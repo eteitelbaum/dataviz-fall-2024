@@ -92,8 +92,6 @@ website:
             text: "Project Assignment 2"
           - href: project/project-assignment-3.qmd
             text: "Project Assignment 3"
-          - href: project/alternative-assignment.qmd
-            text: "Alternative Assignment"
           - href: project/project-datasets.qmd
             text: "Datasets"
       - section: "Course Modules"

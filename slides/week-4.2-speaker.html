@@ -9,9 +9,9 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.361">
+  <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2023-09-14">
+  <meta name="dcterms.date" content="2024-08-22">
   <title>PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -32,7 +32,7 @@
     }
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -224,7 +224,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -388,7 +389,7 @@
     }
   </style>
 <meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data">
-<meta property="og:site-name" content="PSC/DATS 2102--Summer Schedule">
+<meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
 <meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data">
 <meta name="twitter:card" content="summary">
 </head>
@@ -402,7 +403,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">September 14, 2023</p>
+  <p class="date">August 22, 2024</p>
 </section>
 <section id="merging-data-frames" class="slide level2">
 <h2>Merging Data Frames</h2>
@@ -432,18 +433,18 @@
 <section id="countrycode-example" class="slide level2">
 <h2><code>countrycode</code> Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load countrycode</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(countrycode)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Create new iso3c variable</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>democracy <span class="ot">&lt;-</span> democracy <span class="sc">|&gt;</span>    </span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">mutate</span>(<span class="at">iso3c =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> vdem_ctry_id, <span class="co"># what we are converting</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>        <span class="at">origin =</span> <span class="st">"vdem"</span>,         <span class="co"># we are converting from vdem</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>        <span class="at">destination =</span> <span class="st">"wb"</span>))  <span class="sc">|&gt;</span> <span class="co"># and converting to the WB iso3c code </span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">relocate</span>(iso3c, <span class="at">.after =</span> vdem_ctry_id) <span class="co"># move iso3c </span></span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># View the data</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">glimpse</span>(democracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Load countrycode</span></span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(countrycode)</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a><span class="co"># Create new iso3c variable</span></span>
+<span id="cb1-5"><a></a>democracy <span class="ot">&lt;-</span> democracy <span class="sc">|&gt;</span>    </span>
+<span id="cb1-6"><a></a>  <span class="fu">mutate</span>(<span class="at">iso3c =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> vdem_ctry_id, <span class="co"># what we are converting</span></span>
+<span id="cb1-7"><a></a>        <span class="at">origin =</span> <span class="st">"vdem"</span>,         <span class="co"># we are converting from vdem</span></span>
+<span id="cb1-8"><a></a>        <span class="at">destination =</span> <span class="st">"wb"</span>))  <span class="sc">|&gt;</span> <span class="co"># and converting to the WB iso3c code </span></span>
+<span id="cb1-9"><a></a>  <span class="fu">relocate</span>(iso3c, <span class="at">.after =</span> vdem_ctry_id) <span class="co"># move iso3c </span></span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a><span class="co"># View the data</span></span>
+<span id="cb1-12"><a></a><span class="fu">glimpse</span>(democracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="try-it-yourself" class="slide level2">
@@ -471,19 +472,19 @@
 <section id="left_join-example" class="slide level2">
 <h2><code>left_join()</code> Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load readr</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># Perform left join using common iso3c variable and year</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>dem_women <span class="ot">&lt;-</span> <span class="fu">left_join</span>(democracy, women_emp, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso3c"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">rename</span>(<span class="at">country =</span> country.x) <span class="sc">|&gt;</span> <span class="co"># rename country.x</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">select</span>(<span class="sc">!</span>country.y)             <span class="co"># crop country.y</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># Save as .csv for future use</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="fu">write_csv</span>(dem_women, <span class="st">"data/dem_women.csv"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># View the data</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="fu">glimpse</span>(dem_women)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Load readr</span></span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a><span class="co"># Perform left join using common iso3c variable and year</span></span>
+<span id="cb2-5"><a></a>dem_women <span class="ot">&lt;-</span> <span class="fu">left_join</span>(democracy, women_emp, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso3c"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a></a>  <span class="fu">rename</span>(<span class="at">country =</span> country.x) <span class="sc">|&gt;</span> <span class="co"># rename country.x</span></span>
+<span id="cb2-7"><a></a>  <span class="fu">select</span>(<span class="sc">!</span>country.y)             <span class="co"># crop country.y</span></span>
+<span id="cb2-8"><a></a></span>
+<span id="cb2-9"><a></a><span class="co"># Save as .csv for future use</span></span>
+<span id="cb2-10"><a></a><span class="fu">write_csv</span>(dem_women, <span class="st">"data/dem_women.csv"</span>)</span>
+<span id="cb2-11"><a></a></span>
+<span id="cb2-12"><a></a><span class="co"># View the data</span></span>
+<span id="cb2-13"><a></a><span class="fu">glimpse</span>(dem_women)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="try-it-yourself-1" class="slide level2">
@@ -508,22 +509,22 @@
 <section id="example" class="slide level2">
 <h2>Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># group_by(), summarize() and arrange()</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>dem_summary <span class="ot">&lt;-</span> dem_women <span class="sc">|&gt;</span> <span class="co"># save result as new object</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">group_by</span>(region)  <span class="sc">|&gt;</span> <span class="co"># group dem_women data by region</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">summarize</span>(           <span class="co"># summarize following vars (by region)</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="at">polyarchy =</span> <span class="fu">mean</span>(polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculate mean, remove NAs</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="at">gdp_pc =</span> <span class="fu">mean</span>(gdp_pc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="at">flfp =</span> <span class="fu">mean</span>(flfp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb3-8"><a href="#cb3-8"></a>    <span class="at">women_rep =</span> <span class="fu">mean</span>(women_rep, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(polyarchy)) <span class="co"># arrange in descending order by polyarchy score</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># Save as .csv for future use</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="fu">write_csv</span>(dem_summary, <span class="st">"data/dem_summary.csv"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># View the data</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="fu">glimpse</span>(dem_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># group_by(), summarize() and arrange()</span></span>
+<span id="cb3-2"><a></a>dem_summary <span class="ot">&lt;-</span> dem_women <span class="sc">|&gt;</span> <span class="co"># save result as new object</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">group_by</span>(region)  <span class="sc">|&gt;</span> <span class="co"># group dem_women data by region</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">summarize</span>(           <span class="co"># summarize following vars (by region)</span></span>
+<span id="cb3-5"><a></a>    <span class="at">polyarchy =</span> <span class="fu">mean</span>(polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculate mean, remove NAs</span></span>
+<span id="cb3-6"><a></a>    <span class="at">gdp_pc =</span> <span class="fu">mean</span>(gdp_pc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb3-7"><a></a>    <span class="at">flfp =</span> <span class="fu">mean</span>(flfp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb3-8"><a></a>    <span class="at">women_rep =</span> <span class="fu">mean</span>(women_rep, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-9"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(polyarchy)) <span class="co"># arrange in descending order by polyarchy score</span></span>
+<span id="cb3-11"><a></a></span>
+<span id="cb3-12"><a></a><span class="co"># Save as .csv for future use</span></span>
+<span id="cb3-13"><a></a><span class="fu">write_csv</span>(dem_summary, <span class="st">"data/dem_summary.csv"</span>)</span>
+<span id="cb3-14"><a></a></span>
+<span id="cb3-15"><a></a><span class="co"># View the data</span></span>
+<span id="cb3-16"><a></a><span class="fu">glimpse</span>(dem_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="try-it-yourself-2" class="slide level2 scrollable">
@@ -556,11 +557,13 @@
 </ol>
 
 
-<img src="images/dataviz-logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+    <div class="quarto-auto-generated-content">
+<p><img src="images/dataviz-logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</section>
-    </div>
+</div></div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
@@ -589,7 +592,6 @@
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -776,44 +778,6 @@
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
@@ -890,10 +854,9 @@
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -903,8 +866,17 @@
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

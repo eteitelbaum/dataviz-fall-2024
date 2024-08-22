@@ -9,9 +9,9 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.415">
+  <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2023-10-16">
+  <meta name="dcterms.date" content="2024-08-22">
   <title>PSC/DATS 2102–Summer Schedule - Leaflet Maps</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -419,7 +419,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">October 16, 2023</p>
+  <p class="date">August 22, 2024</p>
 </section>
 <section id="leaflet-maps" class="slide level2">
 <h2>Leaflet Maps</h2>
@@ -437,11 +437,11 @@
 <section id="leaflet-map-with-one-marker" class="slide level2">
 <h2>Leaflet Map with One Marker</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span>  <span class="co"># Add default OpenStreetMap map tiles</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">addMarkers</span>(<span class="at">lng =</span> <span class="fl">45.46916</span>, <span class="at">lat =</span> <span class="fl">14.14912</span>, <span class="at">label =</span> <span class="st">"First conflict event"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="fu">leaflet</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span>  <span class="co"># Add default OpenStreetMap map tiles</span></span>
+<span id="cb1-5"><a></a>  <span class="fu">addMarkers</span>(<span class="at">lng =</span> <span class="fl">45.46916</span>, <span class="at">lat =</span> <span class="fl">14.14912</span>, <span class="at">label =</span> <span class="st">"First conflict event"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="leaflet html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7c890cf3f1309ffbeabf" style="width:960px;height:480px;"></div>
 <script type="application/json" data-for="htmlwidget-7c890cf3f1309ffbeabf">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[14.14912,45.46916,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"First conflict event",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[14.14912,14.14912],"lng":[45.46916,45.46916]}},"evals":[],"jsHooks":[]}</script>
@@ -481,50 +481,50 @@
 <p>Download the data from <a href="https://ucdp.uu.se/">UCDP</a> and load.</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a>ged_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/GEDEvent_v22_1.csv"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="do">## As a last resort</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#ged_data &lt;- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/GEDEvent_v22_1.csv")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a>ged_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/GEDEvent_v22_1.csv"</span>)</span>
+<span id="cb2-5"><a></a></span>
+<span id="cb2-6"><a></a><span class="do">## As a last resort</span></span>
+<span id="cb2-7"><a></a><span class="co">#ged_data &lt;- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/GEDEvent_v22_1.csv")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="conflict-data-wrangling" class="slide level2">
 <h2>Conflict Data Wrangling</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>ged_yemen <span class="ot">&lt;-</span> ged_data <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">filter</span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    country_id <span class="sc">==</span> <span class="dv">678</span>, <span class="co">#gw country code</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>    year <span class="sc">==</span> <span class="dv">2021</span>,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    date_start <span class="sc">&lt;</span> <span class="st">"2021-03-01"</span>, </span>
-<span id="cb3-6"><a href="#cb3-6"></a>    where_prec <span class="sc">&lt;</span> <span class="dv">3</span>, <span class="co"># keep if certain where event occurred</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>    event_clarity <span class="sc">==</span> <span class="dv">1</span>, <span class="co"># keep if event reporting is clear</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>      ) <span class="sc">|&gt;</span> </span>
-<span id="cb3-9"><a href="#cb3-9"></a>  <span class="fu">mutate</span>(<span class="at">deaths =</span> deaths_a <span class="sc">+</span> deaths_b <span class="sc">+</span> deaths_civilians <span class="sc">+</span> deaths_unknown) <span class="sc">|&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">select</span>(<span class="at">event_id =</span> id,</span>
-<span id="cb3-11"><a href="#cb3-11"></a>         country_id,</span>
-<span id="cb3-12"><a href="#cb3-12"></a>         <span class="at">date =</span> date_start,</span>
-<span id="cb3-13"><a href="#cb3-13"></a>         <span class="at">gov_deaths =</span> deaths_a, </span>
-<span id="cb3-14"><a href="#cb3-14"></a>         <span class="at">rebel_deaths =</span> deaths_b, </span>
-<span id="cb3-15"><a href="#cb3-15"></a>         <span class="at">civilian_deaths =</span> deaths_civilians, </span>
-<span id="cb3-16"><a href="#cb3-16"></a>         deaths, </span>
-<span id="cb3-17"><a href="#cb3-17"></a>         <span class="at">place =</span> where_coordinates,</span>
-<span id="cb3-18"><a href="#cb3-18"></a>         latitude, </span>
-<span id="cb3-19"><a href="#cb3-19"></a>         longitude) <span class="sc">|&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>ged_yemen <span class="ot">&lt;-</span> ged_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-3"><a></a>    country_id <span class="sc">==</span> <span class="dv">678</span>, <span class="co">#gw country code</span></span>
+<span id="cb3-4"><a></a>    year <span class="sc">==</span> <span class="dv">2021</span>,</span>
+<span id="cb3-5"><a></a>    date_start <span class="sc">&lt;</span> <span class="st">"2021-03-01"</span>, </span>
+<span id="cb3-6"><a></a>    where_prec <span class="sc">&lt;</span> <span class="dv">3</span>, <span class="co"># keep if certain where event occurred</span></span>
+<span id="cb3-7"><a></a>    event_clarity <span class="sc">==</span> <span class="dv">1</span>, <span class="co"># keep if event reporting is clear</span></span>
+<span id="cb3-8"><a></a>      ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a></a>  <span class="fu">mutate</span>(<span class="at">deaths =</span> deaths_a <span class="sc">+</span> deaths_b <span class="sc">+</span> deaths_civilians <span class="sc">+</span> deaths_unknown) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a></a>  <span class="fu">select</span>(<span class="at">event_id =</span> id,</span>
+<span id="cb3-11"><a></a>         country_id,</span>
+<span id="cb3-12"><a></a>         <span class="at">date =</span> date_start,</span>
+<span id="cb3-13"><a></a>         <span class="at">gov_deaths =</span> deaths_a, </span>
+<span id="cb3-14"><a></a>         <span class="at">rebel_deaths =</span> deaths_b, </span>
+<span id="cb3-15"><a></a>         <span class="at">civilian_deaths =</span> deaths_civilians, </span>
+<span id="cb3-16"><a></a>         deaths, </span>
+<span id="cb3-17"><a></a>         <span class="at">place =</span> where_coordinates,</span>
+<span id="cb3-18"><a></a>         latitude, </span>
+<span id="cb3-19"><a></a>         longitude) <span class="sc">|&gt;</span></span>
+<span id="cb3-20"><a></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="basic-conflict-map" class="slide level2">
 <h2>Basic Conflict Map</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span> <span class="co"># map points in ged_yemen data frame</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> <span class="co"># add default tile</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">addMarkers</span>(</span>
-<span id="cb4-5"><a href="#cb4-5"></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">as.character</span>(deaths), <span class="co"># when user clicks, show deaths</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>    <span class="at">label =</span> <span class="sc">~</span>place <span class="co"># when user hovers, show town</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span> <span class="co"># map points in ged_yemen data frame</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> <span class="co"># add default tile</span></span>
+<span id="cb4-3"><a></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
+<span id="cb4-4"><a></a>  <span class="fu">addMarkers</span>(</span>
+<span id="cb4-5"><a></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">as.character</span>(deaths), <span class="co"># when user clicks, show deaths</span></span>
+<span id="cb4-6"><a></a>    <span class="at">label =</span> <span class="sc">~</span>place <span class="co"># when user hovers, show town</span></span>
+<span id="cb4-7"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="basic-conflict-map-1" class="slide level2">
@@ -539,23 +539,23 @@
 <section id="add-awesome-icons" class="slide level2">
 <h2>Add Awesome Icons</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># save icon</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>icon <span class="ot">&lt;-</span> <span class="fu">awesomeIcons</span>(</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">icon =</span> <span class="st">"ios-close"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="at">iconColor =</span> <span class="st">"black"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="at">markerColor =</span> <span class="st">"red"</span>, </span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="at">library =</span> <span class="st">"ion"</span> </span>
-<span id="cb5-7"><a href="#cb5-7"></a>)</span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co"># Build map</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span>   </span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>  <span class="fu">addAwesomeMarkers</span>(</span>
-<span id="cb5-14"><a href="#cb5-14"></a>    <span class="at">icon =</span> icon, </span>
-<span id="cb5-15"><a href="#cb5-15"></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">as.character</span>(deaths), </span>
-<span id="cb5-16"><a href="#cb5-16"></a>    <span class="at">label =</span> <span class="sc">~</span>place</span>
-<span id="cb5-17"><a href="#cb5-17"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># save icon</span></span>
+<span id="cb5-2"><a></a>icon <span class="ot">&lt;-</span> <span class="fu">awesomeIcons</span>(</span>
+<span id="cb5-3"><a></a>  <span class="at">icon =</span> <span class="st">"ios-close"</span>,</span>
+<span id="cb5-4"><a></a>  <span class="at">iconColor =</span> <span class="st">"black"</span>,</span>
+<span id="cb5-5"><a></a>  <span class="at">markerColor =</span> <span class="st">"red"</span>, </span>
+<span id="cb5-6"><a></a>  <span class="at">library =</span> <span class="st">"ion"</span> </span>
+<span id="cb5-7"><a></a>)</span>
+<span id="cb5-8"><a></a></span>
+<span id="cb5-9"><a></a><span class="co"># Build map</span></span>
+<span id="cb5-10"><a></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span>   </span>
+<span id="cb5-11"><a></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-12"><a></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
+<span id="cb5-13"><a></a>  <span class="fu">addAwesomeMarkers</span>(</span>
+<span id="cb5-14"><a></a>    <span class="at">icon =</span> icon, </span>
+<span id="cb5-15"><a></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">as.character</span>(deaths), </span>
+<span id="cb5-16"><a></a>    <span class="at">label =</span> <span class="sc">~</span>place</span>
+<span id="cb5-17"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="add-awesome-icons-1" class="slide level2">
@@ -570,31 +570,31 @@
 <section id="change-content-of-popup" class="slide level2">
 <h2>Change Content of Popup</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ged_yemen<span class="sc">$</span>popup_text <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
-<span id="cb6-2"><a href="#cb6-2"></a>      <span class="st">"Date: %s &lt;br&gt; </span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="st">       Total Deaths: %.0f &lt;br&gt; </span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="st">       Govt. Deaths: %.0f &lt;br&gt; </span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="st">       Rebel Deaths: %.0f &lt;br&gt; </span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="st">       Civilian Death: %.0f &lt;br&gt;"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7"></a>      ged_yemen<span class="sc">$</span>date, </span>
-<span id="cb6-8"><a href="#cb6-8"></a>      ged_yemen<span class="sc">$</span>deaths, </span>
-<span id="cb6-9"><a href="#cb6-9"></a>      ged_yemen<span class="sc">$</span>gov_deaths, </span>
-<span id="cb6-10"><a href="#cb6-10"></a>      ged_yemen<span class="sc">$</span>rebel_deaths,</span>
-<span id="cb6-11"><a href="#cb6-11"></a>      ged_yemen<span class="sc">$</span>civilian_deaths</span>
-<span id="cb6-12"><a href="#cb6-12"></a>    ) <span class="sc">|&gt;</span> <span class="fu">lapply</span>(htmltools<span class="sc">::</span>HTML)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>ged_yemen<span class="sc">$</span>popup_text <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(</span>
+<span id="cb6-2"><a></a>      <span class="st">"Date: %s &lt;br&gt; </span></span>
+<span id="cb6-3"><a></a><span class="st">       Total Deaths: %.0f &lt;br&gt; </span></span>
+<span id="cb6-4"><a></a><span class="st">       Govt. Deaths: %.0f &lt;br&gt; </span></span>
+<span id="cb6-5"><a></a><span class="st">       Rebel Deaths: %.0f &lt;br&gt; </span></span>
+<span id="cb6-6"><a></a><span class="st">       Civilian Death: %.0f &lt;br&gt;"</span>,</span>
+<span id="cb6-7"><a></a>      ged_yemen<span class="sc">$</span>date, </span>
+<span id="cb6-8"><a></a>      ged_yemen<span class="sc">$</span>deaths, </span>
+<span id="cb6-9"><a></a>      ged_yemen<span class="sc">$</span>gov_deaths, </span>
+<span id="cb6-10"><a></a>      ged_yemen<span class="sc">$</span>rebel_deaths,</span>
+<span id="cb6-11"><a></a>      ged_yemen<span class="sc">$</span>civilian_deaths</span>
+<span id="cb6-12"><a></a>    ) <span class="sc">|&gt;</span> <span class="fu">lapply</span>(htmltools<span class="sc">::</span>HTML)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="use-new-labels" class="slide level2">
 <h2>Use New Labels</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span>  </span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">addAwesomeMarkers</span>(</span>
-<span id="cb7-5"><a href="#cb7-5"></a>    <span class="at">icon =</span> icon, </span>
-<span id="cb7-6"><a href="#cb7-6"></a>    <span class="at">popup =</span> <span class="sc">~</span>popup_text, </span>
-<span id="cb7-7"><a href="#cb7-7"></a>    <span class="at">label =</span> <span class="sc">~</span>place</span>
-<span id="cb7-8"><a href="#cb7-8"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">leaflet</span>(<span class="at">data =</span> ged_yemen) <span class="sc">|&gt;</span>  </span>
+<span id="cb7-2"><a></a>  <span class="fu">addTiles</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a></a>  <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">44.1910</span>, <span class="at">lat =</span> <span class="fl">15.3694</span>, <span class="at">zoom =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> <span class="co"># Sana'a coordinates</span></span>
+<span id="cb7-4"><a></a>  <span class="fu">addAwesomeMarkers</span>(</span>
+<span id="cb7-5"><a></a>    <span class="at">icon =</span> icon, </span>
+<span id="cb7-6"><a></a>    <span class="at">popup =</span> <span class="sc">~</span>popup_text, </span>
+<span id="cb7-7"><a></a>    <span class="at">label =</span> <span class="sc">~</span>place</span>
+<span id="cb7-8"><a></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="conflict-map-1" class="slide level2">
@@ -615,11 +615,13 @@
 </ul>
 
 
-<img src="images/dataviz-logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+    <div class="quarto-auto-generated-content">
+<p><img src="images/dataviz-logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</section>
-    </div>
+</div></div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>

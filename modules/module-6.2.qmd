@@ -26,9 +26,9 @@ You also may want to share your app with collaborators by sending them your R sc
 Note that while I am covering methods of sharing your code with others, your are not required to do so for this course. The only requirement is sharing your application as a web app via ShinyApps.io and then either writing a short essay about the app or demoing the app in a short video. Then you will submit your code via a private repo via GitHub classroom as you have been doing for the previous assignments.
 :::
 
-{{< video https://youtu.be/dGUgSFhvaFs title = 'Building your app'>}}
-
 ## Publishing your app on ShinyApps.io
+
+{{< video https://youtu.be/dGUgSFhvaFs title = 'Building your app'>}}
 
 Once it is ready to go, publishing your app to ShinyApps.io is super-easy. Make sure that you have the `rsconnect` package installed. Then, in RStudio, go to Tools > Global Options and select Publishing. Select Connect, ShinyApps.io and follow the instructions for retrieving and entering your token. 
 
@@ -49,21 +49,27 @@ library(shiny)
 runApp("name-of-app")
 ```
 
-## Sharing your code on GitHub
-
-Another way to share your code is on GitHub. The easiest way to do this is to use version control from the very beginning like you [have been doing](https://dataviz-gwu.rocks/modules/getting-started.html#github-and-github-classroom) with GitHub classroom for the assignments in this course. 
-
-But since you are submitting the code via a private GitHub classroom repo, the best way to share your code for this app would be to simply create a new public GitHub repo and copy your code to a new version control project associated with that repo. Then, if you want to make changes to your app and publish it from the new project folder, simply give it a new title when you upload it to ShinyApps.io.
-
-To create a new repo in GitHub, go to your profile, go to Repositories, select New and name your new repository. You can also give it an optional description. Make sure your new repo is set to Public and hit "Create repository." From there copy the repo's URL and use it to create a new version control project in RStudio. Then copy your app.R and supporting files to the new version control rep. 
-
 ## Using the `renv` package to record your R environment
 
 One problem you will frequently run into with R Shiny apps is that they can break as a result of package updates and new R installations. One way to prevent this from happening is to use the `renv` package, which records your R environment at the time you made the app. 
 
 To do this, make sure `renv` is installed. Then type `renv::init()` in your console. Next, type `ren::snapshot()`. At this point, `renv` will give you a list of the packages and versions being used by the app. If everything looks good, type 'y' and `renv` will record the environment. When you come back to work on the app later, you can choose whether to update the packages, but if doing so breaks the app you the option of restoring the earlier environment by typing `renv::restore()`. 
 
+## Sharing your code on GitHub
 
+{{< video https://youtu.be/ApvMnAfQe8A title='Getting Started With GitHub' >}}
+
+Another way to share your code is on GitHub. GitHub is a platform for hosting version control repositories. In this course we will learn to use GitHub to store, manage and collaborate on code.
+
+One central concept you want to be familiar with is a *repository* or "repo" for short. Repos are essentially folders where code can be stored and then accessed and changed by multiple users. All of the assignments for this course will be managed in repos.
+
+GitHub repos are managed using a version control system named Git. Git allows developers to make and track changes to the code stored in the repo. Git also enables users to create branches to work on the code without affecting the main codebase and then merge those changes back into the main branch when they are ready.
+
+The first thing you are going to want to do is to [register](https://happygitwithr.com/github-acct.html) a GitHub account. From there, you want to [install Git](https://happygitwithr.com/install-git.html) and [initiate Git](https://happygitwithr.com/hello-git.html) using the [usethis](https://usethis.r-lib.org/) package. Be sure to install `usethis` first (`install.packages("usethis")`) if you don't have it installed already. Then load `usethis` (`library(usethis)`) and type `use_git_config(user.name = "Jane Doe", user.email = "jane@example.org")` substituting the name and email associated with your GitHub account.
+
+Next, you need to generate a personal access token [(PAT)](https://happygitwithr.com/https-pat.html) by typing `create_github_token()` and set your credentials with the [gitcreds](https://gitcreds.r-lib.org/) package. This is pretty simple once you have your PAT. After installing and loading `gitcreds` (`install.packages("gitcreds")`; `library(gitcreds)`), you can type `gitcreds_get()` to see whether you already have credentials set up. Then type `gitcreds_set()` to enter your new credentials (your username and your password, which will be the PAT that you just generated).
+
+To create a new repo in GitHub, go to your profile, go to Repositories, select New and name your new repository. You can also give it an optional description. Make sure your new repo is set to Public and hit "Create repository." From there copy the repo's URL and use it to create a new version control project in RStudio. Then copy your app.R and supporting files to the new version control repo. From there you can commit and push your code to the repo on your GitHub account. We will go over these steps in class in greater detail as time allows. 
 
 
 

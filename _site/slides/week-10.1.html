@@ -9,9 +9,9 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.415">
+  <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2023-10-30">
+  <meta name="dcterms.date" content="2024-08-22">
   <title>PSC/DATS 2102–Summer Schedule - Regression Tables</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -405,27 +405,27 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">October 30, 2023</p>
+  <p class="date">August 22, 2024</p>
 </section>
 <section id="whats-in-a-regression-table" class="slide level2">
 <h2>What’s in a Regression Table?</h2>
 
-<img data-src="images/fearon_laitin.png" class="quarto-figure-center r-stretch"></section>
+<img data-src="images/fearon_laitin.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="load-data" class="slide level2">
 <h2>Load Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(peacesciencer)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a>conflict_df <span class="ot">&lt;-</span> <span class="fu">create_stateyears</span>(<span class="at">system =</span> <span class="st">'gw'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1946</span><span class="sc">:</span><span class="dv">1999</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">add_ucdp_acd</span>(<span class="at">type=</span><span class="fu">c</span>(<span class="st">"intrastate"</span>), <span class="at">only_wars =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="fu">add_democracy</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="fu">add_creg_fractionalization</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">add_sdp_gdp</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="fu">add_rugged_terrain</span>()</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">glimpse</span>(conflict_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(peacesciencer)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>conflict_df <span class="ot">&lt;-</span> <span class="fu">create_stateyears</span>(<span class="at">system =</span> <span class="st">'gw'</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1946</span><span class="sc">:</span><span class="dv">1999</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a></a>  <span class="fu">add_ucdp_acd</span>(<span class="at">type=</span><span class="fu">c</span>(<span class="st">"intrastate"</span>), <span class="at">only_wars =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a></a>  <span class="fu">add_democracy</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a></a>  <span class="fu">add_creg_fractionalization</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a></a>  <span class="fu">add_sdp_gdp</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a></a>  <span class="fu">add_rugged_terrain</span>()</span>
+<span id="cb1-11"><a></a></span>
+<span id="cb1-12"><a></a><span class="fu">glimpse</span>(conflict_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -440,10 +440,10 @@
 <h2>Run Model</h2>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>conflict_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(ucdponset <span class="sc">~</span> ethfrac <span class="sc">+</span> relfrac <span class="sc">+</span> v2x_polyarchy <span class="sc">+</span> </span>
-<span id="cb2-2"><a href="#cb2-2"></a>                        rugged <span class="sc">+</span> wbgdppc2011est <span class="sc">+</span> wbpopest,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>                  <span class="at">data=</span> conflict_df,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>conflict_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(ucdponset <span class="sc">~</span> ethfrac <span class="sc">+</span> relfrac <span class="sc">+</span> v2x_polyarchy <span class="sc">+</span> </span>
+<span id="cb2-2"><a></a>                        rugged <span class="sc">+</span> wbgdppc2011est <span class="sc">+</span> wbpopest,</span>
+<span id="cb2-3"><a></a>                  <span class="at">data=</span> conflict_df,</span>
+<span id="cb2-4"><a></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -457,7 +457,7 @@
 <section id="view-with-summary" class="slide level2">
 <h2>View with <code>summary()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">summary</span>(conflict_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">summary</span>(conflict_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -577,11 +577,13 @@ Number of Fisher Scoring iterations: 7</code></pre>
 </div>
 
 
-<img src="images/dataviz-logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+    <div class="quarto-auto-generated-content">
+<p><img src="images/dataviz-logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</section>
-    </div>
+</div></div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>

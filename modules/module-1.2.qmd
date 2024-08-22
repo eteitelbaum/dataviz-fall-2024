@@ -28,19 +28,17 @@ install.packages(pkg_list) # install the packages
 - Generate a quarto document named "module-1.2.qmd" in your modules project folder so that you can code along with me
 :::
 
-
 ## Overview 
 
-In this module working, we are going to be working with data from [APIs](https://en.wikipedia.org/wiki/API) instead of flat files. As we saw in the last lesson, importing and wrangling data from flat files can be a messy process. So when clean data are available for download, we want to be able to take advantage of that. Luckily there are some pretty good R packages that allow us to extract data from open source APIs. We are going to be working with two of those in this module (`wbstats` and `vdemdata`) and some others later in the course. 
+In this module working, we are going to be working with data from [APIs](https://en.wikipedia.org/wiki/API) instead of flat files. As we saw in the last lesson, importing and wrangling data from flat files can be a messy process. So when clean data are available for download, we want to be able to take advantage of that. Luckily there are some pretty good R packages that allow us to extract data from open source APIs. We are going to be working with two of those in this module (`wbstats` and `vdemdata`) and some others later in the course.
 
 Along the way, we are going to continue to extend our data wrangling skills. We will learn some new functions in `dplyr` and `janitor` that will help us get our data into a usable form for analysis. We are also going to cover in depth some common data science workflows, including filtering observations, selecting variables, merging two data sets, summarizing data for different groups, and sorting data based on column values. 
 
 The end goal is to have a nice dataset with a combination of World Bank and [V-Dem Institute](https://www.v-dem.net/) data that we can use to illustrate the relationship between the economy, democracy and women's empowerment.   
 
-
 ## Downloading data from an API
 
-{{< video https://youtu.be/cBRTP2imt_o title='Downloading Data from the World Bank' >}}
+{{< video https://youtu.be/Z_jEYnRBv4M title='Downloading Data from the World Bank' >}}
 
 You will no doubt remember the messy data that we downloaded from the World Bank's website in [module 1.1](/modules/module-1.1.htmll#step-1-download-data-from-the-world-bank). Usually it is much easier to download data from an API as opposed to wrangling it from a .csv file. In this example, I want to illustrate that for you by having you download the same data that we worked with in the last module using the [wbstats](https://cran.r-project.org/web/packages/wbstats/vignettes/wbstats.html) package.
 
@@ -97,7 +95,7 @@ One thing that becomes very clear here is that `wb_data()` did not download any 
 
 ## Filter observations, select and create new variables 
 
-{{< video https://youtu.be/7CvYTeMP_PU title='Downloading Data Using wbstats' >}}
+{{< video https://youtu.be/ScQD47eJeAE title='Data transformation' >}}
 
 The next thing we want to talk about is how to filter observations and to select new variables. We also delve more into the topic of how to create new variables. To illustrate these concepts, we are going to be working with the [V-Dem Dataset](https://www.v-dem.net/data/the-v-dem-dataset/). The V-Dem offers an R package for downloading its data called [vdemdata](https://github.com/vdeminstitute/vdemdata). 
 
@@ -131,7 +129,7 @@ democracy <- vdem |> # download the V-Dem dataset
     region = e_regionpol_6C
     ) |>
   mutate(
-    region = case_match(region, # replace the values in region with names
+    region = case_match(region, # replace the values in region with country names
                      1 ~ "Eastern Europe", 
                      2 ~ "Latin America",  
                      3 ~ "Middle East",   
@@ -211,7 +209,7 @@ glimpse(dem_women)
 
 ## Group, summarize and arrange 
 
-{{< video https://youtu.be/2nX9p6arQjg title='Group, Summarize and Arrange' >}}
+{{< video https://youtu.be/mgBwVzMV-v8 title='Group, Summarize and Arrange' >}}
 
 Now that we have completed all of the wrangling, let's do something with it. A common sequence in data science is [group by()](https://dplyr.tidyverse.org/reference/group_by.html), [summarize()](https://dplyr.tidyverse.org/reference/summarise.html) and [arrange()](https://dplyr.tidyverse.org/reference/arrange.html). First, we group the data by certain value or category. Then we summarize it by applying a function like `min()`, `max()`, `mean()`, `median()` or `sd()`. Finally, we order the data according to column values. 
 

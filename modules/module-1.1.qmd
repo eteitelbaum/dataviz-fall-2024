@@ -29,15 +29,13 @@ In this module, we will be using the `readr`, `tidyr` and `dplyr` packages from 
 Also, note that in this module we will load the packages as we go along in various code chunks; but it is also possible to load all of the packages you will be using in a Quarto doc or R script in a single "setup" code chunk at the beginning of the file. You will see both workflows represented in this course.
 :::
 
-
 ## Overview
 
 In this module, we are going to work with a "flat file" (.csv) that we will download from the World Bank's [Data Bank](https://databank.worldbank.org/). We are going to encounter many problems with these data that we will rectify using various R packages that I will introduce along the way. The idea is to take this file in its current state and transform it into a [tidy](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) dataset where each column represents a variable, each row represents an observation, and each cell represents a single value.
 
+## Reading data into R
 
-## Downloading World Bank data into a flat file
-
-{{< video https://youtu.be/iOugfcOnoks title="Downloading Data from the World Bank" >}}
+{{< video https://youtu.be/ZwJsSjJRuMU title="Reading Data into R" >}}
 
 Go to the World Development Indicators [portal](https://databank.worldbank.org/source/world-development-indicators) at the World Bank's Data Bank.
 
@@ -46,11 +44,6 @@ Under Countries, select the Countries tab and then select the little check mark 
 Next, under Series, search for "labor force participation" and find labor force participation rates for women ages 15-64 (ILO modeled estimates). Check that series. 
 
 Now go to Time and select the years from the last 50 years. Click Apply Changes, go to Download Options and download as a .csv file. Place the .csv file in the data directory that you created for this module. Save it as "messy_wb_data.csv" or something like that. 
-
-
-## Reading data from a flat file
-
-{{< video https://youtu.be/i5galFqlj8c title='Reading Data From a Flat File' >}}
 
 Now we are going to read this messy World Bank data into R using the `read_csv()` function from the `readr` package. [readr](https://readr.tidyverse.org/) is a collection of functions that parses data from a flat file into a *tibble*, the modern Tidyverse version of a data frame. After we have read the data  into R, we are going to have a look at it with the [glimpse()](https://dplyr.tidyverse.org/reference/glimpse.html) function from the [dplyr](https://dplyr.tidyverse.org/index.html) package.
 
@@ -74,10 +67,9 @@ wb_data_messy <- read_csv("data/messy_wb_data.csv")
 glimpse(wb_data_messy)
 ```
 
-
 ## Reshaping data
 
-{{< video https://youtu.be/yhFUUblhTNA title='Reshaping Data With `pivot_longer()`' >}}
+{{< video https://youtu.be/u4AXi8A1Bqo title='Reshaping Data With `pivot_longer()`' >}}
 
 There are a few things about the data here that make it messy. First, in order for the data to be tidy, we want each column to represent a variable and each row to represent an observation. 
 
@@ -122,10 +114,9 @@ For our `pivot-longer()` call we used R's native [pipe operator](https://r4ds.ha
 Notice that when we specify the years in our `pivot_longer()` call we encapsulate them in backticks (``). This is because the years, as they were imported from the WDI dataset, have spaces in them. Typically we want to avoid this scenario by writing our variable names in [*snake_case*](https://en.wikipedia.org/wiki/Snake_case). 
 :::
 
+## Cleaning up our data
 
-## Truncating strings and changing variable types
-
-{{< video https://youtu.be/-JT8JSR1z5A title='Truncating Strings and Changing Variable Types' >}}
+{{< video https://youtu.be/xa0tYCfHHTI title='Cleaning Data in R' >}}
 
 Now that our data are transposed, we can start to work on some other key issues. Notice that the year is stored in the weird way in which it was imported--as a character (or string) with both the year and the year in brackets, e.g. 1972 [YR1972]. Notice that `flfp` is also stored as a character whereas it should be numeric. 
 
@@ -144,11 +135,6 @@ wb_data <- wb_data |> # replace wb_data with a modified version of the dataframe
 # View the data
 glimpse(wb_data)
 ```
-
-
-## Cleaning variable names
-
-{{< video https://youtu.be/7bgoebbzfKQ title='Clean Variable Names with Janitor' >}}
 
 The last thing we are going to do is to fix the variable names. Specifically, we want to remove the spaces from the remaining variables and conver them from title case to snake case. To do this, we will use the `clean_names()` function from the `janitor` package. 
 

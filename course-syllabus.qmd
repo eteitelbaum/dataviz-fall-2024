@@ -5,12 +5,14 @@ editor: visual
 
 ## Course Information
 
-Location: Gelman Library, Rm 609
+Location: Gelman Library, Rm 642
+
+Time: 11:10 -12:25
 
 | Instructor: Prof. Emmanuel Teitelbaum
 | Email: [ejt\@gwu.edu](mailto:ejt@gwu.edu)
 
-The best way to contact me is via the course Discord server.
+The best way to contact me is via the course Discord server for inquiries about code or course material and by email or during office hours for personal matters.
 
 Office Hours: [Mondays 3-5 p.m.](https://calendly.com/emmanuel-teitelbaum) and by appointment.
 
@@ -132,7 +134,7 @@ I've designed the following instructional components to support your learning an
 
 The following assessments help you gauge and demonstrate your progress in the course and support you in meeting course learning objectives.
 
--   **Discord:** We will discuss course topics further through the Discord. You are expected to post original thoughts/reflections and respond substantively to others.[\[1\]](#_msocom_1) 
+-   **Discord:** We will discuss course topics further through the Discord. Please post your questions and help other students with their questions when you can.
 
 -   **Assignments**: You will develop various skills through regular assignments. You are expected to one coding assignment per week. Thoughtfully completing weekly assignments helps you meet course objectives.
 
@@ -140,7 +142,7 @@ The following assessments help you gauge and demonstrate your progress in the co
 
 6.  
 
--   **Quizzes:** In this course, you will have opportunities to assess your own knowledge. You are expected to complete two weekly quizzes that provide immediate feedback and support ongoing learning.
+-   **Quizzes:** In this course, you will have opportunities to assess your own knowledge. You are expected to complete in class quizzes that provide immediate feedback and support ongoing learning.
 
 You'll find support for Blackboard and other tools used for course activities and assignments under the **Technology Support** link in the left navigation menu in our course on Blackboard.
 
@@ -167,7 +169,7 @@ Academic dishonesty is defined as cheating of any kind, including misrepresentin
 
 ### Quizzes
 
-Students will complete ten graded quizzes. These exercises will be oriented towards strengthening the student's ability to manipulate, visualize and communicate data with R and Quarto.
+Students will complete ten graded quizzes. These exercises will be oriented towards strengthening the student's ability to manipulate, visualize and communicate data with R and Quarto. I will drop your lowest four quiz scores. Please do not email me about missed quizzes.
 
 ### Coding Assignments
 
@@ -175,7 +177,7 @@ Students will complete five weekly coding assignments. These assignments are des
 
 ### Final Project
 
-Each student will complete a final project that will be developed throughout the semester in three parts. The ultimate objective of this project is for the student to design and program an R Shiny App. politics.
+Each student will complete a final project that will be developed throughout the semester in Students will work in groups to complete a final project. The ultimate objective of this project is for the student to design and program an R Shiny App.
 
 ## Course Grading
 
@@ -198,7 +200,13 @@ The grading scale below maps your final point or percentage total to your final 
 
 ## Late Work
 
-If you miss an assignment deadline, it is your responsibility to contact me via email. Accommodations are automatically approved for university-approved absences such as sporting events, religious holidays, etc.
+Late assignments will incur a penalty of 1 percentage point per day. Late work will not be accepted more than 7 days past the deadline.
+
+Students with exceptional circumstances may receive accommodations for late work under exceptional circumstances, and in consultation with the students' academic advisor, when a verified medical excuse written by a qualified medical professional is provided.
+
+Accommodations are automatically approved for university-approved absences such as sporting events, religious holidays, etc. but these should be provided to the instructor by the end of the second week of the semester.
+
+No exceptions will be made to the late work policy.
 
 ## Incomplete Grades
 
@@ -206,7 +214,7 @@ If you miss an assignment deadline, it is your responsibility to contact me via 
 
 Incomplete grades may be given to undergraduate students only if for reasons beyond the student's control (such as medical or family emergency) they are unable to complete the final work of the course. Faculty should not assign an Incomplete grade if not asked by the student.
 
-[A contract](https://advising.columbian.gwu.edu/sites/g/files/zaxdzs1876/f/downloads/Form%20-%20Incomplete%20Contract_1.pdf)must be signed by the instructor and the student and filed in the department office. A copy should be submitted to the Academic Advising office in Phillips 107. A student has up to a calendar year to finish the coursework for the class, and when completed a grade change form must be submitted to the Academic Advising office to update the grade.
+[A contract](https://advising.columbian.gwu.edu/sites/g/files/zaxdzs1876/f/downloads/Form%20-%20Incomplete%20Contract_1.pdf) must be signed by the instructor and the student and filed in the department office. A copy should be submitted to the Academic Advising office in Phillips 107. A student has up to a calendar year to finish the coursework for the class, and when completed a grade change form must be submitted to the Academic Advising office to update the grade.
 
 For further policy and contract information for undergraduate students, please consult with your advisor and also visit the website for [Columbian College of Arts and Sciences Academic Advising.](https://columbian.gwu.edu/sites/g/files/zaxdzs4901/files/2022-06/ccas_incomplete_contract_21.pdf)
 

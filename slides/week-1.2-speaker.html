@@ -9,9 +9,9 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.433">
+  <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2023-08-30">
+  <meta name="dcterms.date" content="2024-08-22">
   <title>PSC/DATS 2102–Summer Schedule - Getting Started, Part I</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -157,7 +157,8 @@
   }
 
   .callout.callout-titled .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
   .callout.callout-titled .callout-icon::before {
@@ -322,7 +323,7 @@
   </style>
 <meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part I">
 <meta property="og:description" content="RStudio and Basic Quarto">
-<meta property="og:site-name" content="PSC/DATS 2102--Summer Schedule">
+<meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
 <meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part I">
 <meta name="twitter:description" content="RStudio and Basic Quarto">
 <meta name="twitter:card" content="summary">
@@ -338,7 +339,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">August 30, 2023</p>
+  <p class="date">August 22, 2024</p>
 </section>
 <section id="rstudio-setup" class="slide level2 smaller">
 <h2>RStudio Setup</h2>
@@ -410,11 +411,13 @@
 </ul>
 
 
-<img src="images/dataviz-logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+    <div class="quarto-auto-generated-content">
+<p><img src="images/dataviz-logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</section>
-    </div>
+</div></div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
@@ -442,7 +445,6 @@
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
@@ -704,10 +706,9 @@
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -717,8 +718,17 @@
           interactive: true,
           interactiveBorder: 10,
           theme: 'light-border',
-          placement: 'bottom-start'
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 

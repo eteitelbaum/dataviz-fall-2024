@@ -3399,7 +3399,7 @@
     "href": "course-syllabus.html#assignments",
     "title": "Course Syllabus",
     "section": "Assignments",
-    "text": "Assignments\n\nQuizzes (20%)\nCoding assignments (40%)\nFinal project (40% of final grade)\n\nAssignment 1 (10%)\nAssignment 2 (10%)\nAssignment 3 (20%)\n\n\n\nQuizzes\nStudents will complete ten graded quizzes. These exercises will be oriented towards strengthening the student’s ability to manipulate, visualize and communicate data with R and Quarto. I will drop your lowest four quiz scores. Please do not email me about missed quizzes.\n\n\nCoding Assignments\nStudents will complete five weekly coding assignments. These assignments are designed to provide students with the opportunity to apply their newly-acquired skills to a classic question in political science.\n\n\nFinal Project\nEach student will complete a final project that will be developed throughout the semester in Students will work in groups to complete a final project. The ultimate objective of this project is for the student to design and program an R Shiny App.",
+    "text": "Assignments\n\nQuizzes (20%)\nCoding assignments (40%)\nFinal project (40% of final grade)\n\nAssignment 1 (10%)\nAssignment 2 (10%)\nAssignment 3 (20%)\n\n\n\nQuizzes\nStudents will complete approximately ten graded quizzes. These exercises will be oriented towards strengthening the student’s ability to manipulate, visualize and communicate data with R and Quarto. I will drop your lowest two quiz scores. Please do not email me about missed quizzes.\n\n\nCoding Assignments\nStudents will complete five weekly coding assignments. These assignments are designed to provide students with the opportunity to apply their newly-acquired skills to a classic question in political science.\n\n\nFinal Project\nEach student will complete a final project that will be developed throughout the semester in Students will work in groups to complete a final project. The ultimate objective of this project is for the student to design and program an R Shiny App.",
     "crumbs": [
       "Course information",
       "Syllabus"
@@ -3876,6 +3876,17 @@
     "crumbs": [
       "Course Modules",
       "Module 5.1"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#policy-on-ai-tools",
+    "href": "course-syllabus.html#policy-on-ai-tools",
+    "title": "Course Syllabus",
+    "section": "Policy on AI Tools",
+    "text": "Policy on AI Tools\nOverview:\nThe use of ChatGPT can be a valuable tool for students in this course, but it is important to use it ethically and appropriately. By following the guidelines and expectations outlined in this syllabus policy, students can maximize the benefits of using ChatGPT while also demonstrating their own critical thinking, research, and programming skills.\nAs part of this course, students will have the option to use ChatGPT, a large language model trained by OpenAI, to assist in the writing of their R scripts for specific course assignments. ChatGPT can provide students with a starting point for their code but often the code is incomplete or error-prone. It is important to recognize that ChatGPT is a tool and not a substitute for critical thinking, research, or programming skills. Therefore, this syllabus policy outlines the guidelines and expectations for using ChatGPT in this course.\nGuidelines:\nUse ChatGPT ethically and honestly. Do not use ChatGPT to plagiarize or take credit for work that is not your own. Any use of ChatGPT must be properly cited and referenced in accordance with the university’s code of academic integrity.\nRecognize the limitations of ChatGPT. ChatGPT is a machine learning model and may not always provide the most accurate or relevant information. Therefore, it is important to critically evaluate the information and verify it with other sources.\nUse ChatGPT appropriately. ChatGPT should only be used to assist in writing boilerplate syntax for this course. It’s a starting point. It should not be used to attempt to complete other assignments or assessments in this course or in other courses.",
+    "crumbs": [
+      "Course information",
+      "Syllabus"
     ]
   }
 ]

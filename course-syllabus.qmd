@@ -1,6 +1,5 @@
 ---
 title: "Course Syllabus"
-editor: visual
 ---
 
 ## Course Information
@@ -38,7 +37,7 @@ Course and module objectives are guides to gauge your skill and knowledge develo
 
 I care about your learning and also about this subject matter, and I am here to help you have a meaningful learning experience. I expect you to take ownership of your learning: you can get more out of the course by thoughtfully participating in discussions, actively taking notes on readings and lectures, and giving your best effort overall. I will hold you to the highest standards for academic honesty and integrity in your work. I will also encourage you to collaborate and learn from your peers through thoughtful and respectful discussion. It is recommended you log in daily order to keep up with course requirements. I must highlight that communication is vital, so I hope you feel comfortable reaching out to me if you are struggling or have concerns or need [accommodations beyond accessibility](#_heading=h.41mghml). We can determine strategies to set you up for success. Finally, I look forward to collaborating with you in this course to create a meaningful experience for everyone.
 
-# Policy on AI Tools
+## Policy on AI Tools
 
 **Overview:**
 
@@ -169,7 +168,7 @@ Academic dishonesty is defined as cheating of any kind, including misrepresentin
 
 ### Quizzes
 
-Students will complete ten graded quizzes. These exercises will be oriented towards strengthening the student's ability to manipulate, visualize and communicate data with R and Quarto. I will drop your lowest four quiz scores. Please do not email me about missed quizzes.
+Students will complete approximately ten graded quizzes. These exercises will be oriented towards strengthening the student's ability to manipulate, visualize and communicate data with R and Quarto. I will drop your lowest two quiz scores. Please do not email me about missed quizzes.
 
 ### Coding Assignments
 

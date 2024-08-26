@@ -173,7 +173,7 @@ Students will complete approximately ten graded quizzes. These exercises will be
 
 ### Coding Assignments
 
-Students will complete five weekly coding assignments. These assignments are designed to provide students with the opportunity to apply their newly-acquired skills to a classic question in political science.
+Students will complete five weekly coding assignments. These assignments are designed to provide students with the opportunity to apply their newly-acquired skills to real world data.
 
 ### Final Project
 

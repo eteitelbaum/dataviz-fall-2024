@@ -164,7 +164,8 @@ Academic dishonesty is defined as cheating of any kind, including misrepresentin
 3.  Final project (40% of final grade)
     a.  Assignment 1 (10%)
     b.  Assignment 2 (10%)
-    c.  Assignment 3 (20%)
+    c.  Assignment 3 (10%)
+    d.  Lightning Talk (10%)
 
 ### Quizzes
 

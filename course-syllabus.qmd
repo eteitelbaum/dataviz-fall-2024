@@ -177,7 +177,7 @@ Students will complete five weekly coding assignments. These assignments are des
 
 ### Final Project
 
-Each student will complete a final project that will be developed throughout the semester in Students will work in groups to complete a final project. The ultimate objective of this project is for the student to design and program an R Shiny App.
+Each student will complete a final project that will be developed throughout the semester. Students will work in groups to complete the project. The ultimate objective of this project is for the student to design and program an R Shiny App. Details regarding the specifics of the project will be provided through the course of the semester. 
 
 ## Course Grading
 

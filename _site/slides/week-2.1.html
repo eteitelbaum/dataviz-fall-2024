@@ -11,8 +11,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2024-08-22">
-  <title>PSC/DATS 2102–Summer Schedule - Getting Started, Part II</title>
+  <meta name="dcterms.date" content="2024-08-28">
+  <title>PSC/DATS 2102–Summer Schedule - Getting Started, Part I</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -386,11 +386,23 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part II">
-<meta property="og:description" content="More Quarto and GitHub">
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
+  <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <link href="../site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+  <script src="../site_libs/leaflet-1.3.1/leaflet.js"></script>
+  <link href="../site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+  <script src="../site_libs/proj4-2.6.2/proj4.min.js"></script>
+  <script src="../site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+  <link href="../site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+  <script src="../site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part I">
+<meta property="og:description" content="RStudio and Basic Quarto">
 <meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
-<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part II">
-<meta name="twitter:description" content="More Quarto and GitHub">
+<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Getting Started, Part I">
+<meta name="twitter:description" content="RStudio and Basic Quarto">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-dark">
@@ -398,174 +410,480 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Getting Started, Part II</h1>
-  <p class="subtitle">More Quarto and GitHub</p>
+  <h1 class="title">Getting Started, Part I</h1>
+  <p class="subtitle">RStudio and Basic Quarto</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">August 22, 2024</p>
+  <p class="date">August 28, 2024</p>
 </section>
-<section id="reveal-js-slides" class="slide level2">
-<h2>Reveal JS Slides</h2>
+<section id="rstudio" class="slide level2">
+<h2>RStudio</h2>
 <ul>
-<li><a href="https://revealjs.com/">Revealjs</a> is an open source HTML presentation framework that is built on open web technologies like CSS and JavaScript</li>
-<li>These slides are made with the <code>revealjs</code> format in Quarto</li>
-<li>Like other Quarto documents, you can set all the formatting in the YAML header</li>
-<li>But you can also customize individual slides</li>
+<li>RStudio is an integrated development environment (IDE) for R</li>
+<li>RStudio has four panes
+<ul>
+<li><strong>Source</strong>-where you write code</li>
+<li><strong>Console</strong>-where you run code</li>
+<li><strong>Environment</strong>-where you see objects in memory</li>
+<li><strong>Files/Plots/Packages/Help</strong>-where you can navigate files, see plots, install packages, and get help</li>
+</ul></li>
+<li>Let’s open RStudio and have a look around</li>
+</ul>
+</section>
+<section id="quarto" class="slide level2">
+<h2>Quarto</h2>
+<p><br></p>
+<div>
+<ul>
+<li class="fragment"><a href="https://quarto.org/">Quarto</a> is an open-source scientific publishing platform</li>
+<li class="fragment">Allows you to integrate text with code</li>
+<li class="fragment">Kind of like a word processor for data science</li>
+<li class="fragment">Can use it to create reports, books, websites, etc.</li>
+<li class="fragment">Can make HTML, PDF, Word, and other formats</li>
+<li class="fragment">Can use R, Python, Julia, and other languages</li>
+</ul>
+</div>
+</section>
+<section id="project-oriented-workflow" class="slide level2">
+<h2>Project Oriented Workflow</h2>
+<p><br></p>
+<div>
+<ul>
+<li class="fragment">Always start a document in a project folder
+<ul>
+<li class="fragment">That way you don’t have to do <code>setwd</code></li>
+<li class="fragment">Also can share easily with other people</li>
+</ul></li>
+<li class="fragment">Go to File&gt;New Project</li>
+<li class="fragment">Create a Quarto project folder</li>
+</ul>
+</div>
+</section>
+<section id="visual-editor" class="slide level2">
+<h2>Visual Editor</h2>
+<div>
+<ul>
+<li class="fragment">There are two ways to edit Quarto docs
+<ul>
+<li class="fragment">Source (markdown)</li>
+<li class="fragment">Visual editor</li>
+</ul></li>
+<li class="fragment">Visual editor
+<ul>
+<li class="fragment">WYSIWYM</li>
+<li class="fragment">Approximates appearance</li>
+</ul></li>
+<li class="fragment">Try both and see what you like</li>
+</ul>
+</div>
+</section>
+<section id="rendering-documents" class="slide level2 smaller">
+<h2>Rendering Documents</h2>
+<div>
+<ul>
+<li class="fragment">Rendering = converting to another format
+<ul>
+<li class="fragment">Default format is HTML</li>
+<li class="fragment">Can also render to PDF, Word, etc.</li>
+</ul></li>
+<li class="fragment">To render a Quarto document
+<ul>
+<li class="fragment">Click on the Render button
+<ul>
+<li class="fragment">Or keyboard shortcut (Cmd/Ctrl + Shift + K)</li>
+</ul></li>
+</ul></li>
+<li class="fragment">By default, Quarto will preview the document in your browser</li>
+<li class="fragment">But you can also preview in Viewer pane
+<ul>
+<li class="fragment">Click on the gear icon next to the Render button</li>
+<li class="fragment">Select “Preview in Viewer Pane”</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="illustration" class="slide level2">
+<h2>Illustration</h2>
+
+<img data-src="images/intro_quarto.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="lets-try-quarto" class="slide level2">
+<h2>Let’s Try Quarto!</h2>
+<ul>
+<li>Create a new Quarto document
+<ul>
+<li>File&gt;New File&gt;Quarto Document</li>
+</ul></li>
+<li>Save the document in your project folder</li>
+<li>Render it
+<ul>
+<li>Click on the Render button</li>
+<li>Or keyboard shortcut (Cmd/Ctr + Shift + K)</li>
+</ul></li>
+<li>Try out the visual editor</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="top:0%;right:5%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="quarto-docs" class="title-slide slide level1 center">
+<h1>Quarto Docs</h1>
+
+</section>
+<section id="document-elements" class="slide level2">
+<h2>Document Elements</h2>
+<p><br></p>
+<ul>
+<li>YAML Header</li>
+<li>Markdown content</li>
+<li>Code chunks</li>
 </ul>
 </section>
 <section id="yaml-header" class="slide level2">
-<h2>YAML header</h2>
-<p>Here is the code from the YAML header for these slides</p>
+<h2>YAML Header</h2>
+<p><br></p>
+<ul>
+<li>Metadata about the document
+<ul>
+<li>Title, author, date, etc.</li>
+</ul></li>
+<li>Output format</li>
+<li>Execution options</li>
+</ul>
+</section>
+<section id="yaml-header-1" class="slide level2">
+<h2>YAML Header</h2>
 <pre><code>---
-title: Getting Started, Part II
-subtitle: More Quarto and GitHub
+title: "My Documnet"
+author: "Your Name"
 date: today
 date-format: long
-footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
-logo: images/dataviz-logo.png
-format:
-  revealjs:
-    theme: [simple, custom.scss]
-    transition: fade
-    slide-number: true
-    multiplex: true
+format: html
 execute:
   echo: false
   message: false
-  warning: false
-  freeze: auto
----
-</code></pre>
-</section>
-<section id="embed-r-code-chunk" class="slide level2">
-<h2>Embed R code chunk</h2>
+---</code></pre>
+<ul>
+<li>Try adding some of these options in your document</li>
+<li>Then render it again</li>
+<li>Look in the Quarto <a href="https://quarto.org/docs/reference/formats/html.html">guide</a> for other options to try</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Load packages</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(vdemdata) </span>
-<span id="cb2-3"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a><span class="co"># Download the data</span></span>
-<span id="cb2-6"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> </span>
-<span id="cb2-7"><a></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1990</span>)  <span class="sc">|&gt;</span> </span>
-<span id="cb2-8"><a></a>  <span class="fu">select</span>(                  </span>
-<span id="cb2-9"><a></a>    <span class="at">country =</span> country_name,       </span>
-<span id="cb2-10"><a></a>    <span class="at">vdem_ctry_id =</span> country_id, </span>
-<span id="cb2-11"><a></a>    year, </span>
-<span id="cb2-12"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
-<span id="cb2-13"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
-<span id="cb2-14"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
-<span id="cb2-15"><a></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb2-16"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-17"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, <span class="co">#</span></span>
-<span id="cb2-18"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
-<span id="cb2-19"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
-<span id="cb2-20"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
-<span id="cb2-21"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
-<span id="cb2-22"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
-<span id="cb2-23"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
-<span id="cb2-24"><a></a>  )</span>
-<span id="cb2-25"><a></a></span>
-<span id="cb2-26"><a></a><span class="co"># View the data</span></span>
-<span id="cb2-27"><a></a><span class="fu">glimpse</span>(democracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer3" data-update-every="1" tabindex="0" style="right:5%;bottom:0%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
 </div>
 </section>
-<section id="what-the-code-looks-like" class="slide level2">
-<h2>What the Code Looks Like</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a></a><span class="in">#| label: embed_code</span></span>
-<span id="cb3-3"><a></a><span class="in">#| echo: true</span></span>
-<span id="cb3-4"><a></a><span class="in">#| eval: false</span></span>
-<span id="cb3-5"><a></a></span>
-<span id="cb3-6"><a></a><span class="in"># Load packages</span></span>
-<span id="cb3-7"><a></a><span class="in">library(vdemdata) </span></span>
-<span id="cb3-8"><a></a><span class="in">library(dplyr)</span></span>
-<span id="cb3-9"><a></a></span>
-<span id="cb3-10"><a></a><span class="in"># Download the data</span></span>
-<span id="cb3-11"><a></a><span class="in">democracy &lt;- vdem |&gt; </span></span>
-<span id="cb3-12"><a></a><span class="in">  filter(year &gt;= 1990)  |&gt; </span></span>
-<span id="cb3-13"><a></a><span class="in">  select(                  </span></span>
-<span id="cb3-14"><a></a><span class="in">    country = country_name,       </span></span>
-<span id="cb3-15"><a></a><span class="in">    vdem_ctry_id = country_id, </span></span>
-<span id="cb3-16"><a></a><span class="in">    year, </span></span>
-<span id="cb3-17"><a></a><span class="in">    polyarchy = v2x_polyarchy, </span></span>
-<span id="cb3-18"><a></a><span class="in">    gdp_pc = e_gdppc, </span></span>
-<span id="cb3-19"><a></a><span class="in">    region = e_regionpol_6C</span></span>
-<span id="cb3-20"><a></a><span class="in">    ) |&gt;</span></span>
-<span id="cb3-21"><a></a><span class="in">  mutate(</span></span>
-<span id="cb3-22"><a></a><span class="in">    region = case_match(region, #</span></span>
-<span id="cb3-23"><a></a><span class="in">                     1 ~ "Eastern Europe", </span></span>
-<span id="cb3-24"><a></a><span class="in">                     2 ~ "Latin America",  </span></span>
-<span id="cb3-25"><a></a><span class="in">                     3 ~ "Middle East",   </span></span>
-<span id="cb3-26"><a></a><span class="in">                     4 ~ "Africa", </span></span>
-<span id="cb3-27"><a></a><span class="in">                     5 ~ "The West", </span></span>
-<span id="cb3-28"><a></a><span class="in">                     6 ~ "Asia")</span></span>
-<span id="cb3-29"><a></a><span class="in">  )</span></span>
-<span id="cb3-30"><a></a></span>
-<span id="cb3-31"><a></a><span class="in"># View the data</span></span>
-<span id="cb3-32"><a></a><span class="in">glimpse(democracy)</span></span>
-<span id="cb3-33"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="markdown" class="slide level2">
+<h2>Markdown</h2>
+<p><br></p>
+<div>
+<ul>
+<li class="fragment">Markdown is a simple markup language</li>
+<li class="fragment">You can use it to format text</li>
+<li class="fragment">You can also use it to embed images, tables, etc.</li>
+<li class="fragment">And to embed code chunks…</li>
+</ul>
+</div>
 </section>
-<section id="try-it-yourself" class="slide level2 smaller">
-<h2>Try it Yourself</h2>
+<section id="markdown-syntax---basic-authoring" class="slide level2">
+<h2>Markdown Syntax - Basic Authoring</h2>
+<div>
 <ul>
-<li>Go to Quarto’s <a href="https://quarto.org/docs/presentations/revealjs/">revealjs documentation</a></li>
-<li>Start a new project folder called “presentations”</li>
-<li>Start a <code>revealjs</code> presentation</li>
-<li>Try making a basic slide with bullet points</li>
-<li>Add a slide with code (grab from course website)</li>
-<li>Play with chunk options</li>
-<li>Explore other options in documentation (presenting, advanced, revel themes)</li>
-<li>Try publishing to <a href="https://quarto.org/docs/publishing/quarto-pub.html">Quarto Pub</a>
+<li class="fragment">For basic text you can just start typing</li>
+<li class="fragment">For line breaks use two spaces and return (enter)</li>
+<li class="fragment">Headings (use <code>#</code>, <code>##</code>, <code>###</code>, etc.)
 <ul>
-<li><code>quarto publish quarto-pub</code> in terminal</li>
+<li class="fragment"><code>#</code> is the largest heading (level 1)</li>
+<li class="fragment"><code>##</code> is the next largest (level 2)</li>
+<li class="fragment"><code>###</code> is the next largest (level 3)</li>
+<li class="fragment">Etc.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="markdown-syntax---styling" class="slide level2">
+<h2>Markdown Syntax - Styling</h2>
+<div>
+<ul>
+<li class="fragment">Emphasis = Italics (use <code>*</code>)
+<ul>
+<li class="fragment">Bold (use <code>**</code>)</li>
+</ul></li>
+<li class="fragment">Lists
+<ul>
+<li class="fragment">Bullet points (use <code>-</code>)</li>
+<li class="fragment">Numbered lists (use <code>1.</code>)</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="markdown-syntax---content" class="slide level2">
+<h2>Markdown Syntax - Content</h2>
+<div>
+<ul>
+<li class="fragment">Links (use <code>[text](url)</code>)</li>
+<li class="fragment">Images (use <code>![](file path or url)</code>)</li>
+<li class="fragment">Code chunks
+<ul>
+<li class="fragment">R code chunks (```{r}…```)</li>
+<li class="fragment">Python code chunks (```{python}…```)</li>
+<li class="fragment">Etc.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="try-some-markdown" class="slide level2">
+<h2>Try Some Markdown</h2>
+<p><br></p>
+<ul>
+<li>Check out the <a href="https://www.markdownguide.org/basic-syntax/">Markdown Cheatsheet</a></li>
+<li>Try editing the markdown in your document</li>
+<li>Try some of the other things you find in the guide</li>
+<li>Then render it again</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer4" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="code-chunks" class="slide level2">
+<h2>Code Chunks</h2>
+<div>
+<ul>
+<li class="fragment">Incorporate R code (could also be Python, Julia, etc.)</li>
+<li class="fragment">Add a code chunk with the ‘+’ button</li>
+<li class="fragment">Run the code chunk by clicking the play button
+<ul>
+<li class="fragment">Or use keyboard shortcut (Cmd/Ctrl + Shift + Enter)</li>
+</ul></li>
+<li class="fragment">Run all chunks up that point by clicking the down arrow
+<ul>
+<li class="fragment">Or use keyboard shortcut (Cmd/Ctrl + Shift + K)</li>
+</ul></li>
+<li class="fragment">Run a single line with shortcut (Cmd/Ctrl + Enter)</li>
+</ul>
+</div>
+</section>
+<section id="code-chunk-options" class="slide level2">
+<h2>Code Chunk Options</h2>
+<div>
+<ul>
+<li class="fragment">Use <code>#|</code> (hash-pipe) to add options</li>
+<li class="fragment"><code>label</code> is a unique identifier for the chunk</li>
+<li class="fragment">Options to control what happens when you render
+<ul>
+<li class="fragment"><code>echo</code> controls whether the code is shown</li>
+<li class="fragment"><code>eval</code> controls whether the code is run</li>
+<li class="fragment"><code>message</code> controls whether messages are shown</li>
+<li class="fragment"><code>warning</code> controls whether warnings are shown</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="code-chunk-options-1" class="slide level2">
+<h2>Code Chunk Options</h2>
+<p><br></p>
+<ul>
+<li>Code-chunk options override global options set in YAML header</li>
+<li>See <a href="https://quarto.org/docs/reference/cells/cells-knitr.html">documentation</a> for more options</li>
+<li>You can also use write chunk options inline with chunk name,
+<ul>
+<li>e.g., <code>{r, echo = FALSE} ...</code></li>
 </ul></li>
 </ul>
 </section>
-<section id="github-classroom" class="slide level2">
-<h2>GitHub Classroom</h2>
+<section id="illustration-1" class="slide level2">
+<h2>Illustration</h2>
+
+<img data-src="images/code-chunks.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="try-it-yourself" class="slide level2">
+<h2>Try it Yourself!</h2>
 <ul>
-<li>GitHub is a version control platform</li>
-<li>Uses a program called Git to execute version control</li>
-<li>Good for collaboration</li>
-<li>Good for maintaining a portfolio</li>
-<li>GitHub classroom is a way of submitting assignments and learning Git</li>
+<li>Create a code chunk</li>
+<li>Copy this code chunk into your document</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy, <span class="at">colour =</span> class)) <span class="sc">+</span> </span>
+<span id="cb2-4"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Try adding some chunk options in your document</li>
+<li>Then render it again</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer5" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="a-bit-about-r" class="title-slide slide level1 center">
+<h1>A Bit About R</h1>
+
 </section>
-<section id="exercise" class="slide level2">
-<h2>Exercise</h2>
+<section id="r-packages-and-functions" class="slide level2 smaller">
+<h2>R Packages and Functions</h2>
+<p><br></p>
+<div>
 <ul>
-<li>Set up a GitHub account and install git
+<li class="fragment">A <em>function</em> is a set of instructions
 <ul>
-<li>See <a href="https://dataviz-gwu.rocks/modules/getting-started">getting started</a> section of course website if you have not already done this</li>
+<li class="fragment"><code>read_csv()</code> is a function</li>
+<li class="fragment"><code>ggplot()</code> is a function</li>
 </ul></li>
-<li>Follow <a href="https://classroom.github.com/a/aRbbc_aT">this link</a> to accept a test assignment</li>
-<li>Create a new project using version control</li>
-<li>Modify the assignment</li>
-<li>Stage and push modified document to GitHub classroom</li>
-</ul>
-</section>
-<section id="for-fun" class="slide level2">
-<h2>For Fun</h2>
+<li class="fragment">A <em>package</em> is a collection of functions
 <ul>
-<li>Let’s make a Quarto website</li>
-<li>Create a new repository in your GitHub</li>
-<li>Create a new quarto website project using version control</li>
-<li>Preview and render the website locally</li>
-<li>Push to GitHub</li>
-<li>Create a Netlify account</li>
-<li>Train Netlify on GitHub website repo</li>
+<li class="fragment"><code>readr</code> is a package that contains the <code>read_csv()</code> function</li>
+<li class="fragment"><code>ggplot2</code> is a package that contains the <code>ggplot()</code> function</li>
+</ul></li>
+<li class="fragment">Use <code>install.packages()</code> to install packages</li>
+<li class="fragment">Use <code>library()</code> to load packages</li>
+<li class="fragment">You can install packages from CRAN</li>
 </ul>
-
-
+</div>
 </section>
-    <div class="quarto-auto-generated-content">
+<section id="the-tidyverse" class="slide level2 smaller">
+<h2>The Tidyverse</h2>
+<div>
+<ul>
+<li class="fragment">The Tidyverse is a collection of data science packages</li>
+<li class="fragment">It is also considered a dialect of R</li>
+<li class="fragment">In this class, we will be using many Tidyverse packages
+<ul>
+<li class="fragment"><code>ggplot2</code> for data visualization</li>
+<li class="fragment"><code>readr</code> for reading data</li>
+<li class="fragment"><code>dplyr</code> for data manipulation</li>
+<li class="fragment"><code>tidyr</code> for data tidying</li>
+<li class="fragment">Etc.</li>
+</ul></li>
+<li class="fragment">At first we will load the packages independently, e.g.&nbsp;<code>library(ggplot2)</code></li>
+<li class="fragment">Later we will load them all at once with <code>library(tidyverse)</code></li>
+</ul>
+</div>
+</section>
+<section id="lets-get-going-.-.-." class="slide level2">
+<h2>Let’s get going . . .</h2>
+<p><br></p>
+<p>Let’s open up the Getting Started module on Posit Cloud…</p>
+<p>And work through the examples there.</p>
+</section>
+<section id="example-make-a-map" class="slide level2">
+<h2>Example: Make a map!</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-0ffb2856a604b7e374c1" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0ffb2856a604b7e374c1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[38.90243843683386,-77.0443814477152,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,"Elliott School of International Affairs",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[38.90243843683386,38.90243843683386],"lng":[-77.0443814477152,-77.0443814477152]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="example-make-a-map-1" class="slide level2">
+<h2>Example: Make a map!</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb3-2"><a></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span>   <span class="co"># Add default OpenStreetMap map tiles</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">addMarkers</span>(<span class="at">lat =</span> <span class="fl">38.90243843683386</span>, <span class="at">lng =</span>  <span class="sc">-</span><span class="fl">77.0443814477152</span>, </span>
+<span id="cb3-5"><a></a>             <span class="at">label =</span> <span class="st">"Elliott School of International Affairs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-plotting-democracy-over-time" class="slide level2">
+<h2>Example: Plotting Democracy Over Time</h2>
+
+<img data-src="week-2.1_files/figure-revealjs/plot_democracy-1.png" width="960" class="r-stretch"></section>
+<section id="example-plotting-democracy-over-time-1" class="slide level2">
+<h2>Example: Plotting Democracy Over Time</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Load the packages</span></span>
+<span id="cb4-2"><a></a><span class="fu">library</span>(vdemlite)</span>
+<span id="cb4-3"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="co"># Use vdemlite to extract democracy scores for France and INdia</span></span>
+<span id="cb4-6"><a></a>dem_data <span class="ot">&lt;-</span> <span class="fu">fetchdem</span>(<span class="at">indicators =</span> <span class="st">"v2x_polyarchy"</span>,</span>
+<span id="cb4-7"><a></a>                     <span class="at">countries =</span> <span class="fu">c</span>(<span class="st">"FRA"</span>, <span class="st">"IND"</span>))</span>
+<span id="cb4-8"><a></a></span>
+<span id="cb4-9"><a></a><span class="co"># And now we can plot the data</span></span>
+<span id="cb4-10"><a></a><span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">y =</span> v2x_polyarchy, <span class="at">x =</span> year, <span class="at">color=</span>country_name)) <span class="sc">+</span></span>
+<span id="cb4-11"><a></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-12"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-13"><a></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a></a>  <span class="fu">ylab</span>(<span class="st">"Electoral Democracy Index"</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a></a>  <span class="fu">ggtitle</span>(<span class="st">"Electoral Democracy, 1970-2022"</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> .<span class="dv">5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a></a>   <span class="fu">scale_color_manual</span>(<span class="at">name=</span><span class="st">"Country"</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>)) <span class="sc">+</span></span>
+<span id="cb4-18"><a></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-un-voting-trends" class="slide level2">
+<h2>Example: UN Voting Trends</h2>
+
+<img data-src="week-2.1_files/figure-revealjs/un_voting-1.png" width="960" class="r-stretch"></section>
+<section id="example-un-voting-trends-1" class="slide level2">
+<h2>Example: UN Voting Trends</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-2"><a></a><span class="fu">library</span>(unvotes)</span>
+<span id="cb5-3"><a></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-4"><a></a><span class="fu">library</span>(scales)</span>
+<span id="cb5-5"><a></a><span class="fu">library</span>(pacman)</span>
+<span id="cb5-6"><a></a></span>
+<span id="cb5-7"><a></a>unvotes <span class="ot">&lt;-</span> un_votes <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a></a>  <span class="fu">inner_join</span>(un_roll_calls, <span class="at">by =</span> <span class="st">"rcid"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a></a>  <span class="fu">inner_join</span>(un_roll_call_issues, <span class="at">by =</span> <span class="st">"rcid"</span>)</span>
+<span id="cb5-10"><a></a></span>
+<span id="cb5-11"><a></a>unvotes <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a></a>  <span class="co"># then filter out to only include the countries we want</span></span>
+<span id="cb5-13"><a></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"South Africa"</span>, <span class="st">"United States"</span>, <span class="st">"France"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-14"><a></a>  <span class="co"># then make sure R understands the the year variable is a data</span></span>
+<span id="cb5-15"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-16"><a></a>  <span class="co"># Then group the data by country and year</span></span>
+<span id="cb5-17"><a></a>  <span class="fu">group_by</span>(country, year, issue) <span class="sc">%&gt;%</span></span>
+<span id="cb5-18"><a></a>  <span class="co"># then take the average Yes votes for each country_year</span></span>
+<span id="cb5-19"><a></a>  <span class="fu">summarize</span>(<span class="at">percent_yes =</span> <span class="fu">mean</span>(vote <span class="sc">==</span> <span class="st">"yes"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a></a>  <span class="co"># then make a nice plot</span></span>
+<span id="cb5-21"><a></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> percent_yes, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb5-22"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb5-23"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb5-24"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>issue) <span class="sc">+</span></span>
+<span id="cb5-25"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb5-26"><a></a>  <span class="fu">scale_color_manual</span>( <span class="at">values=</span><span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>)) <span class="sc">+</span></span>
+<span id="cb5-27"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-28"><a></a>    <span class="at">title =</span> <span class="st">"Percentage of 'Yes' votes in the UN General Assembly"</span>,</span>
+<span id="cb5-29"><a></a>    <span class="at">subtitle =</span> <span class="st">"1946 to 2019"</span>,</span>
+<span id="cb5-30"><a></a>    <span class="at">y =</span> <span class="st">"% Yes"</span>,</span>
+<span id="cb5-31"><a></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb5-32"><a></a>    <span class="at">color =</span> <span class="st">"Country"</span></span>
+<span id="cb5-33"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section><div class="quarto-auto-generated-content">
 <p><img src="images/dataviz-logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</div></div>
+</div></section>
+    </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
@@ -575,8 +893,6 @@ execute:
   <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -598,7 +914,6 @@ execute:
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'multiplex': {"secret":null,"id":"c045ef1b3e8b6cd0","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -772,12 +1087,50 @@ execute:
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealMath,
-          
+          RevealNotes,
           RevealSearch,
           RevealZoom
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

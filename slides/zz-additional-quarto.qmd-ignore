@@ -1,0 +1,103 @@
+
+
+## Publish HTML to Quarto Pub
+
+- Go to [quartopub.com](https://quartopub.com/)
+- Set up Quarto pub account
+- Look at [guide](https://quarto.org/docs/publishing/quarto-pub.html) for pubishing on Quarto pub
+- With your Quarto pub account open: 
+  - Go to terminal in RStudio
+  - Type `quarto publish quarto pub`
+  
+## Making PDFs
+
+- Install tinytex 
+  Type `quarto install tinytex` in terminal
+- Change document type in YAML header to pdf
+- Look at Quarto Reference and play with options
+
+## Embed R code chunk
+
+```{r}
+#| label: embed_code
+#| echo: true
+#| eval: false
+
+# Load packages
+library(vdemdata) 
+library(dplyr)
+
+# Download the data
+democracy <- vdem |> 
+  filter(year >= 1990)  |> 
+  select(                  
+    country = country_name,       
+    vdem_ctry_id = country_id, 
+    year, 
+    polyarchy = v2x_polyarchy, 
+    gdp_pc = e_gdppc, 
+    region = e_regionpol_6C
+    ) |>
+  mutate(
+    region = case_match(region, #
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+  )
+
+# View the data
+glimpse(democracy)
+```
+
+## What the Code Looks Like
+
+```{{r}}
+#| label: embed_code
+#| echo: true
+#| eval: false
+
+# Load packages
+library(vdemdata) 
+library(dplyr)
+
+# Download the data
+democracy <- vdem |> 
+  filter(year >= 1990)  |> 
+  select(                  
+    country = country_name,       
+    vdem_ctry_id = country_id, 
+    year, 
+    polyarchy = v2x_polyarchy, 
+    gdp_pc = e_gdppc, 
+    region = e_regionpol_6C
+    ) |>
+  mutate(
+    region = case_match(region, #
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+  )
+
+# View the data
+glimpse(democracy)
+```
+
+## Try it Yourself {.smaller}
+
+- Go to Quarto's [revealjs documentation](https://quarto.org/docs/presentations/revealjs/)
+- Start a new project folder called "presentations"
+- Start a `revealjs` presentation
+- Try making a basic slide with bullet points
+- Add a slide with code (grab from course website)
+- Play with chunk options
+- Explore other options in documentation (presenting, advanced, revel themes)
+- Try publishing to [Quarto Pub](https://quarto.org/docs/publishing/quarto-pub.html)
+  - `quarto publish quarto-pub` in terminal
+  
+

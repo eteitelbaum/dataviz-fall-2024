@@ -1,0 +1,74 @@
+---
+title: Getting Started, Part II
+subtitle: More Quarto and GitHub
+date: today
+date-format: long
+footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
+logo: images/dataviz-logo.png
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    transition: fade
+    slide-number: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  freeze: auto
+---
+
+## Quarto Setup
+
+- Go to [quarto.org](https://quarto.org/docs/get-started/) 
+- Select "Get Started"
+- Download and install Quarto CLI
+- Restart R session in RStudio
+
+## Project Oriented Workflow {.smaller}
+
+- Always start a document in a project folder
+  - That way you don't have to do `setwd` 
+  - Also can share easily with other people
+- Go to File>New Project
+- Create a Quarto project folder
+- Open a Quarto quarto document
+- Render it
+- Change Quarto doc elements
+  - Add text with `lipsum`
+  - Check word count
+  - Add stuff to YAML
+
+## Reveal JS Slides
+
+- [Revealjs](https://revealjs.com/) is an open source HTML presentation framework that is built on open web technologies like CSS and JavaScript
+- These slides are made with the `revealjs` format in Quarto
+- Like other Quarto documents, you can set all the formatting in the YAML header
+- But you can also customize individual slides
+
+## YAML header
+
+Here is the code from the YAML header for these slides
+
+```
+---
+title: Getting Started, Part II
+subtitle: More Quarto and GitHub
+date: today
+date-format: long
+footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
+logo: images/dataviz-logo.png
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    transition: fade
+    slide-number: true
+    multiplex: true
+execute:
+  echo: false
+  message: false
+  warning: false
+  freeze: auto
+---
+
+```
+

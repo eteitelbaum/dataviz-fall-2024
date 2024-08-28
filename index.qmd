@@ -19,7 +19,7 @@ advdate <- function(day, week) {
 }
 ```
 
-This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. There are no assignments due on Sundays.
+This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday.
 
 ::: column-screen-inset-right
 |                        Module                        | Date                | Skills                                                    | Packages                                                     | Functions                                                                                                                                                                           |                                      Readings                                       |                                                                  Reference                                                                  |                       Slides                        |                                                                                             Videos                                                                                              |                                                          Assignments                                                           |

@@ -1,6 +1,6 @@
 ---
 title: Getting Started, Part II
-subtitle: More Quarto and GitHub
+subtitle: R and More Quarto
 date: today
 date-format: long
 footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
@@ -17,58 +17,431 @@ execute:
   freeze: auto
 ---
 
-## Quarto Setup
+## Plan for Today
 
-- Go to [quarto.org](https://quarto.org/docs/get-started/) 
-- Select "Get Started"
-- Download and install Quarto CLI
-- Restart R session in RStudio
+- A little more about R
+- Go over three examples on Posit Cloud
+- Discuss advanced use of Quarto
+- Make and publish a Quarto document on [Quarto Pub](https://quartopub.com/)
 
-## Project Oriented Workflow {.smaller}
+# A Little More About R 
 
-- Always start a document in a project folder
-  - That way you don't have to do `setwd` 
-  - Also can share easily with other people
-- Go to File>New Project
-- Create a Quarto project folder
-- Open a Quarto quarto document
-- Render it
-- Change Quarto doc elements
-  - Add text with `lipsum`
-  - Check word count
-  - Add stuff to YAML
+## What is an Object?
 
-## Reveal JS Slides
+::: incremental
+- An object in R is a data structure used to store data
+- It can vary from simple scalar types to more complex data structures like vectors, lists, or data frames
+- Objects hold not only data but also information about the type of data and the operations that can be performed on them
+- Every entity in R is considered an object, making R a language based around the manipulation of objects
+:::
 
-- [Revealjs](https://revealjs.com/) is an open source HTML presentation framework that is built on open web technologies like CSS and JavaScript
-- These slides are made with the `revealjs` format in Quarto
-- Like other Quarto documents, you can set all the formatting in the YAML header
-- But you can also customize individual slides
+## How to Store Data
 
-## YAML header
+- In R, you can store data in objects using the assignment operator `<-`
+- The object name is on the left of `<-`, and the data or value you wish to assign to the object is on the right
+- Then you can print the object to the console using the object name
 
-Here is the code from the YAML header for these slides
+```{r}
+#| label: objects
+#| echo: true
 
-```
----
-title: Getting Started, Part II
-subtitle: More Quarto and GitHub
-date: today
-date-format: long
-footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
-logo: images/dataviz-logo.png
-format:
-  revealjs:
-    theme: [simple, custom.scss]
-    transition: fade
-    slide-number: true
-    multiplex: true
-execute:
-  echo: false
-  message: false
-  warning: false
-  freeze: auto
----
+# Store the value 42 in the object my_number
+my_number <- 42
 
+# Print the value of my_number
+my_number 
 ```
 
+## What Can R Do? 
+
+<br>
+
+::: incremental
+- R is a powerful language for data analysis and visualization
+- It is also a general-purpose programming language
+- It can be used for web development, machine learning, and more
+- It is open-source and has a large community of users and developers
+:::
+
+## R as a Calculator
+
+<br>
+
+- R can be used as a simple calculator
+- You can perform arithmetic operations on numbers
+
+```{r}
+#| label: arithmetic
+#| echo: true
+
+# Addi a number and store it to a value
+sum_of_2plus2 <- 2 + 2
+
+
+sum_of_2plus2
+```
+
+## When to Store Data in Objects
+
+<br>
+
+- Note that you don't always have to store data in objects
+- You should mostly store data in objects when you want to use the data later
+- If you only need to use the data once, you can just use the data directly
+
+```{r}
+#| label: arithmetic2
+#| echo: true
+
+# Add two numbers without storing them in an object
+2 + 2
+```
+
+## Some Common Arithmetic Operators
+
+<br>
+
+- `+` addition
+- `-` subtraction
+- `*` multiplication
+- `/` division
+- `^` exponentiation (also `**`)
+
+## Functions
+
+- A function is a set of instructions that produces some output
+- In R, you can use built-in functions to perform specific tasks
+- For example, you can use the `mean()` function to calculate the average of a set of numbers
+- To do this you have to use the combine function `c()` to create a vector of numbers
+
+## 
+
+<br> 
+
+Create a vector of numbers and take the mean...
+
+<br>
+
+```{r}
+#| label: mean
+#| echo: true
+
+# Create a vector of numbers
+numbers <- c(1, 2, 3, 4, 5)
+
+# Calculate the mean of the numbers
+mean(numbers)
+```
+
+## Some Common Base R Functions {.smaller}
+
+- `mean()` calculates the mean of a set of numbers
+- `median()` calculates the median of a set of numbers
+- `sd()` calculates the standard deviation of a set of numbers
+- `sum()` calculates the sum of a set of numbers
+- `length()` calculates the length of a vector
+- `max()` and `min()` calculate the maximum and minimum values of a vector
+- `round()` rounds a number to a specified number of decimal places
+- `sqrt()` calculates the square root of a number
+- `log()` calculates the natural logarithm of a number
+- `exp()` calculates the exponential of a number
+- `abs()` calculates the absolute value of a number
+
+## Your Turn!
+
+<br>
+
+- Start a new code chunk your Quarto document
+- Try storing some numbers as a function and printing the result 
+- Try using some arithmetic operators
+- Try using some of the common base R functions
+
+```{r}
+#| label: timer0
+
+library(countdown)
+countdown(minutes = 3, 
+          id = "timer0", 
+          bottom = "10%",
+          right = "10%",
+          color_border = "#fff",
+          color_text = "#fff",
+          color_running_background = "#42affa",
+          color_running_text = "black",
+          color_finished_background = "#E5D19D",
+          color_finished_text = "#00264A")
+```
+
+
+# Three Examples
+
+## Let's get going . . .
+
+<br>
+
+Let's open up the Getting Started module on Posit Cloud...
+
+And work through the examples there.
+
+## Example: Make a Map!
+
+```{r}
+#| label: leaflet_map
+
+library(leaflet)
+leaflet() |>
+  addTiles() |>   # Add default OpenStreetMap map tiles
+  addMarkers(lat = 38.90243843683386, lng =  -77.0443814477152, 
+             label = "Elliott School of International Affairs")
+```
+
+## Example: Make a map!
+
+<br>
+
+```{r}
+#| label: leaflet_map2
+#| echo: true
+#| eval: false
+  
+library(leaflet)
+leaflet() |> 
+  addTiles() |>   # Add default OpenStreetMap map tiles
+  addMarkers(lat = 38.90243843683386, lng =  -77.0443814477152, 
+             label = "Elliott School of International Affairs")
+```
+
+```{r}
+#| label: timer1
+
+countdown(minutes = 3, 
+          id = "timer1", 
+          bottom = "10%",
+          right = "10%")
+```
+
+
+## Example: Plotting Democracy Over Time
+
+```{r}
+#| label: plot_democracy
+
+# Load the packages
+library(vdemlite)
+library(ggplot2)
+
+# Use vdemlite to extract democracy scores for France and INdia
+dem_data <- fetchdem(indicators = "v2x_polyarchy",
+                     countries = c("FRA", "IND"))
+
+# And now we can plot the data
+ggplot(dem_data, aes(y = v2x_polyarchy, x = year, color=country_name)) +
+  geom_line() +
+  theme_minimal() +
+  xlab("Year") +
+  ylab("Electoral Democracy Index") +
+  ggtitle("Electoral Democracy, 1970-2022") +
+  geom_hline(yintercept = .5, linetype = "dashed", color = "grey") +
+   scale_color_manual(name="Country", values=c("#E69F00", "#56B4E9")) +
+  ylim(0, 1)
+```
+
+## Example: Plotting Democracy Over Time
+
+```{r}
+#| label: plot_democracy2
+#| echo: true
+#| eval: false
+
+# Load the packages
+library(vdemlite)
+library(ggplot2)
+
+# Use vdemlite to extract democracy scores for France and INdia
+dem_data <- fetchdem(indicators = "v2x_polyarchy",
+                     countries = c("FRA", "IND"))
+
+# And now we can plot the data
+ggplot(dem_data, aes(y = v2x_polyarchy, x = year, color=country_name)) +
+  geom_line() +
+  theme_minimal() +
+  xlab("Year") +
+  ylab("Electoral Democracy Index") +
+  ggtitle("Electoral Democracy, 1970-2022") +
+  geom_hline(yintercept = .5, linetype = "dashed", color = "grey") +
+   scale_color_manual(name="Country", values=c("#E69F00", "#56B4E9")) +
+  ylim(0, 1)
+```
+
+```{r}
+#| label: timer2
+
+countdown(minutes = 3, 
+          id = "timer2", 
+          bottom = "0%",
+          right = "0%")
+```
+
+## Example: UN Voting Trends
+
+```{r}
+#| label: un_voting
+
+library(tidyverse)
+library(unvotes)
+library(lubridate)
+library(scales)
+library(pacman)
+
+unvotes <- un_votes %>%
+  inner_join(un_roll_calls, by = "rcid") %>%
+  inner_join(un_roll_call_issues, by = "rcid")
+
+unvotes %>%
+  # then filter out to only include the countries we want
+  filter(country %in% c("South Africa", "United States", "France")) %>%
+  # then make sure R understands the the year variable is a data
+  mutate(year = year(date)) %>%
+  # Then group the data by country and year
+  group_by(country, year, issue) %>%
+  # then take the average Yes votes for each country_year
+  summarize(percent_yes = mean(vote == "yes")) %>%
+  # then make a nice plot
+  ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "loess", se = FALSE) +
+  facet_wrap(~issue) +
+  scale_y_continuous(labels = percent) +
+  scale_color_manual( values=c("#E69F00", "#56B4E9", "#009E73")) +
+  labs(
+    title = "Percentage of 'Yes' votes in the UN General Assembly",
+    subtitle = "1946 to 2019",
+    y = "% Yes",
+    x = "Year",
+    color = "Country"
+  )
+```
+
+## Example: UN Voting Trends
+
+```{r}
+#| label: un_voting2
+#| echo: true
+#| eval: false
+
+library(tidyverse)
+library(unvotes)
+library(lubridate)
+library(scales)
+library(pacman)
+
+unvotes <- un_votes %>%
+  inner_join(un_roll_calls, by = "rcid") %>%
+  inner_join(un_roll_call_issues, by = "rcid")
+
+unvotes %>%
+  # then filter out to only include the countries we want
+  filter(country %in% c("South Africa", "United States", "France")) %>%
+  # then make sure R understands the the year variable is a data
+  mutate(year = year(date)) %>%
+  # Then group the data by country and year
+  group_by(country, year, issue) %>%
+  # then take the average Yes votes for each country_year
+  summarize(percent_yes = mean(vote == "yes")) %>%
+  # then make a nice plot
+  ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "loess", se = FALSE) +
+  facet_wrap(~issue) +
+  scale_y_continuous(labels = percent) +
+  scale_color_manual( values=c("#E69F00", "#56B4E9", "#009E73")) +
+  labs(
+    title = "Percentage of 'Yes' votes in the UN General Assembly",
+    subtitle = "1946 to 2019",
+    y = "% Yes",
+    x = "Year",
+    color = "Country"
+  )
+```
+
+```{r}
+#| label: timer3
+
+countdown(minutes = 3, 
+          id = "timer3", 
+          bottom = "0%",
+          right = "0%")
+```
+
+# More About Quarto
+
+## Advanced HTML
+
+<br>
+
+- So far we have been using the basic HTML elements to create our documents
+- Quarto supports a wide range of HTML elements and attributes
+- We can use these to create more complex and interactive documents
+
+## Formatting Options
+
+- We can make our documents have a more sophisticated feel by specifying various options in the YAML header
+- Examples include `title`, `subtitle`, `date`, `abstract`, `toc`, etc. 
+- We can also specify font styles and colors and control other aspects of the formatting
+- See [this page](https://quarto.org/docs/reference/formats/html.html) to explore the various formatting options
+
+## Themes
+
+<br>
+
+- Quarto supports a wide range of themes
+- We can use these to change the look and feel of our documents
+- Check out [this page](https://quarto.org/docs/output-formats/html-themes.html) to explore the various themes available in Quarto
+
+## Footnotes
+
+<br>
+
+- You can also add footnotes to your document
+- Use the `^[]` or `[^1]` syntax to add a footnote
+- There are different ways to add footnotes
+- I find that inline notes are the easiest to work with
+  - For example `^[This is a footnote]`
+
+## Generating Lorem Ipsum
+
+<br>
+
+- For working on your document's format it is helpful to have random text
+- The [lorem package](http://pkg.garrickadenbuie.com/lorem/) is helpful for this
+- You can also install an R Studio Addin
+
+## Publishing on Quarto Pub
+
+<br>
+
+- [Quarto Pub](https://quartopub.com/) is a platform for publishing Quarto documents
+- You can publish your documents on Quarto Pub and share them with others
+- Quarto Pub is free to use
+- Sign up for an account, then publish with `quarto publish quarto-pub name-of-document.qmd` in the terminal  
+
+## Your Turn! 
+
+- Start a new Quarto project
+- Create a new Quarto document in your project folder
+- Add a YAML header with the following options:
+  - `title:`
+  - `subtitle:`
+  - `date:`
+  - `date-format:`
+  - `theme:`
+  - `toc:`
+  
+## Your Turn!
+
+- Try adding at least one more option to your YAML header 
+- Generate some sections and some random text using the `lorem` package
+- Add some code chunks to your document (and some code)
+- Add some footnotes to your document
+- Render the document and see what it looks like
+- Publish to Quarto pub

@@ -4112,5 +4112,187 @@
     "title": "Getting Started, Part II",
     "section": "YAML header",
     "text": "YAML header\nHere is the code from the YAML header for these slides\n---\ntitle: Getting Started, Part II\nsubtitle: More Quarto and GitHub\ndate: today\ndate-format: long\nfooter: \"[DataViz 2102 Website](https://dataviz-gwu.rocks)\"\nlogo: images/dataviz-logo.png\nformat:\n  revealjs:\n    theme: [simple, custom.scss]\n    transition: fade\n    slide-number: true\n    multiplex: true\nexecute:\n  echo: false\n  message: false\n  warning: false\n  freeze: auto\n---"
+  },
+  {
+    "objectID": "slides/week-2.2.html#plan-for-today",
+    "href": "slides/week-2.2.html#plan-for-today",
+    "title": "Getting Started, Part II",
+    "section": "Plan for Today",
+    "text": "Plan for Today\n\nA little more about R\nGo over three examples on Posit Cloud\nDiscuss advanced use of Quarto\nMake and publish a Quarto document on Quarto Pub"
+  },
+  {
+    "objectID": "slides/week-2.2.html#what-is-an-object",
+    "href": "slides/week-2.2.html#what-is-an-object",
+    "title": "Getting Started, Part II",
+    "section": "What is an Object?",
+    "text": "What is an Object?\n\n\nAn object in R is a data structure used to store data\nIt can vary from simple scalar types to more complex data structures like vectors, lists, or data frames\nObjects hold not only data but also information about the type of data and the operations that can be performed on them\nEvery entity in R is considered an object, making R a language based around the manipulation of objects"
+  },
+  {
+    "objectID": "slides/week-2.2.html#how-to-store-data",
+    "href": "slides/week-2.2.html#how-to-store-data",
+    "title": "Getting Started, Part II",
+    "section": "How to Store Data",
+    "text": "How to Store Data\n\nIn R, you can store data in objects using the assignment operator &lt;-\nThe object name is on the left of &lt;-, and the data or value you wish to assign to the object is on the right\nThen you can print the object to the console using the object name\n\n\n# Store the value 42 in the object my_number\nmy_number &lt;- 42\n\n# Print the value of my_number\nmy_number \n\n[1] 42"
+  },
+  {
+    "objectID": "slides/week-2.2.html#what-can-r-do",
+    "href": "slides/week-2.2.html#what-can-r-do",
+    "title": "Getting Started, Part II",
+    "section": "What Can R Do?",
+    "text": "What Can R Do?\n\n\n\nR is a powerful language for data analysis and visualization\nIt is also a general-purpose programming language\nIt can be used for web development, machine learning, and more\nIt is open-source and has a large community of users and developers"
+  },
+  {
+    "objectID": "slides/week-2.2.html#r-as-a-calculator",
+    "href": "slides/week-2.2.html#r-as-a-calculator",
+    "title": "Getting Started, Part II",
+    "section": "R as a Calculator",
+    "text": "R as a Calculator\n\n\nR can be used as a simple calculator\nYou can perform arithmetic operations on numbers\n\n\n# Addi a number and store it to a value\nsum_of_2plus2 &lt;- 2 + 2\n\n\nsum_of_2plus2\n\n[1] 4"
+  },
+  {
+    "objectID": "slides/week-2.2.html#when-to-store-data-in-objects",
+    "href": "slides/week-2.2.html#when-to-store-data-in-objects",
+    "title": "Getting Started, Part II",
+    "section": "When to Store Data in Objects",
+    "text": "When to Store Data in Objects\n\n\nNote that you don’t always have to store data in objects\nYou should mostly store data in objects when you want to use the data later\nIf you only need to use the data once, you can just use the data directly\n\n\n# Add two numbers without storing them in an object\n2 + 2\n\n[1] 4"
+  },
+  {
+    "objectID": "slides/week-2.2.html#some-common-arithmetic-operators",
+    "href": "slides/week-2.2.html#some-common-arithmetic-operators",
+    "title": "Getting Started, Part II",
+    "section": "Some Common Arithmetic Operators",
+    "text": "Some Common Arithmetic Operators\n\n\n+ addition\n- subtraction\n* multiplication\n/ division\n^ exponentiation (also **)"
+  },
+  {
+    "objectID": "slides/week-2.2.html#functions",
+    "href": "slides/week-2.2.html#functions",
+    "title": "Getting Started, Part II",
+    "section": "Functions",
+    "text": "Functions\n\nA function is a set of instructions that produces some output\nIn R, you can use built-in functions to perform specific tasks\nFor example, you can use the mean() function to calculate the average of a set of numbers\nTo do this you have to use the combine function c() to create a vector of numbers"
+  },
+  {
+    "objectID": "slides/week-2.2.html#section",
+    "href": "slides/week-2.2.html#section",
+    "title": "Getting Started, Part II",
+    "section": "",
+    "text": "Create a vector of numbers and take the mean…\n\n\n# Create a vector of numbers\nnumbers &lt;- c(1, 2, 3, 4, 5)\n\n# Calculate the mean of the numbers\nmean(numbers)\n\n[1] 3"
+  },
+  {
+    "objectID": "slides/week-2.2.html#some-common-base-r-functions",
+    "href": "slides/week-2.2.html#some-common-base-r-functions",
+    "title": "Getting Started, Part II",
+    "section": "Some Common Base R Functions",
+    "text": "Some Common Base R Functions\n\nmean() calculates the mean of a set of numbers\nmedian() calculates the median of a set of numbers\nsd() calculates the standard deviation of a set of numbers\nsum() calculates the sum of a set of numbers\nlength() calculates the length of a vector\nmax() and min() calculate the maximum and minimum values of a vector\nround() rounds a number to a specified number of decimal places\nsqrt() calculates the square root of a number\nlog() calculates the natural logarithm of a number\nexp() calculates the exponential of a number\nabs() calculates the absolute value of a number"
+  },
+  {
+    "objectID": "slides/week-2.2.html#your-turn",
+    "href": "slides/week-2.2.html#your-turn",
+    "title": "Getting Started, Part II",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nStart a new code chunk your Quarto document\nTry storing some numbers as a function and printing the result\nTry using some arithmetic operators\nTry using some of the common base R functions\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/week-2.2.html#lets-get-going-.-.-.",
+    "href": "slides/week-2.2.html#lets-get-going-.-.-.",
+    "title": "Getting Started, Part II",
+    "section": "Let’s get going . . .",
+    "text": "Let’s get going . . .\n\nLet’s open up the Getting Started module on Posit Cloud…\nAnd work through the examples there."
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-make-a-map",
+    "href": "slides/week-2.2.html#example-make-a-map",
+    "title": "Getting Started, Part II",
+    "section": "Example: Make a Map!",
+    "text": "Example: Make a Map!"
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-make-a-map-1",
+    "href": "slides/week-2.2.html#example-make-a-map-1",
+    "title": "Getting Started, Part II",
+    "section": "Example: Make a map!",
+    "text": "Example: Make a map!\n\n\nlibrary(leaflet)\nleaflet() |&gt; \n  addTiles() |&gt;   # Add default OpenStreetMap map tiles\n  addMarkers(lat = 38.90243843683386, lng =  -77.0443814477152, \n             label = \"Elliott School of International Affairs\")\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-plotting-democracy-over-time",
+    "href": "slides/week-2.2.html#example-plotting-democracy-over-time",
+    "title": "Getting Started, Part II",
+    "section": "Example: Plotting Democracy Over Time",
+    "text": "Example: Plotting Democracy Over Time"
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-plotting-democracy-over-time-1",
+    "href": "slides/week-2.2.html#example-plotting-democracy-over-time-1",
+    "title": "Getting Started, Part II",
+    "section": "Example: Plotting Democracy Over Time",
+    "text": "Example: Plotting Democracy Over Time\n\n# Load the packages\nlibrary(vdemlite)\nlibrary(ggplot2)\n\n# Use vdemlite to extract democracy scores for France and INdia\ndem_data &lt;- fetchdem(indicators = \"v2x_polyarchy\",\n                     countries = c(\"FRA\", \"IND\"))\n\n# And now we can plot the data\nggplot(dem_data, aes(y = v2x_polyarchy, x = year, color=country_name)) +\n  geom_line() +\n  theme_minimal() +\n  xlab(\"Year\") +\n  ylab(\"Electoral Democracy Index\") +\n  ggtitle(\"Electoral Democracy, 1970-2022\") +\n  geom_hline(yintercept = .5, linetype = \"dashed\", color = \"grey\") +\n   scale_color_manual(name=\"Country\", values=c(\"#E69F00\", \"#56B4E9\")) +\n  ylim(0, 1)\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-un-voting-trends",
+    "href": "slides/week-2.2.html#example-un-voting-trends",
+    "title": "Getting Started, Part II",
+    "section": "Example: UN Voting Trends",
+    "text": "Example: UN Voting Trends"
+  },
+  {
+    "objectID": "slides/week-2.2.html#example-un-voting-trends-1",
+    "href": "slides/week-2.2.html#example-un-voting-trends-1",
+    "title": "Getting Started, Part II",
+    "section": "Example: UN Voting Trends",
+    "text": "Example: UN Voting Trends\n\nlibrary(tidyverse)\nlibrary(unvotes)\nlibrary(lubridate)\nlibrary(scales)\nlibrary(pacman)\n\nunvotes &lt;- un_votes %&gt;%\n  inner_join(un_roll_calls, by = \"rcid\") %&gt;%\n  inner_join(un_roll_call_issues, by = \"rcid\")\n\nunvotes %&gt;%\n  # then filter out to only include the countries we want\n  filter(country %in% c(\"South Africa\", \"United States\", \"France\")) %&gt;%\n  # then make sure R understands the the year variable is a data\n  mutate(year = year(date)) %&gt;%\n  # Then group the data by country and year\n  group_by(country, year, issue) %&gt;%\n  # then take the average Yes votes for each country_year\n  summarize(percent_yes = mean(vote == \"yes\")) %&gt;%\n  # then make a nice plot\n  ggplot(mapping = aes(x = year, y = percent_yes, color = country)) +\n  geom_point(alpha = 0.4) +\n  geom_smooth(method = \"loess\", se = FALSE) +\n  facet_wrap(~issue) +\n  scale_y_continuous(labels = percent) +\n  scale_color_manual( values=c(\"#E69F00\", \"#56B4E9\", \"#009E73\")) +\n  labs(\n    title = \"Percentage of 'Yes' votes in the UN General Assembly\",\n    subtitle = \"1946 to 2019\",\n    y = \"% Yes\",\n    x = \"Year\",\n    color = \"Country\"\n  )\n\n\n\n\n−+\n03:00"
+  },
+  {
+    "objectID": "slides/week-2.2.html#advanced-html",
+    "href": "slides/week-2.2.html#advanced-html",
+    "title": "Getting Started, Part II",
+    "section": "Advanced HTML",
+    "text": "Advanced HTML\n\n\nSo far we have been using the basic HTML elements to create our documents\nQuarto supports a wide range of HTML elements and attributes\nWe can use these to create more complex and interactive documents"
+  },
+  {
+    "objectID": "slides/week-2.2.html#formatting-options",
+    "href": "slides/week-2.2.html#formatting-options",
+    "title": "Getting Started, Part II",
+    "section": "Formatting Options",
+    "text": "Formatting Options\n\nWe can make our documents have a more sophisticated feel by specifying various options in the YAML header\nExamples include title, subtitle, date, abstract, toc, etc.\nWe can also specify font styles and colors and control other aspects of the formatting\nSee this page to explore the various formatting options"
+  },
+  {
+    "objectID": "slides/week-2.2.html#themes",
+    "href": "slides/week-2.2.html#themes",
+    "title": "Getting Started, Part II",
+    "section": "Themes",
+    "text": "Themes\n\n\nQuarto supports a wide range of themes\nWe can use these to change the look and feel of our documents\nCheck out this page to explore the various themes available in Quarto"
+  },
+  {
+    "objectID": "slides/week-2.2.html#footnotes",
+    "href": "slides/week-2.2.html#footnotes",
+    "title": "Getting Started, Part II",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nYou can also add footnotes to your document\nUse the ^[] or [^1] syntax to add a footnote\nThere are different ways to add footnotes\nI find that inline notes are the easiest to work with\n\nFor example ^[This is a footnote]"
+  },
+  {
+    "objectID": "slides/week-2.2.html#generating-lorem-ipsum",
+    "href": "slides/week-2.2.html#generating-lorem-ipsum",
+    "title": "Getting Started, Part II",
+    "section": "Generating Lorem Ipsum",
+    "text": "Generating Lorem Ipsum\n\n\nFor working on your document’s format it is helpful to have random text\nThe lorem package is helpful for this\nYou can also install an R Studio Addin"
+  },
+  {
+    "objectID": "slides/week-2.2.html#publishing-on-quarto-pub",
+    "href": "slides/week-2.2.html#publishing-on-quarto-pub",
+    "title": "Getting Started, Part II",
+    "section": "Publishing on Quarto Pub",
+    "text": "Publishing on Quarto Pub\n\n\nQuarto Pub is a platform for publishing Quarto documents\nYou can publish your documents on Quarto Pub and share them with others\nQuarto Pub is free to use\nSign up for an account, then publish with quarto publish quarto-pub name-of-document.qmd in the terminal"
+  },
+  {
+    "objectID": "slides/week-2.2.html#your-turn-1",
+    "href": "slides/week-2.2.html#your-turn-1",
+    "title": "Getting Started, Part II",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nStart a new Quarto project\nCreate a new Quarto document in your project folder\nAdd a YAML header with the following options:\n\ntitle:\nsubtitle:\ndate:\ndate-format:\ntheme:\ntoc:"
+  },
+  {
+    "objectID": "slides/week-2.2.html#your-turn-2",
+    "href": "slides/week-2.2.html#your-turn-2",
+    "title": "Getting Started, Part II",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nTry adding at least one more option to your YAML header\nGenerate some sections and some random text using the lorem package\nAdd some code chunks to your document (and some code)\nAdd some footnotes to your document\nRender the document and see what it looks like\nPublish to Quarto pub"
   }
 ]

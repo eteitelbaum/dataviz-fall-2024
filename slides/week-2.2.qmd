@@ -10,6 +10,7 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
+    chalkboard: true
 execute:
   echo: false
   message: false

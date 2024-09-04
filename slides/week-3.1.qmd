@@ -11,6 +11,7 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
+    chalkboard: true
     #multiplex: true
 execute:
   echo: true

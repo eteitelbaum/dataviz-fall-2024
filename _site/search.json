@@ -2012,21 +2012,21 @@
   {
     "objectID": "slides/week-3.1.html#tidy-data-example",
     "href": "slides/week-3.1.html#tidy-data-example",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "Tidy Data Example",
     "text": "Tidy Data Example"
   },
   {
     "objectID": "slides/week-3.1.html#what-are-clean-data",
     "href": "slides/week-3.1.html#what-are-clean-data",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "What are Clean Data?",
     "text": "What are Clean Data?\n\nColumn names are easy to work with and are not duplicated\nMissing values have been dealt with\nThere are no repeated observations or columns\nThere are no blank observations or columns\nThe data are in the proper format, for example dates should be formatted as dates"
   },
   {
     "objectID": "slides/week-3.1.html#messy-data-example",
     "href": "slides/week-3.1.html#messy-data-example",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "Messy Data Example",
     "text": "Messy Data Example"
   },
@@ -2054,21 +2054,21 @@
   {
     "objectID": "slides/week-3.1.html#try-with-excel",
     "href": "slides/week-3.1.html#try-with-excel",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "Try With Excel",
-    "text": "Try With Excel\n\nHave a look at the readr cheatsheet\nDownload some more data from WB but this time as an excel file\nFollow same steps as with CSV file\n\nuse read_excel() to read in the data\ninstall and experiment with writexl"
+    "text": "Try With Excel\n\n\nRead in the Excel file\nFollow same steps as with CSV file\n\nuse read_excel() to read in the data\ninstall and experiment with writexl\n\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-3.1.html#column-specifications",
     "href": "slides/week-3.1.html#column-specifications",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "Column Specifications",
     "text": "Column Specifications\n\nCan clean columns on backend\nBut can also specify data types in read_csv() or read_excel()\n\n\nspec(wb_data_messy)\n\nwb_data_messy &lt;- read_csv(\"data/your_file_name.csv\", \n                          col_types = cols(\n                           col_double(`1990 [YR1990]`) \n                          )\n                          )"
   },
   {
     "objectID": "slides/week-3.1.html#still-time-left",
     "href": "slides/week-3.1.html#still-time-left",
-    "title": "Reading Data Into R",
+    "title": "Understanding Data",
     "section": "Still Time Left?",
     "text": "Still Time Left?\n\nPlay with googlesheets4\nFind a flatfile with a URL\nImport into R\nSpecify column types\nTry writing a google sheet"
   },
@@ -4294,5 +4294,131 @@
     "title": "Getting Started, Part II",
     "section": "Your Turn!",
     "text": "Your Turn!\n\nTry adding at least one more option to your YAML header\nGenerate some sections and some random text using the lorem package\nAdd some code chunks to your document (and some code)\nAdd some footnotes to your document\nRender the document and see what it looks like\nPublish to Quarto pub"
+  },
+  {
+    "objectID": "slides/week-3.1.html#where-does-data-come-from",
+    "href": "slides/week-3.1.html#where-does-data-come-from",
+    "title": "Understanding Data",
+    "section": "Where Does Data Come From?",
+    "text": "Where Does Data Come From?\n\nThoughts? 😎 💭\n\n\n\nYour boss or a client sends you a file\nSurvey data collected by you or someone else\nYou can download it from a website\nYou can scrape it from a website\nA data package (e.g. unvotes)\nYou can access it through an API"
+  },
+  {
+    "objectID": "slides/week-3.1.html#getting-started-with-data",
+    "href": "slides/week-3.1.html#getting-started-with-data",
+    "title": "Understanding Data",
+    "section": "Getting Started with Data",
+    "text": "Getting Started with Data\n\n\n\nTabular data is data that is organized into rows and columns\n\na.k.a. rectangular data\n\nA data frame is a special kind of tabular data used in data science\nA variable is something you can measure\nAn observation is a single unit or case in your data set\nThe unit of analysis is the level at which you are measuring\n\nIn a cross-section: country, state, county, city, individual, etc.\nIn a time-series: year, month, day, etc."
+  },
+  {
+    "objectID": "slides/week-3.1.html#the-concept-of-tidy-data",
+    "href": "slides/week-3.1.html#the-concept-of-tidy-data",
+    "title": "Understanding Data",
+    "section": "The Concept of “Tidy Data”",
+    "text": "The Concept of “Tidy Data”\n\n\nEach column represents a single variable\nEach row represents a single observation\nEach cell represents a single value"
+  },
+  {
+    "objectID": "slides/week-3.1.html#which-of-these-is-likely-tidyclean",
+    "href": "slides/week-3.1.html#which-of-these-is-likely-tidyclean",
+    "title": "Understanding Data",
+    "section": "Which of These is Likely Tidy/Clean?",
+    "text": "Which of These is Likely Tidy/Clean?\n\n\nYour boss or a client sends you a file\nSurvey data collected by you or someone else\nYou can download it from a website\nYou can scrape it from a website\nA curated collection (e.g. unvotes)\nYou can access it through an API"
+  },
+  {
+    "objectID": "slides/week-3.1.html#how-do-we-get-tidyclean-data",
+    "href": "slides/week-3.1.html#how-do-we-get-tidyclean-data",
+    "title": "Understanding Data",
+    "section": "How Do We Get Tidy/Clean Data?",
+    "text": "How Do We Get Tidy/Clean Data?\n\n\nWrangle it ourselves\nUse a package where it has been wrangled for us\nDownload via an API"
+  },
+  {
+    "objectID": "slides/week-3.1.html#read-data-into-r",
+    "href": "slides/week-3.1.html#read-data-into-r",
+    "title": "Understanding Data",
+    "section": "Read Data into R",
+    "text": "Read Data into R\n\nUse read_csv() function from readr package\nreadr package is part of the tidyverse\nCan do more with it than base R functions"
+  },
+  {
+    "objectID": "slides/week-3.1.html#r-code-review",
+    "href": "slides/week-3.1.html#r-code-review",
+    "title": "Understanding Data",
+    "section": "R Code Review",
+    "text": "R Code Review\n\n\n\n&lt;- is the assignment operator\n\nUse it to assign values to objects\n\n# is the comment operator\n\nUse it to comment out code or add comments\nDifferent function than in markdown text\n\nTo call a library, use library() and name of library\n\nname of library does not have to be in quotes, e.g. library(readr)\nonly when you install it, e.g. install.packages(\"readr\")"
+  },
+  {
+    "objectID": "slides/week-3.1.html#read-data-into-r-1",
+    "href": "slides/week-3.1.html#read-data-into-r-1",
+    "title": "Understanding Data",
+    "section": "Read Data into R",
+    "text": "Read Data into R\n\n\n# load libraries\nlibrary(readr)\nlibrary(dplry)\n\ndem_summary &lt;- read_csv(\"data/dem_summary.csv\") #notice file path\n\nglimpse(dem_summary)"
+  },
+  {
+    "objectID": "slides/week-3.1.html#viewing-the-data-in-r",
+    "href": "slides/week-3.1.html#viewing-the-data-in-r",
+    "title": "Understanding Data",
+    "section": "Viewing the Data in R",
+    "text": "Viewing the Data in R\n\nUse glimpse() to see the columns and data types:\n\n# load libraries\nlibrary(readr)\nlibrary(dplyr)\n\ndem_summary &lt;- read_csv(\"data/dem_summary.csv\")\n\nglimpse(dem_summary)\n\nRows: 6\nColumns: 5\n$ region    &lt;chr&gt; \"The West\", \"Latin America\", \"Eastern Europe\", \"Asia\", \"Afri…\n$ polyarchy &lt;dbl&gt; 0.8709230, 0.6371358, 0.5387451, 0.4076602, 0.3934166, 0.245…\n$ gdp_pc    &lt;dbl&gt; 37.913054, 9.610284, 12.176554, 9.746391, 4.410484, 21.134319\n$ flfp      &lt;dbl&gt; 52.99082, 48.12645, 50.45894, 50.32171, 56.69530, 26.57872\n$ women_rep &lt;dbl&gt; 28.12921, 21.32548, 17.99728, 14.45225, 17.44296, 10.21568"
+  },
+  {
+    "objectID": "slides/week-3.1.html#try-it-yourself",
+    "href": "slides/week-3.1.html#try-it-yourself",
+    "title": "Understanding Data",
+    "section": "Try It Yourself!",
+    "text": "Try It Yourself!\n\nOpen the CSV file to see what it looks like\nThen use this code to read it into R and view it\n\n\n# load libraries\nlibrary(readr)\nlibrary(dplyr)\n\ndem_summary &lt;- read_csv(\"data/dem_summary.csv\")\n\nglimpse(dem_summary)\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-3.1.html#write-a-new-csv-file",
+    "href": "slides/week-3.1.html#write-a-new-csv-file",
+    "title": "Understanding Data",
+    "section": "Write a New CSV File",
+    "text": "Write a New CSV File\n\nNow try writing the same data to a file with a different name\n\nwrite_csv(dem_summary, \"data/your_new_file_name.csv\") \n\n\n\n\n−+\n02:00"
+  },
+  {
+    "objectID": "slides/week-3.1.html#read-in-excel-file",
+    "href": "slides/week-3.1.html#read-in-excel-file",
+    "title": "Understanding Data",
+    "section": "Read in Excel File",
+    "text": "Read in Excel File\n\n\nlibrary(readxl)\n\ndem_summary &lt;- read_excel(\"data/dem_summary.xlsx\")\n\nglimpse(dem_summary)"
+  },
+  {
+    "objectID": "slides/week-3.1.html#import-data-from-google-sheets",
+    "href": "slides/week-3.1.html#import-data-from-google-sheets",
+    "title": "Understanding Data",
+    "section": "Import Data from Google Sheets",
+    "text": "Import Data from Google Sheets\n\n\nCan use googlesheets4\nHave a look at these Gapminder data\nUse gs4_deauth() to authenticate\nThen use read_sheet() to read in the data"
+  },
+  {
+    "objectID": "slides/week-3.1.html#example-code",
+    "href": "slides/week-3.1.html#example-code",
+    "title": "Understanding Data",
+    "section": "Example Code",
+    "text": "Example Code\n\n\nlibrary(googlesheets4)\n\n# Deauthorize to access public sheets without credentials\ngs4_deauth()\n\n# Read in the gapminder Africa data\ngapminder_data &lt;- read_sheet(\"1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY\")"
+  },
+  {
+    "objectID": "slides/week-3.1.html#or",
+    "href": "slides/week-3.1.html#or",
+    "title": "Understanding Data",
+    "section": "Or…",
+    "text": "Or…\n\n\nlibrary(googlesheets4)\n\n# Deauthorize to access public sheets without credentials\ngs4_deauth()\n\n# Read in the gapminder Africa data\ngapminder_data &lt;- read_sheet(\"1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY\")"
+  },
+  {
+    "objectID": "slides/week-3.1.html#or-1",
+    "href": "slides/week-3.1.html#or-1",
+    "title": "Understanding Data",
+    "section": "Or…",
+    "text": "Or…\n\n\nlibrary(googlesheets4)\n\n# Deauthorize to access public sheets without credentials\ngs4_deauth()\n\n# Read in the gapminder Africa data\ngapminder_data &lt;- googledrive::drive_get(\"gapminder\") |&gt;\n  read_sheet()"
+  },
+  {
+    "objectID": "slides/week-3.1.html#try-it-yourself-1",
+    "href": "slides/week-3.1.html#try-it-yourself-1",
+    "title": "Understanding Data",
+    "section": "Try It Yourself!",
+    "text": "Try It Yourself!\n\n\nUse the code above to read in the data\nTry reading in Gapminder data for a different country\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-3.1.html#find-your-own-data",
+    "href": "slides/week-3.1.html#find-your-own-data",
+    "title": "Understanding Data",
+    "section": "Find Your Own Data",
+    "text": "Find Your Own Data\n\n\nVisit kaggle.com\nFind a dataset you like\nDownload it as a CSV\nUpload to your Posit Cloud project\nRead it into R\nExplore with glimpse() and View()\n\n\n\n\n−+\n05:00"
   }
 ]

@@ -9,7 +9,7 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
   echo: false
@@ -18,9 +18,14 @@ execute:
   freeze: auto
 ---
 
-## Read Data 
+## Download Some Messy Data
 
-(from last class)
+- Create a folder called "data" in your course modules project folder
+- Following the instructions in module 1.1, download some messy WB data
+- Make it something other than FLFP
+- Donwload as a CSV file with a unique file name and store in your data folder
+
+## Read Data 
 
 ```{r}
 #| label: read_data
@@ -176,6 +181,23 @@ write_csv(wb_data_clean, "data/wb_data_clean.csv")
 glimpse(wb_data_clean)
 ```
 
+## Column Specifications
 
+- Can clean columns on backend
+- But can also specify data types in `read_csv()` or `read_excel()`
+
+```{r}
+#| label: col_types
+#| eval: false
+#| echo: true
+
+spec(wb_data_messy)
+
+wb_data_messy <- read_csv("data/your_file_name.csv", 
+                          col_types = cols(
+                           col_double(`1990 [YR1990]`) 
+                          )
+                          )
+```
 
 

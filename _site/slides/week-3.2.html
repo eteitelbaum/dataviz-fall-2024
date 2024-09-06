@@ -388,6 +388,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
 <meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Wrangling Data">
 <meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
 <meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Wrangling Data">
@@ -405,35 +407,219 @@
 
   <p class="date">September 5, 2024</p>
 </section>
-<section id="download-some-messy-data" class="slide level2">
-<h2>Download Some Messy Data</h2>
+<section>
+<section id="data-frames" class="title-slide slide level1 center">
+<h1>Data Frames</h1>
+
+</section>
+<section id="what-is-a-data-frame" class="slide level2">
+<h2>What is a Data Frame?</h2>
+<p><br></p>
 <ul>
-<li>Create a folder called “data” in your course modules project folder</li>
-<li>Following the instructions in module 1.1, download some messy WB data</li>
-<li>Make it something other than FLFP</li>
-<li>Donwload as a CSV file with a unique file name and store in your data folder</li>
+<li>Special kind of tabular data used in data science</li>
+<li>Each column can be a different data type</li>
+<li>Data frames are the most common data structure in R</li>
 </ul>
 </section>
-<section id="read-data" class="slide level2">
-<h2>Read Data</h2>
+<section id="what-is-a-tibble" class="slide level2">
+<h2>What is a Tibble?</h2>
+<p><br></p>
+<ul>
+<li>Modern data frames in R</li>
+<li>Offers better printing and subsetting behaviors</li>
+<li>Does not convert character vectors to factors by default</li>
+<li>Displays only the first 10 rows and as many columns as fit on screen</li>
+<li>Column names are preserved exactly, even if they contain spaces</li>
+</ul>
+</section>
+<section id="creating-a-tibble" class="slide level2 smaller">
+<h2>Creating a Tibble</h2>
+<p><br></p>
+<ul>
+<li>When you read data into R with <code>readr</code> you automatically get a tibble</li>
+<li>You can create a tibble using <code>tibble()</code> from the <strong>tibble</strong> package:</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Load packages</span></span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(readr) </span>
-<span id="cb1-3"><a></a><span class="fu">library</span>(dplyr) </span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a><span class="co"># Read data from csv file into an object called "wb_data_messy"</span></span>
-<span id="cb1-6"><a></a>wb_data_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/your_file_name.csv"</span>)</span>
-<span id="cb1-7"><a></a></span>
-<span id="cb1-8"><a></a><span class="co"># View the data</span></span>
-<span id="cb1-9"><a></a><span class="fu">glimpse</span>(wb_data_messy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>  <span class="fu">library</span>(tibble)</span>
+<span id="cb1-2"><a></a>  </span>
+<span id="cb1-3"><a></a>  <span class="co"># Create a tibble</span></span>
+<span id="cb1-4"><a></a>  my_tibble <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-5"><a></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>),</span>
+<span id="cb1-6"><a></a>    <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>),</span>
+<span id="cb1-7"><a></a>    <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">170</span>, <span class="dv">180</span>),</span>
+<span id="cb1-8"><a></a>    <span class="at">is_student =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb1-9"><a></a>  )</span>
+<span id="cb1-10"><a></a>  </span>
+<span id="cb1-11"><a></a>my_tibble  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  name      age height is_student
+  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;lgl&gt;     
+1 Alice      25    160 TRUE      
+2 Bob        30    170 FALSE     
+3 Charlie    35    180 FALSE     </code></pre>
+</div>
 </div>
 </section>
-<section id="messy-data-example" class="slide level2">
-<h2>Messy Data Example</h2>
+<section id="common-data-types" class="slide level2 smaller">
+<h2>Common Data Types</h2>
+<ul>
+<li><strong>&lt;chr&gt; (Character)</strong>: Stores text strings
+<ul>
+<li>Example: <code>"hello"</code>, <code>"R programming"</code></li>
+</ul></li>
+<li><strong>&lt;dbl&gt; (Double)</strong>: Stores decimal (floating-point) numbers
+<ul>
+<li>Example: <code>3.14</code>, <code>-1.0</code></li>
+</ul></li>
+<li><strong>&lt;int&gt; (Integer)</strong>: Stores whole numbers (integers)
+<ul>
+<li>Example: <code>1</code>, <code>-100</code>, <code>42</code></li>
+</ul></li>
+<li><strong>&lt;lgl&gt; (Logical)</strong>: Stores boolean values (<code>TRUE</code>, <code>FALSE</code>, <code>NA</code>)
+<ul>
+<li>Example: <code>TRUE</code>, <code>FALSE</code>, <code>NA</code></li>
+</ul></li>
+<li><strong>&lt;fct&gt; (Factor)</strong>: Stores categorical variables with fixed levels
+<ul>
+<li>Example: <code>factor(c("low", "medium", "high"))</code></li>
+</ul></li>
+<li><strong>&lt;date&gt; (Date)</strong>: Stores dates in the “YYYY-MM-DD” format
+<ul>
+<li>Example: <code>as.Date("2024-09-05")</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="other-data-types" class="slide level2 smaller">
+<h2>Other Data Types</h2>
+<p><br></p>
+<ul>
+<li><strong>&lt;dttm&gt; (Date-Time or POSIXct)</strong>: Stores date-time objects (both date and time).
+<ul>
+<li>Example: <code>as.POSIXct("2024-09-05 14:30:00")</code></li>
+</ul></li>
+<li><strong>&lt;time&gt; (Time)</strong>: Specifically stores time-of-day values (rarely seen without a date)
+<ul>
+<li>Example: <code>"14:30:00"</code></li>
+</ul></li>
+<li><strong>&lt;list&gt; (List)</strong>: Stores lists, where each entry can be a complex object.
+<ul>
+<li>Example: <code>list(c(1, 2, 3), c("a", "b", "c"))</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="dates-and-times-with-lubridate" class="slide level2">
+<h2>Dates and Times with <code>lubridate</code></h2>
+<ul>
+<li><p><strong><code>lubridate</code></strong> is an R package that makes it easier to work with dates and times</p></li>
+<li><p>Use convenient functions to store dates in different formats</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-2"><a></a>  </span>
+<span id="cb3-3"><a></a><span class="co"># Store a date</span></span>
+<span id="cb3-4"><a></a>my_date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(<span class="st">"2024-09-05"</span>)</span>
+<span id="cb3-5"><a></a>my_date2 <span class="ot">&lt;-</span> <span class="fu">mdy</span>(<span class="st">"09-05-2024"</span>)</span>
+<span id="cb3-6"><a></a>my_date3 <span class="ot">&lt;-</span> <span class="fu">dmy</span>(<span class="st">"05-09-2024"</span>)</span>
+<span id="cb3-7"><a></a>  </span>
+<span id="cb3-8"><a></a><span class="co"># Print in long form</span></span>
+<span id="cb3-9"><a></a><span class="fu">format</span>(my_date, <span class="st">"%B %d, %Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "September 05, 2024"</code></pre>
+</div>
+</div>
+</section>
+<section id="your-turn" class="slide level2">
+<h2>Your Turn</h2>
+<p><br></p>
+<ul>
+<li>Create your own tibble</li>
+<li>Make it on a topic you find interesting</li>
+<li>Try to include at least three data types</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="tidying-data" class="title-slide slide level1 center">
+<h1>Tidying Data</h1>
 
-<img data-src="images/messy_wb_data.jpg" style="width:70.0%" class="r-stretch"></section>
+</section>
+<section id="what-is-tyding-data" class="slide level2">
+<h2>What is Tyding Data?</h2>
+<ul>
+<li>In the last class we talked about the concept of “tidy data”
+<ul>
+<li>Each variable forms a column</li>
+<li>Each observation is in a row</li>
+<li>Each cell has a single value</li>
+</ul></li>
+<li>The process of tidying data involves reshaping (or pivoting) data into a tidy format</li>
+<li>We want to use the <code>pivot_longer()</code> or <code>pivot_wider()</code> functions from <code>tidyr</code> to do this</li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p><strong>Query:</strong> Are these data in a tidy format?</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-2"><a></a></span>
+<span id="cb5-3"><a></a>smiths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  subject     time   age weight height
+  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 John Smith     1    33     90   1.87
+2 Mary Smith     1    NA     NA   1.54</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="callout callout-tip no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>To get a list of data frames available in a package use the <code>data()</code> function, e.g.&nbsp;<code>data(package = "tidyr")</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
+<p><br></p>
+<p>How about these data?</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>world_bank_pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,064 × 20
+   country indicator      `2000`  `2001`  `2002`  `2003`  `2004`  `2005`  `2006`
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL    4.16e4 4.20e+4 4.22e+4 4.23e+4 4.23e+4 4.24e+4 4.26e+4
+ 2 ABW     SP.URB.GROW    1.66e0 9.56e-1 4.01e-1 1.97e-1 9.46e-2 1.94e-1 3.67e-1
+ 3 ABW     SP.POP.TOTL    8.91e4 9.07e+4 9.18e+4 9.27e+4 9.35e+4 9.45e+4 9.56e+4
+ 4 ABW     SP.POP.GROW    2.54e0 1.77e+0 1.19e+0 9.97e-1 9.01e-1 1.00e+0 1.18e+0
+ 5 AFE     SP.URB.TOTL    1.16e8 1.20e+8 1.24e+8 1.29e+8 1.34e+8 1.39e+8 1.44e+8
+ 6 AFE     SP.URB.GROW    3.60e0 3.66e+0 3.72e+0 3.71e+0 3.74e+0 3.81e+0 3.81e+0
+ 7 AFE     SP.POP.TOTL    4.02e8 4.12e+8 4.23e+8 4.34e+8 4.45e+8 4.57e+8 4.70e+8
+ 8 AFE     SP.POP.GROW    2.58e0 2.59e+0 2.61e+0 2.62e+0 2.64e+0 2.67e+0 2.70e+0
+ 9 AFG     SP.URB.TOTL    4.31e6 4.36e+6 4.67e+6 5.06e+6 5.30e+6 5.54e+6 5.83e+6
+10 AFG     SP.URB.GROW    1.86e0 1.15e+0 6.86e+0 7.95e+0 4.59e+0 4.47e+0 5.03e+0
+# ℹ 1,054 more rows
+# ℹ 11 more variables: `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;,
+#   `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;,
+#   `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
 <section id="pivot-longer" class="slide level2">
 <h2>Pivot Longer</h2>
+<p><br></p>
 <p><code>pivot_longer()</code> takes three arguments:</p>
 <ul>
 <li><strong>cols</strong> - which columns you want to pivot</li>
@@ -441,73 +627,298 @@
 <li><strong>values_to</strong> - the name of the column where the values are going to</li>
 </ul>
 </section>
-<section id="without-looking" class="slide level2">
-<h2>Without Looking</h2>
+<section id="example-wb-population-data" class="slide level2">
+<h2>Example: WB Population Data</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb9-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb9-3"><a></a></span>
+<span id="cb9-4"><a></a><span class="co"># Assuming your data is stored in a tibble called 'data'</span></span>
+<span id="cb9-5"><a></a></span>
+<span id="cb9-6"><a></a>tidy_pop_data <span class="ot">&lt;-</span> world_bank_pop <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-8"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>,   <span class="co"># The columns you want to pivot (years)</span></span>
+<span id="cb9-9"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,      <span class="co"># New column name for the years</span></span>
+<span id="cb9-10"><a></a>    <span class="at">values_to =</span> <span class="st">"pop"</span>       <span class="co"># New column name for the values</span></span>
+<span id="cb9-11"><a></a>  ) </span>
+<span id="cb9-12"><a></a></span>
+<span id="cb9-13"><a></a><span class="co"># View the tidied data</span></span>
+<span id="cb9-14"><a></a>tidy_pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year    pop
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="slide level2 smaller">
+<h2></h2>
+<p>This is better, usable even, but are we done if we want a tidy data frame?</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb11-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="co"># Pivot using pivot_longer</span></span>
+<span id="cb11-5"><a></a></span>
+<span id="cb11-6"><a></a>tidy_pop_data <span class="ot">&lt;-</span> world_bank_pop <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb11-8"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>,   <span class="co"># The columns you want to pivot (years)</span></span>
+<span id="cb11-9"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,      <span class="co"># New column name for the years</span></span>
+<span id="cb11-10"><a></a>    <span class="at">values_to =</span> <span class="st">"pop"</span>       <span class="co"># New column name for the values</span></span>
+<span id="cb11-11"><a></a>  ) </span>
+<span id="cb11-12"><a></a></span>
+<span id="cb11-13"><a></a><span class="co"># View the tidied data</span></span>
+<span id="cb11-14"><a></a>tidy_pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year    pop
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="section-3" class="slide level2 smaller">
+<h2></h2>
+<p><br></p>
+<p>This is better, usable even, but are we done if we want a tidy data frame?</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb13-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-3"><a></a></span>
+<span id="cb13-4"><a></a><span class="co"># Assuming your data is stored in a tibble called 'data'</span></span>
+<span id="cb13-5"><a></a></span>
+<span id="cb13-6"><a></a>long_pop_data <span class="ot">&lt;-</span> world_bank_pop <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb13-8"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>,   <span class="co"># The columns you want to pivot (years)</span></span>
+<span id="cb13-9"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,      <span class="co"># New column name for the years</span></span>
+<span id="cb13-10"><a></a>    <span class="at">values_to =</span> <span class="st">"pop"</span>       <span class="co"># New column name for the values</span></span>
+<span id="cb13-11"><a></a>  ) </span>
+<span id="cb13-12"><a></a></span>
+<span id="cb13-13"><a></a><span class="co"># View the tidied data</span></span>
+<span id="cb13-14"><a></a>long_pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year    pop
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="section-4" class="slide level2 smaller">
+<h2></h2>
+<p>Issue is that the data are in long form (which is OK for some purposes), but we want to make it wider. Wider, but tidy…</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb15-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb15-3"><a></a></span>
+<span id="cb15-4"><a></a><span class="co"># Pivot using pivot_longer</span></span>
+<span id="cb15-5"><a></a></span>
+<span id="cb15-6"><a></a>tidy_pop_data <span class="ot">&lt;-</span> world_bank_pop <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb15-8"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">2000</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">2017</span><span class="st">`</span>,   <span class="co"># The columns you want to pivot (years)</span></span>
+<span id="cb15-9"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>,      <span class="co"># New column name for the years</span></span>
+<span id="cb15-10"><a></a>    <span class="at">values_to =</span> <span class="st">"pop"</span>       <span class="co"># New column name for the values</span></span>
+<span id="cb15-11"><a></a>  ) </span>
+<span id="cb15-12"><a></a></span>
+<span id="cb15-13"><a></a><span class="co"># View the tidied data</span></span>
+<span id="cb15-14"><a></a>tidy_pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year    pop
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="pivot-wider" class="slide level2">
+<h2>Pivot Wider</h2>
+<p><br></p>
+<p><code>pivot_wider()</code> takes three main arguments:</p>
 <ul>
-<li>Can you remember how to make <code>pivot_longer()</code> work?</li>
+<li><strong>names_from</strong> - the column whose values will become new column names (identifier)</li>
+<li><strong>values_from</strong> - the column containing the values that will fill the new columns</li>
+<li><strong>values_fill</strong> (optional) - specifies what to use for missing values (e.g., <code>NA</code>, <code>0</code>)</li>
+</ul>
+</section>
+<section id="pivotwider-the-wb-data" class="slide level2 smaller">
+<h2><code>pivotwider()</code> the WB Data</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># pivot wider</span></span>
+<span id="cb17-2"><a></a>tidy_pop_data <span class="ot">&lt;-</span> long_pop_data <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb17-4"><a></a>    <span class="at">names_from =</span> indicator, </span>
+<span id="cb17-5"><a></a>    <span class="at">values_from =</span> pop</span>
+<span id="cb17-6"><a></a>  )</span>
+<span id="cb17-7"><a></a></span>
+<span id="cb17-8"><a></a><span class="co"># view the data</span></span>
+<span id="cb17-9"><a></a>tidy_pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,788 × 6
+   country year  SP.URB.TOTL SP.URB.GROW SP.POP.TOTL SP.POP.GROW
+   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+ 1 ABW     2000        41625      1.66         89101       2.54 
+ 2 ABW     2001        42025      0.956        90691       1.77 
+ 3 ABW     2002        42194      0.401        91781       1.19 
+ 4 ABW     2003        42277      0.197        92701       0.997
+ 5 ABW     2004        42317      0.0946       93540       0.901
+ 6 ABW     2005        42399      0.194        94483       1.00 
+ 7 ABW     2006        42555      0.367        95606       1.18 
+ 8 ABW     2007        42729      0.408        96787       1.23 
+ 9 ABW     2008        42906      0.413        97996       1.24 
+10 ABW     2009        43079      0.402        99212       1.23 
+# ℹ 4,778 more rows</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="exercise" class="title-slide slide level1 center">
+<h1>Exercise</h1>
+
+</section>
+<section id="download-some-messy-data" class="slide level2">
+<h2>Download Some Messy Data</h2>
+<p><br></p>
+<ul>
+<li>Download some messy WB data</li>
+<li>Make it multiple variables</li>
+<li>Download as a CSV file</li>
+<li>Save in your project <code>/data</code> folder</li>
+</ul>
+</section>
+<section id="messy-data-example" class="slide level2">
+<h2>Messy Data Example</h2>
+
+<img data-src="images/messy_wb_data.jpg" style="width:70.0%" class="r-stretch"></section>
+<section id="read-data" class="slide level2">
+<h2>Read Data</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="co"># Load packages</span></span>
+<span id="cb19-2"><a></a><span class="fu">library</span>(readr) </span>
+<span id="cb19-3"><a></a><span class="fu">library</span>(dplyr) </span>
+<span id="cb19-4"><a></a></span>
+<span id="cb19-5"><a></a><span class="co"># Read data from csv file into an object called "wb_data_messy"</span></span>
+<span id="cb19-6"><a></a>wb_data_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/your_file_name.csv"</span>)</span>
+<span id="cb19-7"><a></a></span>
+<span id="cb19-8"><a></a><span class="co"># View the data</span></span>
+<span id="cb19-9"><a></a><span class="fu">glimpse</span>(wb_data_messy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="pivot-the-data" class="slide level2">
+<h2>Pivot the Data</h2>
+<p><br></p>
+<ul>
+<li>Use <code>pivot_longer()</code> to get the data in long form</li>
+<li>Use <code>pivot_wider()</code> to get the series in the columns</li>
+</ul>
+</section>
+<section id="special-considerations" class="slide level2">
+<h2>Special Considerations</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="co"># Load tidyr</span></span>
+<span id="cb20-2"><a></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb20-3"><a></a></span>
+<span id="cb20-4"><a></a><span class="co"># Reshape the data</span></span>
+<span id="cb20-5"><a></a>wb_data <span class="ot">&lt;-</span> wb_data_messy <span class="sc">|&gt;</span> </span>
+<span id="cb20-6"><a></a>  <span class="fu">pivot_longer</span>(             </span>
+<span id="cb20-7"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">1973 [YR1973]</span><span class="st">`</span><span class="sc">:</span> <span class="st">`</span><span class="at">2022 [YR2022]</span><span class="st">`</span>, <span class="co"># columns to pivot</span></span>
+<span id="cb20-8"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="co"># name the identifier column "year"</span></span>
+<span id="cb20-9"><a></a>    <span class="at">values_to =</span> <span class="st">"values"</span> <span class="co"># name the numeric var column </span></span>
+<span id="cb20-10"><a></a>  ) </span>
+<span id="cb20-11"><a></a></span>
+<span id="cb20-12"><a></a><span class="co"># View the data</span></span>
+<span id="cb20-13"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="special-considerations-1" class="slide level2">
+<h2>Special Considerations</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>wb_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Series Name</span><span class="st">`</span>)</span>
+<span id="cb21-3"><a></a></span>
+<span id="cb21-4"><a></a><span class="co"># Reshape the data</span></span>
+<span id="cb21-5"><a></a>tidy_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span> </span>
+<span id="cb21-6"><a></a>  <span class="fu">pivot_wider</span>(             </span>
+<span id="cb21-7"><a></a>    <span class="at">names_from =</span> <span class="st">`</span><span class="at">Series Code</span><span class="st">`</span>,</span>
+<span id="cb21-8"><a></a>    <span class="at">values_from =</span> values</span>
+<span id="cb21-9"><a></a>  ) </span>
+<span id="cb21-10"><a></a></span>
+<span id="cb21-11"><a></a><span class="co"># View the data</span></span>
+<span id="cb21-12"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="give-it-a-shot" class="slide level2">
+<h2>Give it a Shot!</h2>
+<p><br></p>
+<ul>
+<li>Try downloading some messy WB data and make it tidy</li>
+<li>Refer to previous slides for help</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Load tidyr</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb2-3"><a></a></span>
-<span id="cb2-4"><a></a><span class="co"># Reshape the data</span></span>
-<span id="cb2-5"><a></a>      <span class="ot">&lt;-</span>    <span class="er">|&gt;</span></span>
-<span id="cb2-6"><a></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-7"><a></a>    <span class="at">cols =</span> </span>
-<span id="cb2-8"><a></a>    <span class="at">names_to =</span> </span>
-<span id="cb2-9"><a></a>    <span class="at">values_to =</span> </span>
-<span id="cb2-10"><a></a>  )</span>
-<span id="cb2-11"><a></a></span>
-<span id="cb2-12"><a></a><span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer3" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
-</section>
-<section id="pivot-data" class="slide level2">
-<h2>Pivot Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Load tidyr</span></span>
-<span id="cb3-2"><a></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="co"># Reshape the data</span></span>
-<span id="cb3-5"><a></a>wb_data <span class="ot">&lt;-</span> wb_data_messy <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a></a>  <span class="fu">pivot_longer</span>(             </span>
-<span id="cb3-7"><a></a>    <span class="at">cols =</span> <span class="st">`</span><span class="at">1973 [YR1973]</span><span class="st">`</span><span class="sc">:</span> <span class="st">`</span><span class="at">2022 [YR2022]</span><span class="st">`</span>, <span class="co"># columns to pivot</span></span>
-<span id="cb3-8"><a></a>    <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="co"># name the identifier column "year"</span></span>
-<span id="cb3-9"><a></a>    <span class="at">values_to =</span> <span class="st">"flfp"</span> <span class="co"># name the numeric var column "flfp"</span></span>
-<span id="cb3-10"><a></a>  ) </span>
-<span id="cb3-11"><a></a></span>
-<span id="cb3-12"><a></a><span class="co"># View the data</span></span>
-<span id="cb3-13"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="try-with-multiple-variables" class="slide level2">
-<h2>Try With Multiple Variables</h2>
-<ul>
-<li>Download more than one variable from the WB</li>
-<li>Save in a new CSV file</li>
-<li>Use pivot longer to put in long format</li>
-<li>And then…</li>
-</ul>
-</section>
-<section id="multiple-variables" class="slide level2">
-<h2>Multiple Variables</h2>
-<p>Use <code>pivot_wider()</code></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>wb_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Series Name</span><span class="st">`</span>)</span>
-<span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a><span class="co"># Reshape the data</span></span>
-<span id="cb4-5"><a></a>tidy_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a></a>  <span class="fu">pivot_wider</span>(             </span>
-<span id="cb4-7"><a></a>    <span class="at">names_from =</span> <span class="st">`</span><span class="at">Series Code</span><span class="st">`</span>,</span>
-<span id="cb4-8"><a></a>    <span class="at">values_from =</span> values</span>
-<span id="cb4-9"><a></a>  ) </span>
-<span id="cb4-10"><a></a></span>
-<span id="cb4-11"><a></a><span class="co"># View the data</span></span>
-<span id="cb4-12"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section></section>
+<section>
+<section id="mutate" class="title-slide slide level1 center">
+<h1>Mutate</h1>
+
 </section>
 <section id="mutating-variables" class="slide level2">
 <h2>Mutating Variables</h2>
+<p><br></p>
 <ul>
 <li>Anytime we want to change a variable, we are going to use the <code>dplyr</code> verbs <code>mutate()</code> or <code>mutate_at()</code></li>
 <li><code>mutate()</code> is if you want to change on variable</li>
@@ -516,56 +927,59 @@
 </section>
 <section id="lets-fix-our-variables" class="slide level2">
 <h2>Let’s Fix Our Variables</h2>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Fix year and flfp</span></span>
-<span id="cb5-2"><a></a>wb_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span> <span class="co"># replace wb_data with a modified version of the dataframe </span></span>
-<span id="cb5-3"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">substring</span>(year, <span class="dv">1</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span> <span class="co"># truncate year (keep first four characters)</span></span>
-<span id="cb5-4"><a></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"flfp"</span>), as.numeric) <span class="co"># change year and flfp to numeric</span></span>
-<span id="cb5-5"><a></a></span>
-<span id="cb5-6"><a></a><span class="co"># View the data</span></span>
-<span id="cb5-7"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="co"># Fix year and flfp</span></span>
+<span id="cb22-2"><a></a>wb_data <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span> <span class="co"># replace wb_data with a modified version of the dataframe </span></span>
+<span id="cb22-3"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">substring</span>(year, <span class="dv">1</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span> <span class="co"># truncate year (keep first four characters)</span></span>
+<span id="cb22-4"><a></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"flfp"</span>), as.numeric) <span class="co"># change year and flfp to numeric</span></span>
+<span id="cb22-5"><a></a></span>
+<span id="cb22-6"><a></a><span class="co"># View the data</span></span>
+<span id="cb22-7"><a></a><span class="fu">glimpse</span>(wb_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="now-try-it-with-multiple-varaibles" class="slide level2">
 <h2>Now Try it With Multiple Varaibles</h2>
+<p><br></p>
 <ul>
 <li>Go to the data frame with multiple variables that you created earlier</li>
 <li>How would you modify this code to make sure the variables are in the right format?</li>
 </ul>
 </section>
-<section>
-<section id="clean-variable-names" class="title-slide slide level1 center">
-<h1>Clean Variable Names</h1>
+<section id="clean-variable-names" class="slide level2">
+<h2>Clean Variable Names</h2>
+<p><br></p>
 <div class="line-block">Very simple: use the <code>janitor</code> package!</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Load janitor</span></span>
-<span id="cb6-2"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a><span class="co"># Apply clean_names() to wb_data, store in new data frame called wb_data_clean</span></span>
-<span id="cb6-5"><a></a>wb_data_clean <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span>  </span>
-<span id="cb6-6"><a></a>  <span class="fu">clean_names</span>() </span>
-<span id="cb6-7"><a></a></span>
-<span id="cb6-8"><a></a><span class="co"># Write wb_data_clean to a csv file</span></span>
-<span id="cb6-9"><a></a><span class="fu">write_csv</span>(wb_data_clean, <span class="st">"data/wb_data_clean.csv"</span>)</span>
-<span id="cb6-10"><a></a></span>
-<span id="cb6-11"><a></a><span class="co"># View the data</span></span>
-<span id="cb6-12"><a></a><span class="fu">glimpse</span>(wb_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># Load janitor</span></span>
+<span id="cb23-2"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a><span class="co"># Apply clean_names() to wb_data, store in new data frame called wb_data_clean</span></span>
+<span id="cb23-5"><a></a>wb_data_clean <span class="ot">&lt;-</span> wb_data <span class="sc">|&gt;</span>  </span>
+<span id="cb23-6"><a></a>  <span class="fu">clean_names</span>() </span>
+<span id="cb23-7"><a></a></span>
+<span id="cb23-8"><a></a><span class="co"># Write wb_data_clean to a csv file</span></span>
+<span id="cb23-9"><a></a><span class="fu">write_csv</span>(wb_data_clean, <span class="st">"data/wb_data_clean.csv"</span>)</span>
+<span id="cb23-10"><a></a></span>
+<span id="cb23-11"><a></a><span class="co"># View the data</span></span>
+<span id="cb23-12"><a></a><span class="fu">glimpse</span>(wb_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="column-specifications" class="slide level2">
 <h2>Column Specifications</h2>
+<p><br></p>
 <ul>
 <li>Can clean columns on backend</li>
 <li>But can also specify data types in <code>read_csv()</code> or <code>read_excel()</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">spec</span>(wb_data_messy)</span>
-<span id="cb7-2"><a></a></span>
-<span id="cb7-3"><a></a>wb_data_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/your_file_name.csv"</span>, </span>
-<span id="cb7-4"><a></a>                          <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb7-5"><a></a>                           <span class="fu">col_double</span>(<span class="st">`</span><span class="at">1990 [YR1990]</span><span class="st">`</span>) </span>
-<span id="cb7-6"><a></a>                          )</span>
-<span id="cb7-7"><a></a>                          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">spec</span>(wb_data_messy)</span>
+<span id="cb24-2"><a></a></span>
+<span id="cb24-3"><a></a>wb_data_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/your_file_name.csv"</span>, </span>
+<span id="cb24-4"><a></a>                          <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb24-5"><a></a>                           <span class="fu">col_double</span>(<span class="st">`</span><span class="at">1990 [YR1990]</span><span class="st">`</span>) </span>
+<span id="cb24-6"><a></a>                          )</span>
+<span id="cb24-7"><a></a>                          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

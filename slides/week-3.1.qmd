@@ -200,7 +200,6 @@ countdown(minutes = 5,
           color_finished_text = "#00264A")
 ```
 
-
 ## Write a New CSV File
 
 <br>

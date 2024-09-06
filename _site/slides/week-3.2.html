@@ -11,7 +11,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2024-08-22">
+  <meta name="dcterms.date" content="2024-09-05">
   <title>PSC/DATS 2102–Summer Schedule - Wrangling Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -403,11 +403,19 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">August 22, 2024</p>
+  <p class="date">September 5, 2024</p>
+</section>
+<section id="download-some-messy-data" class="slide level2">
+<h2>Download Some Messy Data</h2>
+<ul>
+<li>Create a folder called “data” in your course modules project folder</li>
+<li>Following the instructions in module 1.1, download some messy WB data</li>
+<li>Make it something other than FLFP</li>
+<li>Donwload as a CSV file with a unique file name and store in your data folder</li>
+</ul>
 </section>
 <section id="read-data" class="slide level2">
 <h2>Read Data</h2>
-<p>(from last class)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Load packages</span></span>
 <span id="cb1-2"><a></a><span class="fu">library</span>(readr) </span>
@@ -525,6 +533,7 @@
 <li>How would you modify this code to make sure the variables are in the right format?</li>
 </ul>
 </section>
+<section>
 <section id="clean-variable-names" class="title-slide slide level1 center">
 <h1>Clean Variable Names</h1>
 <div class="line-block">Very simple: use the <code>janitor</code> package!</div>
@@ -542,15 +551,31 @@
 <span id="cb6-11"><a></a><span class="co"># View the data</span></span>
 <span id="cb6-12"><a></a><span class="fu">glimpse</span>(wb_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-
 </section>
-    <div class="quarto-auto-generated-content">
+<section id="column-specifications" class="slide level2">
+<h2>Column Specifications</h2>
+<ul>
+<li>Can clean columns on backend</li>
+<li>But can also specify data types in <code>read_csv()</code> or <code>read_excel()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">spec</span>(wb_data_messy)</span>
+<span id="cb7-2"><a></a></span>
+<span id="cb7-3"><a></a>wb_data_messy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/your_file_name.csv"</span>, </span>
+<span id="cb7-4"><a></a>                          <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb7-5"><a></a>                           <span class="fu">col_double</span>(<span class="st">`</span><span class="at">1990 [YR1990]</span><span class="st">`</span>) </span>
+<span id="cb7-6"><a></a>                          )</span>
+<span id="cb7-7"><a></a>                          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section><div class="quarto-auto-generated-content">
 <p><img src="images/dataviz-logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://dataviz-gwu.rocks">DataViz 2102 Website</a></p>
 </div>
-</div></div>
+</div></section>
+    </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
@@ -561,8 +586,6 @@
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -585,7 +608,6 @@
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"c18530dcf6e10b17","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -759,12 +781,50 @@
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
-          
+          RevealNotes,
           RevealSearch,
           RevealZoom
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

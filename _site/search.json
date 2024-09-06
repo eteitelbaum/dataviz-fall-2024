@@ -1937,7 +1937,7 @@
     "href": "slides/week-3.2.html#read-data",
     "title": "Wrangling Data",
     "section": "Read Data",
-    "text": "Read Data\n(from last class)\n\n# Load packages\nlibrary(readr) \nlibrary(dplyr) \n\n# Read data from csv file into an object called \"wb_data_messy\"\nwb_data_messy &lt;- read_csv(\"data/your_file_name.csv\")\n\n# View the data\nglimpse(wb_data_messy)"
+    "text": "Read Data\n\n# Load packages\nlibrary(readr) \nlibrary(dplyr) \n\n# Read data from csv file into an object called \"wb_data_messy\"\nwb_data_messy &lt;- read_csv(\"data/your_file_name.csv\")\n\n# View the data\nglimpse(wb_data_messy)"
   },
   {
     "objectID": "slides/week-3.2.html#messy-data-example",
@@ -4420,5 +4420,19 @@
     "title": "Understanding Data",
     "section": "Find Your Own Data",
     "text": "Find Your Own Data\n\n\nVisit kaggle.com\nFind a dataset you like\nDownload it as a CSV\nUpload to your Posit Cloud project\nRead it into R\nExplore with glimpse() and View()\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-3.2.html#download-some-messy-data",
+    "href": "slides/week-3.2.html#download-some-messy-data",
+    "title": "Wrangling Data",
+    "section": "Download Some Messy Data",
+    "text": "Download Some Messy Data\n\nCreate a folder called “data” in your course modules project folder\nFollowing the instructions in module 1.1, download some messy WB data\nMake it something other than FLFP\nDonwload as a CSV file with a unique file name and store in your data folder"
+  },
+  {
+    "objectID": "slides/week-3.2.html#column-specifications",
+    "href": "slides/week-3.2.html#column-specifications",
+    "title": "Wrangling Data",
+    "section": "Column Specifications",
+    "text": "Column Specifications\n\nCan clean columns on backend\nBut can also specify data types in read_csv() or read_excel()\n\n\nspec(wb_data_messy)\n\nwb_data_messy &lt;- read_csv(\"data/your_file_name.csv\", \n                          col_types = cols(\n                           col_double(`1990 [YR1990]`) \n                          )\n                          )"
   }
 ]

@@ -198,9 +198,9 @@ world_bank_pop
 library(tidyr)
 library(dplyr)
 
-# Assuming your data is stored in a tibble called 'data'
+# Pivot using pivot_longer
 
-tidy_pop_data <- world_bank_pop |>
+long_pop_data <- world_bank_pop |>
   pivot_longer(
     cols = `2000`:`2017`,   # The columns you want to pivot (years)
     names_to = "year",      # New column name for the years
@@ -208,7 +208,7 @@ tidy_pop_data <- world_bank_pop |>
   ) 
 
 # View the tidied data
-tidy_pop_data
+long_pop_data
 ```
 
 ## {.smaller}
@@ -223,7 +223,7 @@ library(dplyr)
 
 # Pivot using pivot_longer
 
-tidy_pop_data <- world_bank_pop |>
+long_pop_data <- world_bank_pop |>
   pivot_longer(
     cols = `2000`:`2017`,   # The columns you want to pivot (years)
     names_to = "year",      # New column name for the years
@@ -231,7 +231,7 @@ tidy_pop_data <- world_bank_pop |>
   ) 
 
 # View the tidied data
-tidy_pop_data
+long_pop_data
 ```
 
 ## {.smaller}
@@ -246,7 +246,7 @@ This is better, usable even, but are we done if we want a tidy data frame?
 library(tidyr)
 library(dplyr)
 
-# Assuming your data is stored in a tibble called 'data'
+# Pivot using pivot_longer
 
 long_pop_data <- world_bank_pop |>
   pivot_longer(
@@ -271,7 +271,7 @@ library(dplyr)
 
 # Pivot using pivot_longer
 
-tidy_pop_data <- world_bank_pop |>
+long_pop_data <- world_bank_pop |>
   pivot_longer(
     cols = `2000`:`2017`,   # The columns you want to pivot (years)
     names_to = "year",      # New column name for the years
@@ -279,7 +279,7 @@ tidy_pop_data <- world_bank_pop |>
   ) 
 
 # View the tidied data
-tidy_pop_data
+long_pop_data
 ```
 
 ## Pivot Wider
@@ -432,7 +432,6 @@ countdown(minutes = 10,
 ```{r}
 #| label: mutate
 #| eval: false
-#| echo: true
 
 # Fix year and flfp
 wb_data <- wb_data |> # replace wb_data with a modified version of the dataframe 

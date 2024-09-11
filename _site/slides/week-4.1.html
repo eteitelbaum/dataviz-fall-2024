@@ -11,8 +11,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2024-09-09">
-  <title>PSC/DATS 2102–Summer Schedule - Downloading Data from an API</title>
+  <meta name="dcterms.date" content="2024-09-11">
+  <title>PSC/DATS 2102–Summer Schedule - Working With Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -388,9 +388,11 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Downloading Data from an API">
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
+<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Working With Data">
 <meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
-<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Downloading Data from an API">
+<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Working With Data">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-dark">
@@ -398,61 +400,92 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Downloading Data from an API</h1>
+  <h1 class="title">Working With Data</h1>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">September 9, 2024</p>
+  <p class="date">September 11, 2024</p>
 </section>
-<section id="apis" class="slide level2">
-<h2>APIs</h2>
+<section id="how-do-we-get-tidyclean-data" class="slide level2">
+<h2>How Do We Get Tidy/Clean Data?</h2>
+<p><br></p>
 <ul>
-<li>API stands for “Application Programming Interface”</li>
-<li>Way for two computers to talk to each other</li>
-<li>In our case, we will use APIs to download social science data</li>
-<li>APIs are accessed through packages in R</li>
-<li>Sometimes there can be more than one package for an API</li>
-<li>Usually easier than reading in data from messy flat file</li>
+<li>Wrangle it ourselves</li>
+<li>Use a package where it has been wrangled for us</li>
+<li>Download via an API</li>
 </ul>
 </section>
 <section id="this-lesson" class="slide level2">
 <h2>This Lesson</h2>
+<p><br></p>
 <ul>
-<li>Access two APIs with R packages</li>
+<li>Practice with World Bank and V-Dem data</li>
 <li>World Bank data through <code>wbstats</code>
 <ul>
 <li>There is another package called <code>WDI</code></li>
+<li>Both packages for accessing data through WB API</li>
 </ul></li>
-<li>Varieties of Democracy (V-Dem) through <code>vdemdata</code>
+<li>Varieties of Democracy (V-Dem) through <code>vdemlite</code>
 <ul>
-<li>This is the only package for V-Dem</li>
-<li>Just downloads all the data</li>
-<li>So we have to use <code>dplyr</code> functions like <code>fliter()</code> and <code>select()</code></li>
+<li>There is also a package called <code>vdemdata</code></li>
+<li><code>vdemlite</code> offers more functionality, works better in the cloud</li>
 </ul></li>
 </ul>
 </section>
+<section id="filter-select-mutate" class="slide level2 smaller">
+<h2><code>filter()</code>, <code>select()</code>, <code>mutate()</code></h2>
+<p><br></p>
+<p>Along the way we will practice some important <code>dplyr</code> verbs:</p>
+<p><br></p>
+<ul>
+<li><code>filter()</code> is used to select observations based on their values</li>
+<li><code>select()</code> is used to select variables</li>
+<li><code>mutate()</code> is used to create new variables or modifying existing ones</li>
+</ul>
+<p><br></p>
+<p>As well as some helpful functions from the <code>janitor</code> package.</p>
+</section>
+<section id="apis" class="slide level2">
+<h2>APIs</h2>
+<p><br></p>
+<ul>
+<li>API stands for “Application Programming Interface”</li>
+<li>Way for two computers to talk to each other</li>
+<li>In our case, we will use APIs to download social science data</li>
+</ul>
+</section>
+<section id="apis-in-r" class="slide level2">
+<h2>APIs in R</h2>
+<div>
+<ul>
+<li class="fragment">APIs are accessed through packages in R</li>
+<li class="fragment">Sometimes there can be more than one package for an API</li>
+<li class="fragment">Much easier than reading in data from messy flat file!</li>
+<li class="fragment">We will use a few API packages in this course
+<ul>
+<li class="fragment">World Bank data through <code>wbstats</code> (or <code>WDI</code>)</li>
+<li class="fragment"><code>fredr</code> for Federal Reserve Economic Data</li>
+<li class="fragment"><code>tidycensus</code> for US Census data</li>
+</ul></li>
+<li class="fragment">But there are many APIs out there (please explore!)</li>
+</ul>
+</div>
+</section>
 <section id="searching-for-wb-indicators" class="slide level2">
 <h2>Searching for WB Indicators</h2>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>flfp_indicators <span class="ot">&lt;-</span> <span class="fu">wb_search</span>(<span class="st">"female labor force"</span>) <span class="co"># store the list of indicators</span></span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a><span class="fu">print</span>(flfp_indicators, <span class="at">n=</span><span class="dv">26</span>) <span class="co"># view the indicators</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="try-it-yourself" class="slide level2">
-<h2>Try it Yourself</h2>
-<ul>
-<li>Start a new Quarto document</li>
-<li>Start a new code chunk</li>
-<li>Load the <code>wbstats</code> package</li>
-<li>Use <code>wb_search()</code> to find some indicators you are interested in</li>
-</ul>
-</section>
 <section id="wbstats-example" class="slide level2">
 <h2><code>wbstats</code> Example</h2>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Load packages</span></span>
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="1-4|6-7|9|10|11|12|13-16|18-19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Load packages</span></span>
 <span id="cb2-2"><a></a><span class="fu">library</span>(wbstats) <span class="co"># for downloading WB data</span></span>
 <span id="cb2-3"><a></a><span class="fu">library</span>(dplyr) <span class="co"># for selecting, renaming and mutating</span></span>
 <span id="cb2-4"><a></a><span class="fu">library</span>(janitor) <span class="co"># for rounding</span></span>
@@ -473,70 +506,331 @@
 <span id="cb2-19"><a></a><span class="fu">glimpse</span>(women_emp) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="try-it-yourself-1" class="slide level2">
-<h2>Try it Yourself</h2>
+<section id="your-turn" class="slide level2">
+<h2>Your Turn!</h2>
+<p><br></p>
 <ul>
-<li>Using the variables you identified in your search, download the data</li>
-<li>Think about what elements of the code you need to change</li>
-<li>Hint: the indicators are going to change!</li>
+<li>Search for a WB indicator</li>
+<li>Download the data</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="top:10%;right:10%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="the-v-dem-dataset" class="slide level2">
+<h2>The V-Dem Dataset</h2>
+<p><br></p>
+<ul>
+<li>V-Dem stands for Varieties of Democracy</li>
+<li>It is a dataset that measures democracy around the world</li>
+<li>Based on expert assessments of the quality of democracy in each country</li>
+<li>Two packages we will explore: <code>vdemdata</code> and <code>vdemlite</code></li>
 </ul>
 </section>
 <section id="downloading-v-dem-data" class="slide level2">
 <h2>Downloading V-Dem Data</h2>
-<ul>
-<li>The <code>vdem</code> function from <code>vdemdata</code> just downloads the data</li>
-<li>There are no parameters for selecting indicators or date ranges</li>
-<li>So we have to do more work with <code>dplyr</code> functions
-<ul>
-<li><code>filter()</code> for years</li>
-<li><code>select()</code> for variables</li>
-</ul></li>
-<li>We are also going to use <code>case_match()</code> to add</li>
-</ul>
-</section>
-<section id="vdemdata-example" class="slide level2">
-<h2><code>vdemdata</code> Example</h2>
+<p><br></p>
+<p>The <code>vdem</code> function from <code>vdemdata</code> just downloads all of the data. Try running this code chunk. What do you see in <code>democracy</code>?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Load packages</span></span>
-<span id="cb3-2"><a></a><span class="fu">library</span>(vdemdata) <span class="co"># to download V-Dem data</span></span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a><span class="co"># Download the data</span></span>
-<span id="cb3-5"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> <span class="co"># download the V-Dem dataset</span></span>
-<span id="cb3-6"><a></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1990</span>)  <span class="sc">|&gt;</span> <span class="co"># filter out years less than 1990</span></span>
-<span id="cb3-7"><a></a>  <span class="fu">select</span>(                  <span class="co"># select (and rename) these variables</span></span>
-<span id="cb3-8"><a></a>    <span class="at">country =</span> country_name,     <span class="co"># the name before the = sign is the new name  </span></span>
-<span id="cb3-9"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  <span class="co"># the name after the = sign is the old name</span></span>
-<span id="cb3-10"><a></a>    year, </span>
-<span id="cb3-11"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
-<span id="cb3-12"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
-<span id="cb3-13"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
-<span id="cb3-14"><a></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb3-15"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-16"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, <span class="co"># replace the values in region with country names</span></span>
-<span id="cb3-17"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
-<span id="cb3-18"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
-<span id="cb3-19"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
-<span id="cb3-20"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
-<span id="cb3-21"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
-<span id="cb3-22"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
-<span id="cb3-23"><a></a>                    <span class="co"># number on the left of the ~ is the V-Dem region code</span></span>
-<span id="cb3-24"><a></a>                    <span class="co"># we are changing the number to the country name on the right</span></span>
-<span id="cb3-25"><a></a>                    <span class="co"># of the equals sign</span></span>
-<span id="cb3-26"><a></a>  )</span>
-<span id="cb3-27"><a></a></span>
-<span id="cb3-28"><a></a><span class="co"># View the data</span></span>
-<span id="cb3-29"><a></a><span class="fu">glimpse</span>(democracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(vdemdata) <span class="co"># load the V-Dem package</span></span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>democracy <span class="ot">&lt;-</span> <span class="fu">vdem</span>() <span class="co"># download the V-Dem dataset</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="try-it-yourself-2" class="slide level2">
-<h2>Try it Yourself</h2>
+<section id="filter" class="slide level2">
+<h2><code>filter()</code></h2>
 <ul>
-<li>Go to the V-Dem <a href="https://www.v-dem.net/documents/24/codebook_v13.pdf">Codebook</a></li>
-<li>Select a democracy indicator from Part III and one other indicator</li>
-<li>Note the indicator code (e.g.&nbsp;“v2x_polyarchy” for the polyarchy score)</li>
-<li>In your Quarto notes document, create a new code chunk</li>
-<li>Use the codes for your selected indicators to download the data</li>
+<li>Run this code. What do you see?</li>
+<li>Try changing the year</li>
+<li>For one year, use <code>==</code> instead of <code>&gt;=</code></li>
+<li>Or try <code>&lt;=</code> and see what happens</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> <span class="co"># download the V-Dem dataset</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1990</span>) <span class="co"># filter out years less than 1990</span></span>
+<span id="cb4-3"><a></a>  </span>
+<span id="cb4-4"><a></a><span class="fu">glimpse</span>(democracy)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="versus" class="slide level2">
+<h2><code>=</code> versus <code>==</code></h2>
+<p><br></p>
+<ul>
+<li><code>=</code> is used to assign values to variables, just like <code>&lt;-</code></li>
+<li><code>==</code> is used to test if two values are equal to each other</li>
+<li>So <code>filter(year == 1990)</code> will give you just the observations for 1990</li>
+</ul>
+</section>
+<section id="and" class="slide level2">
+<h2><code>&gt;=</code> and <code>&lt;=</code></h2>
+<ul>
+<li><code>&gt;=</code> is used to test if a value is greater than or equal to another value</li>
+<li><code>&lt;=</code> is used to test if a value is less than or equal to another value</li>
+<li>So <code>filter(year &gt;= 1990)</code> will give you the observations for 1990 and later</li>
+<li>And <code>filter(year &lt;= 1990)</code> will give you the observations for 1990 and earlier</li>
+</ul>
+</section>
+<section id="select" class="slide level2">
+<h2><code>select()</code></h2>
+<ul>
+<li>Run this code. What do you see?</li>
+<li>Now try <code>v2x_libdem</code> instead of <code>v2x_polyarchy</code></li>
+<li>Choose more from the <a href="https://v-dem.net/documents/24/codebook_v13.pdf">codebook</a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> <span class="co"># download the V-Dem dataset</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">select</span>(                  <span class="co"># select (and rename) these variables</span></span>
+<span id="cb5-3"><a></a>    <span class="at">country =</span> country_name,     <span class="co"># before the = sign is new name  </span></span>
+<span id="cb5-4"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  <span class="co"># after the = sign is the old name</span></span>
+<span id="cb5-5"><a></a>    year, </span>
+<span id="cb5-6"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy</span>
+<span id="cb5-7"><a></a>  )</span>
+<span id="cb5-8"><a></a>  </span>
+<span id="cb5-9"><a></a><span class="fu">glimpse</span>(democracy)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer2" data-update-every="1" tabindex="0" style="top:0%;right:5%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="mutate" class="slide level2">
+<h2><code>mutate()</code></h2>
+<ul>
+<li>Modify the code to create new variable that is three times the value of <code>polyarchy</code></li>
+<li>How about <code>polyarchy</code> squared?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> <span class="co"># download the V-Dem dataset</span></span>
+<span id="cb6-2"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span> <span class="co"># keep only observations from 2015</span></span>
+<span id="cb6-3"><a></a>  <span class="fu">select</span>(                  <span class="co"># select (and rename) these variables</span></span>
+<span id="cb6-4"><a></a>    <span class="at">country =</span> country_name,     <span class="co"># name before the = sign is new name  </span></span>
+<span id="cb6-5"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  <span class="co"># name after the = sign is old name</span></span>
+<span id="cb6-6"><a></a>    year, </span>
+<span id="cb6-7"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy </span>
+<span id="cb6-8"><a></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-10"><a></a>    <span class="at">polyarchy_dbl =</span> polyarchy <span class="sc">*</span> <span class="dv">2</span> <span class="co"># create variable 2X polyarchy</span></span>
+<span id="cb6-11"><a></a>  )</span>
+<span id="cb6-12"><a></a>  </span>
+<span id="cb6-13"><a></a><span class="fu">glimpse</span>(democracy)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer3" data-update-every="1" tabindex="0" style="top:0%;right:5%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="some-common-arithmetic-operators" class="slide level2">
+<h2>Some Common Arithmetic Operators</h2>
+<p><br></p>
+<ul>
+<li><code>+</code> addition</li>
+<li><code>-</code> subtraction</li>
+<li><code>*</code> multiplication</li>
+<li><code>/</code> division</li>
+<li><code>^</code> exponentiation (also <code>**</code>)</li>
+</ul>
+</section>
+<section id="vdemdata-example" class="slide level2 smaller">
+<h2><code>vdemdata</code> Example</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Load packages</span></span>
+<span id="cb7-2"><a></a><span class="fu">library</span>(vdemdata) <span class="co"># to download V-Dem data</span></span>
+<span id="cb7-3"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a><span class="co"># Download the data</span></span>
+<span id="cb7-6"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> <span class="co"># download the V-Dem dataset</span></span>
+<span id="cb7-7"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>)  <span class="sc">|&gt;</span> <span class="co"># filter year, keep 2015</span></span>
+<span id="cb7-8"><a></a>  <span class="fu">select</span>(                  <span class="co"># select (and rename) these variables</span></span>
+<span id="cb7-9"><a></a>    <span class="at">country =</span> country_name,     <span class="co"># the name before the = sign is the new name  </span></span>
+<span id="cb7-10"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  <span class="co"># the name after the = sign is the old name</span></span>
+<span id="cb7-11"><a></a>    year, </span>
+<span id="cb7-12"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
+<span id="cb7-13"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
+<span id="cb7-14"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
+<span id="cb7-15"><a></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-17"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, <span class="co"># replace the values in region with country names</span></span>
+<span id="cb7-18"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
+<span id="cb7-19"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
+<span id="cb7-20"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
+<span id="cb7-21"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
+<span id="cb7-22"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
+<span id="cb7-23"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
+<span id="cb7-24"><a></a>  )</span>
+<span id="cb7-25"><a></a></span>
+<span id="cb7-26"><a></a><span class="co"># View the data</span></span>
+<span id="cb7-27"><a></a><span class="fu">glimpse</span>(democracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section" class="slide level2 smaller">
+<h2></h2>
+<p><br></p>
+<p>Use <code>filter()</code> to select years…</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Download the data</span></span>
+<span id="cb8-2"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>)  <span class="sc">|&gt;</span> <span class="co"># keep 2015</span></span>
+<span id="cb8-4"><a></a>  <span class="fu">select</span>(                 </span>
+<span id="cb8-5"><a></a>    <span class="at">country =</span> country_name,       </span>
+<span id="cb8-6"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  </span>
+<span id="cb8-7"><a></a>    year, </span>
+<span id="cb8-8"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
+<span id="cb8-9"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
+<span id="cb8-10"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
+<span id="cb8-11"><a></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-12"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-13"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region,</span>
+<span id="cb8-14"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
+<span id="cb8-15"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
+<span id="cb8-16"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
+<span id="cb8-17"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
+<span id="cb8-18"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
+<span id="cb8-19"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
+<span id="cb8-20"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
+<p><br></p>
+<p>Use <code>select()</code> to choose variables…</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="4-11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># Download the data</span></span>
+<span id="cb9-2"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a></a>  <span class="fu">select</span>(                  <span class="co"># select (and rename) these variables</span></span>
+<span id="cb9-5"><a></a>    <span class="at">country =</span> country_name,     <span class="co"># the name before the = sign is the new name  </span></span>
+<span id="cb9-6"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  <span class="co"># the name after the = sign is the old name</span></span>
+<span id="cb9-7"><a></a>    year, </span>
+<span id="cb9-8"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
+<span id="cb9-9"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
+<span id="cb9-10"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
+<span id="cb9-11"><a></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb9-12"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-13"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, </span>
+<span id="cb9-14"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
+<span id="cb9-15"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
+<span id="cb9-16"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
+<span id="cb9-17"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
+<span id="cb9-18"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
+<span id="cb9-19"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
+<span id="cb9-20"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-2" class="slide level2 smaller">
+<h2></h2>
+<p><br></p>
+<p>Use <code>mutate</code> with <code>case_match()</code> to Recode Region….</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="12-23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Download the data</span></span>
+<span id="cb10-2"><a></a>democracy <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2015</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a></a>  <span class="fu">select</span>(                  </span>
+<span id="cb10-5"><a></a>    <span class="at">country =</span> country_name,     </span>
+<span id="cb10-6"><a></a>    <span class="at">vdem_ctry_id =</span> country_id,  </span>
+<span id="cb10-7"><a></a>    year, </span>
+<span id="cb10-8"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy, </span>
+<span id="cb10-9"><a></a>    <span class="at">gdp_pc =</span> e_gdppc, </span>
+<span id="cb10-10"><a></a>    <span class="at">region =</span> e_regionpol_6C</span>
+<span id="cb10-11"><a></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-13"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, <span class="co"># replace the values in region with country names</span></span>
+<span id="cb10-14"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
+<span id="cb10-15"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
+<span id="cb10-16"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
+<span id="cb10-17"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
+<span id="cb10-18"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
+<span id="cb10-19"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
+<span id="cb10-20"><a></a>                    <span class="co"># number on the left of the ~ is the V-Dem region code</span></span>
+<span id="cb10-21"><a></a>                    <span class="co"># we are changing the number to the country name on the right</span></span>
+<span id="cb10-22"><a></a>                    <span class="co"># of the equals sign</span></span>
+<span id="cb10-23"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="vdemlite" class="slide level2">
+<h2><code>vdemlite</code></h2>
+<p><br></p>
+<ul>
+<li>Covers a few hundred commonly used indicators and indices from 1970 onward</li>
+<li>Covers everything in <a href="https://v-dem.net/documents/41/v-dem_structureofaggregation_v14.pdf">this document</a></li>
+<li>As opposed to 4000+ indicators from the 18th century onward</li>
+<li>Adds some functionality for working with the data</li>
+<li>Easier to work with in the cloud and apps</li>
+</ul>
+</section>
+<section id="vdemlite-fuctions" class="slide level2">
+<h2><code>vdemlite</code> fuctions</h2>
+<p><br></p>
+<ul>
+<li><code>fetchdem()</code> to download the data</li>
+<li><code>summarizedem()</code> provides searchable table of indicators with summary stats</li>
+<li><code>searchdem()</code> to search for specific indicators or all indicators used to construct an index</li>
+<li>See the <a href="https://eteitelbaum.github.io/vdemlite/articles/vdemlite.html">vdemlite documentation</a> for more details</li>
+</ul>
+</section>
+<section id="fetchdem" class="slide level2">
+<h2><code>fetchdem()</code></h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="co"># Load packages</span></span>
+<span id="cb11-2"><a></a><span class="fu">library</span>(vdemlite) <span class="co"># to download V-Dem data</span></span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="co"># Polyarchy and clean elections index for USA and Sweden for 2000-2020</span></span>
+<span id="cb11-5"><a></a>dem_indicators <span class="ot">&lt;-</span> <span class="fu">fetchdem</span>(<span class="at">indicators =</span> <span class="fu">c</span>(<span class="st">"v2x_polyarchy"</span>, <span class="st">"v2xel_frefair"</span>),</span>
+<span id="cb11-6"><a></a>                           <span class="at">countries =</span> <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"SWE"</span>))</span>
+<span id="cb11-7"><a></a></span>
+<span id="cb11-8"><a></a><span class="co"># View the data</span></span>
+<span id="cb11-9"><a></a><span class="fu">glimpse</span>(dem_indicators)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summarizedem" class="slide level2">
+<h2><code>summarizedem()</code></h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># Summary statistics for the polyarchy index</span></span>
+<span id="cb12-2"><a></a><span class="fu">summarizedem</span>(<span class="at">indicator =</span> <span class="st">"v2x_polyarchy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="searchdem" class="slide level2">
+<h2><code>searchdem()</code></h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">searchdem</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn</h2>
+<p><br></p>
+<ul>
+<li>Try using <code>searchdem()</code> to find an indicator you are interested in using</li>
+<li>Use <code>summarizedem()</code> to get summary statistics for that variable</li>
+<li>Use <code>fetchdem()</code> to download the data for that variable for a country or countries of interest</li>
+<li>Try using <code>mutate()</code> to add region codes to the data</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="timer4" data-update-every="1" tabindex="0" style="top:0%;right:5%;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -556,8 +850,6 @@
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="../site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -580,7 +872,6 @@
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":null,"id":"037ada8f3868c397","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -754,12 +1045,50 @@
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
-          
+          RevealNotes,
           RevealSearch,
           RevealZoom
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

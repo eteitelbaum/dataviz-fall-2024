@@ -953,23 +953,23 @@
   {
     "objectID": "slides/week-4.1.html#apis",
     "href": "slides/week-4.1.html#apis",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "APIs",
-    "text": "APIs\n\nAPI stands for “Application Programming Interface”\nWay for two computers to talk to each other\nIn our case, we will use APIs to download social science data\nAPIs are accessed through packages in R\nSometimes there can be more than one package for an API\nUsually easier than reading in data from messy flat file"
+    "text": "APIs\n\n\nAPI stands for “Application Programming Interface”\nWay for two computers to talk to each other\nIn our case, we will use APIs to download social science data"
   },
   {
     "objectID": "slides/week-4.1.html#this-lesson",
     "href": "slides/week-4.1.html#this-lesson",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "This Lesson",
-    "text": "This Lesson\n\nAccess two APIs with R packages\nWorld Bank data through wbstats\n\nThere is another package called WDI\n\nVarieties of Democracy (V-Dem) through vdemdata\n\nThis is the only package for V-Dem\nJust downloads all the data\nSo we have to use dplyr functions like fliter() and select()"
+    "text": "This Lesson\n\n\nPractice with World Bank and V-Dem data\nWorld Bank data through wbstats\n\nThere is another package called WDI\nBoth packages for accessing data through WB API\n\nVarieties of Democracy (V-Dem) through vdemlite\n\nThere is also a package called vdemdata\nvdemlite offers more functionality, works better in the cloud"
   },
   {
     "objectID": "slides/week-4.1.html#searching-for-wb-indicators",
     "href": "slides/week-4.1.html#searching-for-wb-indicators",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "Searching for WB Indicators",
-    "text": "Searching for WB Indicators\n\nflfp_indicators &lt;- wb_search(\"female labor force\") # store the list of indicators\n\nprint(flfp_indicators, n=26) # view the indicators"
+    "text": "Searching for WB Indicators\n\n\nflfp_indicators &lt;- wb_search(\"female labor force\") # store the list of indicators\n\nprint(flfp_indicators, n=26) # view the indicators"
   },
   {
     "objectID": "slides/week-4.1.html#try-it-yourself",
@@ -981,9 +981,9 @@
   {
     "objectID": "slides/week-4.1.html#wbstats-example",
     "href": "slides/week-4.1.html#wbstats-example",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "wbstats Example",
-    "text": "wbstats Example\n\n# Load packages\nlibrary(wbstats) # for downloading WB data\nlibrary(dplyr) # for selecting, renaming and mutating\nlibrary(janitor) # for rounding\n\n# Store the list of indicators in an object\nindicators &lt;- c(\"flfp\" = \"SL.TLF.CACT.FE.ZS\", \"women_rep\" = \"SG.GEN.PARL.ZS\") \n\n# Download the data  \nwomen_emp &lt;- wb_data(indicators, mrv = 50) |&gt; # download data for last 50 yrs\n  select(!iso2c) |&gt; # drop the iso2c code which we won't be using\n  rename(year = date) |&gt; # rename date to year \n  mutate(\n    flfp = round_to_fraction(flfp, denominator = 100), # round to nearest 100th\n    women_rep = round_to_fraction(women_rep, denominator = 100) \n  )\n\n# View the data\nglimpse(women_emp)"
+    "text": "wbstats Example\n\n\n# Load packages\nlibrary(wbstats) # for downloading WB data\nlibrary(dplyr) # for selecting, renaming and mutating\nlibrary(janitor) # for rounding\n\n# Store the list of indicators in an object\nindicators &lt;- c(\"flfp\" = \"SL.TLF.CACT.FE.ZS\", \"women_rep\" = \"SG.GEN.PARL.ZS\") \n\n# Download the data  \nwomen_emp &lt;- wb_data(indicators, mrv = 50) |&gt; # download data for last 50 yrs\n  select(!iso2c) |&gt; # drop the iso2c code which we won't be using\n  rename(year = date) |&gt; # rename date to year \n  mutate(\n    flfp = round_to_fraction(flfp, denominator = 100), # round to nearest 100th\n    women_rep = round_to_fraction(women_rep, denominator = 100) \n  )\n\n# View the data\nglimpse(women_emp)"
   },
   {
     "objectID": "slides/week-4.1.html#try-it-yourself-1",
@@ -995,16 +995,16 @@
   {
     "objectID": "slides/week-4.1.html#downloading-v-dem-data",
     "href": "slides/week-4.1.html#downloading-v-dem-data",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "Downloading V-Dem Data",
-    "text": "Downloading V-Dem Data\n\nThe vdem function from vdemdata just downloads the data\nThere are no parameters for selecting indicators or date ranges\nSo we have to do more work with dplyr functions\n\nfilter() for years\nselect() for variables\n\nWe are also going to use case_match() to add"
+    "text": "Downloading V-Dem Data\n\nThe vdem function from vdemdata just downloads all of the data. Try running this code chunk. What do you see in democracy?\n\nlibrary(vdemdata) # load the V-Dem package\n\ndemocracy &lt;- vdem() # download the V-Dem dataset"
   },
   {
     "objectID": "slides/week-4.1.html#vdemdata-example",
     "href": "slides/week-4.1.html#vdemdata-example",
-    "title": "Downloading Data from an API",
+    "title": "Working With Data",
     "section": "vdemdata Example",
-    "text": "vdemdata Example\n\n# Load packages\nlibrary(vdemdata) # to download V-Dem data\n\n# Download the data\ndemocracy &lt;- vdem |&gt; # download the V-Dem dataset\n  filter(year &gt;= 1990)  |&gt; # filter out years less than 1990\n  select(                  # select (and rename) these variables\n    country = country_name,     # the name before the = sign is the new name  \n    vdem_ctry_id = country_id,  # the name after the = sign is the old name\n    year, \n    polyarchy = v2x_polyarchy, \n    gdp_pc = e_gdppc, \n    region = e_regionpol_6C\n    ) |&gt;\n  mutate(\n    region = case_match(region, # replace the values in region with country names\n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n                    # number on the left of the ~ is the V-Dem region code\n                    # we are changing the number to the country name on the right\n                    # of the equals sign\n  )\n\n# View the data\nglimpse(democracy)"
+    "text": "vdemdata Example\n\n\n# Load packages\nlibrary(vdemdata) # to download V-Dem data\nlibrary(dplyr)\n\n# Download the data\ndemocracy &lt;- vdem |&gt; # download the V-Dem dataset\n  filter(year == 2015)  |&gt; # filter year, keep 2015\n  select(                  # select (and rename) these variables\n    country = country_name,     # the name before the = sign is the new name  \n    vdem_ctry_id = country_id,  # the name after the = sign is the old name\n    year, \n    polyarchy = v2x_polyarchy, \n    gdp_pc = e_gdppc, \n    region = e_regionpol_6C\n    ) |&gt;\n  mutate(\n    region = case_match(region, # replace the values in region with country names\n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n  )\n\n# View the data\nglimpse(democracy)"
   },
   {
     "objectID": "slides/week-4.1.html#try-it-yourself-2",
@@ -4350,5 +4350,145 @@
       "Course Modules",
       "Module 5.1"
     ]
+  },
+  {
+    "objectID": "slides/week-4.1.html#how-do-we-get-tidyclean-data",
+    "href": "slides/week-4.1.html#how-do-we-get-tidyclean-data",
+    "title": "Working With Data",
+    "section": "How Do We Get Tidy/Clean Data?",
+    "text": "How Do We Get Tidy/Clean Data?\n\n\nWrangle it ourselves\nUse a package where it has been wrangled for us\nDownload via an API"
+  },
+  {
+    "objectID": "slides/week-4.1.html#filter-select-mutate",
+    "href": "slides/week-4.1.html#filter-select-mutate",
+    "title": "Working With Data",
+    "section": "filter(), select(), mutate()",
+    "text": "filter(), select(), mutate()\n\nAlong the way we will practice some important dplyr verbs:\n\n\nfilter() is used to select observations based on their values\nselect() is used to select variables\nmutate() is used to create new variables or modifying existing ones\n\n\nAs well as some helpful functions from the janitor package."
+  },
+  {
+    "objectID": "slides/week-4.1.html#apis-in-r",
+    "href": "slides/week-4.1.html#apis-in-r",
+    "title": "Working With Data",
+    "section": "APIs in R",
+    "text": "APIs in R\n\n\nAPIs are accessed through packages in R\nSometimes there can be more than one package for an API\nMuch easier than reading in data from messy flat file!\nWe will use a few API packages in this course\n\nWorld Bank data through wbstats (or WDI)\nfredr for Federal Reserve Economic Data\ntidycensus for US Census data\n\nBut there are many APIs out there (please explore!)"
+  },
+  {
+    "objectID": "slides/week-4.1.html#your-turn",
+    "href": "slides/week-4.1.html#your-turn",
+    "title": "Working With Data",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nSearch for a WB indicator\nDownload the data\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-4.1.html#the-v-dem-dataset",
+    "href": "slides/week-4.1.html#the-v-dem-dataset",
+    "title": "Working With Data",
+    "section": "The V-Dem Dataset",
+    "text": "The V-Dem Dataset\n\n\nV-Dem stands for Varieties of Democracy\nIt is a dataset that measures democracy around the world\nBased on expert assessments of the quality of democracy in each country\nTwo packages we will explore: vdemdata and vdemlite"
+  },
+  {
+    "objectID": "slides/week-4.1.html#filter",
+    "href": "slides/week-4.1.html#filter",
+    "title": "Working With Data",
+    "section": "filter()",
+    "text": "filter()\n\nRun this code. What do you see?\nTry changing the year\nFor one year, use == instead of &gt;=\nOr try &lt;= and see what happens\n\n\ndemocracy &lt;- vdem |&gt; # download the V-Dem dataset\n  filter(year &gt;= 1990) # filter out years less than 1990\n  \nglimpse(democracy)"
+  },
+  {
+    "objectID": "slides/week-4.1.html#versus",
+    "href": "slides/week-4.1.html#versus",
+    "title": "Working With Data",
+    "section": "= versus ==",
+    "text": "= versus ==\n\n\n= is used to assign values to variables, just like &lt;-\n== is used to test if two values are equal to each other\nSo filter(year == 1990) will give you just the observations for 1990"
+  },
+  {
+    "objectID": "slides/week-4.1.html#and",
+    "href": "slides/week-4.1.html#and",
+    "title": "Working With Data",
+    "section": ">= and <=",
+    "text": "&gt;= and &lt;=\n\n&gt;= is used to test if a value is greater than or equal to another value\n&lt;= is used to test if a value is less than or equal to another value\nSo filter(year &gt;= 1990) will give you the observations for 1990 and later\nAnd filter(year &lt;= 1990) will give you the observations for 1990 and earlier"
+  },
+  {
+    "objectID": "slides/week-4.1.html#select",
+    "href": "slides/week-4.1.html#select",
+    "title": "Working With Data",
+    "section": "select()",
+    "text": "select()\n\nRun this code. What do you see?\nNow try v2x_libdem instead of v2x_polyarchy\nChoose more from the codebook\n\n\ndemocracy &lt;- vdem |&gt; # download the V-Dem dataset\n  select(                  # select (and rename) these variables\n    country = country_name,     # before the = sign is new name  \n    vdem_ctry_id = country_id,  # after the = sign is the old name\n    year, \n    polyarchy = v2x_polyarchy\n  )\n  \nglimpse(democracy)  \n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-4.1.html#mutate",
+    "href": "slides/week-4.1.html#mutate",
+    "title": "Working With Data",
+    "section": "mutate()",
+    "text": "mutate()\n\nModify the code to create new variable that is three times the value of polyarchy\nHow about polyarchy squared?\n\n\ndemocracy &lt;- vdem |&gt; # download the V-Dem dataset\n  filter(year == 2015) |&gt; # keep only observations from 2015\n  select(                  # select (and rename) these variables\n    country = country_name,     # name before the = sign is new name  \n    vdem_ctry_id = country_id,  # name after the = sign is old name\n    year, \n    polyarchy = v2x_polyarchy \n    ) |&gt;\n  mutate(\n    polyarchy_dbl = polyarchy * 2 # create variable 2X polyarchy\n  )\n  \nglimpse(democracy)  \n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-4.1.html#some-common-arithmetic-operators",
+    "href": "slides/week-4.1.html#some-common-arithmetic-operators",
+    "title": "Working With Data",
+    "section": "Some Common Arithmetic Operators",
+    "text": "Some Common Arithmetic Operators\n\n\n+ addition\n- subtraction\n* multiplication\n/ division\n^ exponentiation (also **)"
+  },
+  {
+    "objectID": "slides/week-4.1.html#section",
+    "href": "slides/week-4.1.html#section",
+    "title": "Working With Data",
+    "section": "",
+    "text": "Use filter() to select years…\n\n\n# Download the data\ndemocracy &lt;- vdem |&gt; \n  filter(year == 2015)  |&gt; # keep 2015\n  select(                 \n    country = country_name,       \n    vdem_ctry_id = country_id,  \n    year, \n    polyarchy = v2x_polyarchy, \n    gdp_pc = e_gdppc, \n    region = e_regionpol_6C\n    ) |&gt;\n  mutate(\n    region = case_match(region,\n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n  )"
+  },
+  {
+    "objectID": "slides/week-4.1.html#section-1",
+    "href": "slides/week-4.1.html#section-1",
+    "title": "Working With Data",
+    "section": "",
+    "text": "Use select() to choose variables…\n\n\n# Download the data\ndemocracy &lt;- vdem |&gt; \n  filter(year == 2015)  |&gt; \n  select(                  # select (and rename) these variables\n    country = country_name,     # the name before the = sign is the new name  \n    vdem_ctry_id = country_id,  # the name after the = sign is the old name\n    year, \n    polyarchy = v2x_polyarchy, \n    gdp_pc = e_gdppc, \n    region = e_regionpol_6C\n    ) |&gt;\n  mutate(\n    region = case_match(region, \n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n  )"
+  },
+  {
+    "objectID": "slides/week-4.1.html#section-2",
+    "href": "slides/week-4.1.html#section-2",
+    "title": "Working With Data",
+    "section": "",
+    "text": "Use mutate with case_match() to Recode Region….\n\n\n# Download the data\ndemocracy &lt;- vdem |&gt;\n  filter(year == 2015)  |&gt; \n  select(                  \n    country = country_name,     \n    vdem_ctry_id = country_id,  \n    year, \n    polyarchy = v2x_polyarchy, \n    gdp_pc = e_gdppc, \n    region = e_regionpol_6C\n    ) |&gt;\n  mutate(\n    region = case_match(region, # replace the values in region with country names\n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n                    # number on the left of the ~ is the V-Dem region code\n                    # we are changing the number to the country name on the right\n                    # of the equals sign\n  )"
+  },
+  {
+    "objectID": "slides/week-4.1.html#vdemlite",
+    "href": "slides/week-4.1.html#vdemlite",
+    "title": "Working With Data",
+    "section": "vdemlite",
+    "text": "vdemlite\n\n\nCovers a few hundred commonly used indicators and indices from 1970 onward\nCovers everything in this document\nAs opposed to 4000+ indicators from the 18th century onward\nAdds some functionality for working with the data\nEasier to work with in the cloud and apps"
+  },
+  {
+    "objectID": "slides/week-4.1.html#vdemlite-fuctions",
+    "href": "slides/week-4.1.html#vdemlite-fuctions",
+    "title": "Working With Data",
+    "section": "vdemlite fuctions",
+    "text": "vdemlite fuctions\n\n\nfetchdem() to download the data\nsummarizedem() provides searchable table of indicators with summary stats\nsearchdem() to search for specific indicators or all indicators used to construct an index\nSee the vdemlite documentation for more details"
+  },
+  {
+    "objectID": "slides/week-4.1.html#fetchdem",
+    "href": "slides/week-4.1.html#fetchdem",
+    "title": "Working With Data",
+    "section": "fetchdem()",
+    "text": "fetchdem()\n\n\n# Load packages\nlibrary(vdemlite) # to download V-Dem data\n\n# Polyarchy and clean elections index for USA and Sweden for 2000-2020\ndem_indicators &lt;- fetchdem(indicators = c(\"v2x_polyarchy\", \"v2xel_frefair\"),\n                           countries = c(\"USA\", \"SWE\"))\n\n# View the data\nglimpse(dem_indicators)"
+  },
+  {
+    "objectID": "slides/week-4.1.html#summarizedem",
+    "href": "slides/week-4.1.html#summarizedem",
+    "title": "Working With Data",
+    "section": "summarizedem()",
+    "text": "summarizedem()\n\n\n# Summary statistics for the polyarchy index\nsummarizedem(indicator = \"v2x_polyarchy\")"
+  },
+  {
+    "objectID": "slides/week-4.1.html#searchdem",
+    "href": "slides/week-4.1.html#searchdem",
+    "title": "Working With Data",
+    "section": "searchdem()",
+    "text": "searchdem()\n\n\nsearchdem()"
+  },
+  {
+    "objectID": "slides/week-4.1.html#your-turn-1",
+    "href": "slides/week-4.1.html#your-turn-1",
+    "title": "Working With Data",
+    "section": "Your Turn",
+    "text": "Your Turn\n\n\nTry using searchdem() to find an indicator you are interested in using\nUse summarizedem() to get summary statistics for that variable\nUse fetchdem() to download the data for that variable for a country or countries of interest\nTry using mutate() to add region codes to the data\n\n\n\n\n−+\n05:00"
   }
 ]

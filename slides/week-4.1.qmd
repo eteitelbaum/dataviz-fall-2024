@@ -1,5 +1,5 @@
 ---
-title: Downloading Data from an API
+title: Working With Data
 date: today
 date-format: long
 footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
@@ -9,59 +9,95 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
 ---
 
+## How Do We Get Tidy/Clean Data? 
+
+<br>
+
+- Wrangle it ourselves
+- Use a package where it has been wrangled for us
+- Download via an API 
+
+## This Lesson
+
+<br>
+
+- Practice with World Bank and V-Dem data
+- World Bank data through `wbstats`
+  - There is another package called `WDI`
+  - Both packages for accessing data through WB API
+- Varieties of Democracy (V-Dem) through `vdemlite`
+  - There is also a package called `vdemdata`
+  - `vdemlite` offers more functionality, works better in the cloud
+  
+## `filter()`, `select()`, `mutate()` {.smaller}
+
+<br>
+
+Along the way we will practice some important `dplyr` verbs:
+
+<br>
+
+- `filter()` is used to select observations based on their values
+- `select()` is used to select variables
+- `mutate()` is used to create new variables or modifying existing ones  
+
+<br>
+
+As well as some helpful functions from the `janitor` package.  
+
 ## APIs
+
+<br>
 
 - API stands for "Application Programming Interface"
 - Way for two computers to talk to each other
 - In our case, we will use APIs to download social science data
+
+## APIs in R
+
+::: {.incremental}
 - APIs are accessed through packages in R
 - Sometimes there can be more than one package for an API
-- Usually easier than reading in data from messy flat file
+- Much easier than reading in data from messy flat file!
+- We will use a few API packages in this course
+  - World Bank data through `wbstats` (or `WDI`)
+  - `fredr` for Federal Reserve Economic Data
+  - `tidycensus` for US Census data
+- But there are many APIs out there (please explore!)
+:::
 
-## This Lesson
-
-- Access two APIs with R packages
-- World Bank data through `wbstats`
-  - There is another package called `WDI`
-- Varieties of Democracy (V-Dem) through `vdemdata`
-  - This is the only package for V-Dem
-  - Just downloads all the data
-  - So we have to use `dplyr` functions like `fliter()` and `select()`
 
 ## Searching for WB Indicators
+
+<br>
 
 ```{r}
 #| label: search_wb
 #| eval: false
-#| echo: true
 
 flfp_indicators <- wb_search("female labor force") # store the list of indicators
 
 print(flfp_indicators, n=26) # view the indicators
 ```
-  
-## Try it Yourself
-
-- Start a new Quarto document
-- Start a new code chunk
-- Load the `wbstats` package
-- Use `wb_search()` to find some indicators you are interested in
 
 ## `wbstats` Example
+
+<br>
 
 ```{r}
 #| label: download_wb
 #| eval: false
 #| echo: true
+#| code-line-numbers: "1-4|6-7|9|10|11|12|13-16|18-19"
 
 # Load packages
 library(wbstats) # for downloading WB data
@@ -84,37 +120,289 @@ women_emp <- wb_data(indicators, mrv = 50) |> # download data for last 50 yrs
 glimpse(women_emp) 
 ```
 
-## Try it Yourself
+## Your Turn!
 
-- Using the variables you identified in your search, download the data
-- Think about what elements of the code you need to change
-- Hint: the indicators are going to change!
+<br>
+
+- Search for a WB indicator
+- Download the data
+
+```{r}
+#| label: timer1
+#| echo: false
+
+library(countdown)
+countdown(minutes = 5, 
+          id = "timer1", 
+          top = "10%", 
+          right = "10%",
+          color_border = "#fff",
+          color_text = "#fff",
+          color_running_background = "#42affa",
+          color_running_text = "black",
+          color_finished_background = "#E5D19D",
+          color_finished_text = "#00264A")
+```
+
+## The V-Dem Dataset
+
+<br>
+
+- V-Dem stands for Varieties of Democracy
+- It is a dataset that measures democracy around the world
+- Based on expert assessments of the quality of democracy in each country
+- Two packages we will explore: `vdemdata` and `vdemlite`
 
 ## Downloading V-Dem Data
 
-- The `vdem` function from `vdemdata` just downloads the data
-- There are no parameters for selecting indicators or date ranges
-- So we have to do more work with `dplyr` functions
-  - `filter()` for years
-  - `select()` for variables
-- We are also going to use `case_match()` to add 
+<br>
 
-## `vdemdata` Example
+The `vdem` function from `vdemdata` just downloads all of the data. Try running this code chunk. What do you see in `democracy`?
 
 ```{r}
-#| label: vdemdata
+#| label: vdemdata1
 #| eval: false
+
+library(vdemdata) # load the V-Dem package
+
+democracy <- vdem() # download the V-Dem dataset
+```
+
+
+## `filter()`
+
+- Run this code. What do you see?
+- Try changing the year 
+- For one year, use `==` instead of `>=`
+- Or try `<=` and see what happens 
+
+```{r}
+#| label: vdemdata2
+#| eval: false
+
+democracy <- vdem |> # download the V-Dem dataset
+  filter(year >= 1990) # filter out years less than 1990
+  
+glimpse(democracy)  
+```
+
+## `=` versus `==`
+
+<br>
+
+- `=` is used to assign values to variables, just like `<-`
+- `==` is used to test if two values are equal to each other
+- So `filter(year == 1990)` will give you just the observations for 1990
+
+## `>=` and `<=`
+
+- `>=` is used to test if a value is greater than or equal to another value
+- `<=` is used to test if a value is less than or equal to another value
+- So `filter(year >= 1990)` will give you the observations for 1990 and later
+- And `filter(year <= 1990)` will give you the observations for 1990 and earlier
+
+## `select()`
+
+- Run this code. What do you see?
+- Now try `v2x_libdem` instead of `v2x_polyarchy`
+- Choose more from the [codebook](https://v-dem.net/documents/24/codebook_v13.pdf) 
+
+```{r}
+#| label: vdemdata3
 #| echo: true
+#| eval: false
+
+democracy <- vdem |> # download the V-Dem dataset
+  select(                  # select (and rename) these variables
+    country = country_name,     # before the = sign is new name  
+    vdem_ctry_id = country_id,  # after the = sign is the old name
+    year, 
+    polyarchy = v2x_polyarchy
+  )
+  
+glimpse(democracy)  
+```
+
+```{r}
+#| label: timer2
+#| echo: false
+
+countdown(minutes = 5, 
+          id = "timer2",
+          top = "0%",
+          right = "5%")
+```
+
+## `mutate()`
+
+- Modify the code to create new variable that is three times the value of `polyarchy` 
+- How about `polyarchy` squared? 
+
+```{r}
+#| label: vdemdata4
+#| eval: false
+
+democracy <- vdem |> # download the V-Dem dataset
+  filter(year == 2015) |> # keep only observations from 2015
+  select(                  # select (and rename) these variables
+    country = country_name,     # name before the = sign is new name  
+    vdem_ctry_id = country_id,  # name after the = sign is old name
+    year, 
+    polyarchy = v2x_polyarchy 
+    ) |>
+  mutate(
+    polyarchy_dbl = polyarchy * 2 # create variable 2X polyarchy
+  )
+  
+glimpse(democracy)  
+```
+
+```{r}
+#| label: timer3
+#| echo: false
+
+countdown(minutes = 5, 
+          id = "timer3",
+          top = "0%",
+          right = "5%")
+```
+
+## Some Common Arithmetic Operators
+
+<br>
+
+- `+` addition
+- `-` subtraction
+- `*` multiplication
+- `/` division
+- `^` exponentiation (also `**`)
+
+## `vdemdata` Example {.smaller}
+
+<br>
+
+```{r}
+#| label: vdemdata5
+#| eval: false
 
 # Load packages
 library(vdemdata) # to download V-Dem data
+library(dplyr)
 
 # Download the data
 democracy <- vdem |> # download the V-Dem dataset
-  filter(year >= 1990)  |> # filter out years less than 1990
+  filter(year == 2015)  |> # filter year, keep 2015
   select(                  # select (and rename) these variables
     country = country_name,     # the name before the = sign is the new name  
     vdem_ctry_id = country_id,  # the name after the = sign is the old name
+    year, 
+    polyarchy = v2x_polyarchy, 
+    gdp_pc = e_gdppc, 
+    region = e_regionpol_6C
+    ) |>
+  mutate(
+    region = case_match(region, # replace the values in region with country names
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+  )
+
+# View the data
+glimpse(democracy)
+```
+
+## {.smaller}
+
+<br>
+
+Use `filter()` to select years...
+
+<br>
+
+```{r}
+#| label: vdemdata6
+#| eval: false
+#| code-line-numbers: "2-3"
+
+# Download the data
+democracy <- vdem |> 
+  filter(year == 2015)  |> # keep 2015
+  select(                 
+    country = country_name,       
+    vdem_ctry_id = country_id,  
+    year, 
+    polyarchy = v2x_polyarchy, 
+    gdp_pc = e_gdppc, 
+    region = e_regionpol_6C
+    ) |>
+  mutate(
+    region = case_match(region,
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+  )
+```
+
+## {.smaller}
+
+<br>
+
+Use `select()` to choose variables...
+
+<br>
+
+```{r}
+#| label: vdemdata7
+#| eval: false
+#| code-line-numbers: "4-11"
+
+# Download the data
+democracy <- vdem |> 
+  filter(year == 2015)  |> 
+  select(                  # select (and rename) these variables
+    country = country_name,     # the name before the = sign is the new name  
+    vdem_ctry_id = country_id,  # the name after the = sign is the old name
+    year, 
+    polyarchy = v2x_polyarchy, 
+    gdp_pc = e_gdppc, 
+    region = e_regionpol_6C
+    ) |>
+  mutate(
+    region = case_match(region, 
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+  )
+```
+
+## {.smaller}
+
+<br>
+
+Use `mutate` with `case_match()` to Recode Region....
+
+<br>
+
+```{r}
+#| label: vdemdata8
+#| eval: false
+#| code-line-numbers: "12-23"
+
+# Download the data
+democracy <- vdem |>
+  filter(year == 2015)  |> 
+  select(                  
+    country = country_name,     
+    vdem_ctry_id = country_id,  
     year, 
     polyarchy = v2x_polyarchy, 
     gdp_pc = e_gdppc, 
@@ -132,15 +420,85 @@ democracy <- vdem |> # download the V-Dem dataset
                     # we are changing the number to the country name on the right
                     # of the equals sign
   )
-
-# View the data
-glimpse(democracy)
 ```
 
-## Try it Yourself
+## `vdemlite` 
 
-- Go to the V-Dem [Codebook](https://www.v-dem.net/documents/24/codebook_v13.pdf) 
-- Select a democracy indicator from Part III and one other indicator
-- Note the indicator code (e.g. "v2x_polyarchy" for the polyarchy score)
-- In your Quarto notes document, create a new code chunk
-- Use the codes for your selected indicators to download the data
+<br>
+
+- Covers a few hundred commonly used indicators and indices from 1970 onward
+- Covers everything in [this document](https://v-dem.net/documents/41/v-dem_structureofaggregation_v14.pdf)
+- As opposed to 4000+ indicators from the 18th century onward
+- Adds some functionality for working with the data
+- Easier to work with in the cloud and apps
+
+## `vdemlite` fuctions
+
+<br>
+
+- `fetchdem()` to download the data
+- `summarizedem()` provides searchable table of indicators with summary stats
+- `searchdem()` to search for specific indicators or all indicators used to construct an index
+- See the [vdemlite documentation](https://eteitelbaum.github.io/vdemlite/articles/vdemlite.html) for more details
+
+## `fetchdem()`
+
+<br>
+
+```{r}
+#| label: vdemlite1
+#| eval: false
+
+# Load packages
+library(vdemlite) # to download V-Dem data
+
+# Polyarchy and clean elections index for USA and Sweden for 2000-2020
+dem_indicators <- fetchdem(indicators = c("v2x_polyarchy", "v2xel_frefair"),
+                           countries = c("USA", "SWE"))
+
+# View the data
+glimpse(dem_indicators)
+```
+
+## `summarizedem()`
+
+<br>
+
+```{r}
+#| label: vdemlite2
+#| eval: false
+
+# Summary statistics for the polyarchy index
+summarizedem(indicator = "v2x_polyarchy")
+```
+
+## `searchdem()`
+
+<br>
+
+```{r}
+#| label: vdemlite3
+#| eval: false
+
+searchdem()
+```
+
+## Your Turn
+
+<br>
+
+- Try using `searchdem()` to find an indicator you are interested in using
+- Use `summarizedem()` to get summary statistics for that variable
+- Use `fetchdem()` to download the data for that variable for a country or countries of interest
+- Try using `mutate()` to add region codes to the data 
+
+
+```{r}
+#| label: timer4
+#| echo: false
+
+countdown(minutes = 5, 
+          id = "timer4",
+          top = "0%",
+          right = "5%")
+```

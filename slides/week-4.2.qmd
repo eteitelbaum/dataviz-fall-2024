@@ -148,6 +148,8 @@ dem_women |> # save result as new object
 
 ## 
 
+<br>
+
 Use `across()` to Apply Same Function to Multiple Columns
 
 <br>

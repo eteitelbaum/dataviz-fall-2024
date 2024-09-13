@@ -4489,6 +4489,6 @@
     "href": "slides/week-4.1.html#your-turn-1",
     "title": "Working With Data",
     "section": "Your Turn",
-    "text": "Your Turn\n\n\nTry using searchdem() to find an indicator you are interested in using\nUse summarizedem() to get summary statistics for that variable\nUse fetchdem() to download the data for that variable for a country or countries of interest\nTry using mutate() to add region codes to the data\n\n\n\n\n−+\n05:00"
+    "text": "Your Turn\n\n\nLook at the vdemlite documentation\nTry using searchdem() to find an indicator you are interested in using\nUse summarizedem() to get summary statistics for that variable\nUse fetchdem() to download the data for that variable for a country or countries of interest\nTry using mutate() to add region codes to the data\n\n\n\n\n−+\n05:00"
   }
 ]

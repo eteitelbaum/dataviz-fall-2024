@@ -487,6 +487,7 @@ searchdem()
 
 <br>
 
+- Look at the [vdemlite documentation](https://eteitelbaum.github.io/vdemlite/articles/vdemlite.html)
 - Try using `searchdem()` to find an indicator you are interested in using
 - Use `summarizedem()` to get summary statistics for that variable
 - Use `fetchdem()` to download the data for that variable for a country or countries of interest

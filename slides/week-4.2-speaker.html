@@ -11,8 +11,8 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2024-09-09">
-  <title>PSC/DATS 2102–Summer Schedule - Regression Tables</title>
+  <meta name="dcterms.date" content="2024-09-12">
+  <title>PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -388,11 +388,9 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
-  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
-<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Regression Tables">
+<meta property="og:title" content="PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data">
 <meta property="og:site_name" content="PSC/DATS 2102--Summer Schedule">
-<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Regression Tables">
+<meta name="twitter:title" content="PSC/DATS 2102–Summer Schedule - Merging and Summarizing Data">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-dark">
@@ -400,181 +398,180 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Regression Tables</h1>
+  <h1 class="title">Merging and Summarizing Data</h1>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">September 9, 2024</p>
+  <p class="date">September 12, 2024</p>
 </section>
-<section id="whats-in-a-regression-table" class="slide level2">
-<h2>What’s in a Regression Table?</h2>
-
-<img data-src="images/fearon_laitin.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="load-data" class="slide level2">
-<h2>Load Data</h2>
+<section id="merging-data-frames" class="slide level2">
+<h2>Merging Data Frames</h2>
+<ul>
+<li>Often we have data from two different sources</li>
+<li>Results in two data frames</li>
+<li>How to make them one so we can analyze?</li>
+<li>Key questions
+<ul>
+<li>What is the unit of analysis?</li>
+<li>What is/are the corresponding identifier variables?</li>
+<li>Are the identifier variables in common?</li>
+<li>Or do they have to be added/transformed to match?</li>
+</ul></li>
+</ul>
+</section>
+<section id="merging-wb-and-v-dem-data" class="slide level2">
+<h2>Merging WB and V-Dem Data</h2>
+<p><br></p>
+<ul>
+<li>These are both time-series, country-level data</li>
+<li>Need to merge by country-year</li>
+<li>Year is easy</li>
+<li>But there are many different country codes</li>
+<li>Can use <code>countrycode</code> package to assign country codes</li>
+</ul>
+</section>
+<section id="countrycode-example" class="slide level2">
+<h2><code>countrycode</code> Example</h2>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(peacesciencer)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(dplyr)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Load countrycode</span></span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(countrycode)</span>
 <span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>conflict_df <span class="ot">&lt;-</span> <span class="fu">create_stateyears</span>(<span class="at">system =</span> <span class="st">'gw'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1946</span><span class="sc">:</span><span class="dv">1999</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a></a>  <span class="fu">add_ucdp_acd</span>(<span class="at">type=</span><span class="fu">c</span>(<span class="st">"intrastate"</span>), <span class="at">only_wars =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a></a>  <span class="fu">add_democracy</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a></a>  <span class="fu">add_creg_fractionalization</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a></a>  <span class="fu">add_sdp_gdp</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-10"><a></a>  <span class="fu">add_rugged_terrain</span>()</span>
-<span id="cb1-11"><a></a></span>
-<span id="cb1-12"><a></a><span class="fu">glimpse</span>(conflict_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="setup" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
+<span id="cb1-4"><a></a><span class="co"># Create new iso3c variable</span></span>
+<span id="cb1-5"><a></a>dem_data <span class="ot">&lt;-</span> dem_data <span class="sc">|&gt;</span>    </span>
+<span id="cb1-6"><a></a>  <span class="fu">mutate</span>(<span class="at">iso3c =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> country_id, <span class="co"># what we are converting</span></span>
+<span id="cb1-7"><a></a>        <span class="at">origin =</span> <span class="st">"vdem"</span>,         <span class="co"># we are converting from vdem</span></span>
+<span id="cb1-8"><a></a>        <span class="at">destination =</span> <span class="st">"wb"</span>))  <span class="sc">|&gt;</span> <span class="co"># and converting to the WB iso3c code </span></span>
+<span id="cb1-9"><a></a>  <span class="fu">relocate</span>(iso3c, <span class="at">.after =</span> country_id) <span class="co"># move iso3c </span></span>
+<span id="cb1-10"><a></a></span>
+<span id="cb1-11"><a></a><span class="co"># View the data</span></span>
+<span id="cb1-12"><a></a><span class="fu">glimpse</span>(dem_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="run-model" class="slide level2">
-<h2>Run Model</h2>
-<p><br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>conflict_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(ucdponset <span class="sc">~</span> ethfrac <span class="sc">+</span> relfrac <span class="sc">+</span> v2x_polyarchy <span class="sc">+</span> </span>
-<span id="cb2-2"><a></a>                        rugged <span class="sc">+</span> wbgdppc2011est <span class="sc">+</span> wbpopest,</span>
-<span id="cb2-3"><a></a>                  <span class="at">data=</span> conflict_df,</span>
-<span id="cb2-4"><a></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
-</section>
-<section id="view-with-summary" class="slide level2">
-<h2>View with <code>summary()</code></h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">summary</span>(conflict_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = ucdponset ~ ethfrac + relfrac + v2x_polyarchy + 
-    rugged + wbgdppc2011est + wbpopest, family = binomial(link = "logit"), 
-    data = conflict_df)
-
-Coefficients:
-               Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)    -5.69260    1.40788  -4.043 5.27e-05 ***
-ethfrac         0.80005    0.38072   2.101  0.03560 *  
-relfrac        -0.39138    0.41673  -0.939  0.34764    
-v2x_polyarchy  -0.60161    0.50879  -1.182  0.23704    
-rugged          0.06413    0.07603   0.843  0.39897    
-wbgdppc2011est -0.37188    0.12059  -3.084  0.00204 ** 
-wbpopest        0.29318    0.06735   4.353 1.34e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1182.5  on 6150  degrees of freedom
-Residual deviance: 1126.7  on 6144  degrees of freedom
-  (885 observations deleted due to missingness)
-AIC: 1140.7
-
-Number of Fisher Scoring iterations: 7</code></pre>
-</div>
-</div>
-<p>Now call <code>View()</code> on <code>conflict_model</code>. What do you see?</p>
-</section>
-<section id="view-results-with-broom" class="slide level2">
-<h2>View results with <code>broom</code></h2>
-<p>The <code>tidy()</code> function takes the information in the list and transforms it into a tibble. Call <code>View()</code> on <code>tidy_model</code> to confirm…</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 7
-  term           estimate std.error statistic p.value conf.low conf.high
-  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)     -5.69      1.41      -4.04  0.00005  -8.44      -2.92 
-2 ethfrac          0.800     0.381      2.10  0.0356    0.0670     1.56 
-3 relfrac         -0.391     0.417     -0.939 0.348    -1.22       0.420
-4 v2x_polyarchy   -0.602     0.509     -1.18  0.237    -1.61       0.387
-5 rugged           0.0641    0.0760     0.843 0.399    -0.0923     0.207
-6 wbgdppc2011est  -0.372     0.121     -3.08  0.00204  -0.613     -0.140
-7 wbpopest         0.293     0.0673     4.35  0.00001   0.162      0.426</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer3" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
-</section>
-<section id="how-close-are-our-results-to-fl" class="slide level2">
-<h2>How close are our results to F&amp;L?</h2>
-<p><br></p>
-<p>Discuss with a neighbor…</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 7
-  term           estimate std.error statistic p.value conf.low conf.high
-  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)     -5.69      1.41      -4.04  0.00005  -8.44      -2.92 
-2 ethfrac          0.800     0.381      2.10  0.0356    0.0670     1.56 
-3 relfrac         -0.391     0.417     -0.939 0.348    -1.22       0.420
-4 v2x_polyarchy   -0.602     0.509     -1.18  0.237    -1.61       0.387
-5 rugged           0.0641    0.0760     0.843 0.399    -0.0923     0.207
-6 wbgdppc2011est  -0.372     0.121     -3.08  0.00204  -0.613     -0.140
-7 wbpopest         0.293     0.0673     4.35  0.00001   0.162      0.426</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer4" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
-</section>
-<section id="could-we-get-closer-to-fl" class="slide level2">
-<h2>Could we get closer to F&amp;L?</h2>
+<section id="try-it-yourself" class="slide level2">
+<h2>Try it Yourself</h2>
 <p><br></p>
 <ul>
-<li>Got to the <a href="https://svmiller.com/peacesciencer/reference/add_democracy.html">peacesciencer</a> documentation</li>
-<li>How close are our data to F&amp;L’s?</li>
-<li>Could we change something to better approximate their results?</li>
+<li>Using your democracy data frame from the last lesson</li>
+<li>Use <code>mutate()</code> and <code>countrycode()</code> to add iso3c country codes</li>
+<li>Use <code>relocate</code> to move your iso3c code to the “front” of your data frame (optional)</li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer5" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
 </section>
-<section id="could-we-improve-the-model" class="slide level2">
-<h2>Could we improve the model?</h2>
+<section id="types-of-joins-in-dplyr" class="slide level2">
+<h2>Types of Joins in <code>dplyr</code></h2>
 <p><br></p>
 <ul>
-<li>Are there predictors in the <code>peacesciencer</code> package that were not available to F&amp;L?</li>
-<li>Would adding them improve the fit?</li>
-<li>Are there some predictors that should be removed?</li>
+<li>Mutating versus filtering joins</li>
+<li>Four types of mutating joins
+<ul>
+<li><code>inner_join()</code></li>
+<li><code>full_join()</code></li>
+<li><code>left_join()</code></li>
+<li><code>right_join()</code></li>
+</ul></li>
+<li>For the most part we will use <code>left_join()</code></li>
 </ul>
+</section>
+<section id="left_join-example" class="slide level2">
+<h2><code>left_join()</code> Example</h2>
+<p><br></p>
 <div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer6" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">12</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># Perform left join using common iso3c variable and year</span></span>
+<span id="cb2-2"><a></a>dem_women <span class="ot">&lt;-</span> <span class="fu">left_join</span>(dem_data, women_emp, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso3c"</span>, <span class="st">"year"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(country_text_id, country_id, country)) <span class="sc">|&gt;</span> <span class="co"># drop extra country codes/names</span></span>
+<span id="cb2-4"><a></a>  <span class="fu">rename</span>(<span class="at">region =</span> e_regionpol_6C, </span>
+<span id="cb2-5"><a></a>         <span class="at">polyarchy =</span> v2x_polyarchy,</span>
+<span id="cb2-6"><a></a>         <span class="at">libdem =</span> v2x_libdem) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a></a>    <span class="fu">mutate</span>(</span>
+<span id="cb2-8"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, <span class="co"># replace the values in region with country names</span></span>
+<span id="cb2-9"><a></a>                     <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
+<span id="cb2-10"><a></a>                     <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
+<span id="cb2-11"><a></a>                     <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
+<span id="cb2-12"><a></a>                     <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
+<span id="cb2-13"><a></a>                     <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
+<span id="cb2-14"><a></a>                     <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
+<span id="cb2-15"><a></a>    )</span>
+<span id="cb2-16"><a></a>  </span>
+<span id="cb2-17"><a></a><span class="co"># View the data</span></span>
+<span id="cb2-18"><a></a><span class="fu">glimpse</span>(dem_women)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="try-it-yourself-1" class="slide level2">
+<h2>Try it Yourself</h2>
+<p><br></p>
+<ul>
+<li>Take your V-Dem data frame and your World Bank data frame</li>
+<li>Using <code>left_join()</code> to merge on country code and year</li>
+<li>Along the way, use <code>rename()</code> and <code>select()</code> to insure you have just one country name</li>
+</ul>
+</section>
+<section id="group-summarize-and-arrange" class="slide level2">
+<h2>Group, Summarize and Arrange</h2>
+<p><br></p>
+<ul>
+<li><code>group_by()</code>, <code>summarize()</code>, <code>arrange()</code></li>
+<li>A very common sequence in data science:
+<ul>
+<li>Take an average or some other statistic for a group</li>
+<li>Rank from high to low values of summary value</li>
+</ul></li>
+</ul>
+</section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># group_by(), summarize() and arrange()</span></span>
+<span id="cb3-2"><a></a>dem_women <span class="sc">|&gt;</span> <span class="co"># save result as new object</span></span>
+<span id="cb3-3"><a></a>  <span class="fu">group_by</span>(region)  <span class="sc">|&gt;</span> <span class="co"># group data by region</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">summarize</span>(           <span class="co"># summarize following vars (by region)</span></span>
+<span id="cb3-5"><a></a>    <span class="at">polyarchy_mean =</span> <span class="fu">mean</span>(polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculate mean after remove NAs</span></span>
+<span id="cb3-6"><a></a>    <span class="at">libdem_median =</span> <span class="fu">median</span>(libdem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculate median after remove NAs</span></span>
+<span id="cb3-7"><a></a>    <span class="at">women_rep_sd =</span> <span class="fu">sd</span>(women_rep, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># calculate std. dev after remove NAs</span></span>
+<span id="cb3-8"><a></a>    <span class="at">flfp_min =</span> <span class="fu">min</span>(flfp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># calculate minimum flfp after remove NAs</span></span>
+<span id="cb3-9"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(polyarchy_mean)) <span class="co"># arrange in descending order by polyarchy score</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="use-across-to-apply-same-function-to-multiple-columns" class="slide level2">
+<h2>Use <code>across()</code> to Apply Same Function to Multiple Columns</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>dem_women <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb4-4"><a></a>    <span class="fu">across</span>(<span class="fu">c</span>(polyarchy, libdem, women_rep, flfp), mean, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-5"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(polyarchy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="try-it-yourself-2" class="slide level2 scrollable">
+<h2>Try it Yourself</h2>
+<ul>
+<li>Try changing the parameters in the code to answer these questions:</li>
+</ul>
+<ol type="1">
+<li>Try summarizing the data with a <a href="https://dplyr.tidyverse.org/reference/summarise.html#useful-functions">different function</a> for one or more of the variables.</li>
+</ol>
+<ol type="a">
+<li>What is the median value of <code>polyarchy</code> for The West?</li>
+<li>What is the max value of <code>libdem</code> for Eastern Europe?</li>
+<li>What is the standard deviation of <code>women_rep</code> for Africa?</li>
+<li>What is the mean of <code>flfp</code> for the Middle East?</li>
+</ol>
+<ol start="2" type="1">
+<li>Now try grouping by country instead of region and filter for years &gt;= 2000.</li>
+</ol>
+<ol type="a">
+<li>What is the median value of <code>polyarchy</code> for Sweden?</li>
+<li>What is the max value of <code>libdem</code> New Zealand?</li>
+<li>What is the standard deviation of <code>women_rep</code> for Norway?</li>
+<li>What is the min of <code>flfp</code> for Germany?</li>
+</ol>
+<ol start="3" type="1">
+<li>Try sorting countries in ascending order of the selected variable (hint: delete “desc” from the <code>arrange()</code> call). Which country ranks at the “top” of the list? <strong>Now change it back to descending order.</strong></li>
+</ol>
 
 
 </section>
@@ -618,7 +615,7 @@ Number of Fisher Scoring iterations: 7</code></pre>
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"16986744404656242615","id":"97385b60c701b7dc","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17261931152894463360","id":"0c6d733325b63b45","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

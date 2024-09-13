@@ -12,7 +12,7 @@ format:
     multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -31,6 +31,8 @@ execute:
   
 ## Merging WB and V-Dem Data
 
+<br>
+
 - These are both time-series, country-level data
 - Need to merge by country-year
 - Year is easy
@@ -39,32 +41,37 @@ execute:
 
 ## `countrycode` Example
 
+<br>
+
 ```{r}
 #| label: countrycode
 #| eval: false
-#| echo: true
 
 # Load countrycode
 library(countrycode)
 
 # Create new iso3c variable
-democracy <- democracy |>    
-  mutate(iso3c = countrycode(sourcevar = vdem_ctry_id, # what we are converting
+dem_data <- dem_data |>    
+  mutate(iso3c = countrycode(sourcevar = country_id, # what we are converting
         origin = "vdem",         # we are converting from vdem
         destination = "wb"))  |> # and converting to the WB iso3c code 
-  relocate(iso3c, .after = vdem_ctry_id) # move iso3c 
+  relocate(iso3c, .after = country_id) # move iso3c 
 
 # View the data
-glimpse(democracy)
+glimpse(dem_data)
 ```
 
 ## Try it Yourself
+
+<br>
 
 - Using your democracy data frame from the last lesson
 - Use `mutate()` and `countrycode()` to add iso3c country codes
 - Use `relocate` to move your iso3c code to the "front" of your data frame (optional)
 
 ## Types of Joins in `dplyr`
+
+<br>
 
 - Mutating versus filtering joins
 - Four types of mutating joins
@@ -76,33 +83,43 @@ glimpse(democracy)
 
 ## `left_join()` Example
 
+<br>
+
 ```{r}
 #| label: left_join()
 #| eval: false
-#| echo: true
-
-# Load readr
-library(readr)
 
 # Perform left join using common iso3c variable and year
-dem_women <- left_join(democracy, women_emp, by = c("iso3c", "year")) |> 
-  rename(country = country.x) |> # rename country.x
-  select(!country.y)             # crop country.y
-
-# Save as .csv for future use
-write_csv(dem_women, "data/dem_women.csv")
-
+dem_women <- left_join(dem_data, women_emp, by = c("iso3c", "year")) |> 
+  select(-c(country_text_id, country_id, country)) |> # drop extra country codes/names
+  rename(region = e_regionpol_6C, 
+         polyarchy = v2x_polyarchy,
+         libdem = v2x_libdem) |>
+    mutate(
+    region = case_match(region, # replace the values in region with country names
+                     1 ~ "Eastern Europe", 
+                     2 ~ "Latin America",  
+                     3 ~ "Middle East",   
+                     4 ~ "Africa", 
+                     5 ~ "The West", 
+                     6 ~ "Asia")
+    )
+  
 # View the data
 glimpse(dem_women)  
 ```
 
 ## Try it Yourself
 
+<br>
+
 - Take your V-Dem data frame and your World Bank data frame
 - Using `left_join()` to merge on country code and year
 - Along the way, use `rename()` and `select()` to insure you have just one country name
 
 ## Group, Summarize and Arrange
+
+<br>
 
 - `group_by()`, `summarize()`, `arrange()`
 - A very common sequence in data science:
@@ -111,47 +128,56 @@ glimpse(dem_women)
   
 ## Example
 
+<br>
+
 ```{r}
 #| label: summarize
 #| eval: false
-#| echo: true
 
 # group_by(), summarize() and arrange()
-dem_summary <- dem_women |> # save result as new object
-  group_by(region)  |> # group dem_women data by region
+dem_women |> # save result as new object
+  group_by(region)  |> # group data by region
   summarize(           # summarize following vars (by region)
-    polyarchy = mean(polyarchy, na.rm = TRUE), # calculate mean, remove NAs
-    gdp_pc = mean(gdp_pc, na.rm = TRUE), 
-    flfp = mean(flfp, na.rm = TRUE), 
-    women_rep = mean(women_rep, na.rm = TRUE)
+    polyarchy_mean = mean(polyarchy, na.rm = TRUE), # calculate mean after remove NAs
+    libdem_median = median(libdem, na.rm = TRUE), # calculate median after remove NAs
+    women_rep_sd = sd(women_rep, na.rm = TRUE), # calculate std. dev after remove NAs
+    flfp_min = min(flfp, na.rm = TRUE) # calculate minimum flfp after remove NAs
   ) |> 
-  arrange(desc(polyarchy)) # arrange in descending order by polyarchy score
-
-# Save as .csv for future use
-write_csv(dem_summary, "data/dem_summary.csv")
-
-# View the data
-glimpse(dem_summary)
+  arrange(desc(polyarchy_mean)) # arrange in descending order by polyarchy score
 ```
+
+## Use `across()` to Apply Same Function to Multiple Columns
+
+<br>
+
+```{r}
+#| label: across
+#| eval: false
+
+dem_women |>
+  group_by(region) |> 
+  summarize(
+    across(c(polyarchy, libdem, women_rep, flfp), mean, na.rm = TRUE)
+  ) |> 
+  arrange(desc(polyarchy))
+```
+
 
 ## Try it Yourself {.scrollable}
 
-- Try running a `group_by()`, `summarize()` and `arrange()` in your Quarto document
-- Try changing the parameters to answer these questions: 
+- Try changing the parameters in the code to answer these questions: 
 
 1. Try summarizing the data with a [different function](https://dplyr.tidyverse.org/reference/summarise.html#useful-functions) for one or more of the variables. 
-  a. What is the median value of `polyarchy` for The West?
-  b. What is the max value of `gdp_pc` for Eastern Europe?
-  c. What is the standard deviation of `flfp` for Africa?
-  d. What is the interquartile range of `women_rep` for the Middle East?
+  a. What is the median value of `polyarchy` for The West? 
+  b. What is the max value of `libdem` for Eastern Europe?
+  c. What is the standard deviation of `women_rep` for Africa?
+  d. What is the mean of `flfp` for the Middle East?
   
-2. Now try grouping by country instead of region. 
+2. Now try grouping by country instead of region and filter for years >= 2000.
 
-  a. What is the median value of `polyarchy` for Sweden?
-  b. What is the max value of `gdp_pc` New Zealand?
-  c. What is the standard deviation of `flfp` for Spain?
-  d. What is the interquartile range of `women_rep` for Germany?
+  a. What is the median value of `polyarchy` for Sweden? 
+  b. What is the max value of `libdem` New Zealand?
+  c. What is the standard deviation of `women_rep` for Norway?
+  d. What is the min of `flfp` for Germany?
 
-3. Sort countries in descending order based on the mean value of `gdp_pc` (instead of the median value of `polyarchy`). Which country ranks first based on this sorting?
-
-4. Now try sorting countries in ascending order based on the median value of `women_rep` (hint: delete "desc" from the `arrange()` call). Which country ranks at the "top" of the list?
+3. Try sorting countries in ascending order of the selected variable (hint: delete "desc" from the `arrange()` call). Which country ranks at the "top" of the list? **Now change it back to descending order.** 

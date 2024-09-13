@@ -892,63 +892,63 @@
     "href": "slides/week-4.2.html#merging-wb-and-v-dem-data",
     "title": "Merging and Summarizing Data",
     "section": "Merging WB and V-Dem Data",
-    "text": "Merging WB and V-Dem Data\n\nThese are both time-series, country-level data\nNeed to merge by country-year\nYear is easy\nBut there are many different country codes\nCan use countrycode package to assign country codes"
+    "text": "Merging WB and V-Dem Data\n\n\nThese are both time-series, country-level data\nNeed to merge by country-year\nYear is easy\nBut there are many different country codes\nCan use countrycode package to assign country codes"
   },
   {
     "objectID": "slides/week-4.2.html#countrycode-example",
     "href": "slides/week-4.2.html#countrycode-example",
     "title": "Merging and Summarizing Data",
     "section": "countrycode Example",
-    "text": "countrycode Example\n\n# Load countrycode\nlibrary(countrycode)\n\n# Create new iso3c variable\ndemocracy &lt;- democracy |&gt;    \n  mutate(iso3c = countrycode(sourcevar = vdem_ctry_id, # what we are converting\n        origin = \"vdem\",         # we are converting from vdem\n        destination = \"wb\"))  |&gt; # and converting to the WB iso3c code \n  relocate(iso3c, .after = vdem_ctry_id) # move iso3c \n\n# View the data\nglimpse(democracy)"
+    "text": "countrycode Example\n\n\n# Load countrycode\nlibrary(countrycode)\n\n# Create new iso3c variable\ndem_data &lt;- dem_data |&gt;    \n  mutate(iso3c = countrycode(sourcevar = country_id, # what we are converting\n        origin = \"vdem\",         # we are converting from vdem\n        destination = \"wb\"))  |&gt; # and converting to the WB iso3c code \n  relocate(iso3c, .after = country_id) # move iso3c \n\n# View the data\nglimpse(dem_data)"
   },
   {
     "objectID": "slides/week-4.2.html#try-it-yourself",
     "href": "slides/week-4.2.html#try-it-yourself",
     "title": "Merging and Summarizing Data",
     "section": "Try it Yourself",
-    "text": "Try it Yourself\n\nUsing your democracy data frame from the last lesson\nUse mutate() and countrycode() to add iso3c country codes\nUse relocate to move your iso3c code to the “front” of your data frame (optional)"
+    "text": "Try it Yourself\n\n\nUsing your democracy data frame from the last lesson\nUse mutate() and countrycode() to add iso3c country codes\nUse relocate to move your iso3c code to the “front” of your data frame (optional)"
   },
   {
     "objectID": "slides/week-4.2.html#types-of-joins-in-dplyr",
     "href": "slides/week-4.2.html#types-of-joins-in-dplyr",
     "title": "Merging and Summarizing Data",
     "section": "Types of Joins in dplyr",
-    "text": "Types of Joins in dplyr\n\nMutating versus filtering joins\nFour types of mutating joins\n\ninner_join()\nfull_join()\nleft_join()\nright_join()\n\nFor the most part we will use left_join()"
+    "text": "Types of Joins in dplyr\n\n\nMutating versus filtering joins\nFour types of mutating joins\n\ninner_join()\nfull_join()\nleft_join()\nright_join()\n\nFor the most part we will use left_join()"
   },
   {
     "objectID": "slides/week-4.2.html#left_join-example",
     "href": "slides/week-4.2.html#left_join-example",
     "title": "Merging and Summarizing Data",
     "section": "left_join() Example",
-    "text": "left_join() Example\n\n# Load readr\nlibrary(readr)\n\n# Perform left join using common iso3c variable and year\ndem_women &lt;- left_join(democracy, women_emp, by = c(\"iso3c\", \"year\")) |&gt; \n  rename(country = country.x) |&gt; # rename country.x\n  select(!country.y)             # crop country.y\n\n# Save as .csv for future use\nwrite_csv(dem_women, \"data/dem_women.csv\")\n\n# View the data\nglimpse(dem_women)"
+    "text": "left_join() Example\n\n\n# Perform left join using common iso3c variable and year\ndem_women &lt;- left_join(dem_data, women_emp, by = c(\"iso3c\", \"year\")) |&gt; \n  select(-c(country_text_id, country_id, country)) |&gt; # drop extra country codes/names\n  rename(region = e_regionpol_6C, \n         polyarchy = v2x_polyarchy,\n         libdem = v2x_libdem) |&gt;\n    mutate(\n    region = case_match(region, # replace the values in region with country names\n                     1 ~ \"Eastern Europe\", \n                     2 ~ \"Latin America\",  \n                     3 ~ \"Middle East\",   \n                     4 ~ \"Africa\", \n                     5 ~ \"The West\", \n                     6 ~ \"Asia\")\n    )\n  \n# View the data\nglimpse(dem_women)"
   },
   {
     "objectID": "slides/week-4.2.html#try-it-yourself-1",
     "href": "slides/week-4.2.html#try-it-yourself-1",
     "title": "Merging and Summarizing Data",
     "section": "Try it Yourself",
-    "text": "Try it Yourself\n\nTake your V-Dem data frame and your World Bank data frame\nUsing left_join() to merge on country code and year\nAlong the way, use rename() and select() to insure you have just one country name"
+    "text": "Try it Yourself\n\n\nTake your V-Dem data frame and your World Bank data frame\nUsing left_join() to merge on country code and year\nAlong the way, use rename() and select() to insure you have just one country name"
   },
   {
     "objectID": "slides/week-4.2.html#group-summarize-and-arrange",
     "href": "slides/week-4.2.html#group-summarize-and-arrange",
     "title": "Merging and Summarizing Data",
     "section": "Group, Summarize and Arrange",
-    "text": "Group, Summarize and Arrange\n\ngroup_by(), summarize(), arrange()\nA very common sequence in data science:\n\nTake an average or some other statistic for a group\nRank from high to low values of summary value"
+    "text": "Group, Summarize and Arrange\n\n\ngroup_by(), summarize(), arrange()\nA very common sequence in data science:\n\nTake an average or some other statistic for a group\nRank from high to low values of summary value"
   },
   {
     "objectID": "slides/week-4.2.html#example",
     "href": "slides/week-4.2.html#example",
     "title": "Merging and Summarizing Data",
     "section": "Example",
-    "text": "Example\n\n# group_by(), summarize() and arrange()\ndem_summary &lt;- dem_women |&gt; # save result as new object\n  group_by(region)  |&gt; # group dem_women data by region\n  summarize(           # summarize following vars (by region)\n    polyarchy = mean(polyarchy, na.rm = TRUE), # calculate mean, remove NAs\n    gdp_pc = mean(gdp_pc, na.rm = TRUE), \n    flfp = mean(flfp, na.rm = TRUE), \n    women_rep = mean(women_rep, na.rm = TRUE)\n  ) |&gt; \n  arrange(desc(polyarchy)) # arrange in descending order by polyarchy score\n\n# Save as .csv for future use\nwrite_csv(dem_summary, \"data/dem_summary.csv\")\n\n# View the data\nglimpse(dem_summary)"
+    "text": "Example\n\n\n# group_by(), summarize() and arrange()\ndem_women |&gt; # save result as new object\n  group_by(region)  |&gt; # group data by region\n  summarize(           # summarize following vars (by region)\n    polyarchy_mean = mean(polyarchy, na.rm = TRUE), # calculate mean after remove NAs\n    libdem_median = median(libdem, na.rm = TRUE), # calculate median after remove NAs\n    women_rep_sd = sd(women_rep, na.rm = TRUE), # calculate std. dev after remove NAs\n    flfp_min = min(flfp, na.rm = TRUE) # calculate minimum flfp after remove NAs\n  ) |&gt; \n  arrange(desc(polyarchy_mean)) # arrange in descending order by polyarchy score"
   },
   {
     "objectID": "slides/week-4.2.html#try-it-yourself-2",
     "href": "slides/week-4.2.html#try-it-yourself-2",
     "title": "Merging and Summarizing Data",
     "section": "Try it Yourself",
-    "text": "Try it Yourself\n\nTry running a group_by(), summarize() and arrange() in your Quarto document\nTry changing the parameters to answer these questions:\n\n\nTry summarizing the data with a different function for one or more of the variables.\n\n\nWhat is the median value of polyarchy for The West?\nWhat is the max value of gdp_pc for Eastern Europe?\nWhat is the standard deviation of flfp for Africa?\nWhat is the interquartile range of women_rep for the Middle East?\n\n\nNow try grouping by country instead of region.\n\n\nWhat is the median value of polyarchy for Sweden?\nWhat is the max value of gdp_pc New Zealand?\nWhat is the standard deviation of flfp for Spain?\nWhat is the interquartile range of women_rep for Germany?\n\n\nSort countries in descending order based on the mean value of gdp_pc (instead of the median value of polyarchy). Which country ranks first based on this sorting?\nNow try sorting countries in ascending order based on the median value of women_rep (hint: delete “desc” from the arrange() call). Which country ranks at the “top” of the list?"
+    "text": "Try it Yourself\n\nTry changing the parameters in the code to answer these questions:\n\n\nTry summarizing the data with a different function for one or more of the variables.\n\n\nWhat is the median value of polyarchy for The West?\nWhat is the max value of libdem for Eastern Europe?\nWhat is the standard deviation of women_rep for Africa?\nWhat is the mean of flfp for the Middle East?\n\n\nNow try grouping by country instead of region and filter for years &gt;= 2000.\n\n\nWhat is the median value of polyarchy for Sweden?\nWhat is the max value of libdem New Zealand?\nWhat is the standard deviation of women_rep for Norway?\nWhat is the min of flfp for Germany?\n\n\nTry sorting countries in ascending order of the selected variable (hint: delete “desc” from the arrange() call). Which country ranks at the “top” of the list? Now change it back to descending order."
   },
   {
     "objectID": "slides/week-4.1.html#apis",
@@ -4490,5 +4490,12 @@
     "title": "Working With Data",
     "section": "Your Turn",
     "text": "Your Turn\n\n\nLook at the vdemlite documentation\nTry using searchdem() to find an indicator you are interested in using\nUse summarizedem() to get summary statistics for that variable\nUse fetchdem() to download the data for that variable for a country or countries of interest\nTry using mutate() to add region codes to the data\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-4.2.html#use-across-to-apply-same-function-to-multiple-columns",
+    "href": "slides/week-4.2.html#use-across-to-apply-same-function-to-multiple-columns",
+    "title": "Merging and Summarizing Data",
+    "section": "Use across() to Apply Same Function to Multiple Columns",
+    "text": "Use across() to Apply Same Function to Multiple Columns\n\n\ndem_women |&gt;\n  group_by(region) |&gt; \n  summarize(\n    across(c(polyarchy, libdem, women_rep, flfp), mean, na.rm = TRUE)\n  ) |&gt; \n  arrange(desc(polyarchy))"
   }
 ]

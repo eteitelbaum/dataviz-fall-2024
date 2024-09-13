@@ -146,7 +146,9 @@ dem_women |> # save result as new object
   arrange(desc(polyarchy_mean)) # arrange in descending order by polyarchy score
 ```
 
-## Use `across()` to Apply Same Function to Multiple Columns
+## 
+
+Use `across()` to Apply Same Function to Multiple Columns
 
 <br>
 

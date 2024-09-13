@@ -4497,5 +4497,12 @@
     "title": "Merging and Summarizing Data",
     "section": "Use across() to Apply Same Function to Multiple Columns",
     "text": "Use across() to Apply Same Function to Multiple Columns\n\n\ndem_women |&gt;\n  group_by(region) |&gt; \n  summarize(\n    across(c(polyarchy, libdem, women_rep, flfp), mean, na.rm = TRUE)\n  ) |&gt; \n  arrange(desc(polyarchy))"
+  },
+  {
+    "objectID": "slides/week-4.2.html#section",
+    "href": "slides/week-4.2.html#section",
+    "title": "Merging and Summarizing Data",
+    "section": "",
+    "text": "Use across() to Apply Same Function to Multiple Columns\n\n\ndem_women |&gt;\n  group_by(region) |&gt; \n  summarize(\n    across(c(polyarchy, libdem, women_rep, flfp), mean, na.rm = TRUE)\n  ) |&gt; \n  arrange(desc(polyarchy))"
   }
 ]

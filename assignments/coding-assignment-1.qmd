@@ -54,7 +54,7 @@ Try to make sure you download indicators with enough data to conduct your analys
 
 ## Step 5: Interpret your data (20 pts)
 
-*Write a paragraph or so relating your insights to the Norris reading about electoral reform and women's representation. Picking a handful of country cases from your data, how does your analysis relate to her arguments about the relevance of electoral systems, statutory quotas, reserved seats or voluntary quotas?* 
+*Write a paragraph or so relating your insights to the Norris reading about electoral reform and women's representation. Picking a handful of country cases from your data, how does your summary of gender and democracy variables relate to the level of female representation in a country? How would you relate these findings to Norris's argument about the importance of an inclusive democracy?* 
 
 ::: {.callout-warning}
 Don't write your paragraphs or any interpretation or analysis in a code chunk. Use markdown text. Quarto is designed to be a literate programming tool, so you can write your analysis in markdown text and include code chunks when necessary to support your argument.

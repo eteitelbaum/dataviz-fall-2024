@@ -1,5 +1,5 @@
 ---
-title: Bar Charts and Histograms
+title: Grammar of Graphics
 date: today
 date-format: long
 footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
@@ -9,17 +9,35 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
 ---
 
+## Types of Visualizations {.smaller}
+
+<br>
+
+::: {.incremental}
+- Column charts (bar charts)
+  - Use to compare values across categories
+- Histograms
+  - Use to show distribution of a single variable
+- Line charts 
+  - Use to show trends over time
+  - Can use column charts but not as effective
+- Scatter plots
+  - Use to show relationships between two variables
+  - X-axis is usually explanatory variable, Y-axis is outcome variable
+:::
+
 ## The Grammar of Graphics
 
+::: {.incremental}
 - Data viz has a language with its own grammar
 - Basic components include:
   - Data we are trying to visualize
@@ -28,14 +46,18 @@ execute:
   - Color scales
   - Themes
   - Annotations
+::: 
   
 ## 
 
-Let's start with the first two, the data and the aesthetic. 
+<br>
+
+Let's start with the first two, the data and the aesthetic, with a column chart example...
+
+<br>
 
 ```{r}
 #| label: barchart1
-#| echo: true
 #| output: false
 #| code-line-numbers: "6"
 
@@ -49,10 +71,11 @@ ggplot(dem_summary, aes(x = region, y = polyarchy))
 
 ##
 
-Gives us the axes without any visualization. 
+This gives us the axes without any visualization:
 
 ```{r}
-#| label: barchart1.1
+#| label: barchart2
+#| echo: false
 
 ggplot(dem_summary, aes(x = region, y = polyarchy)) 
 ```
@@ -60,48 +83,62 @@ ggplot(dem_summary, aes(x = region, y = polyarchy))
 
 ##
 
-Now let's add a geom. In this case we want a bar chart so we *add* `geom_col()`
+<br>
 
-```{r}
-#| label: barchart2
-#| echo: true
-#| output: false
+Now let's add a geom. In this case we want a column chart so we *add* `geom_col()`.
 
-ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
-  geom_col()
-```
-
-## 
-
-OK but that gets the idea across but looks a little depressing so...
-
-```{r}
-#| label: barchart2.1
-
-ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
-  geom_col()
-```
-
-## 
-
-...let's change the color of the bars by specifying `fill = "steelblue"`. 
+<br>
 
 ```{r}
 #| label: barchart3
-#| echo: true
-#| output: false
+#| eval: false
+
+ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
+  geom_col()
+```
+
+## 
+
+That gets the idea across but looks a little depressing, so...
+
+```{r}
+#| label: barchart4
+#| echo: false
+
+ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
+  geom_col()
+```
+
+## 
+
+<br>
+
+...let's change the color of the columns by specifying `fill = "steelblue"`.
+
+<br>
+
+```{r}
+#| label: barchart5
+#| eval: false
 #| code-line-numbers: "2"
 
 ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
   geom_col(fill = "steelblue")
 ```
 
+<br>
+
+::: {.callout-tip}
+See [here](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) for more `available`ggplot2` colors. 
+:::
+
 ## 
 
-Note how color of original bars is simply overwritten.
+Note how color of original columns is simply overwritten:
 
 ```{r}
-#| label: barchart3.1
+#| label: barchart6
+#| echo: false
 
 ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
   geom_col(fill = "steelblue")
@@ -109,12 +146,15 @@ ggplot(dem_summary, aes(x = region, y = polyarchy)) +
 
 ## 
 
+<br>
+
 Now let's *add* some labels with the `labs()` function:
 
+<br>
+
 ```{r}
-#| label: barchart4
-#| echo: true
-#| output: false
+#| label: barchart7
+#| eval: false
 #| code-line-numbers: "3-8"
 
 ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
@@ -132,7 +172,8 @@ ggplot(dem_summary, aes(x = region, y = polyarchy)) +
 And that gives us... 
 
 ```{r}
-#| label: barchart4.1
+#| label: barchart8
+#| echo: false
 
 ggplot(dem_summary, aes(x = region, y = polyarchy)) + 
   geom_col(fill = "steelblue") +
@@ -146,15 +187,18 @@ ggplot(dem_summary, aes(x = region, y = polyarchy)) +
 
 ## 
 
-Next, we reorder the bars with the `reorder()` function. 
+Next, we reorder the bars with `fct_reorder()` from the `forcats` package. 
+
+<br>
 
 ```{r}
-#| label: barchart5
-#| echo: true
-#| output: false
+#| label: barchart9
+#| eval: false
 #| code-line-numbers: "1"
 
-ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
+library(forcats)
+
+ggplot(dem_summary, aes(x = fct_reorder(region, -polyarchy), y = polyarchy)) +
   geom_col(fill = "steelblue") + 
   labs(
     x = "Region", 
@@ -163,15 +207,22 @@ ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
     caption = "Source: V-Dem Institute"
     )
 ```
+
+<br> 
+
+Note that we could also use the base R `reorder()` function here.
 
 ## 
 
 This way, we get a nice, visually appealing ordering of the bars according to levels of democracy...
 
 ```{r}
-#| label: barchart5.1
+#| label: barchart10
+#| echo: false
 
-ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
+library(forcats)
+
+ggplot(dem_summary, aes(x = fct_reorder(region, -polyarchy), y = polyarchy)) +
   geom_col(fill = "steelblue") + 
   labs(
     x = "Region", 
@@ -183,12 +234,15 @@ ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
 
 ## 
 
-Jumping ahead a little, let's change the theme to `theme_minimal()`. 
+<br>
+
+Now let's change the theme to `theme_minimal()`. 
+
+<br>
 
 ```{r}
-#| label: barchart6
-#| echo: true
-#| output: false
+#| label: barchart11
+#| eval: false
 #| code-line-numbers: "8"
 
 ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
@@ -201,13 +255,19 @@ ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
     ) + theme_minimal()
 ```
 
+<br>
+
+::: {.callout-tip}
+See [here](https://ggplot2.tidyverse.org/reference/ggtheme.html) for available `ggplot2` themes.
+:::
 
 ## 
 
 Gives us a clean, elegant look. 
 
 ```{r}
-#| label: barchart6.1
+#| label: barchart12
+#| echo: false
 
 ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
   geom_col(fill = "steelblue") + 
@@ -222,12 +282,14 @@ ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
 
 ##
 
+<br>
+
 Note that you can also save your plot as an object to modify later.
 
+<br>
+
 ```{r}
-#| label: barchart7
-#| echo: true
-#| output: false
+#| label: barchart13
 
 dem_bar_chart <- ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = polyarchy)) +
   geom_col(fill = "steelblue")
@@ -238,19 +300,21 @@ dem_bar_chart <- ggplot(dem_summary, aes(x = reorder(region, -polyarchy), y = po
 Which gives us...
 
 ```{r}
-#| label: barchart7.1
-#| echo: true
+#| label: barchart14
  
 dem_bar_chart
 ```
 
 ## 
 
-Now let's add our labels.
+<br> 
+
+Now let's add back our labels... 
+
+<br>
 
 ```{r}
-#| label: barchart8
-#| echo: true
+#| label: barchart15
 #| output: false
 
 dem_bar_chart <- dem_bar_chart +
@@ -267,19 +331,21 @@ dem_bar_chart <- dem_bar_chart +
 So now we have... 
 
 ```{r}
-#| label: barchart8.1
-#| echo: true
+#| label: barchart16
 
 dem_bar_chart
 ```
 
 ## 
 
-Now let's add our theme.
+<br> 
+
+And now we'll add back our theme...
+
+<br>
 
 ```{r}
-#| label: barchart9
-#| echo: true
+#| label: barchart17
 #| output: false
 
 dem_bar_chart <- dem_bar_chart + theme_minimal()
@@ -290,7 +356,7 @@ dem_bar_chart <- dem_bar_chart + theme_minimal()
 Voila! 
 
 ```{r}
-#| label: barchart9.1
+#| label: barchart18
 #| echo: true
 
 dem_bar_chart
@@ -298,39 +364,20 @@ dem_bar_chart
 
 ##
 
-Change the theme.
+Change the theme. There are many [themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) to choose from.
 
 ```{r}
-#| label: barchart10
-#| echo: true
+#| label: barchart19
 
 dem_bar_chart + theme_bw()
 ```
-
 
 ## Your Turn! {.smaller}
 
 <br>
 
-*Use your own wrangled data or this code to get started:*
-
-<br>
-
-```{r}
-#| label: exercise1
-#| echo: true
-#| evakl: false
-
-library(readr)
-library(ggplot2)
-
-dem_summary <- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/dem_summary.csv")
-```
-
-## 
-
 1. `glimpse()` the data
-2. Find a new variable to visualize
+2. Find a new variable to visualize^[Data for GDP per capita spotty after 2015]
 3. Make a bar chart with it
 4. Change the [color](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) of the bars
 5. Order the bars
@@ -340,47 +387,281 @@ dem_summary <- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-f
 9. Then change the labels and/or theme
 
 ```{r}
-#| label: exercise1_timer
-countdown::countdown(minutes = 10, 
-                     id = "exercise1", 
-                     bottom = "10%", 
-                     right = "10%",
-                     color_border = "#fff",
-                     color_text = "#fff",
-                     color_running_background = "#42affa",
-                     color_running_text = "black",
-                     color_finished_background = "#E5D19D",
-                     color_finished_text = "#00264A")
+#| label: timer1
+#| echo: false 
+
+library(countdown)
+countdown(minutes = 10, 
+          id = "timer1", 
+          bottom = "10%", 
+          right = "10%",
+          color_border = "#fff",
+          color_text = "#fff",
+          color_running_background = "#42affa",
+          color_running_text = "black",
+          color_finished_background = "#E5D19D",
+          color_finished_text = "#00264A")
 ```
 
-## Now Try a Histogram
+# Histograms
 
-<br>
-
-*Use this code or your own wrangled data to get started*
+## Purpose of Histograms
 
 <br> 
 
-```{r}
-#| label: dem_women_data
-#| echo: true
-#| eval: false
+- Histograms are used to visualize the distribution of a single variable
+- x-axis represents value of variable of interest
+- y-axis represents the frequency of that value
 
-dem_women <- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/dem_women.csv")
+## Purpose of Histograms
+
+<br>
+
+- They are generally used for continuous variables (e.g., income, age, etc.)
+    - A *continuous* variable is one that can take on any value within a range (e.g., 0.5, 1.2, 3.7, etc.)
+    - A *discrete* variable is one that can only take on certain values (e.g., 1, 2, 3, etc.)
+- Typically, the height of the bar represents the number of observations which fall in that bin
+
+## Example
+
+```{r}
+#| label: histogram1
+#| echo: false
+
+# load dplyr
+library(dplyr)
+
+# load data
+dem_women <- read_csv("data/dem_women.csv")
+
+# filter to 2022
+dem_women_2022 <- dem_women |>
+  filter(year == 2022)
+
+# create histogram
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## Histogram Code
+
+<br>
+
+```{r}
+#| label: histogram2
+#| eval: false
+#| code-line-numbers: "|1-2|4-6|8-10"
+
+# load dplyr
+
+library(dplyr)
+
+# load data
+dem_women <- read_csv("data/dem_women.csv")
+
+# filter to 2022
+dem_women_2022 <- dem_women |>
+  filter(year == 2022) 
+
+# create histogram
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## Histogram Code
+
+<br>
+
+Note that you only need to specify the x axis variable in the `aes()` function. `ggplot2` will automatically visualize the y-axis for a histogram.
+
+<br>
+
+```{r}
+#| label: histogram2.1
+#| eval: false
+#| code-line-numbers: "0-1"
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(bins = 50, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## Change Number of Bins
+
+<br>
+
+Change number of bins (bars) using `bins` or `binwidth` arguments (default number of bins = 30):
+
+<br>
+
+```{r}
+#| label: histogram3
+#| eval: false
+#| code-line-numbers: "2"
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(bins = 50, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
 ```
 
 ##
 
-1. Pick a variable that you want to explore the distribution of
+At 50 bins...
+
+```{r}
+#| label: histogram4
+#| echo: false
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(bins = 50, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+##
+
+At 100 bins...probably too many!
+
+```{r}
+#| label: histogram5
+#| echo: false
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(bins = 100, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## 
+
+<br>
+
+Using `binwidth` instead of `bins`... 
+
+<br>
+
+
+```{r}
+#| label: histogram6
+#| eval: false
+#| code-line-numbers: "2"
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(binwidth = 2, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+##
+
+Setting `binwidth` to 2...
+
+```{r}
+#| label: histogram7
+#| echo: false
+
+ggplot(dem_women_2022, aes(x = flfp)) +
+  geom_histogram(binwidth = 2, fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Number of Countries",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## Change from Count to Density
+
+<br>
+
+```{r}
+#| label: histogram8
+#| eval: false
+#| code-line-numbers: "1,5"
+
+
+ggplot(dem_women_2022, aes(after_stat(density), x = flfp)) +
+  geom_histogram(fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Density",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+<br>
+
+For densities, the total area sums to 1. The height of a bar represents the probability of observations in that bin (rather than the number of observations).
+
+## 
+
+Which gives us... 
+
+```{r}
+#| label: histogram9
+#| echo: false
+
+ggplot(dem_women_2022, aes(after_stat(density), x = flfp)) +
+  geom_histogram(fill = "steelblue") + 
+  labs(
+    x = "Percentage of Working Aged Women in Labor Force",
+    y = "Density",
+    title = "Female labor force participation rates, 2022",
+    caption = "Source: World Bank"
+    ) + theme_minimal()
+```
+
+## Your Turn! {.smaller}
+
+<br>
+
+1. Pick a variable that you want to explore the distribution of^[Data for GDP per capita spotty after 2015] 
 2. Make a histogram
     a. Only specify `x = ` in `aes()`
     b. Specify geom as `geom_histogram`
 3. Choose color for bars
 4. Choose appropriate labels
-5. Add a theme
+5. Change number of bins
+6. Change from count to density
 
 ```{r}
-#| label: exercise2_time
-countdown::countdown(minutes = 10, id = "exercise2")
-```
+#| label: timer2
+#| echo: false
 
+countdown::countdown(minutes = 10, id = "timer2")
+```

@@ -9,7 +9,7 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+   # multiplex: true
     chalkboard: true
 execute:
   echo: true

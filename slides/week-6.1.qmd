@@ -77,6 +77,8 @@ ggplot(dem_waves_ctrs, aes(x = year, y = polyarchy, color = country)) +
 
 ## Last Week's Line Chart
 
+<br>
+
 Create last week's line chart and save as an object...
 
 ```{r}
@@ -98,20 +100,6 @@ dem_waves_chart <- ggplot(dem_waves_ctrs, aes(x = year, y = polyarchy, color = c
 ```
 
 
-```{r}
-#| label: setup_timer
-countdown::countdown(minutes = 2, 
-                     id = "setup", 
-                     #bottom = "10%", 
-                     #right = "10%",
-                     color_border = "#fff",
-                     color_text = "#fff",
-                     color_running_background = "#42affa",
-                     color_running_text = "black",
-                     color_finished_background = "#E5D19D",
-                     color_finished_text = "#00264A")
-```
-
 ## CVD Plot
 
 ```{r}
@@ -128,6 +116,8 @@ cvdPlot(dem_waves_chart)
 
 Call CVD plot from the `colorBlindness` package. CVD stands for "color vision deficiency." 
 
+<br>
+
 ```{r}
 #| label: cvdPlot_code
 #| echo: true
@@ -140,9 +130,10 @@ cvdPlot(dem_waves_chart)
 
 ## CVD Plot
 
-Click on little image to expand view... 
+<br>
 
-![](images/expand_view.png)
+![Click on little image to expand view...](images/expand_view.png){fig-align="center"}
+
 
 ## Your Turn!
 
@@ -153,11 +144,17 @@ Click on little image to expand view...
 - Which group would have the toughest time reading this graph?
 
 ```{r}
-#|label: dem_waves_time
-countdown::countdown(minutes = 2, 
-                     id = "dem_waves", 
-                     bottom = "10%", 
-                     right = "10%")
+#| label: timer1
+countdown::countdown(minutes = 5, 
+                     id = "timer1", 
+                     #bottom = "10%", 
+                     #right = "10%",
+                     color_border = "#fff",
+                     color_text = "#fff",
+                     color_running_background = "#42affa",
+                     color_running_text = "black",
+                     color_finished_background = "#E5D19D",
+                     color_finished_text = "#00264A")
 ```
 
 ## Create Your Own Color Scheme
@@ -242,7 +239,7 @@ flfp_region + scale_fill_manual(values = cb_palette)
 - Reproduce the column chart of FLFP with the custom color scheme
 - Try changing one of the [hex codes](https://htmlcolorcodes.com/)
 - Now run `cvdPlot()` on the plot object to make sure it is color-blind friendly
-- Now try a [Barbie theme](https://www.color-hex.com/color-palette/13479) or [GW colors](https://communications.gwu.edu/visual-identity/color-palette)
+- Now try a [coolors palette](https://coolors.co/) or [GW colors](https://communications.gwu.edu/visual-identity/color-palette)
 
 ```{r}
 #|label: custom_palette_timer
@@ -333,14 +330,6 @@ library(paletteer)
 flfp_region + scale_fill_paletteer_d("beyonce::X1") 
 ```
 
-
-
-
-
-
-
-
-
 And some many not have enough colors for your chart...
 
 ```{r}
@@ -352,11 +341,12 @@ flfp_region +  scale_fill_paletteer_d("beyonce::X1")
 
 ## Your Turn
 
+<br>
+
 - Try one of the color palettes packages we just discussed
-- Google the reference documents for details on schemes
-- For paletteer, check out this [paletteer gallery](https://pmassicotte.github.io/paletteer_gallery/)
-- For ColorBrewer, check out this [selector tool](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
 - A full list of viridis schemes is [here](https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html)
+- For ColorBrewer, check out this [selector tool](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+- For paletteer, check out this [paletteer gallery](https://pmassicotte.github.io/paletteer_gallery/)
 
 ```{r}
 #|label: palette_package_timer
@@ -369,8 +359,10 @@ countdown::countdown(minutes = 10,
 
 ## Scaling for Scatter Plots
 
+
 ```{r}
 #| label: scatterplot1
+
 wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + 
   geom_point(aes(color = region)) + # color points by region
   geom_smooth(method = "loess", linewidth = 1) +  # make the line a loess curve
@@ -387,15 +379,36 @@ wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) +
 wealth_flfp + scale_color_viridis_d(option = "plasma")
 ```
 
+## Fill vs. Color
+
+<br>
+
+- Use **fill** (e.g. `fill = ` or `scale_fill_*`) to modify the fill color of shapes like bars, boxes, or polygons. 
+- Commonly applied to:
+  - Bar charts
+  - Box plots
+  - Histograms
+
+## Fill vs. Color
+
+<br>
+
+- Use **color** (e.g. `color = ` or `scale_color_*`) to modify the color of points, lines, or text. 
+- Commonly applied to:
+  - Scatter plots
+  - Line charts
+  - Text elements
+
 ## Scaling for Scatter Plots
 
-Use `scale_color_viridis_d` instead of `scale_fill_viridis_d`. 
+<br>
 
 ```{r}
 #| label: scatterplot2
 #| echo: true
 #| output: false
-#| code-line-numbers: "13"
+#| code-line-numbers: "14"
+
 wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + 
   geom_point(aes(color = region)) + # color points by region
   geom_smooth(method = "loess", linewidth = 1) +  # make the line a loess curve
@@ -432,7 +445,9 @@ Use the `direction` argument to flip the color scale...
 wealth_flfp + scale_color_viridis_d(option = "plasma", direction = -1)
 ```
 
-## Your Turn! 
+## Your Turn!
+
+<br>
 
 - Try using one of the color schemes on a scatter plot
 - Use `scale_color_` instead of `scale_fill_`

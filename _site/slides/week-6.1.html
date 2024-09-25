@@ -11,7 +11,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.533">
 
-  <meta name="dcterms.date" content="2024-09-22">
+  <meta name="dcterms.date" content="2024-09-24">
   <title>PSC/DATS 2102–Summer Schedule - Accessibility and Color Schemes</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -405,7 +405,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">September 22, 2024</p>
+  <p class="date">September 24, 2024</p>
 </section>
 <section id="color-blindness" class="slide level2">
 <h2>Color Blindness</h2>
@@ -423,6 +423,7 @@
 <img data-src="week-6.1_files/figure-revealjs/line_chart-1.png" width="960" class="r-stretch"></section>
 <section id="last-weeks-line-chart-1" class="slide level2">
 <h2>Last Week’s Line Chart</h2>
+<p><br></p>
 <p>Create last week’s line chart and save as an object…</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>dem_waves_ctrs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/slides/data/dem_waves_ctrs.csv"</span>)</span>
@@ -437,14 +438,6 @@
 <span id="cb1-10"><a></a>    <span class="at">color =</span> <span class="st">"Country"</span> <span class="co"># make title of legend to upper case</span></span>
 <span id="cb1-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="setup" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
 </section>
 <section id="cvd-plot" class="slide level2">
 <h2>CVD Plot</h2>
@@ -454,6 +447,7 @@
 <h2>CVD Plot</h2>
 <p><br></p>
 <p>Call CVD plot from the <code>colorBlindness</code> package. CVD stands for “color vision deficiency.”</p>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(colorBlindness)</span>
 <span id="cb2-2"><a></a></span>
@@ -462,9 +456,9 @@
 </section>
 <section id="cvd-plot-2" class="slide level2">
 <h2>CVD Plot</h2>
-<p>Click on little image to expand view…</p>
+<p><br></p>
 
-<img data-src="images/expand_view.png" class="r-stretch"></section>
+<img data-src="images/expand_view.png" class="quarto-figure quarto-figure-center r-stretch"><p class="caption">Click on little image to expand view…</p></section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn!</h2>
 <p><br></p>
@@ -475,9 +469,9 @@
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="dem_waves" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
@@ -535,7 +529,7 @@
 <li>Reproduce the column chart of FLFP with the custom color scheme</li>
 <li>Try changing one of the <a href="https://htmlcolorcodes.com/">hex codes</a></li>
 <li>Now run <code>cvdPlot()</code> on the plot object to make sure it is color-blind friendly</li>
-<li>Now try a <a href="https://www.color-hex.com/color-palette/13479">Barbie theme</a> or <a href="https://communications.gwu.edu/visual-identity/color-palette">GW colors</a></li>
+<li>Now try a <a href="https://coolors.co/">coolors palette</a> or <a href="https://communications.gwu.edu/visual-identity/color-palette">GW colors</a></li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
@@ -632,12 +626,12 @@
 </section>
 <section id="your-turn-2" class="slide level2">
 <h2>Your Turn</h2>
+<p><br></p>
 <ul>
 <li>Try one of the color palettes packages we just discussed</li>
-<li>Google the reference documents for details on schemes</li>
-<li>For paletteer, check out this <a href="https://pmassicotte.github.io/paletteer_gallery/">paletteer gallery</a></li>
-<li>For ColorBrewer, check out this <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">selector tool</a></li>
 <li>A full list of viridis schemes is <a href="https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html">here</a></li>
+<li>For ColorBrewer, check out this <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">selector tool</a></li>
+<li>For paletteer, check out this <a href="https://pmassicotte.github.io/paletteer_gallery/">paletteer gallery</a></li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
@@ -652,11 +646,37 @@
 <h2>Scaling for Scatter Plots</h2>
 
 <img data-src="week-6.1_files/figure-revealjs/scatterplot1-1.png" width="960" class="r-stretch"></section>
+<section id="fill-vs.-color" class="slide level2">
+<h2>Fill vs.&nbsp;Color</h2>
+<p><br></p>
+<ul>
+<li>Use <strong>fill</strong> (e.g.&nbsp;<code>fill =</code> or <code>scale_fill_*</code>) to modify the fill color of shapes like bars, boxes, or polygons.</li>
+<li>Commonly applied to:
+<ul>
+<li>Bar charts</li>
+<li>Box plots</li>
+<li>Histograms</li>
+</ul></li>
+</ul>
+</section>
+<section id="fill-vs.-color-1" class="slide level2">
+<h2>Fill vs.&nbsp;Color</h2>
+<p><br></p>
+<ul>
+<li>Use <strong>color</strong> (e.g.&nbsp;<code>color =</code> or <code>scale_color_*</code>) to modify the color of points, lines, or text.</li>
+<li>Commonly applied to:
+<ul>
+<li>Scatter plots</li>
+<li>Line charts</li>
+<li>Text elements</li>
+</ul></li>
+</ul>
+</section>
 <section id="scaling-for-scatter-plots-1" class="slide level2">
 <h2>Scaling for Scatter Plots</h2>
-<p>Use <code>scale_color_viridis_d</code> instead of <code>scale_fill_viridis_d</code>.</p>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>wealth_flfp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(flfp_gdp, <span class="fu">aes</span>(<span class="at">x =</span> gdp_pc, <span class="at">y =</span> flfp)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>wealth_flfp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(flfp_gdp, <span class="fu">aes</span>(<span class="at">x =</span> gdp_pc, <span class="at">y =</span> flfp)) <span class="sc">+</span> </span>
 <span id="cb13-2"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span> <span class="co"># color points by region</span></span>
 <span id="cb13-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># make the line a loess curve</span></span>
 <span id="cb13-4"><a></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span> <span class="co"># stretch axis, add '$' format</span></span>
@@ -679,7 +699,7 @@
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>wealth_flfp <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">end =</span> .<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
 <section id="scaling-for-scatter-plots-3" class="slide level2">
 <h2>Scaling for Scatter Plots</h2>
 <p>Use the <code>direction</code> argument to flip the color scale…</p>
@@ -687,9 +707,10 @@
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>wealth_flfp <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
 <section id="your-turn-3" class="slide level2">
 <h2>Your Turn!</h2>
+<p><br></p>
 <ul>
 <li>Try using one of the color schemes on a scatter plot</li>
 <li>Use <code>scale_color_</code> instead of <code>scale_fill_</code></li>

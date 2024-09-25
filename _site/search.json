@@ -3360,7 +3360,7 @@
     "href": "slides/week-6.1.html#last-weeks-line-chart-1",
     "title": "Accessibility and Color Schemes",
     "section": "Last Week’s Line Chart",
-    "text": "Last Week’s Line Chart\nCreate last week’s line chart and save as an object…\n\ndem_waves_ctrs &lt;- read_csv(\"https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/slides/data/dem_waves_ctrs.csv\")\n\ndem_waves_chart &lt;- ggplot(dem_waves_ctrs, aes(x = year, y = polyarchy, color = country)) +\n  geom_line(linewidth = 1) + # our geom is a line with a width of 1\n  labs(\n    x = \"Year\", \n    y = \"Polyarchy Score\", \n    title = 'Democracy in countries representing three different \"waves\"', \n    caption = \"Source: V-Dem Institute\", \n    color = \"Country\" # make title of legend to upper case\n  )\n\n\n\n\n−+\n02:00"
+    "text": "Last Week’s Line Chart\n\nCreate last week’s line chart and save as an object…\n\ndem_waves_ctrs &lt;- read_csv(\"https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/slides/data/dem_waves_ctrs.csv\")\n\ndem_waves_chart &lt;- ggplot(dem_waves_ctrs, aes(x = year, y = polyarchy, color = country)) +\n  geom_line(linewidth = 1) + # our geom is a line with a width of 1\n  labs(\n    x = \"Year\", \n    y = \"Polyarchy Score\", \n    title = 'Democracy in countries representing three different \"waves\"', \n    caption = \"Source: V-Dem Institute\", \n    color = \"Country\" # make title of legend to upper case\n  )"
   },
   {
     "objectID": "slides/week-6.1.html#cvd-plot",
@@ -3374,21 +3374,21 @@
     "href": "slides/week-6.1.html#cvd-plot-1",
     "title": "Accessibility and Color Schemes",
     "section": "CVD Plot",
-    "text": "CVD Plot\n\nCall CVD plot from the colorBlindness package. CVD stands for “color vision deficiency.”\n\nlibrary(colorBlindness)\n\ncvdPlot(dem_waves_chart)"
+    "text": "CVD Plot\n\nCall CVD plot from the colorBlindness package. CVD stands for “color vision deficiency.”\n\n\nlibrary(colorBlindness)\n\ncvdPlot(dem_waves_chart)"
   },
   {
     "objectID": "slides/week-6.1.html#cvd-plot-2",
     "href": "slides/week-6.1.html#cvd-plot-2",
     "title": "Accessibility and Color Schemes",
     "section": "CVD Plot",
-    "text": "CVD Plot\nClick on little image to expand view…"
+    "text": "CVD Plot\n\n\nClick on little image to expand view…"
   },
   {
     "objectID": "slides/week-6.1.html#your-turn",
     "href": "slides/week-6.1.html#your-turn",
     "title": "Accessibility and Color Schemes",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nTake your dem_waves_chart object and run cvdPlot() on it\nExpand the window and have a good look\nWhich group would have the toughest time reading this graph?\n\n\n\n\n−+\n02:00"
+    "text": "Your Turn!\n\n\nTake your dem_waves_chart object and run cvdPlot() on it\nExpand the window and have a good look\nWhich group would have the toughest time reading this graph?\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.1.html#create-your-own-color-scheme",
@@ -3416,7 +3416,7 @@
     "href": "slides/week-6.1.html#your-turn-1",
     "title": "Accessibility and Color Schemes",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nGo to Module 2.2 on the course website\nDo the setup steps\nReproduce the column chart of FLFP with the custom color scheme\nTry changing one of the hex codes\nNow run cvdPlot() on the plot object to make sure it is color-blind friendly\nNow try a Barbie theme or GW colors\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\n\nGo to Module 2.2 on the course website\nDo the setup steps\nReproduce the column chart of FLFP with the custom color scheme\nTry changing one of the hex codes\nNow run cvdPlot() on the plot object to make sure it is color-blind friendly\nNow try a coolors palette or GW colors\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-6.1.html#using-a-color-palette",
@@ -3479,7 +3479,7 @@
     "href": "slides/week-6.1.html#your-turn-2",
     "title": "Accessibility and Color Schemes",
     "section": "Your Turn",
-    "text": "Your Turn\n\nTry one of the color palettes packages we just discussed\nGoogle the reference documents for details on schemes\nFor paletteer, check out this paletteer gallery\nFor ColorBrewer, check out this selector tool\nA full list of viridis schemes is here\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn\n\n\nTry one of the color palettes packages we just discussed\nA full list of viridis schemes is here\nFor ColorBrewer, check out this selector tool\nFor paletteer, check out this paletteer gallery\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-6.1.html#scaling-for-scatter-plots",
@@ -3493,7 +3493,7 @@
     "href": "slides/week-6.1.html#scaling-for-scatter-plots-1",
     "title": "Accessibility and Color Schemes",
     "section": "Scaling for Scatter Plots",
-    "text": "Scaling for Scatter Plots\nUse scale_color_viridis_d instead of scale_fill_viridis_d.\n\nwealth_flfp &lt;- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + # color points by region\n  geom_smooth(method = \"loess\", linewidth = 1) +  # make the line a loess curve\n  scale_x_log10(labels = scales::label_dollar()) + # stretch axis, add '$' format\n  scale_y_continuous(labels = scales::label_percent(scale = 1)) + # add % label\n  labs(\n    x= \"GDP per Capita\", # x-axis title\n    y = \"Female Labor Force Participation\", # y-axis title\n    title = \"Wealth and female labor force participation\", # plot title\n    caption = \"Source: World Bank Development Indicators\", # caption\n    color = \"Region\" # legend title\n    )\n\nwealth_flfp + scale_color_viridis_d(option = \"plasma\")"
+    "text": "Scaling for Scatter Plots\n\n\nwealth_flfp &lt;- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + # color points by region\n  geom_smooth(method = \"loess\", linewidth = 1) +  # make the line a loess curve\n  scale_x_log10(labels = scales::label_dollar()) + # stretch axis, add '$' format\n  scale_y_continuous(labels = scales::label_percent(scale = 1)) + # add % label\n  labs(\n    x= \"GDP per Capita\", # x-axis title\n    y = \"Female Labor Force Participation\", # y-axis title\n    title = \"Wealth and female labor force participation\", # plot title\n    caption = \"Source: World Bank Development Indicators\", # caption\n    color = \"Region\" # legend title\n    )\n\nwealth_flfp + scale_color_viridis_d(option = \"plasma\")"
   },
   {
     "objectID": "slides/week-6.1.html#scaling-for-scatter-plots-2",
@@ -3514,7 +3514,7 @@
     "href": "slides/week-6.1.html#your-turn-3",
     "title": "Accessibility and Color Schemes",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nTry using one of the color schemes on a scatter plot\nUse scale_color_ instead of scale_fill_\nPlay around with end and direction arguments in viridis\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\n\n\nTry using one of the color schemes on a scatter plot\nUse scale_color_ instead of scale_fill_\nPlay around with end and direction arguments in viridis\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-9.1.html#why-tables",
@@ -4492,5 +4492,19 @@
       "Course Modules",
       "Module 5.1"
     ]
+  },
+  {
+    "objectID": "slides/week-6.1.html#fill-vs.-color",
+    "href": "slides/week-6.1.html#fill-vs.-color",
+    "title": "Accessibility and Color Schemes",
+    "section": "Fill vs. Color",
+    "text": "Fill vs. Color\n\n\nUse fill (e.g. fill = or scale_fill_*) to modify the fill color of shapes like bars, boxes, or polygons.\nCommonly applied to:\n\nBar charts\nBox plots\nHistograms"
+  },
+  {
+    "objectID": "slides/week-6.1.html#fill-vs.-color-1",
+    "href": "slides/week-6.1.html#fill-vs.-color-1",
+    "title": "Accessibility and Color Schemes",
+    "section": "Fill vs. Color",
+    "text": "Fill vs. Color\n\n\nUse color (e.g. color = or scale_color_*) to modify the color of points, lines, or text.\nCommonly applied to:\n\nScatter plots\nLine charts\nText elements"
   }
 ]

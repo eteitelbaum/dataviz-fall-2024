@@ -130,8 +130,6 @@ cvdPlot(dem_waves_chart)
 
 ## CVD Plot
 
-<br>
-
 ![Click on little image to expand view...](images/expand_view.png){fig-align="center"}
 
 

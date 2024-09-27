@@ -3192,7 +3192,7 @@
     "href": "slides/week-6.2.html#add-a-theme",
     "title": "Themes, Annotations and Interactivity",
     "section": "Add a Theme",
-    "text": "Add a Theme\n\nflfp_region + theme_minimal()"
+    "text": "Add a Theme\n\n\nCode\nflfp_region + theme_minimal()"
   },
   {
     "objectID": "slides/week-6.2.html#can-also-set-theme",
@@ -3206,14 +3206,14 @@
     "href": "slides/week-6.2.html#your-turn",
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
-    "text": "Your Turn!\nProduce this scatter plot… Then try different themes.\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\nProduce this scatter plot… Then try different themes.\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.2.html#your-turn-1",
     "href": "slides/week-6.2.html#your-turn-1",
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nwealth_flfp &lt;- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + scale_color_viridis_d(option = \"plasma\", end = .7) \n\nwealth_flfp + theme_dark()"
+    "text": "Your Turn!\n\n\nGo to module 2.2\nCopy the code you need to make the line chart\nCreate a horizontal reference line and annotate it\nIn a new code chunk, create a vertical line and annotate it\nPlay with the parameters to move and style your line\nTry different text, etc.\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.2.html#add-an-annotation",
@@ -3227,14 +3227,14 @@
     "href": "slides/week-6.2.html#section",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
-    "text": "First step, add a horizontal line using geom_hline()…\n\nflfp_line + \n  geom_hline(yintercept = 52, linetype=\"dashed\", color = \"red\", size = 1)"
+    "text": "First step, add a horizontal line using geom_hline()…\n\n\nCode\nflfp_line + \n  geom_hline(yintercept = 52, linetype=\"dashed\", color = \"red\", size = 1)"
   },
   {
     "objectID": "slides/week-6.2.html#section-1",
     "href": "slides/week-6.2.html#section-1",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
-    "text": "Second step, the annotation with annotate()…\n\nflfp_line + \n  geom_hline(yintercept = 52, linetype=\"dashed\", color = \"red\", size = 1) +\n  annotate(\"text\", x = 1995, y = 55, label = \"Global average\")"
+    "text": "Second step, the annotation with annotate()…\n\n\nCode\nflfp_line + \n  geom_hline(yintercept = 52, linetype=\"dashed\", color = \"red\", size = 1) +\n  annotate(\"text\", x = 1995, y = 55, label = \"Global average\")"
   },
   {
     "objectID": "slides/week-6.2.html#vertical-reference-line",
@@ -3248,21 +3248,21 @@
     "href": "slides/week-6.2.html#section-2",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
-    "text": "First step, add a horizontal line using geom_hline()…\n\nflfp_line + \n  geom_vline(xintercept=2020, linetype = \"dashed\", size = 1)"
+    "text": "First step, add a horizontal line using geom_hline()…\n\n\nCode\nflfp_line + \n  geom_vline(xintercept=2020, linetype = \"dashed\", size = 1)"
   },
   {
     "objectID": "slides/week-6.2.html#section-3",
     "href": "slides/week-6.2.html#section-3",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
-    "text": "Second step, add the annotation with annotate()\n\nflfp_line + \n  geom_vline(xintercept=2020, linetype = \"dashed\", size = 1) +\n  annotate(\"text\", x = 2017, y = 35, label = \"Pandemic\")"
+    "text": "Second step, add the annotation with annotate()\n\n\nCode\nflfp_line + \n  geom_vline(xintercept=2020, linetype = \"dashed\", size = 1) +\n  annotate(\"text\", x = 2017, y = 35, label = \"Pandemic\")"
   },
   {
     "objectID": "slides/week-6.2.html#your-turn-2",
     "href": "slides/week-6.2.html#your-turn-2",
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nGo to module 2.2\nCopy the code you need to make the line chart\nCreate a horizontal reference line and annotate it\nIn a new code chunk, create a vertical line and annotate it\nPlay with the parameters to move and style your line\nTry different text, etc.\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\n\nGo to module 2.2 and create the basic wealth vs. flfp scatter plot\nNow “plotlify” the plot\nAt first, don’t worry about annotations or tool tip\nThen add in tool tip, play with setting\nThen add in the annotations\nMove annotations, change content\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.2.html#interactivity",
@@ -3276,7 +3276,7 @@
     "href": "slides/week-6.2.html#the-code",
     "title": "Themes, Annotations and Interactivity",
     "section": "The Code",
-    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
+    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\", end = .7) +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
   },
   {
     "objectID": "slides/week-6.2.html#the-code-1",
@@ -3318,21 +3318,21 @@
     "href": "slides/week-6.2.html#section-4",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
-    "text": "But to make a plotly chart, all you need is this!\n\nggplotly(wealth_flfp_plotly)"
+    "text": "But to make a plotly chart, all you need is this!\n\n\nCode\nggplotly(wealth_flfp_plotly)"
   },
   {
     "objectID": "slides/week-6.2.html#your-turn-3",
     "href": "slides/week-6.2.html#your-turn-3",
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nGo to module 2.2 and create the basic wealth vs. flfp scatter plot\nNow “plotlify” the plot\nAt first, don’t worry about annotations or tool tip\nThen add in tool tip, play with setting\nThen add in the annotations\nMove annotations, change content\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\n\n\nTry making an animated scatter plot with different a different y-axis variable\nSee if you can make the title change based on the year displayed\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.2.html#time-permitting",
     "href": "slides/week-6.2.html#time-permitting",
     "title": "Themes, Annotations and Interactivity",
     "section": "Time Permitting",
-    "text": "Time Permitting\nAnnotate (comment) the following code…\n\nwealth_flfp &lt;- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + scale_color_viridis_d(option = \"plasma\", end = .7) \n\nwealth_flfp + theme_minimal()\n\n\n\n\n−+\n05:00"
+    "text": "Time Permitting\nAnnotate (comment) the following code…\n\nwealth_flfp &lt;- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation, 2021\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + \n  scale_color_viridis_d(option = \"plasma\", end = .7) \n\nwealth_flfp + theme_minimal()"
   },
   {
     "objectID": "slides/week-6.2.html#time-permitting-1",
@@ -4506,5 +4506,33 @@
     "title": "Accessibility and Color Schemes",
     "section": "Fill vs. Color",
     "text": "Fill vs. Color\n\n\nUse color (e.g. color = or scale_color_*) to modify the color of points, lines, or text.\nCommonly applied to:\n\nScatter plots\nLine charts\nText elements"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots",
+    "href": "slides/week-6.2.html#animated-plots",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots-1",
+    "href": "slides/week-6.2.html#animated-plots-1",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots\n\n\nflfp_gdp_ts &lt;- wb_data(indicators, mrv = 25) |&gt; # download data for 25 most recent years\n    left_join(select(wb_countries(), c(iso3c, region)), by = \"iso3c\") |&gt; # add regions\n    rename(year = date) |&gt;\n    drop_na() # drop rows with missing values"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots-2",
+    "href": "slides/week-6.2.html#animated-plots-2",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots\n\n\nlibrary(gganimate)\n\nggplot(flfp_gdp_ts, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  transition_states(year) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation, {closest_state}\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + \n  scale_color_viridis_d(option = \"plasma\", end = .7)"
+  },
+  {
+    "objectID": "slides/week-6.2.html#your-turn-4",
+    "href": "slides/week-6.2.html#your-turn-4",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nTry making an animated scatter plot with different a different y-axis variable\nSee if you can make the title change based on the year displayed\n\n\n\n\n−+\n05:00"
   }
 ]

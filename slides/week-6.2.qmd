@@ -9,18 +9,18 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
 ---
 
-
 ```{r}
 #| label: setup
+#| include: false
 
 library(readr)
 library(dplyr)
@@ -64,9 +64,10 @@ flfp_ts <- wb_data("SL.TLF.CACT.FE.ZS", country = "regions_only", start_date = 1
 
 ```{r}
 #| label: column_chart1
+#| echo: false
 
 flfp_region <- ggplot(flfp_gdp_regions, aes(x = reorder(iso3c, -flfp), y = flfp, fill = region)) +
-  geom_col() + 
+  geom_col(fill = "steelblue") + 
   scale_y_continuous(labels = scales::label_percent(scale = 1)) +
   labs(
     x = "Region", 
@@ -74,8 +75,7 @@ flfp_region <- ggplot(flfp_gdp_regions, aes(x = reorder(iso3c, -flfp), y = flfp,
     title = "Levels of female labor force participation by region", 
     fill = "Region",
     caption = "Source: World Bank"
-    ) + 
-  scale_fill_viridis_d()
+    ) 
 
 flfp_region
 ```
@@ -84,7 +84,7 @@ flfp_region
 
 ```{r}
 #| label: column_chart2
-#| echo: true
+#| code-fold: true
 
 flfp_region + theme_minimal()
 ```
@@ -114,6 +114,7 @@ Produce this scatter plot... Then try different [themes](https://ggplot2.tidyver
 
 ```{r}
 #| label: exercise1
+#| echo: false
 
 wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + 
   geom_point(aes(color = region)) + # color points by region
@@ -123,19 +124,22 @@ wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) +
   labs(
     x= "GDP per Capita", # x-axis title
     y = "Female Labor Force Participation", # y-axis title
-    title = "Wealth and female labor force participation", # plot title
+    title = "Wealth and female labor force participation, 2021", # plot title
     caption = "Source: World Bank Development Indicators", # caption
     color = "Region" # legend title
-    ) + scale_color_viridis_d(option = "plasma", end = .7) 
+    ) + 
+  scale_color_viridis_d(option = "plasma", end = .7) 
 
 wealth_flfp + theme_dark()
 ```
 
 ```{r}
 #| label: setup_timer
-countdown(minutes = 10, 
+#| echo: false
+
+countdown(minutes = 5, 
           id = "setup", 
-          #bottom = "10%", 
+          top = "10%", 
           right = "-15%",
           color_border = "#fff",
           color_text = "#fff",
@@ -145,33 +149,11 @@ countdown(minutes = 10,
           color_finished_text = "#00264A")
 ```
 
-## Your Turn!
-
-```{r}
-#| label: exercise1_solution
-#| echo: true
-#| output: false
-
-wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + 
-  geom_point(aes(color = region)) + 
-  geom_smooth(method = "loess", linewidth = 1) +
-  scale_x_log10(labels = scales::label_dollar()) + 
-  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
-  labs(
-    x= "GDP per Capita",
-    y = "Female Labor Force Participation",
-    title = "Wealth and female labor force participation",
-    caption = "Source: World Bank Development Indicators",
-    color = "Region"
-    ) + scale_color_viridis_d(option = "plasma", end = .7) 
-
-wealth_flfp + theme_dark()
-```
-
 ## Add an Annotation
 
 ```{r}
 #| label: annotation1
+#| echo: false
 
 flfp_line <- ggplot(flfp_ts, aes(x = year, y = flfp, color = region)) +
   geom_line(linewidth = 1) + 
@@ -179,7 +161,7 @@ flfp_line <- ggplot(flfp_ts, aes(x = year, y = flfp, color = region)) +
   labs(
     x = "Year", 
     y = "Female Labor Force Participation", 
-    title = "Regional trends in female labor force participation", 
+    title = "Regional trends in female labor force participation, 2021", 
     caption = "Source: V-Dem Institute", 
     color = "Country"
   ) + scale_color_viridis_d() +
@@ -194,7 +176,7 @@ flfp_line + geom_hline(yintercept = 52, linetype="dashed", color = "red", size =
 First step, add a horizontal line using `geom_hline()`... 
 
 ```{r}
-#| echo: true
+#| code-fold: true
 
 flfp_line + 
   geom_hline(yintercept = 52, linetype="dashed", color = "red", size = 1) 
@@ -205,7 +187,7 @@ flfp_line +
 Second step, the annotation with `annotate()`...
 
 ```{r}
-#| echo: true 
+#| code-fold: true 
 
 flfp_line + 
   geom_hline(yintercept = 52, linetype="dashed", color = "red", size = 1) +
@@ -215,6 +197,8 @@ flfp_line +
 ## Vertical Reference Line
 
 ```{r}
+#| echo: false
+
 flfp_line + 
   geom_vline(xintercept=2020, linetype = "dashed", size = 1) +
   annotate("text", x = 2017, y = 35, label = "Pandemic")
@@ -225,7 +209,7 @@ flfp_line +
 First step, add a horizontal line using `geom_hline()`... 
 
 ```{r}
-#| echo: true
+#| code-fold: true
 
 flfp_line + 
   geom_vline(xintercept=2020, linetype = "dashed", size = 1)
@@ -236,7 +220,7 @@ flfp_line +
 Second step, add the annotation with `annotate()`
 
 ```{r}
-#| echo: true
+#| code-fold: true
 
 flfp_line + 
   geom_vline(xintercept=2020, linetype = "dashed", size = 1) +
@@ -244,6 +228,8 @@ flfp_line +
 ```
 
 ## Your Turn!
+
+<br>
 
 - Go to module 2.2
 - Copy the code you need to make the line chart
@@ -254,7 +240,9 @@ flfp_line +
 
 ```{r}
 #| label: exercise2_timer
-countdown(minutes = 10, 
+#| echo: false
+
+countdown(minutes = 5, 
           id = "exercise2", 
           #bottom = "10%", 
           #right = "10%"
@@ -263,11 +251,15 @@ countdown(minutes = 10,
 
 ## Interactivity
 
+<br>
+
 ```{r}
+#| echo: false
+
 library(plotly)
 
 wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
+  scale_color_viridis_d(option = "plasma", end = .7) +
   theme_minimal() +
   aes(label = country)  # need so ggplot retains label for plotly
 
@@ -294,7 +286,7 @@ ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |>
 library(plotly)
 
 wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
+  scale_color_viridis_d(option = "plasma", end = .7) +
   theme_minimal() +
   aes(label = country)  # need so ggplot retains label for plotly
 
@@ -315,122 +307,8 @@ ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |>
 ## The Code
 
 ```{r}
-#| echo: true
-#| output: false
-#| code-line-numbers: "1"
-
-library(plotly)
-
-wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
-  theme_minimal() +
-  aes(label = country)  # need so ggplot retains label for plotly
-
-ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |> 
-  
-  # add source
-  layout(annotations = list(text = "Source: World Bank Development Indicators",  
-                            font = list(size = 10), showarrow = FALSE,
-                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,
-                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |> 
-  # add web address
-  layout(annotations = list(text = "www.dataviz-gwu.rocks", 
-                            font = list(size = 10, color = 'grey'), showarrow = FALSE,
-                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,
-                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))
-```
-
-## The Code
-
-```{r}
-#| echo: true
-#| output: false
-#| code-line-numbers: "6"
-
-library(plotly)
-
-wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
-  theme_minimal() +
-  aes(label = country)  # need so ggplot retains label for plotly
-
-ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |> 
-  
-  # add source
-  layout(annotations = list(text = "Source: World Bank Development Indicators",  
-                            font = list(size = 10), showarrow = FALSE,
-                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,
-                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |> 
-  # add web address
-  layout(annotations = list(text = "www.dataviz-gwu.rocks", 
-                            font = list(size = 10, color = 'grey'), showarrow = FALSE,
-                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,
-                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))
-```
-
-## The Code
-
-```{r}
-#| echo: true
-#| output: false
-#| code-line-numbers: "8"
-
-library(plotly)
-
-wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
-  theme_minimal() +
-  aes(label = country)  # need so ggplot retains label for plotly
-
-ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |> 
-  
-  # add source
-  layout(annotations = list(text = "Source: World Bank Development Indicators",  
-                            font = list(size = 10), showarrow = FALSE,
-                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,
-                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |> 
-  # add web address
-  layout(annotations = list(text = "www.dataviz-gwu.rocks", 
-                            font = list(size = 10, color = 'grey'), showarrow = FALSE,
-                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,
-                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))
-```
-
-## The Code
-
-```{r}
-#| echo: true
-#| output: false
-#| code-line-numbers: "10-14"
-
-library(plotly)
-
-wealth_flfp_plotly <- wealth_flfp  + 
-  scale_color_viridis_d(option = "plasma") +
-  theme_minimal() +
-  aes(label = country)  # need so ggplot retains label for plotly
-
-ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |> 
-  
-  # add source
-  layout(annotations = list(text = "Source: World Bank Development Indicators",  
-                            font = list(size = 10), showarrow = FALSE,
-                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,
-                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |> 
-  # add web address
-  layout(annotations = list(text = "www.dataviz-gwu.rocks", 
-                            font = list(size = 10, color = 'grey'), showarrow = FALSE,
-                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,
-                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))
-```
-
-
-## The Code
-
-```{r}
-#| echo: true
-#| output: false
-#| code-line-numbers: "15-19"
+#| eval: false
+#| code-line-numbers: "1|6|8|10-14|15-19"
 
 library(plotly)
 
@@ -458,7 +336,7 @@ ggplotly(wealth_flfp_plotly, tooltip = c("country", "flfp", "gdp_pc")) |>
 But to make a plotly chart, all you need is this! 
 
 ```{r}
-#| echo: true
+#| code-fold: true
 
 ggplotly(wealth_flfp_plotly)
 ```
@@ -475,8 +353,95 @@ ggplotly(wealth_flfp_plotly)
 
 ```{r}
 #| label: exercise3_timer
-countdown(minutes = 10, 
+#| echo: false
+
+countdown(minutes = 5, 
           id = "exercise3", 
+          #bottom = "10%", 
+          #right = "10%"
+          )
+```
+
+## Animated Plots
+
+```{r}
+#| echo: false
+
+flfp_gdp_ts <- wb_data(indicators, mrv = 25) |> # download data for 25 most recent years
+    left_join(select(wb_countries(), c(iso3c, region)), by = "iso3c") |> # add regions
+    rename(year = date) |>
+    drop_na() # drop rows with missing values
+
+library(gganimate)
+
+ggplot(flfp_gdp_ts, aes(x = gdp_pc, y = flfp)) + 
+  geom_point(aes(color = region)) + 
+  geom_smooth(method = "loess", linewidth = 1) +
+  scale_x_log10(labels = scales::label_dollar()) + 
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  transition_states(year) +
+  labs(
+    x= "GDP per Capita",
+    y = "Female Labor Force Participation",
+    title = "Wealth and female labor force participation, {closest_state}",
+    caption = "Source: World Bank Development Indicators",
+    color = "Region"
+    ) + 
+  scale_color_viridis_d(option = "plasma", end = .7) 
+```
+
+## Animated Plots
+
+<br>
+
+```{r}
+#| eval: false
+
+flfp_gdp_ts <- wb_data(indicators, mrv = 25) |> # download data for 25 most recent years
+    left_join(select(wb_countries(), c(iso3c, region)), by = "iso3c") |> # add regions
+    rename(year = date) |>
+    drop_na() # drop rows with missing values
+```
+
+## Animated Plots
+
+<br>
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1|8|12"
+
+library(gganimate)
+
+ggplot(flfp_gdp_ts, aes(x = gdp_pc, y = flfp)) + 
+  geom_point(aes(color = region)) + 
+  geom_smooth(method = "loess", linewidth = 1) +
+  scale_x_log10(labels = scales::label_dollar()) + 
+  scale_y_continuous(labels = scales::label_percent(scale = 1)) +
+  transition_states(year) +
+  labs(
+    x= "GDP per Capita",
+    y = "Female Labor Force Participation",
+    title = "Wealth and female labor force participation, {closest_state}",
+    caption = "Source: World Bank Development Indicators",
+    color = "Region"
+    ) + 
+  scale_color_viridis_d(option = "plasma", end = .7) 
+```
+
+## Your Turn!
+
+<br>
+
+- Try making an animated scatter plot with different a different y-axis variable
+- See if you can make the title change based on the year displayed
+
+```{r}
+#| label: exercise4_timer
+#| echo: false
+
+countdown(minutes = 5, 
+          id = "exercise4", 
           #bottom = "10%", 
           #right = "10%"
           )
@@ -487,8 +452,7 @@ countdown(minutes = 10,
 Annotate (comment) the following code...
 
 ```{r}
-#| echo: true
-#| output: false
+#| eval: false
 
 wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) + 
   geom_point(aes(color = region)) + 
@@ -498,30 +462,21 @@ wealth_flfp <- ggplot(flfp_gdp, aes(x = gdp_pc, y = flfp)) +
   labs(
     x= "GDP per Capita",
     y = "Female Labor Force Participation",
-    title = "Wealth and female labor force participation",
+    title = "Wealth and female labor force participation, 2021",
     caption = "Source: World Bank Development Indicators",
     color = "Region"
-    ) + scale_color_viridis_d(option = "plasma", end = .7) 
+    ) + 
+  scale_color_viridis_d(option = "plasma", end = .7) 
 
 wealth_flfp + theme_minimal()
 ```
 
-```{r}
-#| label: exercise4_timer
-countdown(minutes = 5, 
-          id = "exercise4", 
-          #bottom = "10%", 
-          #right = "10%"
-          )
-```
-
 ## Time Permitting
 
-Annotate  (comment) the following code...
+Annotate (comment) the following code...
 
 ```{r}
-#| echo: true
-#| output: false
+#| eval: false
 
 flfp_line <- ggplot(flfp_ts, aes(x = year, y = flfp, color = region)) +
   geom_line(linewidth = 1) + 
@@ -541,6 +496,8 @@ flfp_line + geom_hline(yintercept = 52, linetype="dashed", color = "red", size =
 
 ```{r}
 #| label: exercise5_timer
+#| echo: false
+
 countdown(minutes = 5, 
           id = "exercise5", 
           #bottom = "10%", 

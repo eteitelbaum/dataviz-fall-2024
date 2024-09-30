@@ -163,7 +163,7 @@ flfp_line <- ggplot(flfp_ts, aes(x = year, y = flfp, color = region)) +
     y = "Female Labor Force Participation", 
     title = "Regional trends in female labor force participation, 2021", 
     caption = "Source: V-Dem Institute", 
-    color = "Country"
+    color = "Region"
   ) + scale_color_viridis_d() +
   theme_minimal()
 

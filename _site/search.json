@@ -2157,9 +2157,9 @@
   {
     "objectID": "assignments/coding-assignment-2.html",
     "href": "assignments/coding-assignment-2.html",
-    "title": "Coding Assignment 2",
+    "title": "Homework 2",
     "section": "",
-    "text": "For this assignment, you are going to evaluate modernization theory as laid out in Seymour Martin Lipset’s classic article entitled “Some Social Requisites of Democracy: Economic Development and Political Legitimacy.” How classic is this article? According to Google Scholar, this piece has been cited more than 11.5 thousand times!\nWe are going to use data from V-Dem and modern data viz tools to explore Lipset’s hypothesis that economic modernization is highly correlated with democracy. We have already done this to some extent by looking at the relationship between wealth and the polyarchy score. But we are going to broaden things out by looking at other measures of modernization and democracy contained in the V-Dem dataset.\nBefore starting on this assignment, you will want to have a look at the V-Dem codebook. Look through the sections titled “V-Dem Democracy Indices” (section 2 of the codebook) and “Background Factors (E).” There are five democracy indicators, one of which is the polyarchy index. There are a number of background factors, many of which pertain to economic modernization. We are going to be looking at the relationship between these two sets of variables.\nNow have a look at “Some Social Requisites of Democracy” and in particular pay attention to the indicators in Table II and the discussion surrounding them. Think of each indicator (e.g. urbanization, education, etc.) as a sub-hypothesis of his theory. Which of these sub-hypotheses about modernization do you think is most compelling? Which would you like to test?\nSubmission note: Accept the invitation on Blackboard to submit this assignment via GitHub.",
+    "text": "For this assignment, you are going to evaluate modernization theory as laid out in Seymour Martin Lipset’s classic article entitled “Some Social Requisites of Democracy: Economic Development and Political Legitimacy.” How classic is this article? According to Google Scholar, this piece has been cited more than 11.5 thousand times!\nWe are going to use data from V-Dem and modern data viz tools to explore Lipset’s hypothesis that economic modernization is highly correlated with democracy. We have already done this to some extent by looking at the relationship between wealth and the polyarchy score. But we are going to broaden things out by looking at other measures of democracy contained in the V-Dem dataset. Specifically, you can choose among the following four measures:\n\nliberal democracy (v2x_libdem)\nparticipatory democracy (v2x_partipdem)\ndeliberative democracy (v2x_delibdem)\negalitarian democracy (v2x_egaldem)\n\nOr you can use some other democracy indicator from the V-Dem database. For measuring modernization we will use GDP per capita (e_gdppc). Use the vdemlite package to retrieve your indicators.\nFor an extra challenge, you could try merging V-Dem democracy indicators with GDP per capita taken from the World Bank using the wbstats package but this is not required.\nStart by running this code chunk to import all of the packages you will need for this exercise. Then start working through the code and questions below. Feel free to grab relevant code chunks from the slides or the classwork QMD files that we have used in class so far.\n\nlibrary(tidyverse)\nlibrary(tidyr)\nlibrary(colorBlindness)\nlibrary(vdemlite)\nlibrary(plotly)\nlibrary(gganimate)",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
@@ -2168,9 +2168,9 @@
   {
     "objectID": "assignments/coding-assignment-2.html#overview",
     "href": "assignments/coding-assignment-2.html#overview",
-    "title": "Coding Assignment 2",
+    "title": "Homework 2",
     "section": "",
-    "text": "For this assignment, you are going to evaluate modernization theory as laid out in Seymour Martin Lipset’s classic article entitled “Some Social Requisites of Democracy: Economic Development and Political Legitimacy.” How classic is this article? According to Google Scholar, this piece has been cited more than 11.5 thousand times!\nWe are going to use data from V-Dem and modern data viz tools to explore Lipset’s hypothesis that economic modernization is highly correlated with democracy. We have already done this to some extent by looking at the relationship between wealth and the polyarchy score. But we are going to broaden things out by looking at other measures of modernization and democracy contained in the V-Dem dataset.\nBefore starting on this assignment, you will want to have a look at the V-Dem codebook. Look through the sections titled “V-Dem Democracy Indices” (section 2 of the codebook) and “Background Factors (E).” There are five democracy indicators, one of which is the polyarchy index. There are a number of background factors, many of which pertain to economic modernization. We are going to be looking at the relationship between these two sets of variables.\nNow have a look at “Some Social Requisites of Democracy” and in particular pay attention to the indicators in Table II and the discussion surrounding them. Think of each indicator (e.g. urbanization, education, etc.) as a sub-hypothesis of his theory. Which of these sub-hypotheses about modernization do you think is most compelling? Which would you like to test?\nSubmission note: Accept the invitation on Blackboard to submit this assignment via GitHub.",
+    "text": "For this assignment, you are going to evaluate modernization theory as laid out in Seymour Martin Lipset’s classic article entitled “Some Social Requisites of Democracy: Economic Development and Political Legitimacy.” How classic is this article? According to Google Scholar, this piece has been cited more than 11.5 thousand times!\nWe are going to use data from V-Dem and modern data viz tools to explore Lipset’s hypothesis that economic modernization is highly correlated with democracy. We have already done this to some extent by looking at the relationship between wealth and the polyarchy score. But we are going to broaden things out by looking at other measures of democracy contained in the V-Dem dataset. Specifically, you can choose among the following four measures:\n\nliberal democracy (v2x_libdem)\nparticipatory democracy (v2x_partipdem)\ndeliberative democracy (v2x_delibdem)\negalitarian democracy (v2x_egaldem)\n\nOr you can use some other democracy indicator from the V-Dem database. For measuring modernization we will use GDP per capita (e_gdppc). Use the vdemlite package to retrieve your indicators.\nFor an extra challenge, you could try merging V-Dem democracy indicators with GDP per capita taken from the World Bank using the wbstats package but this is not required.\nStart by running this code chunk to import all of the packages you will need for this exercise. Then start working through the code and questions below. Feel free to grab relevant code chunks from the slides or the classwork QMD files that we have used in class so far.\n\nlibrary(tidyverse)\nlibrary(tidyr)\nlibrary(colorBlindness)\nlibrary(vdemlite)\nlibrary(plotly)\nlibrary(gganimate)",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
@@ -4534,5 +4534,93 @@
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
     "text": "Your Turn!\n\n\nTry making an animated scatter plot with different a different y-axis variable\nSee if you can make the title change based on the year displayed\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
+    "title": "Homework 2",
+    "section": "Step 1: Make a line chart showing country trends (20 pts)",
+    "text": "Step 1: Make a line chart showing country trends (20 pts)\na) Use fetchdem() to retrieve your chosen democracy indicator for five countries from different regions that you expect might be interesting to compare for 1970 onward and store it in an object called line_chart_dta. Use glimpse() or look at the data frame to make sure everything looks right.\nb) Now choose one of the democracy indicators and visualize it with a line chart using ggplot2 for the countries that you chose. Be sure to specify x =, y = and color = in your aes() call and use geom_line() to create the chart. Add appropriate axis labels, a title and a caption. Now add a colorblind-friendly color map and an attractive theme.\nc) Add a vertical line at an interesting point in history or a horizontal line at a notable point on the y-axis and an annotation explaining the significance of the line.\nd) In a few sentences below, interpret your chart. Describe the levels and trends in democracy scores. Put your answer right below this line in markdown text (DO NOT write your comments in a code chunk!!).",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
+    "title": "Homework 2",
+    "section": "Step 2: Make a column chart comparing country levels (20 pts)",
+    "text": "Step 2: Make a column chart comparing country levels (20 pts)\na) Now use a group_by(), summarize() sequence to take country averages for the data that you retrieved for your line chart in Step 1 and store it as an object called column_chrt_dta.\nb) Use ggplot() and geom_col() to visualize one of the democracy measures with a column chart (you can use the same measure as in Step 1 or a different one). Use fct_reorder() to arrange the columns in order of the y-axis values. Make sure to add appropriate axis labels, a title and a caption. Change the fill color and add a theme to spruce it up a bit. Remember that these are averages over the same number of years as the line chart you made in Step 1\nc) Interpret your column chart. Does the evidence in the column chart roughly match what you saw in the line chart above?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
+    "title": "Homework 2",
+    "section": "Step 3: Make a scatter plot (20 pts)",
+    "text": "Step 3: Make a scatter plot (20 pts)\na) Use fetchdem() to grab democracy indicators along with GDP per capita and region codes (e_regionpol_6C) for all countries for one year of your choosing (hint: set start_year and end_year to the same year). Be sure to rename variables where you need to and use mutate() and case_match() to assign region names \nb) Use the data from part A build a scatter plot with ggplot2 using these data. Put GDP on the x-axis and one of the measures of democracy on the y-axis and color the points by region. Stretch the x-axis on a log scale and use the scales package to add a prefix and suffix to the x-axis numbers to indicate that they are dollar figures. Add appropriate labels and a viridis color map and add your favorite theme. If you get some warnings about a few missing data points, try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.\nc) Next add a trend line with geom_smooth() preferably with a linear model (method = “lm”). Note that you will get some warnings about missing data points and a message about the linear model. Try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
+    "title": "Homework 2",
+    "section": "Step 4: Additional Tasks (20 pts)",
+    "text": "Step 4: Additional Tasks (20 pts)\na) Facet wrap your scatter plot by region.\nb) Remove the facet_wrap() call and display the relationship for one region and use geom_text() to label your points.\nc) Remove the text labels and make your scatter plot interactive using ggplotly(). Make sure that your tooltip includes the information that you want to display to the user.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
+    "href": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
+    "title": "Homework 2",
+    "section": "Step 5: Interpretation (10 pts)",
+    "text": "Step 5: Interpretation (10 pts)\nInterpret your results from your visualizations, including the scatter plot, line chart and column chart. Is there an obvious relationship between development and democracy? Do the data generally support Lipset’s theory?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
+    "href": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
+    "title": "Homework 2",
+    "section": "Step 6: Rendering (10 pts)",
+    "text": "Step 6: Rendering (10 pts)\nUse a Quato theme to improve the look of the HTML output. Press the render button to create your HTML document. If there are lots of messages or warnings come out of your code chunks, consider supressing them with the appropriate chunk options. If you get any errors go back and fix them and try again until the document renders.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#extra-credit-3-pts",
+    "href": "assignments/coding-assignment-2.html#extra-credit-3-pts",
+    "title": "Homework 2",
+    "section": "Extra Credit (3 pts)",
+    "text": "Extra Credit (3 pts)\na) Use fetchdem() to download time series data and gganimate to make an animated version of your scatter plot.\nb) Interpret the plot. Does it tell an interesting story that the static plot did not?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#submission",
+    "href": "assignments/coding-assignment-2.html#submission",
+    "title": "Homework 2",
+    "section": "Submission",
+    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
   }
 ]

@@ -2765,21 +2765,21 @@
     "href": "slides/week-7.1.html#mercator-projection",
     "title": "Choropleth Maps",
     "section": "Mercator Projection",
-    "text": "Mercator Projection\n\n\n\nSource: Wikipedia"
+    "text": "Mercator Projection\n\nSource: Wikipedia"
   },
   {
     "objectID": "slides/week-7.1.html#natural-earth-projection",
     "href": "slides/week-7.1.html#natural-earth-projection",
     "title": "Choropleth Maps",
     "section": "Natural Earth Projection",
-    "text": "Natural Earth Projection\n\n\n\nSource: Wikipedia"
+    "text": "Natural Earth Projection\n\nSource: Wikipedia"
   },
   {
     "objectID": "slides/week-7.1.html#disputed-territory",
     "href": "slides/week-7.1.html#disputed-territory",
     "title": "Choropleth Maps",
     "section": "Disputed Territory",
-    "text": "Disputed Territory\n\n\n\nSource: Wikimedia Commons"
+    "text": "Disputed Territory\n\nSource: Wikimedia Commons"
   },
   {
     "objectID": "slides/week-7.1.html#development",
@@ -2862,8 +2862,8 @@
     "objectID": "slides/week-7.2.html#what-is-a-function",
     "href": "slides/week-7.2.html#what-is-a-function",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "A reusable piece of code that takes some inputs, performs some operations and returns an output\nElements\n\nInputs (arguments)\nOperations (code block)\nOutput (return value)\n\nLike cooking (to produce a dish, you have a recipe and ingredients)\nDon’t repeat yourself (DRY)"
+    "section": "What is a Function",
+    "text": "What is a Function\n\nA reusable piece of code that takes some inputs, performs some operations and returns an output\nElements\n\nInputs (arguments)\nOperations (code block)\nOutput (return value)\n\nLike cooking (to produce a dish, you have a recipe and ingredients)\nDon’t repeat yourself (DRY)"
   },
   {
     "objectID": "slides/week-7.2.html#map-function",
@@ -2876,22 +2876,22 @@
     "objectID": "slides/week-7.2.html#map-function-1",
     "href": "slides/week-7.2.html#map-function-1",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "source(\"functions/wb-maps.R\", local = knitr::knit_global())\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
+    "section": "Map Function",
+    "text": "Map Function\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
   },
   {
     "objectID": "slides/week-7.2.html#map-function-2",
     "href": "slides/week-7.2.html#map-function-2",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "library(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), \n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + \n  labs(\n    title =  title, \n    fill = legend_title, \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, \n    direction = direction \n    )\n}"
+    "section": "Map Function",
+    "text": "Map Function\n\nlibrary(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), \n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + \n  labs(\n    title =  title, \n    fill = legend_title, \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, \n    direction = direction \n    )\n}"
   },
   {
     "objectID": "slides/week-7.2.html#map-function-3",
     "href": "slides/week-7.2.html#map-function-3",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "Save the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
+    "section": "Map Function",
+    "text": "Map Function\n\nSave the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
   },
   {
     "objectID": "slides/week-7.2.html#map-function-4",
@@ -2918,22 +2918,22 @@
     "objectID": "slides/week-7.2.html#your-turn",
     "href": "slides/week-7.2.html#your-turn",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "Take the code from module 3.1, paste in an R script and save in a folder\nCall source() and then the function in your Quarto document\nChange the values for the five parameters\nGo back to the code and add a new parameter (like subtitle)\nTry calling the function again\nWrite something about your map and render the Quarto document\n\n\n\n\n−+\n10:00"
+    "section": "Your Turn",
+    "text": "Your Turn\n\n\nTake the code from module 3.1, paste in an R script and save in a folder\nCall source() and then the function in your Quarto document\nChange the values for the five parameters\nGo back to the code and add a new parameter (like subtitle)\nTry calling the function again\nWrite something about your map and render the Quarto document\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-7.2.html#democracy-function",
     "href": "slides/week-7.2.html#democracy-function",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "Can you make a map function for a democracy indicator?\nCome up with a plan\n\nWhat will the name of the function be?\nWhat will the parameters be?\nWhat would the\n\nTake democracy code from last class and implement\nAdd more parameters if desired\n\n\n\n\n−+\n10:00"
+    "section": "Democracy Function",
+    "text": "Democracy Function\n\n\nCan you make a map function for a democracy indicator?\nCome up with a plan\n\nWhat will the name of the function be?\nWhat will the parameters be?\nWhat would the\n\nTake democracy code from last class and implement\nAdd more parameters if desired\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-7.2.html#other-functions",
     "href": "slides/week-7.2.html#other-functions",
     "title": "Make a Map Function",
-    "section": "",
-    "text": "What other visualizations could you “functionize”?\nLine charts?\nBar charts?\nScatter plots?\nTry one!"
+    "section": "Other Functions",
+    "text": "Other Functions\n\n\nWhat other visualizations could you “functionize”?\nLine charts?\nBar charts?\nScatter plots?\nTry one!"
   },
   {
     "objectID": "slides/week-2.1.html#rstudio",

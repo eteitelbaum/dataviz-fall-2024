@@ -9,14 +9,16 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
 ---
+
+# Make a Map Function
 
 ## What is a Function
 
@@ -31,7 +33,25 @@ execute:
 ## Map Function
 
 ```{r}
-#| lable: map-function0
+#| label: map-function0
+#| echo: false
+
+source("functions/wb-maps.R", local = knitr::knit_global())
+
+create_map(var_id = "SL.TLF.CACT.FE.ZS", 
+           title= "Female Labor Force Participation", 
+           legend_title = "FLFP %", 
+           theme = "inferno", 
+           direction = -1)
+```
+
+## Map Function
+
+<br>
+
+```{r}
+#| label: map-function0.1
+#| eval: false
 
 source("functions/wb-maps.R", local = knitr::knit_global())
 
@@ -48,6 +68,7 @@ create_map(var_id = "SL.TLF.CACT.FE.ZS",
 #| lable: map-function1
 #| echo: true
 #| output: false 
+#| code-line-numbers: "|7,11,16,18-19,27-28"
 
 library(rnaturalearth)
 library(dplyr)
@@ -77,170 +98,6 @@ ne_countries(scale = "medium", returnclass = "sf") |>
   scale_fill_viridis_c( 
     option = theme, 
     direction = direction 
-    )
-}
-```
-
-## Map Function
-
-```{r}
-#| lable: map-function2
-#| echo: true
-#| output: false 
-#| code-line-numbers: "7"
-
-library(rnaturalearth)
-library(dplyr)
-library(ggplot2)
-library(ggthemes)
-library(wbstats)
-
-create_map <- function(var_id, title, legend_title, theme, direction){
-
-ne_countries(scale = "medium", returnclass = "sf") |> 
-  left_join(
-    wb_data(var_id, mrnev = 1), 
-    join_by(iso_a3 == iso3c)
-  ) |> 
-  filter(name != "Antarctica") |>  
-  ggplot() + 
-  geom_sf(aes(fill = eval(parse(text=var_id)))) + 
-  labs(
-    title =  title, 
-    fill = legend_title, 
-    caption = "Source: World Bank Development Indicators"
-    ) +
-  theme_map() +
-  theme(
-    plot.title = element_text(face = "bold"),
-  ) +
-  scale_fill_viridis_c( 
-    option = theme, 
-    direction = direction 
-    )
-}
-```
-
-## Map Function
-
-Where is the first argument?
-
-<br>
-
-```{r}
-#| lable: map-function4
-#| echo: true
-#| output: false 
-#| code-line-numbers: "9-13"
-
-library(rnaturalearth)
-library(dplyr)
-library(ggplot2)
-library(ggthemes)
-library(wbstats)
-
-create_map <- function(var_id, title, legend_title, theme, direction){
-
-ne_countries(scale = "medium", returnclass = "sf") |> 
-  left_join(
-    wb_data(var_id, mrnev = 1), 
-    join_by(iso_a3 == iso3c)
-  ) |> 
-  filter(name != "Antarctica") |>  
-  ggplot() + 
-  geom_sf(aes(fill = eval(parse(text=var_id)))) + # remove quotes
-  labs(
-    title =  title, # change title
-    fill = legend_title, # change legend title
-    caption = "Source: World Bank Development Indicators"
-    ) +
-  theme_map() +
-  theme(
-    plot.title = element_text(face = "bold"),
-  ) +
-  scale_fill_viridis_c( 
-    option = theme, #  chg theme
-    direction = direction # change direction of scale
-    )
-}
-```
-
-## Map Function
-
-```{r}
-#| lable: map-function5
-#| echo: true
-#| output: false 
-#| code-line-numbers: "11"
-
-library(rnaturalearth)
-library(dplyr)
-library(ggplot2)
-library(ggthemes)
-library(wbstats)
-
-create_map <- function(var_id, title, legend_title, theme, direction){
-
-ne_countries(scale = "medium", returnclass = "sf") |> 
-  left_join(
-    wb_data(var_id, mrnev = 1), # change variable id
-    join_by(iso_a3 == iso3c)
-  ) |> 
-  filter(name != "Antarctica") |>  
-  ggplot() + 
-  geom_sf(aes(fill = eval(parse(text=var_id)))) + 
-  labs(
-    title =  title, 
-    fill = legend_title, 
-    caption = "Source: World Bank Development Indicators"
-    ) +
-  theme_map() +
-  theme(
-    plot.title = element_text(face = "bold"),
-  ) +
-  scale_fill_viridis_c( 
-    option = theme, 
-    direction = direction 
-    )
-}
-```
-
-## Map Function
-
-```{r}
-#| lable: map-function6
-#| echo: true
-#| output: false 
-#| code-line-numbers: "7,11,16,18-19,27-28"
-
-library(rnaturalearth)
-library(dplyr)
-library(ggplot2)
-library(ggthemes)
-library(wbstats)
-
-create_map <- function(var_id, title, legend_title, theme, direction){
-
-ne_countries(scale = "medium", returnclass = "sf") |> 
-  left_join(
-    wb_data(var_id, mrnev = 1), # change variable id
-    join_by(iso_a3 == iso3c)
-  ) |> 
-  filter(name != "Antarctica") |>  
-  ggplot() + 
-  geom_sf(aes(fill = eval(parse(text=var_id)))) + # remove quotes
-  labs(
-    title =  title, # change title
-    fill = legend_title, # change legend title
-    caption = "Source: World Bank Development Indicators"
-    ) +
-  theme_map() +
-  theme(
-    plot.title = element_text(face = "bold"),
-  ) +
-  scale_fill_viridis_c( 
-    option = theme, #  chg theme
-    direction = direction # change direction of scale
     )
 }
 ```
@@ -267,7 +124,6 @@ and call in your document...<br>
 
 ```{r}
 #| label: map-function8
-#| echo: true
 #| output: false
 
 create_map(var_id = "SL.TLF.CACT.FE.ZS", 
@@ -276,7 +132,6 @@ create_map(var_id = "SL.TLF.CACT.FE.ZS",
            theme = "inferno", 
            direction = -1)
 ```
-
 
 ## Your Turn{.smaller}
 
@@ -290,18 +145,12 @@ create_map(var_id = "SL.TLF.CACT.FE.ZS",
 - Write something about your map and render the Quarto document
 
 ```{r}
-#| label: setup_timer
+#| label: exercise5_timer
+#| echo: false
+
 library(countdown)
-countdown(minutes = 10, 
-          id = "setup", 
-          #bottom = "10%", 
-          #right = "10%",
-          color_border = "#fff",
-          color_text = "#fff",
-          color_running_background = "#42affa",
-          color_running_text = "black",
-          color_finished_background = "#E5D19D",
-          color_finished_text = "#00264A")
+
+countdown(minutes = 10)
 ```
 
 ## Democracy Function{.smaller}
@@ -317,9 +166,10 @@ countdown(minutes = 10,
 - Add more parameters if desired
 
 ```{r}
-#| label: exercise2_timer
-countdown(minutes = 20, 
-          id = "exercise2", 
+#| label: exercise6_timer
+#| echo: false
+
+countdown(minutes = 10, 
           bottom = "10%", 
           right = "10%"
           )
@@ -327,8 +177,11 @@ countdown(minutes = 20,
 
 ## Other Functions
 
+<br>
+
 - What other visualizations could you "functionize"?
 - Line charts?
 - Bar charts? 
 - Scatter plots? 
 - Try one!
+

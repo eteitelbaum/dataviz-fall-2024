@@ -9,10 +9,11 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
+    fig-align: center
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -20,6 +21,8 @@ execute:
 
 ```{r}
 #| label: setup
+#| include: false 
+
 library(countdown)
 source("functions/wb-maps.R", local = knitr::knit_global())
 ```
@@ -28,6 +31,8 @@ source("functions/wb-maps.R", local = knitr::knit_global())
 
 ```{r}
 #| label: flfp_map
+#| echo: false 
+
 create_map(var_id = "SL.TLF.CACT.FE.ZS", 
            title = "Female Labor Force Participation", 
            legend_title = "FLFP %", 
@@ -56,6 +61,8 @@ create_map(var_id = "SL.TLF.CACT.FE.ZS",
 
 ```{r}
 #| label: gdp_map
+#| echo: false
+
 create_map(var_id = "NY.GDP.PCAP.PP.KD", 
            title= "GDP per capita (constant 2017 internatioal $)", 
            legend_title = "Geary-Khamis $", 
@@ -73,7 +80,6 @@ Grab country shapes with `ne_countries()`
 
 ```{r}
 #| label: country_shapes
-#| echo: true
 #| output: false
 
 library(rnaturalearth)
@@ -100,7 +106,6 @@ Make a map using `geom_sf()` from `ggplot2`.
 
 ```{r}
 #| label: first_map
-#| echo: true
 #| output: false
 
 library(ggplot2)
@@ -120,7 +125,6 @@ Add a color scale and a theme.
 
 ```{r}
 #| label: beautify_map
-#| echo: true
 #| output: false
 
 library(ggthemes)
@@ -147,6 +151,8 @@ ggplot(data = world_map_df) +
 
 ```{r}
 #| label: setup_timer
+#| echo: false 
+
 countdown(minutes = 5, 
           id = "setup", 
           bottom = "10%", 
@@ -164,6 +170,7 @@ countdown(minutes = 5,
 
 ```{r}
 #| label: oil_rents1
+#| echo: false
 
 library(wbstats)
 
@@ -202,8 +209,7 @@ Grab data from the WB, join with country shapes...
 
 ```{r}
 #| label: oil_rents2
-#| echo: true
-#| output: false
+#| eval: false
 
 library(wbstats)
 
@@ -220,8 +226,7 @@ rents_map_df |>
 
 ```{r}
 #| label: oil_rents3
-#| echo: true
-#| output: false
+#| eval: false
 
 ggplot(data = rents_map_df) +
   geom_sf(aes(fill = oil_rents_gdp)) + # shade based on oil rents
@@ -258,8 +263,9 @@ ggplot(data = rents_map_df) +
 
 ```{r}
 #| label: exercise2_timer
+#| echo: false
+
 countdown(minutes = 10, 
-          id = "exercise2", 
           bottom = "10%", 
           right = "10%"
           )
@@ -277,8 +283,9 @@ countdown(minutes = 10,
 
 ```{r}
 #| label: exercise3_timer
+#| echo: false 
+
 countdown(minutes = 10, 
-          id = "exercise2", 
           bottom = "10%", 
           right = "10%"
           )
@@ -292,14 +299,12 @@ countdown(minutes = 10,
 - Sometimes not! 
 - Try prompting ChatGPT to code up a choropleth map
 - Tell it what packages to use
-- See how it does and note what it does differently relative to humans
-- Then debug the code
+- Note differences from our code
+- Debug if necessary
 
 ```{r}
 #| label: exercise4_timer
-countdown(minutes = 10, 
-          id = "exercise2", 
-          #bottom = "10%", 
-          #right = "10%"
-          )
+#| echo: false
+
+countdown(minutes = 10)
 ```

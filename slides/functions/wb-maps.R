@@ -13,7 +13,7 @@ create_map <- function(var_id, title, subtitle, legend_title, theme, direction){
     ) |> 
     filter(name != "Antarctica") |>  
     ggplot() + 
-    geom_sf(aes(fill = eval(parse(text=var_id)))) + # remove quotes
+    geom_sf(aes(fill = .data[[var_id]])) + # unquote var_id
     labs(
       title =  title, # change title
       fill = legend_title, # change legend title

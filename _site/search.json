@@ -794,91 +794,91 @@
     "href": "slides/week-8.1.html#leaflet-map-with-one-marker",
     "title": "Leaflet Maps",
     "section": "Leaflet Map with One Marker",
-    "text": "Leaflet Map with One Marker\n\nlibrary(leaflet)\n\nleaflet() |&gt;\n  addTiles() |&gt;  # Add default OpenStreetMap map tiles\n  addMarkers(lng = 45.46916, lat = 14.14912, label = \"First conflict event\")"
+    "text": "Leaflet Map with One Marker\n\n\nCode\nlibrary(leaflet)\n\nleaflet() |&gt;\n  addTiles() |&gt;  # Add default OpenStreetMap map tiles\n  addMarkers(lng = -77.05257716288175, lat = 38.8894121430393, label = \"Watergate Steps\")"
   },
   {
     "objectID": "slides/week-8.1.html#your-turn",
     "href": "slides/week-8.1.html#your-turn",
     "title": "Leaflet Maps",
     "section": "Your Turn",
-    "text": "Your Turn\n\n\nMake a leaflet map with one marker\nFind the coordinates (longitude and latitude) of your high school\nOr some favorite place\nEnter coordinates into addMarkers() call and label the marker\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn\n\n\nMake a leaflet map with one marker\nFind the coordinates (longitude and latitude) of your high school\nOr some favorite place\nEnter coordinates into addMarkers() call and label the marker\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-8.1.html#conflict-map",
     "href": "slides/week-8.1.html#conflict-map",
     "title": "Leaflet Maps",
     "section": "Conflict Map",
-    "text": "Conflict Map"
+    "text": "Conflict Map\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#conflict-data",
     "href": "slides/week-8.1.html#conflict-data",
     "title": "Leaflet Maps",
     "section": "Conflict Data",
-    "text": "Conflict Data\n\nDownload the data from UCDP and load.\n\n\nlibrary(readr)\nlibrary(dplyr)\n\nged_data &lt;- read_csv(\"data/GEDEvent_v22_1.csv\")\n\n## As a last resort\n#ged_data &lt;- read_csv(\"https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/GEDEvent_v22_1.csv\")"
+    "text": "Conflict Data\n\nDownload the data from UCDP and load.\n\n\nlibrary(readr)\nlibrary(dplyr)\n\nged_data &lt;- read_csv(\"data/GEDEvent_v22_1.csv\")"
   },
   {
     "objectID": "slides/week-8.1.html#conflict-data-wrangling",
     "href": "slides/week-8.1.html#conflict-data-wrangling",
     "title": "Leaflet Maps",
     "section": "Conflict Data Wrangling",
-    "text": "Conflict Data Wrangling\n\nged_yemen &lt;- ged_data |&gt; \n  filter(\n    country_id == 678, #gw country code\n    year == 2021,\n    date_start &lt; \"2021-03-01\", \n    where_prec &lt; 3, # keep if certain where event occurred\n    event_clarity == 1, # keep if event reporting is clear\n      ) |&gt; \n  mutate(deaths = deaths_a + deaths_b + deaths_civilians + deaths_unknown) |&gt;\n  select(event_id = id,\n         country_id,\n         date = date_start,\n         gov_deaths = deaths_a, \n         rebel_deaths = deaths_b, \n         civilian_deaths = deaths_civilians, \n         deaths, \n         place = where_coordinates,\n         latitude, \n         longitude) |&gt;\n  sf::st_as_sf(coords = c(\"longitude\", \"latitude\"))"
+    "text": "Conflict Data Wrangling\n\n\nged_yemen &lt;- ged_data |&gt; \n  filter(\n    country_id == 678, #gw country code\n    year == 2021,\n    date_start &lt; \"2021-03-01\", \n    where_prec &lt; 3, # keep if certain where event occurred\n    event_clarity == 1, # keep if event reporting is clear\n      ) |&gt; \n  mutate(deaths = deaths_a + deaths_b + deaths_civilians + deaths_unknown) |&gt;\n  select(event_id = id,\n         country_id,\n         date = date_start,\n         gov_deaths = deaths_a, \n         rebel_deaths = deaths_b, \n         civilian_deaths = deaths_civilians, \n         deaths, \n         place = where_coordinates,\n         latitude, \n         longitude) |&gt;\n  sf::st_as_sf(coords = c(\"longitude\", \"latitude\"))"
   },
   {
     "objectID": "slides/week-8.1.html#basic-conflict-map",
     "href": "slides/week-8.1.html#basic-conflict-map",
     "title": "Leaflet Maps",
     "section": "Basic Conflict Map",
-    "text": "Basic Conflict Map\n\nleaflet(data = ged_yemen) |&gt; # map points in ged_yemen data frame\n  addTiles() |&gt; # add default tile\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addMarkers(\n    popup = ~as.character(deaths), # when user clicks, show deaths\n    label = ~place # when user hovers, show town\n    )"
+    "text": "Basic Conflict Map\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # map points in ged_yemen data frame\n  addTiles() |&gt; # add default tile\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addMarkers(\n    popup = ~as.character(deaths), # when user clicks, show deaths\n    label = ~place # when user hovers, show town\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#basic-conflict-map-1",
     "href": "slides/week-8.1.html#basic-conflict-map-1",
     "title": "Leaflet Maps",
     "section": "Basic Conflict Map",
-    "text": "Basic Conflict Map"
+    "text": "Basic Conflict Map\n\nleaflet(data = ged_yemen) |&gt; # map points in ged_yemen data frame\n  addTiles() |&gt; # add default tile\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addMarkers(\n    popup = ~as.character(deaths), # when user clicks, show deaths\n    label = ~place # when user hovers, show town\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#add-awesome-icons",
     "href": "slides/week-8.1.html#add-awesome-icons",
     "title": "Leaflet Maps",
     "section": "Add Awesome Icons",
-    "text": "Add Awesome Icons\n\n# save icon\nicon &lt;- awesomeIcons(\n  icon = \"ios-close\",\n  iconColor = \"black\",\n  markerColor = \"red\", \n  library = \"ion\" \n)\n\n# Build map\nleaflet(data = ged_yemen) |&gt;   \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~as.character(deaths), \n    label = ~place\n    )"
+    "text": "Add Awesome Icons\n\n\nCode\n# save icon\nicon &lt;- awesomeIcons(\n  icon = \"ios-close\",\n  iconColor = \"black\",\n  markerColor = \"red\", \n  library = \"ion\" \n)\n\n# Build map\nleaflet(data = ged_yemen) |&gt;   \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~as.character(deaths), \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#add-awesome-icons-1",
     "href": "slides/week-8.1.html#add-awesome-icons-1",
     "title": "Leaflet Maps",
     "section": "Add Awesome Icons",
-    "text": "Add Awesome Icons"
+    "text": "Add Awesome Icons\n\n# save icon\nicon &lt;- awesomeIcons(\n  icon = \"ios-close\",\n  iconColor = \"black\",\n  markerColor = \"red\", \n  library = \"ion\" \n)\n\n# Build map\nleaflet(data = ged_yemen) |&gt;   \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~as.character(deaths), \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#change-content-of-popup",
     "href": "slides/week-8.1.html#change-content-of-popup",
     "title": "Leaflet Maps",
     "section": "Change Content of Popup",
-    "text": "Change Content of Popup\n\nged_yemen$popup_text &lt;- sprintf(\n      \"Date: %s &lt;br&gt; \n       Total Deaths: %.0f &lt;br&gt; \n       Govt. Deaths: %.0f &lt;br&gt; \n       Rebel Deaths: %.0f &lt;br&gt; \n       Civilian Death: %.0f &lt;br&gt;\",\n      ged_yemen$date, \n      ged_yemen$deaths, \n      ged_yemen$gov_deaths, \n      ged_yemen$rebel_deaths,\n      ged_yemen$civilian_deaths\n    ) |&gt; lapply(htmltools::HTML)"
+    "text": "Change Content of Popup\n\n\nged_yemen$popup_text &lt;- sprintf(\n      \"Date: %s &lt;br&gt; \n       Total Deaths: %.0f &lt;br&gt; \n       Govt. Deaths: %.0f &lt;br&gt; \n       Rebel Deaths: %.0f &lt;br&gt; \n       Civilian Death: %.0f &lt;br&gt;\",\n      ged_yemen$date, \n      ged_yemen$deaths, \n      ged_yemen$gov_deaths, \n      ged_yemen$rebel_deaths,\n      ged_yemen$civilian_deaths\n    ) |&gt; lapply(htmltools::HTML)"
   },
   {
     "objectID": "slides/week-8.1.html#use-new-labels",
     "href": "slides/week-8.1.html#use-new-labels",
     "title": "Leaflet Maps",
     "section": "Use New Labels",
-    "text": "Use New Labels\n\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
+    "text": "Use New Labels\n\n\nCode\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#conflict-map-1",
     "href": "slides/week-8.1.html#conflict-map-1",
     "title": "Leaflet Maps",
     "section": "Conflict Map",
-    "text": "Conflict Map"
+    "text": "Conflict Map\n\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#your-turn-1",
     "href": "slides/week-8.1.html#your-turn-1",
     "title": "Leaflet Maps",
     "section": "Your Turn",
-    "text": "Your Turn\n\nDownload the data\nReproduce Yemen map\nThen try another country"
+    "text": "Your Turn\n\n\nLoad the data\nReproduce Yemen map\nThen try another country"
   },
   {
     "objectID": "slides/week-4.2.html#merging-data-frames",
@@ -4727,5 +4727,26 @@
     "title": "Make a Map Function",
     "section": "Line Chart",
     "text": "Line Chart\n\n\ncreate_line_chart &lt;- function(data, x_var, y_var, color_var, title, x_label,\n                              y_label, legend_title, color_palette = \"turbo\",\n                              palette_end = 0.8) {\n  \n  ggplot(data, aes(x = {{ x_var }}, y = {{ y_var }}, color = {{ color_var }})) +\n    geom_line() +\n    labs(\n      title = title,\n      x = x_label,\n      y = y_label\n    ) +\n    scale_color_viridis_d(\n      name = legend_title,  \n      option = color_palette, \n      end = palette_end\n    ) +\n    theme_minimal()\n}\n\n# Example call\ncreate_line_chart(\n  data = brics_dem, \n  x_var = year, \n  y_var = v2x_polyarchy, \n  color_var = country_name, \n  title = \"Democracy in the BRICS Nations\", \n  x_label = \"Year\", \n  y_label = \"Polyarchy Score\",\n  legend_title = \"Index\"\n)"
+  },
+  {
+    "objectID": "slides/week-8.1.html#our-goal",
+    "href": "slides/week-8.1.html#our-goal",
+    "title": "Leaflet Maps",
+    "section": "Our Goal",
+    "text": "Our Goal"
+  },
+  {
+    "objectID": "slides/week-8.1.html#use-the-new-labels",
+    "href": "slides/week-8.1.html#use-the-new-labels",
+    "title": "Leaflet Maps",
+    "section": "Use the New Labels",
+    "text": "Use the New Labels\n\n\nCode\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
+  },
+  {
+    "objectID": "slides/week-8.1.html#add-provider-tiles",
+    "href": "slides/week-8.1.html#add-provider-tiles",
+    "title": "Leaflet Maps",
+    "section": "Add Provider Tiles",
+    "text": "Add Provider Tiles\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   }
 ]

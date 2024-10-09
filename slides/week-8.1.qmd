@@ -12,7 +12,7 @@ format:
     multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -84,12 +84,13 @@ ged_yemen$popup_text <- sprintf(
 
 ```{r}
 #| label: one_marker
-#| echo: true
+#| code-fold: true
+
 library(leaflet)
 
 leaflet() |>
   addTiles() |>  # Add default OpenStreetMap map tiles
-  addMarkers(lng = 45.46916, lat = 14.14912, label = "First conflict event")
+  addMarkers(lng = -77.05257716288175, lat = 38.8894121430393, label = "Watergate Steps")
 ```
 
 ## Your Turn
@@ -103,8 +104,10 @@ leaflet() |>
 
 ```{r}
 #| label: setup_timer
+#| echo: false
+
 library(countdown)
-countdown(minutes = 10, 
+countdown(minutes = 5, 
           id = "setup", 
           bottom = "10%", 
           right = "10%",
@@ -116,10 +119,12 @@ countdown(minutes = 10,
           color_finished_text = "#00264A")
 ```
 
-## Conflict Map
+## Our Goal
+
+<br>
 
 ```{r}
-#| label: conflict_map
+#| echo: false
 
 leaflet(data = ged_yemen) |> # Jan and Feb  
   addProviderTiles("OpenTopoMap") |> # include name of provider here
@@ -141,23 +146,20 @@ Download the data from [UCDP](https://ucdp.uu.se/) and load.
 
 ```{r}
 #| label: conflict_data
-#| echo: true
 #| output: false
 
 library(readr)
 library(dplyr)
 
 ged_data <- read_csv("data/GEDEvent_v22_1.csv")
-
-## As a last resort
-#ged_data <- read_csv("https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/modules/data/GEDEvent_v22_1.csv")
 ```
 
 ## Conflict Data Wrangling
 
+<br>
+
 ```{r}
 #| label: conflict_data_cleaning
-#| echo: true
 #| output: false
 
 ged_yemen <- ged_data |> 
@@ -185,21 +187,9 @@ ged_yemen <- ged_data |>
 ## Basic Conflict Map
 
 ```{r}
-#| echo: true
-#| output: false
+#| label: basic_conflict_map
+#| code-fold: true
 
-leaflet(data = ged_yemen) |> # map points in ged_yemen data frame
-  addTiles() |> # add default tile
-  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |> # Sana'a coordinates
-  addMarkers(
-    popup = ~as.character(deaths), # when user clicks, show deaths
-    label = ~place # when user hovers, show town
-    )
-```
-
-## Basic Conflict Map
-
-```{r}
 leaflet(data = ged_yemen) |> # map points in ged_yemen data frame
   addTiles() |> # add default tile
   setView(lng = 44.1910, lat = 15.3694, zoom = 6) |> # Sana'a coordinates
@@ -213,31 +203,8 @@ leaflet(data = ged_yemen) |> # map points in ged_yemen data frame
 ## Add Awesome Icons
 
 ```{r}
-#| echo: true
-#| output: false
+#| code-fold: true
 
-# save icon
-icon <- awesomeIcons(
-  icon = "ios-close",
-  iconColor = "black",
-  markerColor = "red", 
-  library = "ion" 
-)
-
-# Build map
-leaflet(data = ged_yemen) |>   
-  addTiles() |> 
-  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |> # Sana'a coordinates
-  addAwesomeMarkers(
-    icon = icon, 
-    popup = ~as.character(deaths), 
-    label = ~place
-    )
-```
-
-## Add Awesome Icons
-
-```{r}
 # save icon
 icon <- awesomeIcons(
   icon = "ios-close",
@@ -259,10 +226,9 @@ leaflet(data = ged_yemen) |>
 
 ## Change Content of Popup
 
-```{r}
-#| echo: true
-#| output: false
+<br>
 
+```{r}
 ged_yemen$popup_text <- sprintf(
       "Date: %s <br> 
        Total Deaths: %.0f <br> 
@@ -277,11 +243,10 @@ ged_yemen$popup_text <- sprintf(
     ) |> lapply(htmltools::HTML)
 ```
 
-## Use New Labels
+## Use the New Labels
 
 ```{r}
-#| echo: true
-#| output: false
+#| code-fold: true
 
 leaflet(data = ged_yemen) |>  
   addTiles() |> 
@@ -293,10 +258,12 @@ leaflet(data = ged_yemen) |>
     )
 ```
 
-
-## Conflict Map
+## Add Provider Tiles
 
 ```{r}
+#| label: conflict_map
+#| code-fold: true
+
 leaflet(data = ged_yemen) |> # Jan and Feb  
   addProviderTiles("OpenTopoMap") |> # include name of provider here
   setView(lng = 44.1910, lat = 15.3694, zoom = 6) |> # Sana'a coordinates
@@ -307,9 +274,12 @@ leaflet(data = ged_yemen) |> # Jan and Feb
     )
 ```
 
+
 ## Your Turn
 
-- Download the data
+<br>
+
+- Load the data
 - Reproduce Yemen map
 - Then try another country
 

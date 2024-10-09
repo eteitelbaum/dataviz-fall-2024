@@ -20,6 +20,7 @@ execute:
 
 ```{r}
 #| label: setup
+#| echo: false
 
 library(readr)
 library(dplyr)

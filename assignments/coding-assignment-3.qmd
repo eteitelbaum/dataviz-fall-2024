@@ -84,5 +84,6 @@ For this assignment, we are going to be evaluating Michael Ross's influential bo
 
 *See if you can find a list of the ten biggest oil fields and in your country and their geographic coordinates. Put those coordinates to a .csv file. You can try using an AI for this, but you may have to do some "jail breaking" because it could be interpreted as sensitive information. Now see if you can read the data into R and use it to plot the location of the oil fields in a fresh map. What did you find in terms of the relationship between oil and conflict?* 
 
+## Submission
 
-
+*After rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.*

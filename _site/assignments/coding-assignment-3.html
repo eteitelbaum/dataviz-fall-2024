@@ -397,7 +397,7 @@ ul.task-list li input[type="checkbox"] {
 <p><em>The central argument in Michael Ross’s book is that oil rents undermine democracy because oil provides a non-tax source of revenue to governments. If people don’t have to worry about taxes, then they don’t have to be concerned about what their leaders are doing. He calls this the “fiscal theory of democracy.” Let’s use the map app we built in module 3.1 for exploring World Bank data to evaluate this claim.</em></p>
 <p><em>a. In your assignment folder, create a subfolder called ‘function’ and use it to store your map function helper script like we did in module 3.1.</em></p>
 <p><em>b. Now add the <code>source()</code> code chunk that will enable you to call the map function in your Quarto document.</em></p>
-<p><em>c.&nbsp;Use your function to map income taxes as a percent of government revenue (GC.TAX.GSRV.RV.ZS). Then use it to map “NY.GDP.PETR.RT.ZS”. Do you see evidence of a relationship between taxes and oil rents?</em></p>
+<p><em>c.&nbsp;Use your function to map taxes as a percent of government revenue. You can use taxes on goods and services (GC.TAX.GSRV.RV.ZS) or taxes on income, profits and capital gains (GC.TAX.YPKG.RV.ZS). Then use it to map oil rengs (NY.GDP.PETR.RT.ZS). Do you see evidence of a relationship between taxes and oil rents?</em></p>
 <p><em>d.&nbsp;Use the <code>wb_search()</code> function to identify at least one other variable that would be relevant for evaluating Ross’s theory. Use your function to map that variable. Then describe the relationship with oil wealth (if any) and how the map is relevant to Ross’s theory.</em></p>
 </section>
 <section id="step-4-make-a-leaflet-map-of-conflict-in-an-oil-rich-country-25-pts" class="level2">
@@ -406,7 +406,6 @@ ul.task-list li input[type="checkbox"] {
 <p><em>a. Select a country case to work with. This should be a oil-rich country that has recently experienced high levels of internal conflict. Examples include Iraq, Syria, Yemen and Nigeria. Use your AI to identify a country and a period of time to analyze. Say a few words about your country case and the time period you will be looking at.</em><br>
 <em>b. Now, following the step laid out in module 3.2, filter a few months of conflict data from the UCDP GED dataset for your selected country and convert the coordinates simple features using the <code>st_as_sf()</code> function from the <code>sf</code> package.</em></p>
 <p><em>c.&nbsp;Next, produce a leaflet map that displays markers representing conflict events. Have the markers display the name of the location where the conflict event occurred when the user hovers over them. Have the popup windows display the number of deaths and the date of the event when the user clicks on them. Use “OpenTopoMap” as your basemap.</em></p>
-<p><em>e. Do some research into the location of oil fields in your country. Does conflict tend to concentrate where the oil lies?</em></p>
 </section>
 <section id="extra-credit-3-pts" class="level2">
 <h2 class="anchored" data-anchor-id="extra-credit-3-pts">Extra Credit (3 pts)</h2>

@@ -52,7 +52,7 @@ For this assignment, we are going to be evaluating Michael Ross's influential bo
 
 ```
 
-*c. Use your function to map income taxes as a percent of government revenue (GC.TAX.GSRV.RV.ZS). Then use it to map "NY.GDP.PETR.RT.ZS". Do you see evidence of a relationship between taxes and oil rents?*
+*c. Use your function to map taxes as a percent of government revenue. You can use taxes on goods and services (GC.TAX.GSRV.RV.ZS) or taxes on income, profits and capital gains (GC.TAX.YPKG.RV.ZS). Then use it to map oil rengs (NY.GDP.PETR.RT.ZS). Do you see evidence of a relationship between taxes and oil rents?*
 
 ```{r}
 
@@ -77,8 +77,6 @@ For this assignment, we are going to be evaluating Michael Ross's influential bo
 *b. Now, following the step laid out in module 3.2, filter a few months of conflict data from the UCDP GED dataset for your selected country and convert the coordinates simple features using the `st_as_sf()` function from the `sf` package.*
 
 *c. Next, produce a leaflet map that displays markers representing conflict events. Have the markers display the name of the location where the conflict event occurred when the user hovers over them. Have the popup windows display the number of deaths and the date of the event when the user clicks on them. Use "OpenTopoMap" as your basemap.*
-
-*e. Do some research into the location of oil fields in your country. Does conflict tend to concentrate where the oil lies?*
 
 ## Extra Credit (3 pts)
 

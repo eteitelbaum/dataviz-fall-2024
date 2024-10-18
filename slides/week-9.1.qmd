@@ -9,7 +9,7 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
 execute:
   echo: false
@@ -351,6 +351,8 @@ countdown(minutes = 10,
 
 ## Change Colum Width
 
+<br>
+
 ```{r}
 vgoodtable <- goodtable |>
   cols_width(c(q1:top5) ~ px(90))
@@ -359,6 +361,8 @@ vgoodtable
 ```
 
 ## Change Colum Width
+
+<br>
 
 ```{r}
 #| echo: true
@@ -372,6 +376,8 @@ vgoodtable
 
 ## Change Font
 
+<br>
+
 ```{r}
 greattable <- vgoodtable |>
   opt_table_font(font = "verdana")
@@ -380,6 +386,8 @@ greattable
 ```
 
 ## Change Font
+
+<br>
 
 ```{r}
 #| echo: true
@@ -393,6 +401,8 @@ greattable
 
 ## Center
 
+<br>
+
 ```{r}
 #| label: center
 vgreattable <- greattable |>
@@ -405,6 +415,8 @@ vgreattable
 ```
 
 ## Center
+
+<br>
 
 ```{r}
 #| echo: true
@@ -420,6 +432,8 @@ vgreattable
 ```
 
 ## Add Borders and Lines
+
+<br>
 
 ```{r}
 #| label: nolines
@@ -436,8 +450,9 @@ awesometable
 ```
 
 
-
 ## Add Borders and Lines
+
+<br>
 
 ```{r}
 #| echo: true
@@ -456,6 +471,8 @@ awesometable
 ```
 
 ## Export Table
+
+<br>
 
 ```{r}
 #| echo: true

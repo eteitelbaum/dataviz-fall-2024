@@ -1,5 +1,5 @@
 ---
-title: "gt Tables"
+title: "Advanced Table Skills"
 date: today
 date-format: long
 footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
@@ -12,7 +12,7 @@ format:
     multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -29,113 +29,80 @@ library(tidycensus)
 
 my_api_key = Sys.getenv("census_api_key")
 census_api_key(my_api_key)
+```
 
 
-v21 <- load_variables(2021, "acs5", cache = TRUE)
+# gtExtras
 
-quintiles <- get_acs(geography = "state", 
-                      variables = c(q1 = "B19081_001",
-                                    q2 = "B19081_002",
-                                    q3 = "B19081_003",
-                                    q4 = "B19081_004",
-                                    q5 = "B19081_005",
-                                    top5 = "B19081_006"),
-                      year = 2021,
-                      output = "wide") |>
-                      select(
-                        !ends_with("M"), # eliminate margin of error
-                        -GEOID) |> # eliminate geo id
-                      rename(name = NAME) |>
-                      rename_with(~str_remove(., 'E'))
+## The `gtExtras` package
 
-# lowest 
-state_min <- quintiles |> 
-  slice_min(q1) 
+- By now we know the difference between a graph and a table
+  - **Tables** are good for comparing individual values
+  - **Graphs** are for visualizing a whole bunch of values
+- Usually we keep our graphs and tables separate
+- But are there times when we might want to combine them?
+- `gtExtras` lets us include sparklines, histograms, etc. in our tables
 
-# highest
-state_max <- quintiles |> 
-  slice_max(top5) 
+## Democracy Example
 
-# randomly select five more
-five_more <- quintiles |>
-   slice_sample(n = 5) 
+<br>
 
-states <- bind_rows(state_min, state_max, five_more) |>
-  arrange(desc(top5))
+```{r}
+library(vdemlite)
 
-awesometable <- gt(states) |> 
-  tab_header(
-    title = "Mean Household Income of Quintiles, 2021",
-    subtitle = "Seven Representative U.S. States"
-  ) |> 
-  cols_label(
-    name = "",
-    q1 = "lowest",
-    q2 = "second",
-    q3 = "third",
-    q4 = "fourth",
-    q5 = "highest",
-    top5 = "top 5%"
-  ) |> 
-  
-  fmt_currency(
-    columns = c(q1:top5),
-    currency = "USD", 
-    use_subunits = FALSE
-  ) |>
-  
-  # note that you can use markdown (md) to format the source note for html documents
-  tab_source_note(source_note = md("**Source**: US Census Bureau, American Community Survey")) |>
-  
-  cols_width(c(q1:top5) ~ px(90)) |>
-  
-  opt_table_font(font = "verdana") |>
-  cols_align(
-  align = "center",
-  columns = q1:top5
-) |>
-  tab_options(
-    table.border.top.color = "black", 
-    table.border.bottom.color = "black",
-    heading.border.bottom.color = "black", 
-    column_labels.border.bottom.color = "black", 
-    table_body.border.bottom.color = "black"
+# Grab the polyarchy scores for the United States between 2000 and 2020
+brics_dem <- fetchdem(indicators = "v2x_polyarchy",
+                         start_year = 2000, end_year = 2020,
+                         countries = c("BRA", "RUS", "IND", "CHN", "ZAF"))
+```
+
+## Democracy Example
+
+<br>
+
+```{r}
+library(dplyr)
+
+dem_summary <- brics_dem|>
+  group_by(country_id) |>
+  summarize(
+    max = max(v2x_polyarchy, na.rm = TRUE),
+    mean = mean(v2x_polyarchy, na.rm = TRUE),
+    sd = sd(v2x_polyarchy, na.rm = TRUE),
+    dem_data = list(v2x_polyarchy),
+    .groups = "drop"
   )
 ```
 
+## Democracy Example
 
-
-## Let's make a `gt` table
-
-Create `states` data frame... 
+<br>
 
 ```{r}
-#| echo: true
-#| eval: false
+library(gtExtras)
 
-# lowest 
-state_min <- quintiles |> 
-  slice_min(q1) 
-
-# highest
-state_max <- quintiles |> 
-  slice_max(top5) 
-
-# randomly select five more
-five_more <- quintiles |>
-   slice_sample(n = 5) 
-
-states <- bind_rows(state_min, state_max, five_more) |>
-  arrange(desc(top5))
+dem_summary |>
+  gt() |>
+  gt_plt_sparkline(dem_data) #from gtExtras
 ```
 
+## Your Turn!
+
+<br>
+
+- Download democracy data for one year
+- Indicator is your choice
+- Add region codes
+- Group and summarize by region
+- Add an appropriate inline plot to your table
+
 ```{r}
-#| label: setup_timer
+#| echo: false
+
 library(countdown)
-countdown(minutes = 10, 
-          id = "setup", 
-          #bottom = "10%", 
-          #right = "10%",
+countdown(minutes = 15, 
+          bottom = "10%", 
+          right = "10%",
           color_border = "#fff",
           color_text = "#fff",
           color_running_background = "#42affa",
@@ -144,196 +111,14 @@ countdown(minutes = 10,
           color_finished_text = "#00264A")
 ```
 
-## Let's make a `gt` table
 
-<br>
+# When Not to Use a Table
 
-```{r}
-#| echo: true
-library(gt)
-gt(states)
-```
-
-## Let's make a good `gt` table
-
-<br>
+## Not a Good Table {.scrollable}
 
 ```{r}
-goodtable <- gt(states) |> 
-  tab_header(
-    title = "Mean Household Income of Quintiles, 2021",
-    subtitle = "Seven Representative U.S. States"
-  ) |> 
-  cols_label(
-    name = "",
-    q1 = "lowest",
-    q2 = "second",
-    q3 = "third",
-    q4 = "fourth",
-    q5 = "highest",
-    top5 = "top 5%"
-  ) |> 
-  fmt_currency(
-    columns = c(q1:top5),
-    currency = "USD", 
-    use_subunits = FALSE
-  ) |>
-  # note that you can use markdown (md) to format the source note for html documents
-  tab_source_note(source_note = md("**Source**: US Census Bureau, American Community Survey"))
+#| echo: false
 
-goodtable
-```
-
-## Let's make a good `gt` table
-
-```{r}
-#| echo: true
-#| eval: false
-
-goodtable <- gt(states) |> 
-  tab_header(
-    title = "Mean Household Income of Quintiles, 2021",
-    subtitle = "Seven Representative U.S. States"
-  ) |> 
-  cols_label(
-    name = "",
-    q1 = "lowest",
-    q2 = "second",
-    q3 = "third",
-    q4 = "fourth",
-    q5 = "highest",
-    top5 = "top 5%"
-  ) |> 
-  fmt_currency(
-    columns = c(q1:top5),
-    currency = "USD", 
-    use_subunits = FALSE
-  ) |>
-  # note that you can use markdown (md) to format the source note for html documents
-  tab_source_note(source_note = md("**Source**: US Census Bureau, American Community Survey"))
-
-goodtable
-```
-
-```{r}
-countdown(minutes = 10, 
-          id = "goodtable") 
-```
-
-## Change Colum Width
-
-<br>
-
-```{r}
-vgoodtable <- goodtable |>
-  cols_width(c(q1:top5) ~ px(90))
-
-vgoodtable
-```
-
-## Change Colum Width
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false 
-
-vgoodtable <- goodtable |>
-  cols_width(c(q1:top5) ~ px(90))
-
-vgoodtable
-```
-
-## Change Font
-
-<br>
-
-```{r}
-greattable <- vgoodtable |>
-  opt_table_font(font = "verdana")
-
-greattable
-```
-
-## Change Font
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false
-
-greattable <- vgoodtable |>
-  opt_table_font(font = "verdana")
-
-greattable
-```
-
-## Center
-
-<br>
-
-```{r}
-#| label: center
-vgreattable <- greattable |>
-  cols_align(
-  align = "center",
-  columns = q1:top5
-)
-
-vgreattable
-```
-
-## Center
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false
-
-vgreattable <- greattable |>
-  cols_align(
-  align = "center",
-  columns = q1:top5
-)
-
-vgreattable
-```
-
-## Add Borders and Lines
-
-<br>
-
-```{r}
-#| label: nolines
-awesometable <- vgreattable |>
-  tab_options(
-    table.border.top.color = "black", 
-    table.border.bottom.color = "black",
-    heading.border.bottom.color = "black", 
-    column_labels.border.bottom.color = "black", 
-    table_body.border.bottom.color = "black"
-  )
-
-awesometable
-```
-
-## Export Table
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false
-
-gtsave(awesometable, "awesometable.png")
-```
-
-## Not a Good Table {.smaller}
-
-```{r}
 library(janitor)
 
 mass_med_inc <- get_acs(
@@ -356,6 +141,8 @@ kableExtra::kable(mass_med_inc)
 ## Use Confidence Intervals Instead
 
 ```{r}
+#| echo: false
+
 library(ggplot2)
 
 mass_med_inc |>
@@ -372,8 +159,9 @@ mass_med_inc |>
 
 ## Use Confidence Intervals Instead
 
+<br>
+
 ```{r}
-#| echo: true
 #| output: false
 
 library(ggplot2)
@@ -390,4 +178,27 @@ mass_med_inc |>
   theme_minimal()
 ```
 
+## Your Turn!
 
+<br>
+
+- Download data on median income for another state
+- Plot the income estimates for that state
+
+```{r}
+#| echo: false
+countdown(minutes = 15, 
+          bottom = "10%", 
+          right = "10%")
+```
+
+# Time Permitting
+
+## `reactable`
+
+<br>
+
+- `reactable` is an [R package](https://glin.github.io/reactable/index.html) that lets you create interactive tables
+- You can sort, filter, and search the table
+- Based on the [React Table](https://github.com/tanstack/table/tree/v7?tab=readme-ov-file) library
+- Let's explore it together!

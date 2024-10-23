@@ -9,10 +9,12 @@ format:
     theme: [simple, custom.scss]
     transition: fade
     slide-number: true
-    multiplex: true
+    #multiplex: true
     chalkboard: true
+    
+    #view-distance: 18
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -24,8 +26,9 @@ execute:
 
 ## Load Data
 
+<br>
+
 ```{r}
-#| echo: true
 #| output: false
 
 library(peacesciencer)
@@ -44,8 +47,10 @@ glimpse(conflict_df)
 
 ```{r}
 #| label: setup_timer
+#| echo: false
+
 library(countdown)
-countdown(minutes = 5, 
+countdown(minutes = 2, 
           id = "setup", 
           bottom = "10%", 
           right = "10%",
@@ -62,7 +67,6 @@ countdown(minutes = 5,
 <br>
 
 ```{r}
-#| echo: TRUE
 conflict_model <- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + 
                         rugged + wbgdppc2011est + wbpopest,
                   data= conflict_df,
@@ -71,30 +75,20 @@ conflict_model <- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy +
 
 ```{r}
 #| label: timer2
-countdown(minutes = 3, 
-          id = "timer1", 
-          bottom = "10%", 
-          right = "10%")
-```
+#| echo: false
 
+countdown(minutes = 2)
+```
 
 ## View with `summary()`
 
 ```{r}
-#| echo: true
-
 summary(conflict_model)
 ```
 
-Now call `View()` on `conflict_model`. What do you see? 
-
 ## View results with `broom`
 
-The `tidy()` function takes the information in the list and transforms it into a tibble. Call `View()` on `tidy_model` to confirm... 
-
 ```{r}
-#echo: true
-
 library(broom)
 
 tidy_model <- conflict_model |>
@@ -106,8 +100,9 @@ tidy_model
 
 ```{r}
 #| label: timer3
-countdown(minutes = 3, 
-          id = "timer3")
+#| echo: false
+
+countdown(minutes = 2)
 ```
 
 ## How close are our results to F&L? 
@@ -122,41 +117,186 @@ tidy_model
 
 ```{r}
 #| label: timer4
-countdown(minutes = 12, 
-          id = "timer4", 
-          bottom = "10%", 
-          right = "10%")
+#| echo: false
+
+countdown(minutes = 3)
 ```
 
 ## Could we get closer to F&L? 
 
 <br>
 
-- Got to the [peacesciencer](https://svmiller.com/peacesciencer/reference/add_democracy.html) documentation
 - How close are our data to F&L's?
+- Got to the [peacesciencer](https://svmiller.com/peacesciencer/reference/add_democracy.html) documentation
 - Could we change something to better approximate their results? 
+- Are there predictors in the `peacesciencer` package that were not available to F&L? 
 
 ```{r}
 #| label: timer5
-countdown(minutes = 12, 
-          id = "timer5", 
+#| echo: false
+
+countdown(minutes = 10, 
           bottom = "10%", 
           right = "10%")
 ```
 
-## Could we improve the model? 
+## Regression Tables with `modelsummary`
 
 <br>
 
-- Are there predictors in the `peacesciencer` package that were not available to F&L? 
-- Would adding them improve the fit? 
-- Are there some predictors that should be removed? 
+::: {.incremental}
+- Oftentimes we want to show multiple models at once (like F&L)
+- We want to compare across them and see which is the best model
+- How can we do that? 
+- There are **many** ways to do this in R
+- We will use the `modelsummary` package
+:::
+
+## Run Multiple Models
+
+<br>
+
+```{r}
+#| label: multiple_models
+
+ethnicity <- glm(ucdponset ~ ethfrac + relfrac + wbgdppc2011est + wbpopest, # store each model in an object
+                  data = conflict_df,
+                  family = "binomial")
+
+democracy <- glm(ucdponset ~ v2x_polyarchy + wbgdppc2011est +  wbpopest,
+                  data = conflict_df,
+                  family = "binomial")
+
+terrain <- glm(ucdponset ~ rugged + wbgdppc2011est + wbpopest ,
+                  data = conflict_df,
+                  family = "binomial")
+
+full_model <- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + rugged +
+                        wbgdppc2011est + wbpopest,
+                  data = conflict_df,
+                  family = "binomial")
+```
+
+
+## Prep Data for Display
+
+<br>
+
+```{r}
+#| label: prep_data
+
+models <- list("Ethnicity" = ethnicity,  # store list of models in an object
+               "Democracy" = democracy, 
+               "Terrain" = terrain, 
+               "Full Model" = full_model)
+
+coef_map <- c("ethfrac" = "Ethnic Frac",  # map coefficients
+        "relfrac" = "Religions Frac",     #(change names and order)
+        "v2x_polyarchy" = "Polyarchy",
+        "rugged" = "Terrain",
+        "wbgdppc2011est" = "Per capita GDP",
+        "wbpopest" = "Population",
+        "(Intercept)" = "Intercept")
+
+caption = "Table 1: Predictors of Conflict Onset" # store caption
+reference = "See appendix for data sources."      # store reference notes
+```
+
+## Display the Models {.smaller}
+
+```{r}
+#| label: display_models
+#| echo: false
+
+library(modelsummary)
+
+modelsummary(models,                      # display the table
+             stars = TRUE,                # include stars for significance
+             gof_map = c("nobs"),         # goodness of fit stats to include   
+             coef_map = coef_map,         # coefficient mapping
+             title = caption,             # title
+             notes = reference)           # source note
+```
+
+## Your Turn!
+
+<br>
+
+- Got to the [peacesciencer](https://svmiller.com/peacesciencer/reference/index.html) documentation
+- How close are our data to F&L's?
+- Could we change something to better approximate their results? 
+- Run multiple models using different predictors
+- Display the models using `modelsummary`
+- Try to get as close to F&L as you can! 
 
 ```{r}
 #| label: timer6
-countdown(minutes = 12, 
-          id = "timer6", 
-          bottom = "10%", 
+#| echo: false
+
+countdown(minutes = 10, 
+          bottom = "5%", 
+          right = "10%")
+```
+
+# Coefficient Plots
+
+## {.smaller}
+
+<br> 
+
+This doesn't look that great...
+
+```{r}
+#| label: bad_regression_table
+#| code-fold: true
+#| code-summary: "Show the code"
+
+modelsummary(conflict_model, 
+             stars = TRUE,  
+             gof_map = c("nobs"),
+             coef_map = coef_map,
+             title = caption, 
+             notes = reference)
+```
+
+## 
+
+<br> 
+
+So we can use `ggplot` to make a coefficient plot instead...
+
+```{r}
+#| label: coef_plot
+#| code-fold: true
+#| code-summary: "Show the code"
+
+library(ggplot2)
+
+modelplot(conflict_model, 
+          coef_map = rev(coef_map), # rev() reverses list order
+          coef_omit = "Intercept", 
+          color = "blue") + # use plus to add customizations like any ggplot object
+  geom_vline(xintercept = 0, color = "red", linetype = "dashed", linewidth = .75) + # red 0 line
+  labs(
+    title = "Figure 1: Predictors of Conflict Onset",
+    caption = "See appendix for data sources."
+  ) 
+```
+
+## Your Turn!
+
+- Take one of your models
+- Use `modelplot` to create a coefficient plot of it
+- Customize the plot to your liking
+- Interpret the results
+- Discuss advantages of coefficient plots with a neighbor
+
+```{r}
+#| label: timer7
+#| echo: false
+
+countdown(minutes = 10, 
+          bottom = "5%", 
           right = "10%")
 ```
 

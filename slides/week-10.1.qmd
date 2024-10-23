@@ -206,7 +206,7 @@ reference = "See appendix for data sources."      # store reference notes
 
 ```{r}
 #| label: display_models
-#| echo: false
+#| code-fold: true
 
 library(modelsummary)
 

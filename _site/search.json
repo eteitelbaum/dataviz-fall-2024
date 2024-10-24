@@ -2148,7 +2148,7 @@
     "href": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-10-pts",
     "title": "Assignment 4",
     "section": "Bonus section: Use confidence intervals instead of tables (10 pts)",
-    "text": "Bonus section: Use confidence intervals instead of tables (10 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (5 pts)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form?",
+    "text": "Bonus section: Use confidence intervals instead of tables (10 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (5 pts)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form? (5 pts)",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 4"
@@ -3520,15 +3520,15 @@
     "objectID": "slides/week-9.1.html#why-tables",
     "href": "slides/week-9.1.html#why-tables",
     "title": "Making Tables",
-    "section": "Why Tables?",
-    "text": "Why Tables?\n\n\n\nSummary statistics\nPrecise values (for small number of cases)\nRegression tables"
+    "section": "",
+    "text": "Summary statistics\nPrecise values (for small number of cases)\nRegression tables"
   },
   {
     "objectID": "slides/week-9.1.html#awesome-table",
     "href": "slides/week-9.1.html#awesome-table",
     "title": "Making Tables",
     "section": "Awesome Table",
-    "text": "Awesome Table\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Awesome Table\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#when-not-to-use-tables",
@@ -3605,14 +3605,14 @@
     "href": "slides/week-9.1.html#lets-make-a-gt-table-1",
     "title": "Making Tables",
     "section": "Let’s make a gt table",
-    "text": "Let’s make a gt table\n\n\nlibrary(gt)\ngt(states)\n\n\n\n\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nMinnesota\n18936\n48127\n78073\n117959\n250361\n441274\n\n\nNevada\n15024\n40468\n66247\n101591\n224480\n410161\n\n\nAlaska\n19344\n51030\n81169\n122652\n242097\n394694\n\n\nMontana\n14811\n36927\n60644\n93340\n205462\n370234\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234"
+    "text": "Let’s make a gt table\n\n\nlibrary(gt)\ngt(states)\n\n\n\n\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nMassachusetts\n16812\n50519\n89602\n142491\n316447\n558616\n\n\nCalifornia\n17433\n49234\n84658\n134560\n309857\n555007\n\n\nNorth Carolina\n13880\n36395\n60870\n95946\n217348\n390822\n\n\nOhio\n13962\n37248\n62197\n96445\n209247\n370964\n\n\nMaine\n14836\n38190\n63621\n97559\n205365\n359776\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234"
   },
   {
     "objectID": "slides/week-9.1.html#lets-make-a-good-gt-table",
     "href": "slides/week-9.1.html#lets-make-a-good-gt-table",
     "title": "Making Tables",
     "section": "Let’s make a good gt table",
-    "text": "Let’s make a good gt table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Let’s make a good gt table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#lets-make-a-good-gt-table-1",
@@ -3626,63 +3626,63 @@
     "href": "slides/week-9.1.html#change-colum-width",
     "title": "Making Tables",
     "section": "Change Colum Width",
-    "text": "Change Colum Width\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Change Colum Width\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#change-colum-width-1",
     "href": "slides/week-9.1.html#change-colum-width-1",
     "title": "Making Tables",
     "section": "Change Colum Width",
-    "text": "Change Colum Width\n\nvgoodtable &lt;- goodtable |&gt;\n  cols_width(c(q1:top5) ~ px(90))\n\nvgoodtable"
+    "text": "Change Colum Width\n\n\nvgoodtable &lt;- goodtable |&gt;\n  cols_width(c(q1:top5) ~ px(90))\n\nvgoodtable"
   },
   {
     "objectID": "slides/week-9.1.html#change-font",
     "href": "slides/week-9.1.html#change-font",
     "title": "Making Tables",
     "section": "Change Font",
-    "text": "Change Font\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Change Font\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#change-font-1",
     "href": "slides/week-9.1.html#change-font-1",
     "title": "Making Tables",
     "section": "Change Font",
-    "text": "Change Font\n\ngreattable &lt;- vgoodtable |&gt;\n  opt_table_font(font = \"verdana\")\n\ngreattable"
+    "text": "Change Font\n\n\ngreattable &lt;- vgoodtable |&gt;\n  opt_table_font(font = \"verdana\")\n\ngreattable"
   },
   {
     "objectID": "slides/week-9.1.html#center",
     "href": "slides/week-9.1.html#center",
     "title": "Making Tables",
     "section": "Center",
-    "text": "Center\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Center\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#center-1",
     "href": "slides/week-9.1.html#center-1",
     "title": "Making Tables",
     "section": "Center",
-    "text": "Center\n\nvgreattable &lt;- greattable |&gt;\n  cols_align(\n  align = \"center\",\n  columns = q1:top5\n)\n\nvgreattable"
+    "text": "Center\n\n\nvgreattable &lt;- greattable |&gt;\n  cols_align(\n  align = \"center\",\n  columns = q1:top5\n)\n\nvgreattable"
   },
   {
     "objectID": "slides/week-9.1.html#add-borders-and-lines",
     "href": "slides/week-9.1.html#add-borders-and-lines",
     "title": "Making Tables",
     "section": "Add Borders and Lines",
-    "text": "Add Borders and Lines\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nNevada\n$15,024\n$40,468\n$66,247\n$101,591\n$224,480\n$410,161\n\n\nAlaska\n$19,344\n$51,030\n$81,169\n$122,652\n$242,097\n$394,694\n\n\nMontana\n$14,811\n$36,927\n$60,644\n$93,340\n$205,462\n$370,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "text": "Add Borders and Lines\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMassachusetts\n$16,812\n$50,519\n$89,602\n$142,491\n$316,447\n$558,616\n\n\nCalifornia\n$17,433\n$49,234\n$84,658\n$134,560\n$309,857\n$555,007\n\n\nNorth Carolina\n$13,880\n$36,395\n$60,870\n$95,946\n$217,348\n$390,822\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
   },
   {
     "objectID": "slides/week-9.1.html#add-borders-and-lines-1",
     "href": "slides/week-9.1.html#add-borders-and-lines-1",
     "title": "Making Tables",
     "section": "Add Borders and Lines",
-    "text": "Add Borders and Lines\n\nawesometable &lt;- vgreattable |&gt;\n  tab_options(\n    table.border.top.color = \"black\", \n    table.border.bottom.color = \"black\",\n    heading.border.bottom.color = \"black\", \n    column_labels.border.bottom.color = \"black\", \n    table_body.border.bottom.color = \"black\"\n  )\n\nawesometable"
+    "text": "Add Borders and Lines\n\n\nawesometable &lt;- vgreattable |&gt;\n  tab_options(\n    table.border.top.color = \"black\", \n    table.border.bottom.color = \"black\",\n    heading.border.bottom.color = \"black\", \n    column_labels.border.bottom.color = \"black\", \n    table_body.border.bottom.color = \"black\"\n  )\n\nawesometable"
   },
   {
     "objectID": "slides/week-9.1.html#export-table",
     "href": "slides/week-9.1.html#export-table",
     "title": "Making Tables",
     "section": "Export Table",
-    "text": "Export Table\n\ngtsave(awesometable, \"awesometable.png\")"
+    "text": "Export Table\n\n\ngtsave(awesometable, \"awesometable.png\")"
   },
   {
     "objectID": "about.html",
@@ -4886,5 +4886,23 @@
     "title": "Regression Tables",
     "section": "Your Turn!",
     "text": "Your Turn!\n\nTake one of your models\nUse modelplot to create a coefficient plot of it\nCustomize the plot to your liking\nInterpret the results\nDiscuss advantages of coefficient plots with a neighbor\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "assignments/coding-assignment-4.html#submission",
+    "href": "assignments/coding-assignment-4.html#submission",
+    "title": "Assignment 4",
+    "section": "Submission",
+    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 4"
+    ]
+  },
+  {
+    "objectID": "slides/week-9.1.html",
+    "href": "slides/week-9.1.html",
+    "title": "Making Tables",
+    "section": "",
+    "text": "Summary statistics\nPrecise values (for small number of cases)\nRegression tables"
   }
 ]

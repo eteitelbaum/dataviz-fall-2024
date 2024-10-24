@@ -44,4 +44,8 @@ There are two parts to this assignment. In Part I, you will use `tidycensus` and
 *1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state?* (5 pts)
 
 
-*2. Use `modelplot` to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form?* 
+*2. Use `modelplot` to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form?* (5 pts)
+
+## Submission
+
+*After rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.*

@@ -4904,5 +4904,16 @@
     "title": "Making Tables",
     "section": "",
     "text": "Summary statistics\nPrecise values (for small number of cases)\nRegression tables"
+  },
+  {
+    "objectID": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
+    "href": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
+    "title": "Assignment 4",
+    "section": "Bonus section: Use confidence intervals instead of tables (2 pts)",
+    "text": "Bonus section: Use confidence intervals instead of tables (2 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (1 pt)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form? (1 pt)",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 4"
+    ]
   }
 ]

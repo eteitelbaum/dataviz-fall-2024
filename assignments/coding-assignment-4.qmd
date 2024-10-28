@@ -35,7 +35,7 @@ There are two parts to this assignment. In Part I, you will use `tidycensus` and
 
 ### Step 3: Make a table with multiple models (20 pts)
 
-*Now use `modelsummary` to produce a handsome table with multiple models, but change out some of the measures. Try looking at ethnic and relgious polarization (`ethfrac`, `relfrac`) instead of fractionalization. For democracy, use the `polity2` score. And for terrain, try `newlmtnest` (a measure of mountainous terrain) instead of `rugged`. How do yur results change and how are they different from Fearon and Laitin's results?* 
+*Now use `modelsummary` to produce a handsome table with multiple models, but change out some of the measures. Try looking at ethnic and relgious polarization (`ethpol`, `relpol`) instead of fractionalization. For democracy, use the `polity2` score. And for terrain, try `newlmtnest` (a measure of mountainous terrain) instead of `rugged`. How do yur results change and how are they different from Fearon and Laitin's results?* 
 
 ## Bonus section: Use confidence intervals instead of tables (2 pts)
 

@@ -678,88 +678,39 @@
     "text": "Step 10: Post your link to Discord and reflect (10 pts.)\nPost the link of your Quarto Pub document on the class Discord server and reflect on your document and what you learned from the exercise. Finally, comment on at least one other student’s post in the server. Provide positive feedback and say something about what you learned from their document or presentation."
   },
   {
-    "objectID": "slides/week-9.2.html#lets-make-a-gt-table",
-    "href": "slides/week-9.2.html#lets-make-a-gt-table",
-    "title": "gt Tables",
-    "section": "Let’s make a gt table",
-    "text": "Let’s make a gt table\nCreate states data frame…\n\n# lowest \nstate_min &lt;- quintiles |&gt; \n  slice_min(q1) \n\n# highest\nstate_max &lt;- quintiles |&gt; \n  slice_max(top5) \n\n# randomly select five more\nfive_more &lt;- quintiles |&gt;\n   slice_sample(n = 5) \n\nstates &lt;- bind_rows(state_min, state_max, five_more) |&gt;\n  arrange(desc(top5))\n\n\n\n\n−+\n10:00"
+    "objectID": "slides/week-9.2.html#the-gtextras-package",
+    "href": "slides/week-9.2.html#the-gtextras-package",
+    "title": "Advanced Table Skills",
+    "section": "The gtExtras package",
+    "text": "The gtExtras package\n\nBy now we know the difference between a graph and a table\n\nTables are good for comparing individual values\nGraphs are for visualizing a whole bunch of values\n\nUsually we keep our graphs and tables separate\nBut are there times when we might want to combine them?\ngtExtras lets us include sparklines, histograms, etc. in our tables"
   },
   {
-    "objectID": "slides/week-9.2.html#lets-make-a-gt-table-1",
-    "href": "slides/week-9.2.html#lets-make-a-gt-table-1",
-    "title": "gt Tables",
-    "section": "Let’s make a gt table",
-    "text": "Let’s make a gt table\n\n\nlibrary(gt)\ngt(states)\n\n\n\n\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nTexas\n15033\n40532\n67928\n107319\n239765\n427006\n\n\nGeorgia\n14139\n38707\n65443\n102914\n234209\n422018\n\n\nOregon\n16014\n42554\n70418\n108483\n232703\n404468\n\n\nSouth Dakota\n16002\n39619\n64234\n95810\n200212\n358060\n\n\nArkansas\n12076\n31051\n52280\n82811\n188510\n344470\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234"
+    "objectID": "slides/week-9.2.html#democracy-example",
+    "href": "slides/week-9.2.html#democracy-example",
+    "title": "Advanced Table Skills",
+    "section": "Democracy Example",
+    "text": "Democracy Example\n\n\nlibrary(vdemlite)\n\n# Grab the polyarchy scores for the United States between 2000 and 2020\nbrics_dem &lt;- fetchdem(indicators = \"v2x_polyarchy\",\n                         start_year = 2000, end_year = 2020,\n                         countries = c(\"BRA\", \"RUS\", \"IND\", \"CHN\", \"ZAF\"))"
   },
   {
-    "objectID": "slides/week-9.2.html#lets-make-a-good-gt-table",
-    "href": "slides/week-9.2.html#lets-make-a-good-gt-table",
-    "title": "gt Tables",
-    "section": "Let’s make a good gt table",
-    "text": "Let’s make a good gt table\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nTexas\n$15,033\n$40,532\n$67,928\n$107,319\n$239,765\n$427,006\n\n\nGeorgia\n$14,139\n$38,707\n$65,443\n$102,914\n$234,209\n$422,018\n\n\nOregon\n$16,014\n$42,554\n$70,418\n$108,483\n$232,703\n$404,468\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nArkansas\n$12,076\n$31,051\n$52,280\n$82,811\n$188,510\n$344,470\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
+    "objectID": "slides/week-9.2.html#democracy-example-1",
+    "href": "slides/week-9.2.html#democracy-example-1",
+    "title": "Advanced Table Skills",
+    "section": "Democracy Example",
+    "text": "Democracy Example\n\n\nlibrary(dplyr)\n\ndem_summary &lt;- brics_dem|&gt;\n  group_by(country_id) |&gt;\n  summarize(\n    max = max(v2x_polyarchy, na.rm = TRUE),\n    mean = mean(v2x_polyarchy, na.rm = TRUE),\n    sd = sd(v2x_polyarchy, na.rm = TRUE),\n    dem_data = list(v2x_polyarchy),\n    .groups = \"drop\"\n  )"
   },
   {
-    "objectID": "slides/week-9.2.html#lets-make-a-good-gt-table-1",
-    "href": "slides/week-9.2.html#lets-make-a-good-gt-table-1",
-    "title": "gt Tables",
-    "section": "Let’s make a good gt table",
-    "text": "Let’s make a good gt table\n\ngoodtable &lt;- gt(states) |&gt; \n  tab_header(\n    title = \"Mean Household Income of Quintiles, 2021\",\n    subtitle = \"Seven Representative U.S. States\"\n  ) |&gt; \n  cols_label(\n    name = \"\",\n    q1 = \"lowest\",\n    q2 = \"second\",\n    q3 = \"third\",\n    q4 = \"fourth\",\n    q5 = \"highest\",\n    top5 = \"top 5%\"\n  ) |&gt; \n  fmt_currency(\n    columns = c(q1:top5),\n    currency = \"USD\", \n    use_subunits = FALSE\n  ) |&gt;\n  # note that you can use markdown (md) to format the source note for html documents\n  tab_source_note(source_note = md(\"**Source**: US Census Bureau, American Community Survey\"))\n\ngoodtable\n\n\n\n\n−+\n10:00"
+    "objectID": "slides/week-9.2.html#democracy-example-2",
+    "href": "slides/week-9.2.html#democracy-example-2",
+    "title": "Advanced Table Skills",
+    "section": "Democracy Example",
+    "text": "Democracy Example\n\n\nlibrary(gtExtras)\n\ndem_summary |&gt;\n  gt() |&gt;\n  gt_plt_sparkline(dem_data) #from gtExtras\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncountry_id\nmax\nmean\nsd\ndem_data\n\n\n\n\n8\n0.773\n0.75280952\n0.01862423\n\n\n\n   0.7\n\n\n\n11\n0.405\n0.30133333\n0.04091251\n\n\n\n   0.26\n\n\n\n19\n0.878\n0.83461905\n0.05923046\n\n\n\n   0.7\n\n\n\n39\n0.736\n0.63866667\n0.11018182\n\n\n\n   0.4\n\n\n\n110\n0.103\n0.09042857\n0.00944760\n\n\n\n   0.08"
   },
   {
-    "objectID": "slides/week-9.2.html#change-colum-width",
-    "href": "slides/week-9.2.html#change-colum-width",
-    "title": "gt Tables",
-    "section": "Change Colum Width",
-    "text": "Change Colum Width\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nTexas\n$15,033\n$40,532\n$67,928\n$107,319\n$239,765\n$427,006\n\n\nGeorgia\n$14,139\n$38,707\n$65,443\n$102,914\n$234,209\n$422,018\n\n\nOregon\n$16,014\n$42,554\n$70,418\n$108,483\n$232,703\n$404,468\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nArkansas\n$12,076\n$31,051\n$52,280\n$82,811\n$188,510\n$344,470\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
-  },
-  {
-    "objectID": "slides/week-9.2.html#change-colum-width-1",
-    "href": "slides/week-9.2.html#change-colum-width-1",
-    "title": "gt Tables",
-    "section": "Change Colum Width",
-    "text": "Change Colum Width\n\n\nvgoodtable &lt;- goodtable |&gt;\n  cols_width(c(q1:top5) ~ px(90))\n\nvgoodtable"
-  },
-  {
-    "objectID": "slides/week-9.2.html#change-font",
-    "href": "slides/week-9.2.html#change-font",
-    "title": "gt Tables",
-    "section": "Change Font",
-    "text": "Change Font\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nTexas\n$15,033\n$40,532\n$67,928\n$107,319\n$239,765\n$427,006\n\n\nGeorgia\n$14,139\n$38,707\n$65,443\n$102,914\n$234,209\n$422,018\n\n\nOregon\n$16,014\n$42,554\n$70,418\n$108,483\n$232,703\n$404,468\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nArkansas\n$12,076\n$31,051\n$52,280\n$82,811\n$188,510\n$344,470\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
-  },
-  {
-    "objectID": "slides/week-9.2.html#change-font-1",
-    "href": "slides/week-9.2.html#change-font-1",
-    "title": "gt Tables",
-    "section": "Change Font",
-    "text": "Change Font\n\n\ngreattable &lt;- vgoodtable |&gt;\n  opt_table_font(font = \"verdana\")\n\ngreattable"
-  },
-  {
-    "objectID": "slides/week-9.2.html#center",
-    "href": "slides/week-9.2.html#center",
-    "title": "gt Tables",
-    "section": "Center",
-    "text": "Center\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nTexas\n$15,033\n$40,532\n$67,928\n$107,319\n$239,765\n$427,006\n\n\nGeorgia\n$14,139\n$38,707\n$65,443\n$102,914\n$234,209\n$422,018\n\n\nOregon\n$16,014\n$42,554\n$70,418\n$108,483\n$232,703\n$404,468\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nArkansas\n$12,076\n$31,051\n$52,280\n$82,811\n$188,510\n$344,470\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
-  },
-  {
-    "objectID": "slides/week-9.2.html#center-1",
-    "href": "slides/week-9.2.html#center-1",
-    "title": "gt Tables",
-    "section": "Center",
-    "text": "Center\n\n\nvgreattable &lt;- greattable |&gt;\n  cols_align(\n  align = \"center\",\n  columns = q1:top5\n)\n\nvgreattable"
-  },
-  {
-    "objectID": "slides/week-9.2.html#add-borders-and-lines",
-    "href": "slides/week-9.2.html#add-borders-and-lines",
-    "title": "gt Tables",
-    "section": "Add Borders and Lines",
-    "text": "Add Borders and Lines\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nTexas\n$15,033\n$40,532\n$67,928\n$107,319\n$239,765\n$427,006\n\n\nGeorgia\n$14,139\n$38,707\n$65,443\n$102,914\n$234,209\n$422,018\n\n\nOregon\n$16,014\n$42,554\n$70,418\n$108,483\n$232,703\n$404,468\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nArkansas\n$12,076\n$31,051\n$52,280\n$82,811\n$188,510\n$344,470\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey"
-  },
-  {
-    "objectID": "slides/week-9.2.html#export-table",
-    "href": "slides/week-9.2.html#export-table",
-    "title": "gt Tables",
-    "section": "Export Table",
-    "text": "Export Table\n\n\ngtsave(awesometable, \"awesometable.png\")"
+    "objectID": "slides/week-9.2.html#your-turn",
+    "href": "slides/week-9.2.html#your-turn",
+    "title": "Advanced Table Skills",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nDownload democracy data for one year\nIndicator is your choice\nAdd region codes\nGroup and summarize by region\nAdd an appropriate inline plot to your table\n\n\n\n\n−+\n15:00"
   },
   {
     "objectID": "slides/week-9.2.html#not-a-good-table",
@@ -783,6 +734,20 @@
     "text": "Use Confidence Intervals Instead\n\n\nlibrary(ggplot2)\n\nmass_med_inc |&gt;\n  ggplot(aes(x = estimate, y = reorder(name, estimate))) +\n  geom_errorbar(aes(xmin = lower_90, xmax = upper_90)) +\n  geom_point(color = \"red\", size = 2) +\n  labs(title = \"Household income by county in Massachusetts\",\n       subtitle = \"2017-2021 American Community Survey\",\n       y = \"\",\n       x = \"Median Income\", \n       caption = \"ACS estimate (bars represent 90% confidence intervals)\") +\n  theme_minimal()"
   },
   {
+    "objectID": "slides/week-9.2.html#your-turn-1",
+    "href": "slides/week-9.2.html#your-turn-1",
+    "title": "Advanced Table Skills",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nDownload data on median income for another state\nPlot the income estimates for that state\n\n\n\n\n−+\n15:00"
+  },
+  {
+    "objectID": "slides/week-9.2.html#reactable",
+    "href": "slides/week-9.2.html#reactable",
+    "title": "Advanced Table Skills",
+    "section": "reactable",
+    "text": "reactable\n\n\nreactable is an R package that lets you create interactive tables\nYou can sort, filter, and search the table\nBased on the React Table library\nLet’s explore it together!"
+  },
+  {
     "objectID": "slides/week-8.1.html#leaflet-maps",
     "href": "slides/week-8.1.html#leaflet-maps",
     "title": "Leaflet Maps",
@@ -804,11 +769,11 @@
     "text": "Your Turn\n\n\nMake a leaflet map with one marker\nFind the coordinates (longitude and latitude) of your high school\nOr some favorite place\nEnter coordinates into addMarkers() call and label the marker\n\n\n\n\n−+\n05:00"
   },
   {
-    "objectID": "slides/week-8.1.html#conflict-map",
-    "href": "slides/week-8.1.html#conflict-map",
+    "objectID": "slides/week-8.1.html#our-goal",
+    "href": "slides/week-8.1.html#our-goal",
     "title": "Leaflet Maps",
-    "section": "Conflict Map",
-    "text": "Conflict Map\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
+    "section": "Our Goal",
+    "text": "Our Goal"
   },
   {
     "objectID": "slides/week-8.1.html#conflict-data",
@@ -832,25 +797,11 @@
     "text": "Basic Conflict Map\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # map points in ged_yemen data frame\n  addTiles() |&gt; # add default tile\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addMarkers(\n    popup = ~as.character(deaths), # when user clicks, show deaths\n    label = ~place # when user hovers, show town\n    )"
   },
   {
-    "objectID": "slides/week-8.1.html#basic-conflict-map-1",
-    "href": "slides/week-8.1.html#basic-conflict-map-1",
-    "title": "Leaflet Maps",
-    "section": "Basic Conflict Map",
-    "text": "Basic Conflict Map\n\nleaflet(data = ged_yemen) |&gt; # map points in ged_yemen data frame\n  addTiles() |&gt; # add default tile\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addMarkers(\n    popup = ~as.character(deaths), # when user clicks, show deaths\n    label = ~place # when user hovers, show town\n    )"
-  },
-  {
     "objectID": "slides/week-8.1.html#add-awesome-icons",
     "href": "slides/week-8.1.html#add-awesome-icons",
     "title": "Leaflet Maps",
     "section": "Add Awesome Icons",
     "text": "Add Awesome Icons\n\n\nCode\n# save icon\nicon &lt;- awesomeIcons(\n  icon = \"ios-close\",\n  iconColor = \"black\",\n  markerColor = \"red\", \n  library = \"ion\" \n)\n\n# Build map\nleaflet(data = ged_yemen) |&gt;   \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~as.character(deaths), \n    label = ~place\n    )"
-  },
-  {
-    "objectID": "slides/week-8.1.html#add-awesome-icons-1",
-    "href": "slides/week-8.1.html#add-awesome-icons-1",
-    "title": "Leaflet Maps",
-    "section": "Add Awesome Icons",
-    "text": "Add Awesome Icons\n\n# save icon\nicon &lt;- awesomeIcons(\n  icon = \"ios-close\",\n  iconColor = \"black\",\n  markerColor = \"red\", \n  library = \"ion\" \n)\n\n# Build map\nleaflet(data = ged_yemen) |&gt;   \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~as.character(deaths), \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#change-content-of-popup",
@@ -860,18 +811,18 @@
     "text": "Change Content of Popup\n\n\nged_yemen$popup_text &lt;- sprintf(\n      \"Date: %s &lt;br&gt; \n       Total Deaths: %.0f &lt;br&gt; \n       Govt. Deaths: %.0f &lt;br&gt; \n       Rebel Deaths: %.0f &lt;br&gt; \n       Civilian Death: %.0f &lt;br&gt;\",\n      ged_yemen$date, \n      ged_yemen$deaths, \n      ged_yemen$gov_deaths, \n      ged_yemen$rebel_deaths,\n      ged_yemen$civilian_deaths\n    ) |&gt; lapply(htmltools::HTML)"
   },
   {
-    "objectID": "slides/week-8.1.html#use-new-labels",
-    "href": "slides/week-8.1.html#use-new-labels",
+    "objectID": "slides/week-8.1.html#use-the-new-labels",
+    "href": "slides/week-8.1.html#use-the-new-labels",
     "title": "Leaflet Maps",
-    "section": "Use New Labels",
-    "text": "Use New Labels\n\n\nCode\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
+    "section": "Use the New Labels",
+    "text": "Use the New Labels\n\n\nCode\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   },
   {
-    "objectID": "slides/week-8.1.html#conflict-map-1",
-    "href": "slides/week-8.1.html#conflict-map-1",
+    "objectID": "slides/week-8.1.html#add-provider-tiles",
+    "href": "slides/week-8.1.html#add-provider-tiles",
     "title": "Leaflet Maps",
-    "section": "Conflict Map",
-    "text": "Conflict Map\n\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
+    "section": "Add Provider Tiles",
+    "text": "Add Provider Tiles\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
   },
   {
     "objectID": "slides/week-8.1.html#your-turn-1",
@@ -1371,11 +1322,60 @@
     "text": "Could we get closer to F&L?\n\n\nHow close are our data to F&L’s?\nGot to the peacesciencer documentation\nCould we change something to better approximate their results?\nAre there predictors in the peacesciencer package that were not available to F&L?\n\n\n\n\n−+\n10:00"
   },
   {
-    "objectID": "slides/week-10.1.html#could-we-improve-the-model",
-    "href": "slides/week-10.1.html#could-we-improve-the-model",
+    "objectID": "slides/week-10.1.html#regression-tables-with-modelsummary",
+    "href": "slides/week-10.1.html#regression-tables-with-modelsummary",
     "title": "Regression Tables",
-    "section": "Could we improve the model?",
-    "text": "Could we improve the model?\n\n\nAre there predictors in the peacesciencer package that were not available to F&L?\nWould adding them improve the fit?\nAre there some predictors that should be removed?\n\n\n\n\n−+\n12:00"
+    "section": "Regression Tables with modelsummary",
+    "text": "Regression Tables with modelsummary\n\n\n\nOftentimes we want to show multiple models at once (like F&L)\nWe want to compare across them and see which is the best model\nHow can we do that?\nThere are many ways to do this in R\nWe will use the modelsummary package"
+  },
+  {
+    "objectID": "slides/week-10.1.html#run-multiple-models",
+    "href": "slides/week-10.1.html#run-multiple-models",
+    "title": "Regression Tables",
+    "section": "Run Multiple Models",
+    "text": "Run Multiple Models\n\n\nethnicity &lt;- glm(ucdponset ~ ethfrac + relfrac + wbgdppc2011est + wbpopest, # store each model in an object\n                  data = conflict_df,\n                  family = \"binomial\")\n\ndemocracy &lt;- glm(ucdponset ~ v2x_polyarchy + wbgdppc2011est +  wbpopest,\n                  data = conflict_df,\n                  family = \"binomial\")\n\nterrain &lt;- glm(ucdponset ~ rugged + wbgdppc2011est + wbpopest ,\n                  data = conflict_df,\n                  family = \"binomial\")\n\nfull_model &lt;- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + rugged +\n                        wbgdppc2011est + wbpopest,\n                  data = conflict_df,\n                  family = \"binomial\")"
+  },
+  {
+    "objectID": "slides/week-10.1.html#prep-data-for-display",
+    "href": "slides/week-10.1.html#prep-data-for-display",
+    "title": "Regression Tables",
+    "section": "Prep Data for Display",
+    "text": "Prep Data for Display\n\n\nmodels &lt;- list(\"Ethnicity\" = ethnicity,  # store list of models in an object\n               \"Democracy\" = democracy, \n               \"Terrain\" = terrain, \n               \"Full Model\" = full_model)\n\ncoef_map &lt;- c(\"ethfrac\" = \"Ethnic Frac\",  # map coefficients\n        \"relfrac\" = \"Religions Frac\",     #(change names and order)\n        \"v2x_polyarchy\" = \"Polyarchy\",\n        \"rugged\" = \"Terrain\",\n        \"wbgdppc2011est\" = \"Per capita GDP\",\n        \"wbpopest\" = \"Population\",\n        \"(Intercept)\" = \"Intercept\")\n\ncaption = \"Table 1: Predictors of Conflict Onset\" # store caption\nreference = \"See appendix for data sources.\"      # store reference notes"
+  },
+  {
+    "objectID": "slides/week-10.1.html#display-the-models",
+    "href": "slides/week-10.1.html#display-the-models",
+    "title": "Regression Tables",
+    "section": "Display the Models",
+    "text": "Display the Models\n\n\nCode\nlibrary(modelsummary)\n\nmodelsummary(models,                      # display the table\n             stars = TRUE,                # include stars for significance\n             gof_map = c(\"nobs\"),         # goodness of fit stats to include   \n             coef_map = coef_map,         # coefficient mapping\n             title = caption,             # title\n             notes = reference)           # source note\n\n\n \n\n  \n    \n    \n    tinytable_rjfnr54w7fui35u5l57c\n    \n    \n    \n    \n  \n\n  \n    \n      \n        \n        Table 1: Predictors of Conflict Onset\n              \n                 \n                Ethnicity\n                Democracy\n                Terrain\n                Full Model\n              \n        \n        + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001\nSee appendix for data sources.\n        \n                \n                  Ethnic Frac   \n                  0.744*   \n                           \n                           \n                  0.800*   \n                \n                \n                                \n                  (0.367)  \n                           \n                           \n                  (0.381)  \n                \n                \n                  Religions Frac\n                  -0.481   \n                           \n                           \n                  -0.391   \n                \n                \n                                \n                  (0.411)  \n                           \n                           \n                  (0.417)  \n                \n                \n                  Polyarchy     \n                           \n                  -0.228   \n                           \n                  -0.602   \n                \n                \n                                \n                           \n                  (0.436)  \n                           \n                  (0.509)  \n                \n                \n                  Terrain       \n                           \n                           \n                  0.031    \n                  0.064    \n                \n                \n                                \n                           \n                           \n                  (0.076)  \n                  (0.076)  \n                \n                \n                  Per capita GDP\n                  -0.474***\n                  -0.512***\n                  -0.543***\n                  -0.372** \n                \n                \n                                \n                  (0.104)  \n                  (0.108)  \n                  (0.092)  \n                  (0.121)  \n                \n                \n                  Population    \n                  0.282*** \n                  0.297*** \n                  0.299*** \n                  0.293*** \n                \n                \n                                \n                  (0.067)  \n                  (0.051)  \n                  (0.050)  \n                  (0.067)  \n                \n                \n                  Intercept     \n                  -4.703***\n                  -4.407***\n                  -4.296***\n                  -5.693***\n                \n                \n                                \n                  (1.327)  \n                  (1.205)  \n                  (1.143)  \n                  (1.408)  \n                \n                \n                  Num.Obs.      \n                  6364     \n                  6772     \n                  6840     \n                  6151"
+  },
+  {
+    "objectID": "slides/week-10.1.html#your-turn",
+    "href": "slides/week-10.1.html#your-turn",
+    "title": "Regression Tables",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\n\nGot to the peacesciencer documentation\nHow close are our data to F&L’s?\nCould we change something to better approximate their results?\nRun multiple models using different predictors\nDisplay the models using modelsummary\nTry to get as close to F&L as you can!\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/week-10.1.html#section",
+    "href": "slides/week-10.1.html#section",
+    "title": "Regression Tables",
+    "section": "",
+    "text": "This doesn’t look that great…\n\n\nShow the code\nmodelsummary(conflict_model, \n             stars = TRUE,  \n             gof_map = c(\"nobs\"),\n             coef_map = coef_map,\n             title = caption, \n             notes = reference)\n\n\n \n\n  \n    \n    \n    tinytable_1l64ay7j2cyqkal583ua\n    \n    \n    \n    \n  \n\n  \n    \n      \n        \n        Table 1: Predictors of Conflict Onset\n              \n                 \n                (1)\n              \n        \n        + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001\nSee appendix for data sources.\n        \n                \n                  Ethnic Frac   \n                  0.800*   \n                \n                \n                                \n                  (0.381)  \n                \n                \n                  Religions Frac\n                  -0.391   \n                \n                \n                                \n                  (0.417)  \n                \n                \n                  Polyarchy     \n                  -0.602   \n                \n                \n                                \n                  (0.509)  \n                \n                \n                  Terrain       \n                  0.064    \n                \n                \n                                \n                  (0.076)  \n                \n                \n                  Per capita GDP\n                  -0.372** \n                \n                \n                                \n                  (0.121)  \n                \n                \n                  Population    \n                  0.293*** \n                \n                \n                                \n                  (0.067)  \n                \n                \n                  Intercept     \n                  -5.693***\n                \n                \n                                \n                  (1.408)  \n                \n                \n                  Num.Obs.      \n                  6151"
+  },
+  {
+    "objectID": "slides/week-10.1.html#section-1",
+    "href": "slides/week-10.1.html#section-1",
+    "title": "Regression Tables",
+    "section": "",
+    "text": "So we can use ggplot to make a coefficient plot instead…\n\n\nShow the code\nlibrary(ggplot2)\n\nmodelplot(conflict_model, \n          coef_map = rev(coef_map), # rev() reverses list order\n          coef_omit = \"Intercept\", \n          color = \"blue\") + # use plus to add customizations like any ggplot object\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\", linewidth = .75) + # red 0 line\n  labs(\n    title = \"Figure 1: Predictors of Conflict Onset\",\n    caption = \"See appendix for data sources.\"\n  )"
+  },
+  {
+    "objectID": "slides/week-10.1.html#your-turn-1",
+    "href": "slides/week-10.1.html#your-turn-1",
+    "title": "Regression Tables",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nTake one of your models\nUse modelplot to create a coefficient plot of it\nCustomize the plot to your liking\nInterpret the results\nDiscuss advantages of coefficient plots with a neighbor\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-5.1.html#types-of-visualizations",
@@ -1994,11 +1994,33 @@
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-to-explore-the-relvance-of-oil-25-pts",
-    "href": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-to-explore-the-relvance-of-oil-25-pts",
+    "objectID": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-in-an-oil-rich-country-25-pts",
+    "href": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-in-an-oil-rich-country-25-pts",
     "title": "Assignment 3",
-    "section": "Step 4: Make a leaflet map of conflict to explore the relvance of oil (25 pts)",
-    "text": "Step 4: Make a leaflet map of conflict to explore the relvance of oil (25 pts)\nIn Chapter 5 of the Oil Curse, Michael Ross argues that oil wealth is destabilizing for developing countries due to the fact that rebels and the government fight over oil. Your task for this question is to explore the relationship between conflict and oil in a leaflet map.\nWe will harness OpenAI’s ChatGPT in our research for this question. Note that because AI has a tendency to “halucinate”, you should always use other sources like Google to verify the information that ChatGPT provides.\na. Select a country case to work with. This should be a oil-rich country that has recently experienced high levels of internal conflict. Examples include Iraq, Syria, Yemen and Nigeria. Use your AI to identify a country and a period of time to analyze. Say a few words about your country case and the time period you will be looking at.\nb. Now, following the step laid out in module 3.2, filter a few months of conflict data from the UCDP GED dataset for your selected country and convert the coordinates simple features using the st_as_sf() function from the sf package.\nc. Next, produce a leaflet map that displays markers representing conflict events. Have the markers display the name of the location where the conflict event occurred when the user hovers over them. Have the popup windows display the number of deaths and the date of the event when the user clicks on them. Use “OpenTopoMap” as your basemap.\nd. Now let’s do some research into the location of oil fields. Ask your AI to give you a list of the ten biggest oil fields and in your country and their geographic coordinates. Now ask your AI how you can export those coordinates to a .csv file. Make sure that your columns are appropriately labeled (e.g. snake case) and save your file as oil_fields.csv in your assignment folder. Then read the data into R using readr and store them in an object called oil_fields.\ne. Now map the oil fields using leaflet(), giving each marker a label that displays the name of the oil field. Do you notice that conflict events occur close to oil fields in your chosen country?",
+    "section": "Step 4: Make a leaflet map of conflict in an oil rich country (25 pts)",
+    "text": "Step 4: Make a leaflet map of conflict in an oil rich country (25 pts)\nIn Chapter 5 of the Oil Curse, Michael Ross argues that oil wealth is destabilizing for developing countries due to the fact that rebels and the government fight over oil. Your task for this question is to explore the relationship between conflict and oil in a leaflet map.\na. Select a country case to work with. This should be a oil-rich country that has recently experienced high levels of internal conflict. Examples include Iraq, Syria, Yemen and Nigeria. Use your AI to identify a country and a period of time to analyze. Say a few words about your country case and the time period you will be looking at.\nb. Now, following the step laid out in module 3.2, filter a few months of conflict data from the UCDP GED dataset for your selected country and convert the coordinates simple features using the st_as_sf() function from the sf package.\nc. Next, produce a leaflet map that displays markers representing conflict events. Have the markers display the name of the location where the conflict event occurred when the user hovers over them. Have the popup windows display the number of deaths and the date of the event when the user clicks on them. Use “OpenTopoMap” as your basemap.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 3"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-3.html#extra-credit-3-pts",
+    "href": "assignments/coding-assignment-3.html#extra-credit-3-pts",
+    "title": "Assignment 3",
+    "section": "Extra Credit (3 pts)",
+    "text": "Extra Credit (3 pts)\nSee if you can find a list of the ten biggest oil fields and in your country and their geographic coordinates. Put those coordinates to a .csv file. You can try using an AI for this, but you may have to do some “jail breaking” because it could be interpreted as sensitive information. Now see if you can read the data into R and use it to plot the location of the oil fields in a fresh map. What did you find in terms of the relationship between oil and conflict?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 3"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-3.html#submission",
+    "href": "assignments/coding-assignment-3.html#submission",
+    "title": "Assignment 3",
+    "section": "Submission",
+    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 3"
@@ -2144,11 +2166,22 @@
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-10-pts",
-    "href": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-10-pts",
+    "objectID": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
+    "href": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
     "title": "Assignment 4",
-    "section": "Bonus section: Use confidence intervals instead of tables (10 pts)",
-    "text": "Bonus section: Use confidence intervals instead of tables (10 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (5 pts)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form? (5 pts)",
+    "section": "Bonus section: Use confidence intervals instead of tables (2 pts)",
+    "text": "Bonus section: Use confidence intervals instead of tables (2 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (1 pt)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form? (1 pt)",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 4"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-4.html#submission",
+    "href": "assignments/coding-assignment-4.html#submission",
+    "title": "Assignment 4",
+    "section": "Submission",
+    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 4"
@@ -2177,55 +2210,88 @@
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-2.html#step-1-gather-your-data-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-1-gather-your-data-20-pts",
-    "title": "Coding Assignment 2",
-    "section": "Step 1: Gather Your Data (20 pts)",
-    "text": "Step 1: Gather Your Data (20 pts)\nUse the vdemdata package to download data for your analysis. Since we already looked at the polyarchy score and wealth in class, you need to use a different measure of democracy and a different background factor for your analysis. Use a select() verb to include country, year, region (e_regionpol_6C), at least one of the other four measures of democracy, and one background factor that is not per capita GDP. Store your data in an object called dem_data. Pipe in a mutate() verb and use case_match() to label the regions. Review module 1.2 if you are confused on how to do this.",
+    "objectID": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
+    "title": "Homework 2",
+    "section": "Step 1: Make a line chart showing country trends (20 pts)",
+    "text": "Step 1: Make a line chart showing country trends (20 pts)\na) Use fetchdem() to retrieve your chosen democracy indicator for five countries from different regions that you expect might be interesting to compare for 1970 onward and store it in an object called line_chart_dta. Use glimpse() or look at the data frame to make sure everything looks right.\nb) Now choose one of the democracy indicators and visualize it with a line chart using ggplot2 for the countries that you chose. Be sure to specify x =, y = and color = in your aes() call and use geom_line() to create the chart. Add appropriate axis labels, a title and a caption. Now add a colorblind-friendly color map and an attractive theme.\nc) Add a vertical line at an interesting point in history or a horizontal line at a notable point on the y-axis and an annotation explaining the significance of the line.\nd) In a few sentences below, interpret your chart. Describe the levels and trends in democracy scores. Put your answer right below this line in markdown text (DO NOT write your comments in a code chunk!!).",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-2.html#step-2-make-a-bar-chart-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-2-make-a-bar-chart-20-pts",
-    "title": "Coding Assignment 2",
-    "section": "Step 2: Make a bar chart (20 pts)",
-    "text": "Step 2: Make a bar chart (20 pts)\na) Insert a code chunk below this line and label it. Wrangle your data for the bar chart. Filter by year to include data since 2000, group by region and summarize by mean. Save the new data in an object called bar_chart_data.\nb) Insert a code chunk below this line and label it. Use ggplot() and geom_col() to create a bar chart showing levels of democracy across the regions with your wrangled data. Make sure to add appropriate axis labels, a title and a caption. Add a theme to spruce it up a bit.\nNote: From here on out I will expect you to know to add a code chunk and label it.",
+    "objectID": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
+    "title": "Homework 2",
+    "section": "Step 2: Make a column chart comparing country levels (20 pts)",
+    "text": "Step 2: Make a column chart comparing country levels (20 pts)\na) Now use a group_by(), summarize() sequence to take country averages for the data that you retrieved for your line chart in Step 1 and store it as an object called column_chrt_dta.\nb) Use ggplot() and geom_col() to visualize one of the democracy measures with a column chart (you can use the same measure as in Step 1 or a different one). Use fct_reorder() to arrange the columns in order of the y-axis values. Make sure to add appropriate axis labels, a title and a caption. Change the fill color and add a theme to spruce it up a bit. Remember that these are averages over the same number of years as the line chart you made in Step 1\nc) Interpret your column chart. Does the evidence in the column chart roughly match what you saw in the line chart above?",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-2.html#step-3-make-a-colorblind-friendly-line-chart-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-3-make-a-colorblind-friendly-line-chart-20-pts",
-    "title": "Coding Assignment 2",
-    "section": "Step 3: Make a colorblind-friendly line chart (20 pts)",
-    "text": "Step 3: Make a colorblind-friendly line chart (20 pts)\na) Filter your dem_data to include three or four countries of your choosing and create a line chart of your democracy indicator. You can save the data as a new data frame called dem_data_line or you can pipe your filtered data directly into ggplot().\nb) Use cvdPlot() to view your chart from the standpoint of someone with red-green color blindness and describe what you see.\nc) Add a colorblind-friendly color map using viridis or ColorBrewer.\nd) Run the plot through cvdPlot() and describe what you see. Is your plot colorblind friendly?",
+    "objectID": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
+    "title": "Homework 2",
+    "section": "Step 3: Make a scatter plot (20 pts)",
+    "text": "Step 3: Make a scatter plot (20 pts)\na) Use fetchdem() to grab democracy indicators along with GDP per capita and region codes (e_regionpol_6C) for all countries for one year of your choosing (hint: set start_year and end_year to the same year). Be sure to rename variables where you need to and use mutate() and case_match() to assign region names \nb) Use the data from part A build a scatter plot with ggplot2 using these data. Put GDP on the x-axis and one of the measures of democracy on the y-axis and color the points by region. Stretch the x-axis on a log scale and use the scales package to add a prefix and suffix to the x-axis numbers to indicate that they are dollar figures. Add appropriate labels and a viridis color map and add your favorite theme. If you get some warnings about a few missing data points, try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.\nc) Next add a trend line with geom_smooth() preferably with a linear model (method = “lm”). Note that you will get some warnings about missing data points and a message about the linear model. Try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-2.html#step-4-make-a-scatter-plot-with-annotation-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-4-make-a-scatter-plot-with-annotation-20-pts",
-    "title": "Coding Assignment 2",
-    "section": "Step 4: Make a scatter plot with annotation (20 pts)",
-    "text": "Step 4: Make a scatter plot with annotation (20 pts)\na) Using dem__data, filter out a ten year period. This could be the most recent ten years of data or a distinct ten year period that you want to look at. If you choose a recent period, make sure that you have enough data to take an average of ten years. Some of the background variables in V-Dem are not entirely up to date. You can check the availability of the data by looking at the V-Dem codebook or using glimpse() or View() to look at your data.Group by country and summarize by mean. Save your your data in a new object called dem_data_scatter.\nb) Now build a scatter plot with ggplot2. Put your modernization-related variable (background variable) on the x-axis and your measure of democracy on the y-axis and color the points by region. Add a trend line with geom_smooth(). This could be a linear model or a loess curve. Add appropriate labels and a viridis or ColorBrewer color map and change the theme to theme_minimal.\nc) Add an annotation to your scatter plot using annotate() and geom_vline() or geom_hline(). Your annotation could highlight a particular year or level of democracy that is relevant for your analysis. Explain briefly why you included this annotation",
+    "objectID": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
+    "href": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
+    "title": "Homework 2",
+    "section": "Step 4: Additional Tasks (20 pts)",
+    "text": "Step 4: Additional Tasks (20 pts)\na) Facet wrap your scatter plot by region.\nb) Remove the facet_wrap() call and display the relationship for one region and use geom_text() to label your points.\nc) Remove the text labels and make your scatter plot interactive using ggplotly(). Make sure that your tooltip includes the information that you want to display to the user.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
     ]
   },
   {
-    "objectID": "assignments/coding-assignment-2.html#step-5-make-your-scatter-plot-interactive-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-5-make-your-scatter-plot-interactive-20-pts",
-    "title": "Coding Assignment 2",
-    "section": "Step 5: Make your scatter plot interactive (20 pts)",
-    "text": "Step 5: Make your scatter plot interactive (20 pts)\na) Make your scatter plot interactive using ggplotly(). Make sure that your tooltip includes the information that you want to display to the user.\nb) Interpret your results. Does your plot show a relationship between the two variables? Which countries are outliers in your analysis? Why do you think they are outliers and how does your explanation relate to Lipset’s hypothesis?",
+    "objectID": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
+    "href": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
+    "title": "Homework 2",
+    "section": "Step 5: Interpretation (10 pts)",
+    "text": "Step 5: Interpretation (10 pts)\nInterpret your results from your visualizations, including the scatter plot, line chart and column chart. Is there an obvious relationship between development and democracy? Do the data generally support Lipset’s theory?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
+    "href": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
+    "title": "Homework 2",
+    "section": "Step 6: Rendering (10 pts)",
+    "text": "Step 6: Rendering (10 pts)\nUse a Quato theme to improve the look of the HTML output. Press the render button to create your HTML document. If there are lots of messages or warnings come out of your code chunks, consider supressing them with the appropriate chunk options. If you get any errors go back and fix them and try again until the document renders.",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#extra-credit-3-pts",
+    "href": "assignments/coding-assignment-2.html#extra-credit-3-pts",
+    "title": "Homework 2",
+    "section": "Extra Credit (3 pts)",
+    "text": "Extra Credit (3 pts)\na) Use fetchdem() to download time series data and gganimate to make an animated version of your scatter plot.\nb) Interpret the plot. Does it tell an interesting story that the static plot did not?",
+    "crumbs": [
+      "Coding Assignments",
+      "Coding Assignment 2"
+    ]
+  },
+  {
+    "objectID": "assignments/coding-assignment-2.html#submission",
+    "href": "assignments/coding-assignment-2.html#submission",
+    "title": "Homework 2",
+    "section": "Submission",
+    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 2"
@@ -2866,6 +2932,34 @@
     "text": "What is a Function\n\nA reusable piece of code that takes some inputs, performs some operations and returns an output\nElements\n\nInputs (arguments)\nOperations (code block)\nOutput (return value)\n\nLike cooking (to produce a dish, you have a recipe and ingredients)\nDon’t repeat yourself (DRY)"
   },
   {
+    "objectID": "slides/week-7.2.html#simple-example",
+    "href": "slides/week-7.2.html#simple-example",
+    "title": "Make a Map Function",
+    "section": "Simple Example",
+    "text": "Simple Example\n\n\n# Define the function\nsquare_number &lt;- function(x) {\n  result &lt;- x^2\n  return(result)\n}\n\n# Use the function\nsquare_number(55)\n\n[1] 3025"
+  },
+  {
+    "objectID": "slides/week-7.2.html#tidy-evaluation",
+    "href": "slides/week-7.2.html#tidy-evaluation",
+    "title": "Make a Map Function",
+    "section": "Tidy Evaluation",
+    "text": "Tidy Evaluation\n\nIn the Tidyverse, ridy evaluation allows you to reference a column without using quotes or referencing the data frame\n\n\ndemocracy |&gt; filter(polyarchy &gt; .5)\n\nvs. \n\ndemocracy[democracy$polyarchy &gt; .5, ]\n\nor\n\ndemocracy[democracy[[\"polyarchy\"]] &gt; .5, ]"
+  },
+  {
+    "objectID": "slides/week-7.2.html#tidy-evaluation-1",
+    "href": "slides/week-7.2.html#tidy-evaluation-1",
+    "title": "Make a Map Function",
+    "section": "Tidy Evaluation",
+    "text": "Tidy Evaluation\n\nTidy evaluation lets us refer to column names without quotes, which is great for interactive use.\nBut it can be tricky for programming because dplyr and ggplot2 assume that any argument passed to them is already a column name.\nWhen we pass a variable containing a column name (e.g., a string), R doesn’t automatically evaluate the variable to find the column name.\nWe need to explicitly tell R to look inside the variable and treat it as a column."
+  },
+  {
+    "objectID": "slides/week-7.2.html#tidy-evaluation-2",
+    "href": "slides/week-7.2.html#tidy-evaluation-2",
+    "title": "Make a Map Function",
+    "section": "Tidy Evaluation",
+    "text": "Tidy Evaluation\n\n\nTo do this we use {{}} in functions\nFor Shiny apps and strings we will use .data[[]]\nCan also use !!sym() in some contexts\nDepricated or less preferred methods include get(), eval(parse()),aes_string() and !!enquo()"
+  },
+  {
     "objectID": "slides/week-7.2.html#map-function",
     "href": "slides/week-7.2.html#map-function",
     "title": "Make a Map Function",
@@ -2894,27 +2988,6 @@
     "text": "Map Function\n\nSave the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
   },
   {
-    "objectID": "slides/week-7.2.html#map-function-4",
-    "href": "slides/week-7.2.html#map-function-4",
-    "title": "Make a Map Function",
-    "section": "Map Function",
-    "text": "Map Function\n\nlibrary(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), # change variable id\n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + \n  labs(\n    title =  title, \n    fill = legend_title, \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, \n    direction = direction \n    )\n}"
-  },
-  {
-    "objectID": "slides/week-7.2.html#map-function-5",
-    "href": "slides/week-7.2.html#map-function-5",
-    "title": "Make a Map Function",
-    "section": "Map Function",
-    "text": "Map Function\n\nlibrary(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), # change variable id\n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + # remove quotes\n  labs(\n    title =  title, # change title\n    fill = legend_title, # change legend title\n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, #  chg theme\n    direction = direction # change direction of scale\n    )\n}"
-  },
-  {
-    "objectID": "slides/week-7.2.html#map-function-6",
-    "href": "slides/week-7.2.html#map-function-6",
-    "title": "Make a Map Function",
-    "section": "Map Function",
-    "text": "Map Function\n\nSave the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
-  },
-  {
     "objectID": "slides/week-7.2.html#your-turn",
     "href": "slides/week-7.2.html#your-turn",
     "title": "Make a Map Function",
@@ -2934,6 +3007,20 @@
     "title": "Make a Map Function",
     "section": "Other Functions",
     "text": "Other Functions\n\n\nWhat other visualizations could you “functionize”?\nLine charts?\nBar charts?\nScatter plots?\nTry one!"
+  },
+  {
+    "objectID": "slides/week-7.2.html#group-and-summarize",
+    "href": "slides/week-7.2.html#group-and-summarize",
+    "title": "Make a Map Function",
+    "section": "Group and Summarize",
+    "text": "Group and Summarize\n\n\n# var_id = any World Bank indicator\n# mrv = number of most recent values\n# group_var = column to group by (country or date)\n\nmean_wb_data &lt;- function(var_id, mrv, group_var){\n  wb_data(var_id, mrv = mrv) |&gt; \n    group_by( {{ group_var }}) |&gt; \n    summarize(mean_value = mean(.data[[var_id]], na.rm = TRUE))\n}\n\n# Example call\nmean_wb_data(\"SL.TLF.CACT.FE.ZS\", 3, date)"
+  },
+  {
+    "objectID": "slides/week-7.2.html#line-chart",
+    "href": "slides/week-7.2.html#line-chart",
+    "title": "Make a Map Function",
+    "section": "Line Chart",
+    "text": "Line Chart\n\n\ncreate_line_chart &lt;- function(data, x_var, y_var, color_var, title, x_label,\n                              y_label, legend_title, color_palette = \"turbo\",\n                              palette_end = 0.8) {\n  \n  ggplot(data, aes(x = {{ x_var }}, y = {{ y_var }}, color = {{ color_var }})) +\n    geom_line() +\n    labs(\n      title = title,\n      x = x_label,\n      y = y_label\n    ) +\n    scale_color_viridis_d(\n      name = legend_title,  \n      option = color_palette, \n      end = palette_end\n    ) +\n    theme_minimal()\n}\n\n# Example call\ncreate_line_chart(\n  data = brics_dem, \n  x_var = year, \n  y_var = v2x_polyarchy, \n  color_var = country_name, \n  title = \"Democracy in the BRICS Nations\", \n  x_label = \"Year\", \n  y_label = \"Polyarchy Score\",\n  legend_title = \"Index\"\n)"
   },
   {
     "objectID": "slides/week-2.1.html#rstudio",
@@ -3209,13 +3296,6 @@
     "text": "Your Turn!\nProduce this scatter plot… Then try different themes.\n\n\n\n\n−+\n05:00"
   },
   {
-    "objectID": "slides/week-6.2.html#your-turn-1",
-    "href": "slides/week-6.2.html#your-turn-1",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nGo to module 2.2\nCopy the code you need to make the line chart\nCreate a horizontal reference line and annotate it\nIn a new code chunk, create a vertical line and annotate it\nPlay with the parameters to move and style your line\nTry different text, etc.\n\n\n\n\n−+\n05:00"
-  },
-  {
     "objectID": "slides/week-6.2.html#add-an-annotation",
     "href": "slides/week-6.2.html#add-an-annotation",
     "title": "Themes, Annotations and Interactivity",
@@ -3258,11 +3338,11 @@
     "text": "Second step, add the annotation with annotate()\n\n\nCode\nflfp_line + \n  geom_vline(xintercept=2020, linetype = \"dashed\", size = 1) +\n  annotate(\"text\", x = 2017, y = 35, label = \"Pandemic\")"
   },
   {
-    "objectID": "slides/week-6.2.html#your-turn-2",
-    "href": "slides/week-6.2.html#your-turn-2",
+    "objectID": "slides/week-6.2.html#your-turn-1",
+    "href": "slides/week-6.2.html#your-turn-1",
     "title": "Themes, Annotations and Interactivity",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\nGo to module 2.2 and create the basic wealth vs. flfp scatter plot\nNow “plotlify” the plot\nAt first, don’t worry about annotations or tool tip\nThen add in tool tip, play with setting\nThen add in the annotations\nMove annotations, change content\n\n\n\n\n−+\n05:00"
+    "text": "Your Turn!\n\n\nGo to module 2.2\nCopy the code you need to make the line chart\nCreate a horizontal reference line and annotate it\nIn a new code chunk, create a vertical line and annotate it\nPlay with the parameters to move and style your line\nTry different text, etc.\n\n\n\n\n−+\n05:00"
   },
   {
     "objectID": "slides/week-6.2.html#interactivity",
@@ -3286,39 +3366,39 @@
     "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
   },
   {
-    "objectID": "slides/week-6.2.html#the-code-2",
-    "href": "slides/week-6.2.html#the-code-2",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "The Code",
-    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
-  },
-  {
-    "objectID": "slides/week-6.2.html#the-code-3",
-    "href": "slides/week-6.2.html#the-code-3",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "The Code",
-    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
-  },
-  {
-    "objectID": "slides/week-6.2.html#the-code-4",
-    "href": "slides/week-6.2.html#the-code-4",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "The Code",
-    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
-  },
-  {
-    "objectID": "slides/week-6.2.html#the-code-5",
-    "href": "slides/week-6.2.html#the-code-5",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "The Code",
-    "text": "The Code\n\nlibrary(plotly)\n\nwealth_flfp_plotly &lt;- wealth_flfp  + \n  scale_color_viridis_d(option = \"plasma\") +\n  theme_minimal() +\n  aes(label = country)  # need so ggplot retains label for plotly\n\nggplotly(wealth_flfp_plotly, tooltip = c(\"country\", \"flfp\", \"gdp_pc\")) |&gt; \n  \n  # add source\n  layout(annotations = list(text = \"Source: World Bank Development Indicators\",  \n                            font = list(size = 10), showarrow = FALSE,\n                            xref = 'paper', x = 1.1, xanchor = 'right', xshift = 0,\n                            yref = 'paper', y = -.1, yanchor = 'auto', yshift = 0)) |&gt; \n  # add web address\n  layout(annotations = list(text = \"www.dataviz-gwu.rocks\", \n                            font = list(size = 10, color = 'grey'), showarrow = FALSE,\n                            xref = 'paper', x = .5, xanchor = 'center', xshift = 0,\n                            yref = 'paper', y = 1, yanchor = 'top', yshift = 0))"
-  },
-  {
     "objectID": "slides/week-6.2.html#section-4",
     "href": "slides/week-6.2.html#section-4",
     "title": "Themes, Annotations and Interactivity",
     "section": "",
     "text": "But to make a plotly chart, all you need is this!\n\n\nCode\nggplotly(wealth_flfp_plotly)"
+  },
+  {
+    "objectID": "slides/week-6.2.html#your-turn-2",
+    "href": "slides/week-6.2.html#your-turn-2",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nGo to module 2.2 and create the basic wealth vs. flfp scatter plot\nNow “plotlify” the plot\nAt first, don’t worry about annotations or tool tip\nThen add in tool tip, play with setting\nThen add in the annotations\nMove annotations, change content\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots",
+    "href": "slides/week-6.2.html#animated-plots",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots-1",
+    "href": "slides/week-6.2.html#animated-plots-1",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots\n\n\nflfp_gdp_ts &lt;- wb_data(indicators, mrv = 25) |&gt; # download data for 25 most recent years\n    left_join(select(wb_countries(), c(iso3c, region)), by = \"iso3c\") |&gt; # add regions\n    rename(year = date) |&gt;\n    drop_na() # drop rows with missing values"
+  },
+  {
+    "objectID": "slides/week-6.2.html#animated-plots-2",
+    "href": "slides/week-6.2.html#animated-plots-2",
+    "title": "Themes, Annotations and Interactivity",
+    "section": "Animated Plots",
+    "text": "Animated Plots\n\n\nlibrary(gganimate)\n\nggplot(flfp_gdp_ts, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  transition_states(year) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation, {closest_state}\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + \n  scale_color_viridis_d(option = \"plasma\", end = .7)"
   },
   {
     "objectID": "slides/week-6.2.html#your-turn-3",
@@ -3489,6 +3569,20 @@
     "text": "Scaling for Scatter Plots"
   },
   {
+    "objectID": "slides/week-6.1.html#fill-vs.-color",
+    "href": "slides/week-6.1.html#fill-vs.-color",
+    "title": "Accessibility and Color Schemes",
+    "section": "Fill vs. Color",
+    "text": "Fill vs. Color\n\n\nUse fill (e.g. fill = or scale_fill_*) to modify the fill color of shapes like bars, boxes, or polygons.\nCommonly applied to:\n\nBar charts\nBox plots\nHistograms"
+  },
+  {
+    "objectID": "slides/week-6.1.html#fill-vs.-color-1",
+    "href": "slides/week-6.1.html#fill-vs.-color-1",
+    "title": "Accessibility and Color Schemes",
+    "section": "Fill vs. Color",
+    "text": "Fill vs. Color\n\n\nUse color (e.g. color = or scale_color_*) to modify the color of points, lines, or text.\nCommonly applied to:\n\nScatter plots\nLine charts\nText elements"
+  },
+  {
     "objectID": "slides/week-6.1.html#scaling-for-scatter-plots-1",
     "href": "slides/week-6.1.html#scaling-for-scatter-plots-1",
     "title": "Accessibility and Color Schemes",
@@ -3520,8 +3614,8 @@
     "objectID": "slides/week-9.1.html#why-tables",
     "href": "slides/week-9.1.html#why-tables",
     "title": "Making Tables",
-    "section": "",
-    "text": "Summary statistics\nPrecise values (for small number of cases)\nRegression tables"
+    "section": "Why Tables?",
+    "text": "Why Tables?\n\n\n\nSummary statistics\nPrecise values (for small number of cases)\nRegression tables"
   },
   {
     "objectID": "slides/week-9.1.html#awesome-table",
@@ -4135,7 +4229,7 @@
     "href": "modules/module-2.2.html",
     "title": "Module 2.2",
     "section": "",
-    "text": "Prework\n\n\n\n\nInstall plotly (install.packages(\"plotly\")) and have a look at the documentation\n\nInstall colorBlindness (install.packages(\"colorBlindness\")) and read this vignette\n\nGenerate a quarto document named “module-2.2.qmd” in your “modules” project folder so that you can code along with me\nIn your quarto document, run these code chunks and familiarize yourself the data frames that they generate\nNote the use of drop_na() from the tidyr package in constructing the flfp_gdp data frame. drop_na() is a convenient function for dropping rows with missing values.\n\n\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\nlibrary(wbstats)\nlibrary(countrycode)\n\nindicators = c(flfp = \"SL.TLF.CACT.FE.ZS\", gdp_pc = \"NY.GDP.PCAP.KD\") # define indicators\n\n## Regional levels of FLFP for column chart \n\nflfp_gdp_regions &lt;- \n  wb_data(\"SL.TLF.CACT.FE.ZS\", country = \"regions_only\", mrnev = 1) |&gt; \n  rename(\n    region = country,\n    year = date,\n    flfp = SL.TLF.CACT.FE.ZS\n  ) |&gt; \n  select(region, iso3c, year, flfp)\n  \nflfp_gdp_regions\n\n# A tibble: 7 × 4\n  region                     iso3c  year  flfp\n  &lt;chr&gt;                      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 East Asia & Pacific        EAS    2023  58.6\n2 Europe & Central Asia      ECS    2023  51.6\n3 Latin America & Caribbean  LCN    2023  51.1\n4 Middle East & North Africa MEA    2023  19.0\n5 North America              NAC    2023  57.0\n6 South Asia                 SAS    2023  31.6\n7 Sub-Saharan Africa         SSF    2023  60.7\n\n## Cross-section of data on FLFP and GDP per capita for scatter plot\n\nflfp_gdp &lt;- wb_data(indicators, end_date = 2021) |&gt; # download data for 2021\n    left_join(select(wb_countries(), c(iso3c, region)), by = \"iso3c\") |&gt;  # add regions\n    drop_na() # drop rows with missing values\n\nglimpse(flfp_gdp)\n\nRows: 181\nColumns: 7\n$ iso2c   &lt;chr&gt; \"AF\", \"AO\", \"AL\", \"AE\", \"AR\", \"AM\", \"AU\", \"AT\", \"AZ\", \"BI\", \"B…\n$ iso3c   &lt;chr&gt; \"AFG\", \"AGO\", \"ALB\", \"ARE\", \"ARG\", \"ARM\", \"AUS\", \"AUT\", \"AZE\",…\n$ country &lt;chr&gt; \"Afghanistan\", \"Angola\", \"Albania\", \"United Arab Emirates\", \"A…\n$ date    &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 20…\n$ gdp_pc  &lt;dbl&gt; 407.6165, 2387.4299, 4857.1119, 42715.4402, 12444.3183, 4526.5…\n$ flfp    &lt;dbl&gt; 14.787, 74.694, 51.788, 52.789, 50.283, 58.156, 61.216, 56.099…\n$ region  &lt;chr&gt; \"South Asia\", \"Sub-Saharan Africa\", \"Europe & Central Asia\", \"…\n\n## Time series data on regional trends in FLFP for line chart\n\nflfp_ts &lt;- wb_data(\"SL.TLF.CACT.FE.ZS\", country = \"regions_only\", start_date = 1990, end_date = 2022) |&gt; \n  rename(\n    region = country,\n    year = date,\n    flfp = SL.TLF.CACT.FE.ZS\n  ) |&gt; \n  select(region, iso3c, year, flfp)\n  \nglimpse(flfp_ts)\n\nRows: 231\nColumns: 4\n$ region &lt;chr&gt; \"East Asia & Pacific\", \"East Asia & Pacific\", \"East Asia & Paci…\n$ iso3c  &lt;chr&gt; \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", …\n$ year   &lt;dbl&gt; 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 200…\n$ flfp   &lt;dbl&gt; NA, 66.36603, 66.24243, 65.92144, 65.88117, 65.73217, 65.59558,…",
+    "text": "Prework\n\n\n\n\nInstall plotly (install.packages(\"plotly\")) and have a look at the documentation\n\nInstall colorBlindness (install.packages(\"colorBlindness\")) and read this vignette\n\nGenerate a quarto document named “module-2.2.qmd” in your “modules” project folder so that you can code along with me\nIn your quarto document, run these code chunks and familiarize yourself the data frames that they generate\nNote the use of drop_na() from the tidyr package in constructing the flfp_gdp data frame. drop_na() is a convenient function for dropping rows with missing values.\n\n\nlibrary(readr)\nlibrary(dplyr)\nlibrary(tidyr)\nlibrary(ggplot2)\nlibrary(wbstats)\nlibrary(countrycode)\n\nindicators = c(flfp = \"SL.TLF.CACT.FE.ZS\", gdp_pc = \"NY.GDP.PCAP.KD\") # define indicators\n\n## Regional levels of FLFP for column chart \n\nflfp_gdp_regions &lt;- \n  wb_data(\"SL.TLF.CACT.FE.ZS\", country = \"regions_only\", mrnev = 1) |&gt; \n  rename(\n    region = country,\n    year = date,\n    flfp = SL.TLF.CACT.FE.ZS\n  ) |&gt; \n  select(region, iso3c, year, flfp)\n  \nflfp_gdp_regions\n\n# A tibble: 7 × 4\n  region                     iso3c  year  flfp\n  &lt;chr&gt;                      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 East Asia & Pacific        EAS    2023  58.6\n2 Europe & Central Asia      ECS    2023  51.6\n3 Latin America & Caribbean  LCN    2023  51.1\n4 Middle East & North Africa MEA    2023  19.0\n5 North America              NAC    2023  57.0\n6 South Asia                 SAS    2023  31.6\n7 Sub-Saharan Africa         SSF    2023  60.7\n\n## Cross-section of data on FLFP and GDP per capita for scatter plot\n\nflfp_gdp &lt;- wb_data(indicators, end_date = 2021) |&gt; # download data for 2021\n    left_join(select(wb_countries(), c(iso3c, region)), by = \"iso3c\") |&gt;  # add regions\n    drop_na() # drop rows with missing values\n\nglimpse(flfp_gdp)\n\nRows: 180\nColumns: 7\n$ iso2c   &lt;chr&gt; \"AF\", \"AO\", \"AL\", \"AE\", \"AR\", \"AM\", \"AU\", \"AT\", \"AZ\", \"BI\", \"B…\n$ iso3c   &lt;chr&gt; \"AFG\", \"AGO\", \"ALB\", \"ARE\", \"ARG\", \"ARM\", \"AUS\", \"AUT\", \"AZE\",…\n$ country &lt;chr&gt; \"Afghanistan\", \"Angola\", \"Albania\", \"United Arab Emirates\", \"A…\n$ date    &lt;dbl&gt; 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 20…\n$ gdp_pc  &lt;dbl&gt; 407.6165, 2387.4299, 4857.1119, 42715.4402, 12444.3183, 4526.5…\n$ flfp    &lt;dbl&gt; 14.787, 74.694, 51.788, 52.789, 50.283, 58.156, 61.216, 56.099…\n$ region  &lt;chr&gt; \"South Asia\", \"Sub-Saharan Africa\", \"Europe & Central Asia\", \"…\n\n## Time series data on regional trends in FLFP for line chart\n\nflfp_ts &lt;- wb_data(\"SL.TLF.CACT.FE.ZS\", country = \"regions_only\", start_date = 1990, end_date = 2022) |&gt; \n  rename(\n    region = country,\n    year = date,\n    flfp = SL.TLF.CACT.FE.ZS\n  ) |&gt; \n  select(region, iso3c, year, flfp)\n  \nglimpse(flfp_ts)\n\nRows: 231\nColumns: 4\n$ region &lt;chr&gt; \"East Asia & Pacific\", \"East Asia & Pacific\", \"East Asia & Paci…\n$ iso3c  &lt;chr&gt; \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", \"EAS\", …\n$ year   &lt;dbl&gt; 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 200…\n$ flfp   &lt;dbl&gt; NA, 66.36603, 66.24243, 65.92144, 65.88117, 65.73217, 65.59558,…",
     "crumbs": [
       "Course Modules",
       "Module 2.2"
@@ -4234,7 +4328,7 @@
     "href": "modules/module-4.2.html#run-many-regressions-and-display-with-modelsummary",
     "title": "Module 4.2",
     "section": "Run many regressions and display with modelsummary",
-    "text": "Run many regressions and display with modelsummary\n\nbroom is really great if we want to just run one regression and see the results in the context of a working document. But what if we want to display our results to other researchers? For this, we need to use a different package. One package that is really good at producing professional-looking tabels is modelsummary and one of its strongest features is the ability to combine multiple models into the same table while still allowing for substantial customization.\nLet’s go ahead and store four models. In the first three, we will feature sets of predictors (ethnicity, democracy and terrain) and then a final model that includes all of our predictors. In each model, we will include wealth (GDP) and population as controls because we have a feeling that these are robust predictors of conflict onset.\n\nethnicity &lt;- glm(ucdponset ~ ethfrac + relfrac + wbgdppc2011est + wbpopest, # store each model in an object\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\ndemocracy &lt;- glm(ucdponset ~ v2x_polyarchy + wbgdppc2011est +  wbpopest,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nterrain &lt;- glm(ucdponset ~ rugged + wbgdppc2011est + wbpopest ,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nfull_model &lt;- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + rugged +\n                        wbgdppc2011est + wbpopest,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nNext we will store our models as a list with intuitive names that we can display as column headers in our regression table. Then we will store a new coefficient mapping where we rename our variables and change the order that they will appear in the table. We will also store a title and a reference.\n\nmodels &lt;- list(\"Ethnicity\" = ethnicity,  # store list of models in an object\n               \"Democracy\" = democracy, \n               \"Terrain\" = terrain, \n               \"Full Model\" = full_model)\n\ncoef_map &lt;- c(\"ethfrac\" = \"Ethnic Frac\",  # map coefficients\n        \"relfrac\" = \"Religions Frac\",     #(change names and order)\n        \"v2x_polyarchy\" = \"Polyarchy\",\n        \"rugged\" = \"Terrain\",\n        \"wbgdppc2011est\" = \"Per capita GDP\",\n        \"wbpopest\" = \"Population\",\n        \"(Intercept)\" = \"Intercept\")\n\ncaption = \"Table 1: Predictors of Conflict Onset\" # store caption\nreference = \"See appendix for data sources.\"      # store reference notes\n\nNow we can call modelsummary(). The first argument is the list of models we want to display. Next we tell modelsummary that we want it to show stars for statistical significance (stars = TRUE). And in gof_map, we say that, of the many goodness of fit statistics available to us, we only want to include the number of observations. Finally we plug our title into title = and a source note into notes =.\n\nlibrary(modelsummary)\n\nmodelsummary(models,                      # display the table\n             stars = TRUE,                # include stars for significance\n             gof_map = c(\"nobs\"),         # goodness of fit stats to include   \n             coef_map = coef_map,         # coefficient mapping\n             title = caption,             # title\n             notes = reference)           # source note\n\n \n\n  \n    \n\ntinytable_k2048xhyfkeghn6u02ng\n\n\n      \n\nTable 1: Predictors of Conflict Onset\n              \n \n                Ethnicity\n                Democracy\n                Terrain\n                Full Model\n              \n\n\n+ p \nSee appendix for data sources.\n\n\n\nEthnic Frac   \n                  0.744*   \n                           \n                           \n                  0.800*   \n                \n\n              \n                  (0.367)  \n                           \n                           \n                  (0.381)  \n                \n\nReligions Frac\n                  -0.481   \n                           \n                           \n                  -0.391   \n                \n\n              \n                  (0.411)  \n                           \n                           \n                  (0.417)  \n                \n\nPolyarchy     \n                           \n                  -0.228   \n                           \n                  -0.602   \n                \n\n              \n                           \n                  (0.436)  \n                           \n                  (0.509)  \n                \n\nTerrain       \n                           \n                           \n                  0.031    \n                  0.064    \n                \n\n              \n                           \n                           \n                  (0.076)  \n                  (0.076)  \n                \n\nPer capita GDP\n                  -0.474***\n                  -0.512***\n                  -0.543***\n                  -0.372** \n                \n\n              \n                  (0.104)  \n                  (0.108)  \n                  (0.092)  \n                  (0.121)  \n                \n\nPopulation    \n                  0.282*** \n                  0.297*** \n                  0.299*** \n                  0.293*** \n                \n\n              \n                  (0.067)  \n                  (0.051)  \n                  (0.050)  \n                  (0.067)  \n                \n\nIntercept     \n                  -4.703***\n                  -4.407***\n                  -4.296***\n                  -5.693***\n                \n\n              \n                  (1.327)  \n                  (1.205)  \n                  (1.143)  \n                  (1.408)  \n                \n\nNum.Obs.      \n                  6364     \n                  6772     \n                  6840     \n                  6151",
+    "text": "Run many regressions and display with modelsummary\n\nbroom is really great if we want to just run one regression and see the results in the context of a working document. But what if we want to display our results to other researchers? For this, we need to use a different package. One package that is really good at producing professional-looking tabels is modelsummary and one of its strongest features is the ability to combine multiple models into the same table while still allowing for substantial customization.\nLet’s go ahead and store four models. In the first three, we will feature sets of predictors (ethnicity, democracy and terrain) and then a final model that includes all of our predictors. In each model, we will include wealth (GDP) and population as controls because we have a feeling that these are robust predictors of conflict onset.\n\nethnicity &lt;- glm(ucdponset ~ ethfrac + relfrac + wbgdppc2011est + wbpopest, # store each model in an object\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\ndemocracy &lt;- glm(ucdponset ~ v2x_polyarchy + wbgdppc2011est +  wbpopest,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nterrain &lt;- glm(ucdponset ~ rugged + wbgdppc2011est + wbpopest ,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nfull_model &lt;- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + rugged +\n                        wbgdppc2011est + wbpopest,\n                  data = conflict_df,\n                  family = binomial(link=\"logit\"))\n\nNext we will store our models as a list with intuitive names that we can display as column headers in our regression table. Then we will store a new coefficient mapping where we rename our variables and change the order that they will appear in the table. We will also store a title and a reference.\n\nmodels &lt;- list(\"Ethnicity\" = ethnicity,  # store list of models in an object\n               \"Democracy\" = democracy, \n               \"Terrain\" = terrain, \n               \"Full Model\" = full_model)\n\ncoef_map &lt;- c(\"ethfrac\" = \"Ethnic Frac\",  # map coefficients\n        \"relfrac\" = \"Religions Frac\",     #(change names and order)\n        \"v2x_polyarchy\" = \"Polyarchy\",\n        \"rugged\" = \"Terrain\",\n        \"wbgdppc2011est\" = \"Per capita GDP\",\n        \"wbpopest\" = \"Population\",\n        \"(Intercept)\" = \"Intercept\")\n\ncaption = \"Table 1: Predictors of Conflict Onset\" # store caption\nreference = \"See appendix for data sources.\"      # store reference notes\n\nNow we can call modelsummary(). The first argument is the list of models we want to display. Next we tell modelsummary that we want it to show stars for statistical significance (stars = TRUE). And in gof_map, we say that, of the many goodness of fit statistics available to us, we only want to include the number of observations. Finally we plug our title into title = and a source note into notes =.\n\nlibrary(modelsummary)\n\nmodelsummary(models,                      # display the table\n             stars = TRUE,                # include stars for significance\n             gof_map = c(\"nobs\"),         # goodness of fit stats to include   \n             coef_map = coef_map,         # coefficient mapping\n             title = caption,             # title\n             notes = reference)           # source note\n\n \n\n  \n    \n\ntinytable_z6n2mqimq6763fi0f6j3\n\n\n      \n\nTable 1: Predictors of Conflict Onset\n              \n \n                Ethnicity\n                Democracy\n                Terrain\n                Full Model\n              \n\n\n+ p \nSee appendix for data sources.\n\n\n\nEthnic Frac   \n                  0.744*   \n                           \n                           \n                  0.800*   \n                \n\n              \n                  (0.367)  \n                           \n                           \n                  (0.381)  \n                \n\nReligions Frac\n                  -0.481   \n                           \n                           \n                  -0.391   \n                \n\n              \n                  (0.411)  \n                           \n                           \n                  (0.417)  \n                \n\nPolyarchy     \n                           \n                  -0.228   \n                           \n                  -0.602   \n                \n\n              \n                           \n                  (0.436)  \n                           \n                  (0.509)  \n                \n\nTerrain       \n                           \n                           \n                  0.031    \n                  0.064    \n                \n\n              \n                           \n                           \n                  (0.076)  \n                  (0.076)  \n                \n\nPer capita GDP\n                  -0.474***\n                  -0.512***\n                  -0.543***\n                  -0.372** \n                \n\n              \n                  (0.104)  \n                  (0.108)  \n                  (0.092)  \n                  (0.121)  \n                \n\nPopulation    \n                  0.282*** \n                  0.297*** \n                  0.299*** \n                  0.293*** \n                \n\n              \n                  (0.067)  \n                  (0.051)  \n                  (0.050)  \n                  (0.067)  \n                \n\nIntercept     \n                  -4.703***\n                  -4.407***\n                  -4.296***\n                  -5.693***\n                \n\n              \n                  (1.327)  \n                  (1.205)  \n                  (1.143)  \n                  (1.408)  \n                \n\nNum.Obs.      \n                  6364     \n                  6772     \n                  6840     \n                  6151",
     "crumbs": [
       "Course Modules",
       "Module 4.2"
@@ -4245,7 +4339,7 @@
     "href": "modules/module-4.2.html#when-a-coefficient-plot-is-better",
     "title": "Module 4.2",
     "section": "When a coefficient plot is better",
-    "text": "When a coefficient plot is better\n\nA regression table is great when we have many models that we want to display. But what happens when we have just one model? We could present something like our earlier tidy() output which has the beta coefficient, the standard error, t-statistic and p-values in separate columns, but this would be unconventional and would take up a lot of space. Another option is just to present a table with one column like this:\n\nmodelsummary(conflict_model, \n             stars = TRUE,  \n             gof_map = c(\"nobs\"),\n             coef_map = coef_map,\n             title = caption, \n             notes = reference)\n\n \n\n  \n    \n\ntinytable_pliwep08farbznr5zesy\n\n\n      \n\nTable 1: Predictors of Conflict Onset\n              \n \n                (1)\n              \n\n\n+ p \nSee appendix for data sources.\n\n\n\nEthnic Frac   \n                  0.800*   \n                \n\n              \n                  (0.381)  \n                \n\nReligions Frac\n                  -0.391   \n                \n\n              \n                  (0.417)  \n                \n\nPolyarchy     \n                  -0.602   \n                \n\n              \n                  (0.509)  \n                \n\nTerrain       \n                  0.064    \n                \n\n              \n                  (0.076)  \n                \n\nPer capita GDP\n                  -0.372** \n                \n\n              \n                  (0.121)  \n                \n\nPopulation    \n                  0.293*** \n                \n\n              \n                  (0.067)  \n                \n\nIntercept     \n                  -5.693***\n                \n\n              \n                  (1.408)  \n                \n\nNum.Obs.      \n                  6151     \n                \n\n\n\n\n    \n\n\nBut this is also somewhat unconventional and makes our regression output look a little bit lonely. A better option could be to display a coefficient plot that shows point estimates and confidence intervals. This is often preferable with one model because it makes our results so much easier to interpret.\nLet’s try making a coefficient plot with modelplot() from the modelsummary package. The syntax for modelplot() is very similar to that of modelsummary() but there are a few small differences.\nFirst, it puts maps the coefficients from the bottom up, so if you to maintain the order of the coefficients you need to reverse the mapping. We do this with the rev() function.\nSecond, we want to omit the intercept with coef_omit = \"Intercept\" because the emphasis in a coefficient plot is less on the exact regression equation and more on the magnitude and significance of the coefficients.\nThird we can customize various things. We can specify the color of the points and confidence intervals and we can load ggplot2 for further customization. Now we can add geoms and labels just like any other ggplot object. Here we add a red vertical intercept line at zero to make it clearer which variables are significant (e.g. the confidence interval does not overlap with zero). And we add a title and a caption using the labs() function.\n\nlibrary(ggplot2)\n\n\nmodelplot(conflict_model, \n          coef_map = rev(coef_map), # rev() reverses list order\n          coef_omit = \"Intercept\", \n          color = \"blue\") + # use plus to add customizations like any ggplot object\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\", linewidth = .75) + # red 0 line\n  labs(\n    title = \"Figure 1: Predictors of Conflict Onset\",\n    caption = \"See appendix for data sources.\"\n  )",
+    "text": "When a coefficient plot is better\n\nA regression table is great when we have many models that we want to display. But what happens when we have just one model? We could present something like our earlier tidy() output which has the beta coefficient, the standard error, t-statistic and p-values in separate columns, but this would be unconventional and would take up a lot of space. Another option is just to present a table with one column like this:\n\nmodelsummary(conflict_model, \n             stars = TRUE,  \n             gof_map = c(\"nobs\"),\n             coef_map = coef_map,\n             title = caption, \n             notes = reference)\n\n \n\n  \n    \n\ntinytable_15mpib1aucb5e5s4akax\n\n\n      \n\nTable 1: Predictors of Conflict Onset\n              \n \n                (1)\n              \n\n\n+ p \nSee appendix for data sources.\n\n\n\nEthnic Frac   \n                  0.800*   \n                \n\n              \n                  (0.381)  \n                \n\nReligions Frac\n                  -0.391   \n                \n\n              \n                  (0.417)  \n                \n\nPolyarchy     \n                  -0.602   \n                \n\n              \n                  (0.509)  \n                \n\nTerrain       \n                  0.064    \n                \n\n              \n                  (0.076)  \n                \n\nPer capita GDP\n                  -0.372** \n                \n\n              \n                  (0.121)  \n                \n\nPopulation    \n                  0.293*** \n                \n\n              \n                  (0.067)  \n                \n\nIntercept     \n                  -5.693***\n                \n\n              \n                  (1.408)  \n                \n\nNum.Obs.      \n                  6151     \n                \n\n\n\n\n    \n\n\nBut this is also somewhat unconventional and makes our regression output look a little bit lonely. A better option could be to display a coefficient plot that shows point estimates and confidence intervals. This is often preferable with one model because it makes our results so much easier to interpret.\nLet’s try making a coefficient plot with modelplot() from the modelsummary package. The syntax for modelplot() is very similar to that of modelsummary() but there are a few small differences.\nFirst, it puts maps the coefficients from the bottom up, so if you to maintain the order of the coefficients you need to reverse the mapping. We do this with the rev() function.\nSecond, we want to omit the intercept with coef_omit = \"Intercept\" because the emphasis in a coefficient plot is less on the exact regression equation and more on the magnitude and significance of the coefficients.\nThird we can customize various things. We can specify the color of the points and confidence intervals and we can load ggplot2 for further customization. Now we can add geoms and labels just like any other ggplot object. Here we add a red vertical intercept line at zero to make it clearer which variables are significant (e.g. the confidence interval does not overlap with zero). And we add a title and a caption using the labs() function.\n\nlibrary(ggplot2)\n\n\nmodelplot(conflict_model, \n          coef_map = rev(coef_map), # rev() reverses list order\n          coef_omit = \"Intercept\", \n          color = \"blue\") + # use plus to add customizations like any ggplot object\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\", linewidth = .75) + # red 0 line\n  labs(\n    title = \"Figure 1: Predictors of Conflict Onset\",\n    caption = \"See appendix for data sources.\"\n  )",
     "crumbs": [
       "Course Modules",
       "Module 4.2"
@@ -4289,7 +4383,7 @@
     "href": "modules/module-4.1.html#explore-the-data-with-kableextra",
     "title": "Module 4.1",
     "section": "Explore the data with kableExtra",
-    "text": "Explore the data with kableExtra\n\nNow let’s use some dplyr slice functions and kableExtra to subset and explore the data. First let’s see which are the wealthiest states. To do this, we can apply slice_max() to identify the states with the highest incomes among the top 5 percent of wage earners. We will save that list as an object called top_10 and then call kable() to view it.\n\nlibrary(kableExtra)\n\ntop_10 &lt;- quintiles |&gt;\n  slice_max(top5, n = 10)\n\nkable(top_10)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nConnecticut\n17417\n48870\n84042\n133488\n319533\n602707\n\n\nNew York\n14054\n42220\n75647\n123318\n302676\n574063\n\n\nNew Jersey\n18458\n52339\n90337\n142858\n319140\n562886\n\n\nMassachusetts\n16812\n50519\n89602\n142491\n316447\n558616\n\n\nCalifornia\n17433\n49234\n84658\n134560\n309857\n555007\n\n\nMaryland\n19946\n55165\n91725\n140353\n293979\n503597\n\n\nWashington\n19367\n50803\n82817\n127003\n277165\n487950\n\n\nVirginia\n17922\n48359\n81072\n127411\n280299\n486006\n\n\nIllinois\n15102\n42688\n72900\n114531\n258373\n466713\n\n\n\n\n\nNow let’s do the same thing but searching for the poorest states instead. We will use the slice_min() function to identify the states with the lowest incomes in the first quintile of earners.\n\nbottom_10 &lt;- quintiles |&gt;\n  slice_min(q1, n = 10)\n\nkable(bottom_10)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234\n\n\nMississippi\n10096\n27963\n49418\n80125\n175581\n308523\n\n\nLouisiana\n10371\n29781\n53925\n89536\n201514\n357026\n\n\nNew Mexico\n11058\n31274\n54295\n86905\n188282\n323568\n\n\nWest Virginia\n11120\n29606\n51038\n81393\n174019\n299882\n\n\nAlabama\n11602\n31928\n55270\n88640\n193311\n336788\n\n\nKentucky\n11846\n32616\n55838\n88089\n194168\n350411\n\n\nArkansas\n12076\n31051\n52280\n82811\n188510\n344470\n\n\nSouth Carolina\n12680\n34881\n58665\n92118\n207367\n374427\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\n\n\n\nOK now let’s make a table with a selection of states that reflects the full range of household incomes. So first, we will use slice_min() and slice_max() without arguments to select the state with the poorest households in q1 and the state with the wealthiest households in top5. The we will use slice_sample() to take a random sample of five additional states.\nWe will store these selections in three objects and then combine them into a single data frame called states using the dplyr function bind_rows. bind_rows() appends data frames with different observations for the same set of columns. You can think of its a kind of “verticle merging” of data frames.\nAfter we have done the append, we can view the new data by calling kable(states).\n\n# lowest \nstate_min &lt;- quintiles |&gt; \n  slice_min(q1) \n\n# highest\nstate_max &lt;- quintiles |&gt; \n  slice_max(top5) \n\n# randomly select five more\nfive_more &lt;- quintiles |&gt;\n   slice_sample(n = 5) \n\nstates &lt;- bind_rows(state_min, state_max, five_more) |&gt;\n  arrange(desc(top5))\n\nkable(states)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nIllinois\n15102\n42688\n72900\n114531\n258373\n466713\n\n\nOhio\n13962\n37248\n62197\n96445\n209247\n370964\n\n\nMaine\n14836\n38190\n63621\n97559\n205365\n359776\n\n\nSouth Dakota\n16002\n39619\n64234\n95810\n200212\n358060\n\n\nLouisiana\n10371\n29781\n53925\n89536\n201514\n357026\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234",
+    "text": "Explore the data with kableExtra\n\nNow let’s use some dplyr slice functions and kableExtra to subset and explore the data. First let’s see which are the wealthiest states. To do this, we can apply slice_max() to identify the states with the highest incomes among the top 5 percent of wage earners. We will save that list as an object called top_10 and then call kable() to view it.\n\nlibrary(kableExtra)\n\ntop_10 &lt;- quintiles |&gt;\n  slice_max(top5, n = 10)\n\nkable(top_10)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nConnecticut\n17417\n48870\n84042\n133488\n319533\n602707\n\n\nNew York\n14054\n42220\n75647\n123318\n302676\n574063\n\n\nNew Jersey\n18458\n52339\n90337\n142858\n319140\n562886\n\n\nMassachusetts\n16812\n50519\n89602\n142491\n316447\n558616\n\n\nCalifornia\n17433\n49234\n84658\n134560\n309857\n555007\n\n\nMaryland\n19946\n55165\n91725\n140353\n293979\n503597\n\n\nWashington\n19367\n50803\n82817\n127003\n277165\n487950\n\n\nVirginia\n17922\n48359\n81072\n127411\n280299\n486006\n\n\nIllinois\n15102\n42688\n72900\n114531\n258373\n466713\n\n\n\n\n\nNow let’s do the same thing but searching for the poorest states instead. We will use the slice_min() function to identify the states with the lowest incomes in the first quintile of earners.\n\nbottom_10 &lt;- quintiles |&gt;\n  slice_min(q1, n = 10)\n\nkable(bottom_10)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234\n\n\nMississippi\n10096\n27963\n49418\n80125\n175581\n308523\n\n\nLouisiana\n10371\n29781\n53925\n89536\n201514\n357026\n\n\nNew Mexico\n11058\n31274\n54295\n86905\n188282\n323568\n\n\nWest Virginia\n11120\n29606\n51038\n81393\n174019\n299882\n\n\nAlabama\n11602\n31928\n55270\n88640\n193311\n336788\n\n\nKentucky\n11846\n32616\n55838\n88089\n194168\n350411\n\n\nArkansas\n12076\n31051\n52280\n82811\n188510\n344470\n\n\nSouth Carolina\n12680\n34881\n58665\n92118\n207367\n374427\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\n\n\n\nOK now let’s make a table with a selection of states that reflects the full range of household incomes. So first, we will use slice_min() and slice_max() without arguments to select the state with the poorest households in q1 and the state with the wealthiest households in top5. The we will use slice_sample() to take a random sample of five additional states.\nWe will store these selections in three objects and then combine them into a single data frame called states using the dplyr function bind_rows. bind_rows() appends data frames with different observations for the same set of columns. You can think of its a kind of “verticle merging” of data frames.\nAfter we have done the append, we can view the new data by calling kable(states).\n\n# lowest \nstate_min &lt;- quintiles |&gt; \n  slice_min(q1) \n\n# highest\nstate_max &lt;- quintiles |&gt; \n  slice_max(top5) \n\n# randomly select five more\nfive_more &lt;- quintiles |&gt;\n   slice_sample(n = 5) \n\nstates &lt;- bind_rows(state_min, state_max, five_more) |&gt;\n  arrange(desc(top5))\n\nkable(states)\n\n\n\nname\nq1\nq2\nq3\nq4\nq5\ntop5\n\n\n\nDistrict of Columbia\n12971\n51060\n94478\n157803\n375792\n670768\n\n\nMinnesota\n18936\n48127\n78073\n117959\n250361\n441274\n\n\nMichigan\n14460\n38184\n63466\n98543\n213981\n376426\n\n\nOhio\n13962\n37248\n62197\n96445\n209247\n370964\n\n\nOklahoma\n13348\n34646\n57485\n89451\n195269\n348180\n\n\nIndiana\n14748\n38052\n62211\n94655\n198848\n347661\n\n\nPuerto Rico\n2906\n12144\n22163\n38397\n99043\n187234",
     "crumbs": [
       "Course Modules",
       "Module 4.1"
@@ -4300,7 +4394,7 @@
     "href": "modules/module-4.1.html#display-the-data-with-a-gt-table",
     "title": "Module 4.1",
     "section": "Display the data with a gt table",
-    "text": "Display the data with a gt table\n\nNow that we have some good data for a table, let’s make a really beautiful table with the gt package. “gt” stands for “grammar of tables.” So just as we talked about a “grammar of graphics” when we were studying plots, we can talk about the “grammar of tables” and break a table down into its component parts.\ngt envisions six main parts of a table that can be customized in various ways. The table header includes the title and possibly a subtitle. Next, we have the stub section that contains our row labels and, above that, a stubhead label, which we could use to provide more information about what is in the rows. Then, we have column labels that tell us about what is in each column and the table body which contains the actual data that we want to present. Finally, we have the table footer, which would contain any notes that we have about information contained in the table as well as information about sources. Check out the gt function reference to get a sense of all the customizations available.\nLet’s go ahead and start out by making a basic gt table with a title, subtitle, column labels, source note and format the numbers as dollar figures.\nMake a good gt table\n\nlibrary(gt)\n\ngoodtable &lt;- gt(states) |&gt; \n  tab_header(\n    title = \"Mean Household Income of Quintiles, 2021\",\n    subtitle = \"Seven Representative U.S. States\"\n  ) |&gt; \n  cols_label(\n    name = \"\",\n    q1 = \"lowest\",\n    q2 = \"second\",\n    q3 = \"third\",\n    q4 = \"fourth\",\n    q5 = \"highest\",\n    top5 = \"top 5%\"\n  ) |&gt; \n  fmt_currency(\n    columns = c(q1:top5),\n    currency = \"USD\", \n    use_subunits = FALSE\n  ) |&gt;\n  # note that you can use markdown (md) to format the source note for html documents\n  tab_source_note(source_note = md(\"**Source**: US Census Bureau, American Community Survey\"))\n\ngoodtable\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nIllinois\n$15,102\n$42,688\n$72,900\n$114,531\n$258,373\n$466,713\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nLouisiana\n$10,371\n$29,781\n$53,925\n$89,536\n$201,514\n$357,026\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nChange column width\nNow let’s add some further customization. One thing to pay attention to is the column width. Too narrow of columns can make it difficult to read the information, while too wide of columns can cause the table not to fit on the page. We can adjust the column width of our table with the cols_width() function.\n\nvgoodtable &lt;- goodtable |&gt;\n  cols_width(c(q1:top5) ~ px(90))\n\nvgoodtable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nIllinois\n$15,102\n$42,688\n$72,900\n$114,531\n$258,373\n$466,713\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nLouisiana\n$10,371\n$29,781\n$53,925\n$89,536\n$201,514\n$357,026\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nChange font\nNext we want to make sure that the fonts that we use are legible and accessible, just like we did for our charts. We can do this with opt_table_font().\n\ngreattable &lt;- vgoodtable |&gt;\n  opt_table_font(font = \"verdana\")\n\ngreattable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nIllinois\n$15,102\n$42,688\n$72,900\n$114,531\n$258,373\n$466,713\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nLouisiana\n$10,371\n$29,781\n$53,925\n$89,536\n$201,514\n$357,026\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nCenter\nThen we want to check to make sure that information is aligned properly in the table. We can use right, left or center justify our text, depending on its purpose, by calling cols_align().\n\nvgreattable &lt;- greattable |&gt;\n  cols_align(\n  align = \"center\",\n  columns = q1:top5\n)\n\nvgreattable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nIllinois\n$15,102\n$42,688\n$72,900\n$114,531\n$258,373\n$466,713\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nLouisiana\n$10,371\n$29,781\n$53,925\n$89,536\n$201,514\n$357,026\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nAdd borders and lines\nFinally, we want to think about how to use borders and lines to separate and identify different elements of the table using tab_options() like this.\n\nawesometable &lt;- vgreattable |&gt;\n  tab_options(\n    table.border.top.color = \"black\", \n    table.border.bottom.color = \"black\",\n    heading.border.bottom.color = \"black\", \n    column_labels.border.bottom.color = \"black\", \n    table_body.border.bottom.color = \"black\"\n  )\n\nawesometable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nIllinois\n$15,102\n$42,688\n$72,900\n$114,531\n$258,373\n$466,713\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nMaine\n$14,836\n$38,190\n$63,621\n$97,559\n$205,365\n$359,776\n\n\nSouth Dakota\n$16,002\n$39,619\n$64,234\n$95,810\n$200,212\n$358,060\n\n\nLouisiana\n$10,371\n$29,781\n$53,925\n$89,536\n$201,514\n$357,026\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nExport your table\nNow try exporting your table as .png file with the gtsave() function.\n\ngtsave(awesometable, \"awesometable.png\")",
+    "text": "Display the data with a gt table\n\nNow that we have some good data for a table, let’s make a really beautiful table with the gt package. “gt” stands for “grammar of tables.” So just as we talked about a “grammar of graphics” when we were studying plots, we can talk about the “grammar of tables” and break a table down into its component parts.\ngt envisions six main parts of a table that can be customized in various ways. The table header includes the title and possibly a subtitle. Next, we have the stub section that contains our row labels and, above that, a stubhead label, which we could use to provide more information about what is in the rows. Then, we have column labels that tell us about what is in each column and the table body which contains the actual data that we want to present. Finally, we have the table footer, which would contain any notes that we have about information contained in the table as well as information about sources. Check out the gt function reference to get a sense of all the customizations available.\nLet’s go ahead and start out by making a basic gt table with a title, subtitle, column labels, source note and format the numbers as dollar figures.\nMake a good gt table\n\nlibrary(gt)\n\ngoodtable &lt;- gt(states) |&gt; \n  tab_header(\n    title = \"Mean Household Income of Quintiles, 2021\",\n    subtitle = \"Seven Representative U.S. States\"\n  ) |&gt; \n  cols_label(\n    name = \"\",\n    q1 = \"lowest\",\n    q2 = \"second\",\n    q3 = \"third\",\n    q4 = \"fourth\",\n    q5 = \"highest\",\n    top5 = \"top 5%\"\n  ) |&gt; \n  fmt_currency(\n    columns = c(q1:top5),\n    currency = \"USD\", \n    use_subunits = FALSE\n  ) |&gt;\n  # note that you can use markdown (md) to format the source note for html documents\n  tab_source_note(source_note = md(\"**Source**: US Census Bureau, American Community Survey\"))\n\ngoodtable\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nMichigan\n$14,460\n$38,184\n$63,466\n$98,543\n$213,981\n$376,426\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nOklahoma\n$13,348\n$34,646\n$57,485\n$89,451\n$195,269\n$348,180\n\n\nIndiana\n$14,748\n$38,052\n$62,211\n$94,655\n$198,848\n$347,661\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nChange column width\nNow let’s add some further customization. One thing to pay attention to is the column width. Too narrow of columns can make it difficult to read the information, while too wide of columns can cause the table not to fit on the page. We can adjust the column width of our table with the cols_width() function.\n\nvgoodtable &lt;- goodtable |&gt;\n  cols_width(c(q1:top5) ~ px(90))\n\nvgoodtable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nMichigan\n$14,460\n$38,184\n$63,466\n$98,543\n$213,981\n$376,426\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nOklahoma\n$13,348\n$34,646\n$57,485\n$89,451\n$195,269\n$348,180\n\n\nIndiana\n$14,748\n$38,052\n$62,211\n$94,655\n$198,848\n$347,661\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nChange font\nNext we want to make sure that the fonts that we use are legible and accessible, just like we did for our charts. We can do this with opt_table_font().\n\ngreattable &lt;- vgoodtable |&gt;\n  opt_table_font(font = \"verdana\")\n\ngreattable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nMichigan\n$14,460\n$38,184\n$63,466\n$98,543\n$213,981\n$376,426\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nOklahoma\n$13,348\n$34,646\n$57,485\n$89,451\n$195,269\n$348,180\n\n\nIndiana\n$14,748\n$38,052\n$62,211\n$94,655\n$198,848\n$347,661\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nCenter\nThen we want to check to make sure that information is aligned properly in the table. We can use right, left or center justify our text, depending on its purpose, by calling cols_align().\n\nvgreattable &lt;- greattable |&gt;\n  cols_align(\n  align = \"center\",\n  columns = q1:top5\n)\n\nvgreattable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nMichigan\n$14,460\n$38,184\n$63,466\n$98,543\n$213,981\n$376,426\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nOklahoma\n$13,348\n$34,646\n$57,485\n$89,451\n$195,269\n$348,180\n\n\nIndiana\n$14,748\n$38,052\n$62,211\n$94,655\n$198,848\n$347,661\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nAdd borders and lines\nFinally, we want to think about how to use borders and lines to separate and identify different elements of the table using tab_options() like this.\n\nawesometable &lt;- vgreattable |&gt;\n  tab_options(\n    table.border.top.color = \"black\", \n    table.border.bottom.color = \"black\",\n    heading.border.bottom.color = \"black\", \n    column_labels.border.bottom.color = \"black\", \n    table_body.border.bottom.color = \"black\"\n  )\n\nawesometable\n\n\n\n\n\n\nMean Household Income of Quintiles, 2021\n\n\nSeven Representative U.S. States\n\n\n\nlowest\nsecond\nthird\nfourth\nhighest\ntop 5%\n\n\n\n\nDistrict of Columbia\n$12,971\n$51,060\n$94,478\n$157,803\n$375,792\n$670,768\n\n\nMinnesota\n$18,936\n$48,127\n$78,073\n$117,959\n$250,361\n$441,274\n\n\nMichigan\n$14,460\n$38,184\n$63,466\n$98,543\n$213,981\n$376,426\n\n\nOhio\n$13,962\n$37,248\n$62,197\n$96,445\n$209,247\n$370,964\n\n\nOklahoma\n$13,348\n$34,646\n$57,485\n$89,451\n$195,269\n$348,180\n\n\nIndiana\n$14,748\n$38,052\n$62,211\n$94,655\n$198,848\n$347,661\n\n\nPuerto Rico\n$2,906\n$12,144\n$22,163\n$38,397\n$99,043\n$187,234\n\n\n\nSource: US Census Bureau, American Community Survey\n\n\n\n\n\nExport your table\nNow try exporting your table as .png file with the gtsave() function.\n\ngtsave(awesometable, \"awesometable.png\")",
     "crumbs": [
       "Course Modules",
       "Module 4.1"
@@ -4355,7 +4449,7 @@
     "href": "modules/module-3.1.html#using-rnaturalearth-to-map-other-data",
     "title": "Module 3.1",
     "section": "Using rnaturalearth to map other data",
-    "text": "Using rnaturalearth to map other data\n\nNow that we know how to make a map with Natural Earth shapes and geom_sf(), we can merge in data and map data from other sources. Let’s go ahead and merge some data on oil rents from the World Bank. We will do a left_join() based on iso3c country codes. In the World Bank data the iso3c codes are simply called “iso3c.” In rnaturalearth there are a number of options, but the best here for our purposes is “iso_a3”\n\n\n\n\n\n\nWarning\n\n\n\nAt the time I made the video, the codes for “iso_a3” and some of the others were missing so I recommended using “iso_a3_eh.” But now the issue has been fixed, so please use “iso_a3.”\n\n\n\nlibrary(wbstats)\n\noil_rents_df &lt;- wb_data(c(oil_rents_gdp = \"NY.GDP.PETR.RT.ZS\"), mrnev = 1) \n\nrents_map_df &lt;- left_join(world_map_df, oil_rents_df, join_by(iso_a3 == iso3c))\n\nrents_map_df |&gt;\n  select(last_col(5):last_col()) |&gt; #select last 5 columns of df\n  glimpse() \n\nRows: 241\nColumns: 6\n$ date          &lt;dbl&gt; 2021, 2021, 2018, 2021, 2014, NA, 2021, 2021, 2021, NA, …\n$ oil_rents_gdp &lt;dbl&gt; 0.047768809, 0.000000000, 4.531310652, 0.669314215, 11.3…\n$ obs_status    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ footnote      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ last_updated  &lt;date&gt; 2024-09-19, 2024-09-19, 2024-09-19, 2024-09-19, 2024-09…\n$ geometry      &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((31.28789 -2..., MULTIPOLYGO…\n\n\nNow we can map these data. Everything here is pretty much the same as before, except we change the fill to oil_rents_gdp. We will also add a subtitle and make a few other cosmetic changes like shifting the position of the legend title, bolding the plot title and changing the viridis color scale from discrete to continuous.\n\nggplot(data = rents_map_df) +\n  geom_sf(aes(fill = oil_rents_gdp)) + # shade based on oil rents\n  labs(\n    title = \"Oil rents (% of GDP)\",\n    subtitle = \"(Most recent available data)\", # add subtitle\n    fill = \"Percent\", \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    legend.position = \"right\", \n    #legend.title = element_text(size = 8),\n    #legend.text = element_text(size = 6)\n    plot.title = element_text(face = \"bold\"), # move legend\n    ) +\n  scale_fill_viridis_c( # chg from discrete (_d) to continuous (_c)\n      option = \"magma\", #  chg to magma theme\n      labels = scales::label_percent(scale = 1) # add % label for legend\n      )",
+    "text": "Using rnaturalearth to map other data\n\nNow that we know how to make a map with Natural Earth shapes and geom_sf(), we can merge in data and map data from other sources. Let’s go ahead and merge some data on oil rents from the World Bank. We will do a left_join() based on iso3c country codes. In the World Bank data the iso3c codes are simply called “iso3c.” In rnaturalearth there are a number of options, but the best here for our purposes is “iso_a3”\n\n\n\n\n\n\nWarning\n\n\n\nAt the time I made the video, the codes for “iso_a3” and some of the others were missing so I recommended using “iso_a3_eh.” But now the issue has been fixed, so please use “iso_a3.”\n\n\n\nlibrary(wbstats)\n\noil_rents_df &lt;- wb_data(c(oil_rents_gdp = \"NY.GDP.PETR.RT.ZS\"), mrnev = 1) \n\nrents_map_df &lt;- left_join(world_map_df, oil_rents_df, join_by(iso_a3 == iso3c))\n\nrents_map_df |&gt;\n  select(last_col(5):last_col()) |&gt; #select last 5 columns of df\n  glimpse() \n\nRows: 241\nColumns: 6\n$ date          &lt;dbl&gt; 2021, 2021, 2018, 2021, 2014, NA, 2021, 2021, 2021, NA, …\n$ oil_rents_gdp &lt;dbl&gt; 0.047768809, 0.000000000, 4.531310652, 0.669314215, 11.3…\n$ obs_status    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ footnote      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …\n$ last_updated  &lt;date&gt; 2024-10-24, 2024-10-24, 2024-10-24, 2024-10-24, 2024-10…\n$ geometry      &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((31.28789 -2..., MULTIPOLYGO…\n\n\nNow we can map these data. Everything here is pretty much the same as before, except we change the fill to oil_rents_gdp. We will also add a subtitle and make a few other cosmetic changes like shifting the position of the legend title, bolding the plot title and changing the viridis color scale from discrete to continuous.\n\nggplot(data = rents_map_df) +\n  geom_sf(aes(fill = oil_rents_gdp)) + # shade based on oil rents\n  labs(\n    title = \"Oil rents (% of GDP)\",\n    subtitle = \"(Most recent available data)\", # add subtitle\n    fill = \"Percent\", \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    legend.position = \"right\", \n    #legend.title = element_text(size = 8),\n    #legend.text = element_text(size = 6)\n    plot.title = element_text(face = \"bold\"), # move legend\n    ) +\n  scale_fill_viridis_c( # chg from discrete (_d) to continuous (_c)\n      option = \"magma\", #  chg to magma theme\n      labels = scales::label_percent(scale = 1) # add % label for legend\n      )",
     "crumbs": [
       "Course Modules",
       "Module 3.1"
@@ -4491,429 +4585,6 @@
     "crumbs": [
       "Course Modules",
       "Module 5.1"
-    ]
-  },
-  {
-    "objectID": "slides/week-6.1.html#fill-vs.-color",
-    "href": "slides/week-6.1.html#fill-vs.-color",
-    "title": "Accessibility and Color Schemes",
-    "section": "Fill vs. Color",
-    "text": "Fill vs. Color\n\n\nUse fill (e.g. fill = or scale_fill_*) to modify the fill color of shapes like bars, boxes, or polygons.\nCommonly applied to:\n\nBar charts\nBox plots\nHistograms"
-  },
-  {
-    "objectID": "slides/week-6.1.html#fill-vs.-color-1",
-    "href": "slides/week-6.1.html#fill-vs.-color-1",
-    "title": "Accessibility and Color Schemes",
-    "section": "Fill vs. Color",
-    "text": "Fill vs. Color\n\n\nUse color (e.g. color = or scale_color_*) to modify the color of points, lines, or text.\nCommonly applied to:\n\nScatter plots\nLine charts\nText elements"
-  },
-  {
-    "objectID": "slides/week-6.2.html#animated-plots",
-    "href": "slides/week-6.2.html#animated-plots",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "Animated Plots",
-    "text": "Animated Plots"
-  },
-  {
-    "objectID": "slides/week-6.2.html#animated-plots-1",
-    "href": "slides/week-6.2.html#animated-plots-1",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "Animated Plots",
-    "text": "Animated Plots\n\n\nflfp_gdp_ts &lt;- wb_data(indicators, mrv = 25) |&gt; # download data for 25 most recent years\n    left_join(select(wb_countries(), c(iso3c, region)), by = \"iso3c\") |&gt; # add regions\n    rename(year = date) |&gt;\n    drop_na() # drop rows with missing values"
-  },
-  {
-    "objectID": "slides/week-6.2.html#animated-plots-2",
-    "href": "slides/week-6.2.html#animated-plots-2",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "Animated Plots",
-    "text": "Animated Plots\n\n\nlibrary(gganimate)\n\nggplot(flfp_gdp_ts, aes(x = gdp_pc, y = flfp)) + \n  geom_point(aes(color = region)) + \n  geom_smooth(method = \"loess\", linewidth = 1) +\n  scale_x_log10(labels = scales::label_dollar()) + \n  scale_y_continuous(labels = scales::label_percent(scale = 1)) +\n  transition_states(year) +\n  labs(\n    x= \"GDP per Capita\",\n    y = \"Female Labor Force Participation\",\n    title = \"Wealth and female labor force participation, {closest_state}\",\n    caption = \"Source: World Bank Development Indicators\",\n    color = \"Region\"\n    ) + \n  scale_color_viridis_d(option = \"plasma\", end = .7)"
-  },
-  {
-    "objectID": "slides/week-6.2.html#your-turn-4",
-    "href": "slides/week-6.2.html#your-turn-4",
-    "title": "Themes, Annotations and Interactivity",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nTry making an animated scatter plot with different a different y-axis variable\nSee if you can make the title change based on the year displayed\n\n\n\n\n−+\n05:00"
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-1-make-a-line-chart-showing-country-trends-20-pts",
-    "title": "Homework 2",
-    "section": "Step 1: Make a line chart showing country trends (20 pts)",
-    "text": "Step 1: Make a line chart showing country trends (20 pts)\na) Use fetchdem() to retrieve your chosen democracy indicator for five countries from different regions that you expect might be interesting to compare for 1970 onward and store it in an object called line_chart_dta. Use glimpse() or look at the data frame to make sure everything looks right.\nb) Now choose one of the democracy indicators and visualize it with a line chart using ggplot2 for the countries that you chose. Be sure to specify x =, y = and color = in your aes() call and use geom_line() to create the chart. Add appropriate axis labels, a title and a caption. Now add a colorblind-friendly color map and an attractive theme.\nc) Add a vertical line at an interesting point in history or a horizontal line at a notable point on the y-axis and an annotation explaining the significance of the line.\nd) In a few sentences below, interpret your chart. Describe the levels and trends in democracy scores. Put your answer right below this line in markdown text (DO NOT write your comments in a code chunk!!).",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-2-make-a-column-chart-comparing-country-levels-20-pts",
-    "title": "Homework 2",
-    "section": "Step 2: Make a column chart comparing country levels (20 pts)",
-    "text": "Step 2: Make a column chart comparing country levels (20 pts)\na) Now use a group_by(), summarize() sequence to take country averages for the data that you retrieved for your line chart in Step 1 and store it as an object called column_chrt_dta.\nb) Use ggplot() and geom_col() to visualize one of the democracy measures with a column chart (you can use the same measure as in Step 1 or a different one). Use fct_reorder() to arrange the columns in order of the y-axis values. Make sure to add appropriate axis labels, a title and a caption. Change the fill color and add a theme to spruce it up a bit. Remember that these are averages over the same number of years as the line chart you made in Step 1\nc) Interpret your column chart. Does the evidence in the column chart roughly match what you saw in the line chart above?",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-3-make-a-scatter-plot-20-pts",
-    "title": "Homework 2",
-    "section": "Step 3: Make a scatter plot (20 pts)",
-    "text": "Step 3: Make a scatter plot (20 pts)\na) Use fetchdem() to grab democracy indicators along with GDP per capita and region codes (e_regionpol_6C) for all countries for one year of your choosing (hint: set start_year and end_year to the same year). Be sure to rename variables where you need to and use mutate() and case_match() to assign region names \nb) Use the data from part A build a scatter plot with ggplot2 using these data. Put GDP on the x-axis and one of the measures of democracy on the y-axis and color the points by region. Stretch the x-axis on a log scale and use the scales package to add a prefix and suffix to the x-axis numbers to indicate that they are dollar figures. Add appropriate labels and a viridis color map and add your favorite theme. If you get some warnings about a few missing data points, try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.\nc) Next add a trend line with geom_smooth() preferably with a linear model (method = “lm”). Note that you will get some warnings about missing data points and a message about the linear model. Try setting warning: false at the top of the code chunk with the hash pipe (#|) operator.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
-    "href": "assignments/coding-assignment-2.html#step-4-additional-tasks-20-pts",
-    "title": "Homework 2",
-    "section": "Step 4: Additional Tasks (20 pts)",
-    "text": "Step 4: Additional Tasks (20 pts)\na) Facet wrap your scatter plot by region.\nb) Remove the facet_wrap() call and display the relationship for one region and use geom_text() to label your points.\nc) Remove the text labels and make your scatter plot interactive using ggplotly(). Make sure that your tooltip includes the information that you want to display to the user.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
-    "href": "assignments/coding-assignment-2.html#step-5-interpretation-10-pts",
-    "title": "Homework 2",
-    "section": "Step 5: Interpretation (10 pts)",
-    "text": "Step 5: Interpretation (10 pts)\nInterpret your results from your visualizations, including the scatter plot, line chart and column chart. Is there an obvious relationship between development and democracy? Do the data generally support Lipset’s theory?",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
-    "href": "assignments/coding-assignment-2.html#step-6-rendering-10-pts",
-    "title": "Homework 2",
-    "section": "Step 6: Rendering (10 pts)",
-    "text": "Step 6: Rendering (10 pts)\nUse a Quato theme to improve the look of the HTML output. Press the render button to create your HTML document. If there are lots of messages or warnings come out of your code chunks, consider supressing them with the appropriate chunk options. If you get any errors go back and fix them and try again until the document renders.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#extra-credit-3-pts",
-    "href": "assignments/coding-assignment-2.html#extra-credit-3-pts",
-    "title": "Homework 2",
-    "section": "Extra Credit (3 pts)",
-    "text": "Extra Credit (3 pts)\na) Use fetchdem() to download time series data and gganimate to make an animated version of your scatter plot.\nb) Interpret the plot. Does it tell an interesting story that the static plot did not?",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-2.html#submission",
-    "href": "assignments/coding-assignment-2.html#submission",
-    "title": "Homework 2",
-    "section": "Submission",
-    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 2"
-    ]
-  },
-  {
-    "objectID": "slides/week-7.1.html#what-is-a-function",
-    "href": "slides/week-7.1.html#what-is-a-function",
-    "title": "Choropleth Maps",
-    "section": "What is a Function",
-    "text": "What is a Function\n\nA reusable piece of code that takes some inputs, performs some operations and returns an output\nElements\n\nInputs (arguments)\nOperations (code block)\nOutput (return value)\n\nLike cooking (to produce a dish, you have a recipe and ingredients)\nDon’t repeat yourself (DRY)"
-  },
-  {
-    "objectID": "slides/week-7.1.html#map-function",
-    "href": "slides/week-7.1.html#map-function",
-    "title": "Choropleth Maps",
-    "section": "Map Function",
-    "text": "Map Function"
-  },
-  {
-    "objectID": "slides/week-7.1.html#map-function-1",
-    "href": "slides/week-7.1.html#map-function-1",
-    "title": "Choropleth Maps",
-    "section": "Map Function",
-    "text": "Map Function\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
-  },
-  {
-    "objectID": "slides/week-7.1.html#map-function-2",
-    "href": "slides/week-7.1.html#map-function-2",
-    "title": "Choropleth Maps",
-    "section": "Map Function",
-    "text": "Map Function\n\nlibrary(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), \n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + \n  labs(\n    title =  title, \n    fill = legend_title, \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, \n    direction = direction \n    )\n}"
-  },
-  {
-    "objectID": "slides/week-7.1.html#map-function-3",
-    "href": "slides/week-7.1.html#map-function-3",
-    "title": "Choropleth Maps",
-    "section": "Map Function",
-    "text": "Map Function\n\nSave the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)"
-  },
-  {
-    "objectID": "slides/week-7.1.html#your-turn-2",
-    "href": "slides/week-7.1.html#your-turn-2",
-    "title": "Choropleth Maps",
-    "section": "Your Turn",
-    "text": "Your Turn\n\n\nTake the code from module 3.1, paste in an R script and save in a folder\nCall source() and then the function in your Quarto document\nChange the values for the five parameters\nGo back to the code and add a new parameter (like subtitle)\nTry calling the function again\nWrite something about your map and render the Quarto document\n\n\n\n\n−+\n10:00"
-  },
-  {
-    "objectID": "slides/week-7.1.html#democracy-function",
-    "href": "slides/week-7.1.html#democracy-function",
-    "title": "Choropleth Maps",
-    "section": "Democracy Function",
-    "text": "Democracy Function\n\n\nCan you make a map function for a democracy indicator?\nCome up with a plan\n\nWhat will the name of the function be?\nWhat will the parameters be?\nWhat would the\n\nTake democracy code from last class and implement\nAdd more parameters if desired\n\n\n\n\n−+\n10:00"
-  },
-  {
-    "objectID": "slides/week-7.1.html#other-functions",
-    "href": "slides/week-7.1.html#other-functions",
-    "title": "Choropleth Maps",
-    "section": "Other Functions",
-    "text": "Other Functions\n\n\nWhat other visualizations could you “functionize”?\nLine charts?\nBar charts?\nScatter plots?\nTry one!"
-  },
-  {
-    "objectID": "slides/week-7.2.html",
-    "href": "slides/week-7.2.html",
-    "title": "Make a Map Function",
-    "section": "",
-    "text": "A reusable piece of code that takes some inputs, performs some operations and returns an output\nElements\n\nInputs (arguments)\nOperations (code block)\nOutput (return value)\n\nLike cooking (to produce a dish, you have a recipe and ingredients)\nDon’t repeat yourself (DRY)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)\n\n\n\n\n\nlibrary(rnaturalearth)\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(ggthemes)\nlibrary(wbstats)\n\ncreate_map &lt;- function(var_id, title, legend_title, theme, direction){\n\nne_countries(scale = \"medium\", returnclass = \"sf\") |&gt; \n  left_join(\n    wb_data(var_id, mrnev = 1), \n    join_by(iso_a3 == iso3c)\n  ) |&gt; \n  filter(name != \"Antarctica\") |&gt;  \n  ggplot() + \n  geom_sf(aes(fill = eval(parse(text=var_id)))) + \n  labs(\n    title =  title, \n    fill = legend_title, \n    caption = \"Source: World Bank Development Indicators\"\n    ) +\n  theme_map() +\n  theme(\n    plot.title = element_text(face = \"bold\"),\n  ) +\n  scale_fill_viridis_c( \n    option = theme, \n    direction = direction \n    )\n}\n\n\n\n\n\nSave the source code in a folder…\n\n\nsource(\"functions/wb-maps.R\", local = knitr::knit_global())\n\n\nand call in your document…\n\ncreate_map(var_id = \"SL.TLF.CACT.FE.ZS\", \n           title= \"Female Labor Force Participation\", \n           legend_title = \"FLFP %\", \n           theme = \"inferno\", \n           direction = -1)\n\n\n\n\n\n\nTake the code from module 3.1, paste in an R script and save in a folder\nCall source() and then the function in your Quarto document\nChange the values for the five parameters\nGo back to the code and add a new parameter (like subtitle)\nTry calling the function again\nWrite something about your map and render the Quarto document\n\n\n\n\n−+\n10:00\n\n\n\n\n\n\n\n\nCan you make a map function for a democracy indicator?\nCome up with a plan\n\nWhat will the name of the function be?\nWhat will the parameters be?\nWhat would the\n\nTake democracy code from last class and implement\nAdd more parameters if desired\n\n\n\n\n−+\n10:00\n\n\n\n\n\n\n\n\nWhat other visualizations could you “functionize”?\nLine charts?\nBar charts?\nScatter plots?\nTry one!"
-  },
-  {
-    "objectID": "slides/week-7.2.html#simple-example",
-    "href": "slides/week-7.2.html#simple-example",
-    "title": "Make a Map Function",
-    "section": "Simple Example",
-    "text": "Simple Example\n\n\n# Define the function\nsquare_number &lt;- function(x) {\n  result &lt;- x^2\n  return(result)\n}\n\n# Use the function\nsquare_number(55)\n\n[1] 3025"
-  },
-  {
-    "objectID": "slides/week-7.2.html#tidy-evaluation",
-    "href": "slides/week-7.2.html#tidy-evaluation",
-    "title": "Make a Map Function",
-    "section": "Tidy Evaluation",
-    "text": "Tidy Evaluation\n\nIn the Tidyverse, ridy evaluation allows you to reference a column without using quotes or referencing the data frame\n\n\ndemocracy |&gt; filter(polyarchy &gt; .5)\n\nvs. \n\ndemocracy[democracy$polyarchy &gt; .5, ]\n\nor\n\ndemocracy[democracy[[\"polyarchy\"]] &gt; .5, ]"
-  },
-  {
-    "objectID": "slides/week-7.2.html#tidy-evaluation-1",
-    "href": "slides/week-7.2.html#tidy-evaluation-1",
-    "title": "Make a Map Function",
-    "section": "Tidy Evaluation",
-    "text": "Tidy Evaluation\n\nTidy evaluation lets us refer to column names without quotes, which is great for interactive use.\nBut it can be tricky for programming because dplyr and ggplot2 assume that any argument passed to them is already a column name.\nWhen we pass a variable containing a column name (e.g., a string), R doesn’t automatically evaluate the variable to find the column name.\nWe need to explicitly tell R to look inside the variable and treat it as a column."
-  },
-  {
-    "objectID": "slides/week-7.2.html#tidy-evaluation-2",
-    "href": "slides/week-7.2.html#tidy-evaluation-2",
-    "title": "Make a Map Function",
-    "section": "Tidy Evaluation",
-    "text": "Tidy Evaluation\n\n\nTo do this we use {{}} in functions\nFor Shiny apps and strings we will use .data[[]]\nCan also use !!sym() in some contexts\nDepricated or less preferred methods include get(), eval(parse()),aes_string() and !!enquo()"
-  },
-  {
-    "objectID": "slides/week-7.2.html#group-and-summarize",
-    "href": "slides/week-7.2.html#group-and-summarize",
-    "title": "Make a Map Function",
-    "section": "Group and Summarize",
-    "text": "Group and Summarize\n\n\n# var_id = any World Bank indicator\n# mrv = number of most recent values\n# group_var = column to group by (country or date)\n\nmean_wb_data &lt;- function(var_id, mrv, group_var){\n  wb_data(var_id, mrv = mrv) |&gt; \n    group_by( {{ group_var }}) |&gt; \n    summarize(mean_value = mean(.data[[var_id]], na.rm = TRUE))\n}\n\n# Example call\nmean_wb_data(\"SL.TLF.CACT.FE.ZS\", 3, date)"
-  },
-  {
-    "objectID": "slides/week-7.2.html#line-chart",
-    "href": "slides/week-7.2.html#line-chart",
-    "title": "Make a Map Function",
-    "section": "Line Chart",
-    "text": "Line Chart\n\n\ncreate_line_chart &lt;- function(data, x_var, y_var, color_var, title, x_label,\n                              y_label, legend_title, color_palette = \"turbo\",\n                              palette_end = 0.8) {\n  \n  ggplot(data, aes(x = {{ x_var }}, y = {{ y_var }}, color = {{ color_var }})) +\n    geom_line() +\n    labs(\n      title = title,\n      x = x_label,\n      y = y_label\n    ) +\n    scale_color_viridis_d(\n      name = legend_title,  \n      option = color_palette, \n      end = palette_end\n    ) +\n    theme_minimal()\n}\n\n# Example call\ncreate_line_chart(\n  data = brics_dem, \n  x_var = year, \n  y_var = v2x_polyarchy, \n  color_var = country_name, \n  title = \"Democracy in the BRICS Nations\", \n  x_label = \"Year\", \n  y_label = \"Polyarchy Score\",\n  legend_title = \"Index\"\n)"
-  },
-  {
-    "objectID": "slides/week-8.1.html#our-goal",
-    "href": "slides/week-8.1.html#our-goal",
-    "title": "Leaflet Maps",
-    "section": "Our Goal",
-    "text": "Our Goal"
-  },
-  {
-    "objectID": "slides/week-8.1.html#use-the-new-labels",
-    "href": "slides/week-8.1.html#use-the-new-labels",
-    "title": "Leaflet Maps",
-    "section": "Use the New Labels",
-    "text": "Use the New Labels\n\n\nCode\nleaflet(data = ged_yemen) |&gt;  \n  addTiles() |&gt; \n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
-  },
-  {
-    "objectID": "slides/week-8.1.html#add-provider-tiles",
-    "href": "slides/week-8.1.html#add-provider-tiles",
-    "title": "Leaflet Maps",
-    "section": "Add Provider Tiles",
-    "text": "Add Provider Tiles\n\n\nCode\nleaflet(data = ged_yemen) |&gt; # Jan and Feb  \n  addProviderTiles(\"OpenTopoMap\") |&gt; # include name of provider here\n  setView(lng = 44.1910, lat = 15.3694, zoom = 6) |&gt; # Sana'a coordinates\n  addAwesomeMarkers(\n    icon = icon, \n    popup = ~popup_text, \n    label = ~place\n    )"
-  },
-  {
-    "objectID": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-in-an-oil-rich-country-25-pts",
-    "href": "assignments/coding-assignment-3.html#step-4-make-a-leaflet-map-of-conflict-in-an-oil-rich-country-25-pts",
-    "title": "Assignment 3",
-    "section": "Step 4: Make a leaflet map of conflict in an oil rich country (25 pts)",
-    "text": "Step 4: Make a leaflet map of conflict in an oil rich country (25 pts)\nIn Chapter 5 of the Oil Curse, Michael Ross argues that oil wealth is destabilizing for developing countries due to the fact that rebels and the government fight over oil. Your task for this question is to explore the relationship between conflict and oil in a leaflet map.\na. Select a country case to work with. This should be a oil-rich country that has recently experienced high levels of internal conflict. Examples include Iraq, Syria, Yemen and Nigeria. Use your AI to identify a country and a period of time to analyze. Say a few words about your country case and the time period you will be looking at.\nb. Now, following the step laid out in module 3.2, filter a few months of conflict data from the UCDP GED dataset for your selected country and convert the coordinates simple features using the st_as_sf() function from the sf package.\nc. Next, produce a leaflet map that displays markers representing conflict events. Have the markers display the name of the location where the conflict event occurred when the user hovers over them. Have the popup windows display the number of deaths and the date of the event when the user clicks on them. Use “OpenTopoMap” as your basemap.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 3"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-3.html#extra-credit-3-pts",
-    "href": "assignments/coding-assignment-3.html#extra-credit-3-pts",
-    "title": "Assignment 3",
-    "section": "Extra Credit (3 pts)",
-    "text": "Extra Credit (3 pts)\nSee if you can find a list of the ten biggest oil fields and in your country and their geographic coordinates. Put those coordinates to a .csv file. You can try using an AI for this, but you may have to do some “jail breaking” because it could be interpreted as sensitive information. Now see if you can read the data into R and use it to plot the location of the oil fields in a fresh map. What did you find in terms of the relationship between oil and conflict?",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 3"
-    ]
-  },
-  {
-    "objectID": "assignments/coding-assignment-3.html#submission",
-    "href": "assignments/coding-assignment-3.html#submission",
-    "title": "Assignment 3",
-    "section": "Submission",
-    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 3"
-    ]
-  },
-  {
-    "objectID": "slides/week-9.2.html#the-gtextras-package",
-    "href": "slides/week-9.2.html#the-gtextras-package",
-    "title": "Advanced Table Skills",
-    "section": "The gtExtras package",
-    "text": "The gtExtras package\n\nBy now we know the difference between a graph and a table\n\nTables are good for comparing individual values\nGraphs are for visualizing a whole bunch of values\n\nUsually we keep our graphs and tables separate\nBut are there times when we might want to combine them?\ngtExtras lets us include sparklines, histograms, etc. in our tables"
-  },
-  {
-    "objectID": "slides/week-9.2.html#democracy-example",
-    "href": "slides/week-9.2.html#democracy-example",
-    "title": "Advanced Table Skills",
-    "section": "Democracy Example",
-    "text": "Democracy Example\n\n\nlibrary(vdemlite)\n\n# Grab the polyarchy scores for the United States between 2000 and 2020\nbrics_dem &lt;- fetchdem(indicators = \"v2x_polyarchy\",\n                         start_year = 2000, end_year = 2020,\n                         countries = c(\"BRA\", \"RUS\", \"IND\", \"CHN\", \"ZAF\"))"
-  },
-  {
-    "objectID": "slides/week-9.2.html#democracy-example-1",
-    "href": "slides/week-9.2.html#democracy-example-1",
-    "title": "Advanced Table Skills",
-    "section": "Democracy Example",
-    "text": "Democracy Example\n\n\nlibrary(dplyr)\n\ndem_summary &lt;- brics_dem|&gt;\n  group_by(country_id) |&gt;\n  summarize(\n    max = max(v2x_polyarchy, na.rm = TRUE),\n    mean = mean(v2x_polyarchy, na.rm = TRUE),\n    sd = sd(v2x_polyarchy, na.rm = TRUE),\n    dem_data = list(v2x_polyarchy),\n    .groups = \"drop\"\n  )"
-  },
-  {
-    "objectID": "slides/week-9.2.html#democracy-example-2",
-    "href": "slides/week-9.2.html#democracy-example-2",
-    "title": "Advanced Table Skills",
-    "section": "Democracy Example",
-    "text": "Democracy Example\n\n\nlibrary(gtExtras)\n\ndem_summary |&gt;\n  gt() |&gt;\n  gt_plt_sparkline(dem_data) #from gtExtras\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ncountry_id\nmax\nmean\nsd\ndem_data\n\n\n\n\n8\n0.773\n0.75280952\n0.01862423\n\n\n\n   0.7\n\n\n\n11\n0.405\n0.30133333\n0.04091251\n\n\n\n   0.26\n\n\n\n19\n0.878\n0.83461905\n0.05923046\n\n\n\n   0.7\n\n\n\n39\n0.736\n0.63866667\n0.11018182\n\n\n\n   0.4\n\n\n\n110\n0.103\n0.09042857\n0.00944760\n\n\n\n   0.08"
-  },
-  {
-    "objectID": "slides/week-9.2.html#your-turn",
-    "href": "slides/week-9.2.html#your-turn",
-    "title": "Advanced Table Skills",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nDownload democracy data for one year\nIndicator is your choice\nAdd region codes\nGroup and summarize by region\nAdd an appropriate inline plot to your table\n\n\n\n\n−+\n15:00"
-  },
-  {
-    "objectID": "slides/week-9.2.html#your-turn-1",
-    "href": "slides/week-9.2.html#your-turn-1",
-    "title": "Advanced Table Skills",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nDownload data on median income for another state\nPlot the income estimates for that state\n\n\n\n\n−+\n15:00"
-  },
-  {
-    "objectID": "slides/week-9.2.html#reactable",
-    "href": "slides/week-9.2.html#reactable",
-    "title": "Advanced Table Skills",
-    "section": "reactable",
-    "text": "reactable\n\n\nreactable is an R package that lets you create interactive tables\nYou can sort, filter, and search the table\nBased on the React Table library\nLet’s explore it together!"
-  },
-  {
-    "objectID": "slides/week-10.1.html#regression-tables-with-modelsummary",
-    "href": "slides/week-10.1.html#regression-tables-with-modelsummary",
-    "title": "Regression Tables",
-    "section": "Regression Tables with modelsummary",
-    "text": "Regression Tables with modelsummary\n\n\n\nOftentimes we want to show multiple models at once (like F&L)\nWe want to compare across them and see which is the best model\nHow can we do that?\nThere are many ways to do this in R\nWe will use the modelsummary package"
-  },
-  {
-    "objectID": "slides/week-10.1.html#run-multiple-models",
-    "href": "slides/week-10.1.html#run-multiple-models",
-    "title": "Regression Tables",
-    "section": "Run Multiple Models",
-    "text": "Run Multiple Models\n\n\nethnicity &lt;- glm(ucdponset ~ ethfrac + relfrac + wbgdppc2011est + wbpopest, # store each model in an object\n                  data = conflict_df,\n                  family = \"binomial\")\n\ndemocracy &lt;- glm(ucdponset ~ v2x_polyarchy + wbgdppc2011est +  wbpopest,\n                  data = conflict_df,\n                  family = \"binomial\")\n\nterrain &lt;- glm(ucdponset ~ rugged + wbgdppc2011est + wbpopest ,\n                  data = conflict_df,\n                  family = \"binomial\")\n\nfull_model &lt;- glm(ucdponset ~ ethfrac + relfrac + v2x_polyarchy + rugged +\n                        wbgdppc2011est + wbpopest,\n                  data = conflict_df,\n                  family = \"binomial\")"
-  },
-  {
-    "objectID": "slides/week-10.1.html#prep-data-for-display",
-    "href": "slides/week-10.1.html#prep-data-for-display",
-    "title": "Regression Tables",
-    "section": "Prep Data for Display",
-    "text": "Prep Data for Display\n\n\nmodels &lt;- list(\"Ethnicity\" = ethnicity,  # store list of models in an object\n               \"Democracy\" = democracy, \n               \"Terrain\" = terrain, \n               \"Full Model\" = full_model)\n\ncoef_map &lt;- c(\"ethfrac\" = \"Ethnic Frac\",  # map coefficients\n        \"relfrac\" = \"Religions Frac\",     #(change names and order)\n        \"v2x_polyarchy\" = \"Polyarchy\",\n        \"rugged\" = \"Terrain\",\n        \"wbgdppc2011est\" = \"Per capita GDP\",\n        \"wbpopest\" = \"Population\",\n        \"(Intercept)\" = \"Intercept\")\n\ncaption = \"Table 1: Predictors of Conflict Onset\" # store caption\nreference = \"See appendix for data sources.\"      # store reference notes"
-  },
-  {
-    "objectID": "slides/week-10.1.html#display-the-models",
-    "href": "slides/week-10.1.html#display-the-models",
-    "title": "Regression Tables",
-    "section": "Display the Models",
-    "text": "Display the Models\n\n\nCode\nlibrary(modelsummary)\n\nmodelsummary(models,                      # display the table\n             stars = TRUE,                # include stars for significance\n             gof_map = c(\"nobs\"),         # goodness of fit stats to include   \n             coef_map = coef_map,         # coefficient mapping\n             title = caption,             # title\n             notes = reference)           # source note\n\n\n \n\n  \n    \n    \n    tinytable_rjfnr54w7fui35u5l57c\n    \n    \n    \n    \n  \n\n  \n    \n      \n        \n        Table 1: Predictors of Conflict Onset\n              \n                 \n                Ethnicity\n                Democracy\n                Terrain\n                Full Model\n              \n        \n        + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001\nSee appendix for data sources.\n        \n                \n                  Ethnic Frac   \n                  0.744*   \n                           \n                           \n                  0.800*   \n                \n                \n                                \n                  (0.367)  \n                           \n                           \n                  (0.381)  \n                \n                \n                  Religions Frac\n                  -0.481   \n                           \n                           \n                  -0.391   \n                \n                \n                                \n                  (0.411)  \n                           \n                           \n                  (0.417)  \n                \n                \n                  Polyarchy     \n                           \n                  -0.228   \n                           \n                  -0.602   \n                \n                \n                                \n                           \n                  (0.436)  \n                           \n                  (0.509)  \n                \n                \n                  Terrain       \n                           \n                           \n                  0.031    \n                  0.064    \n                \n                \n                                \n                           \n                           \n                  (0.076)  \n                  (0.076)  \n                \n                \n                  Per capita GDP\n                  -0.474***\n                  -0.512***\n                  -0.543***\n                  -0.372** \n                \n                \n                                \n                  (0.104)  \n                  (0.108)  \n                  (0.092)  \n                  (0.121)  \n                \n                \n                  Population    \n                  0.282*** \n                  0.297*** \n                  0.299*** \n                  0.293*** \n                \n                \n                                \n                  (0.067)  \n                  (0.051)  \n                  (0.050)  \n                  (0.067)  \n                \n                \n                  Intercept     \n                  -4.703***\n                  -4.407***\n                  -4.296***\n                  -5.693***\n                \n                \n                                \n                  (1.327)  \n                  (1.205)  \n                  (1.143)  \n                  (1.408)  \n                \n                \n                  Num.Obs.      \n                  6364     \n                  6772     \n                  6840     \n                  6151"
-  },
-  {
-    "objectID": "slides/week-10.1.html#your-turn",
-    "href": "slides/week-10.1.html#your-turn",
-    "title": "Regression Tables",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nGot to the peacesciencer documentation\nHow close are our data to F&L’s?\nCould we change something to better approximate their results?\nRun multiple models using different predictors\nDisplay the models using modelsummary\nTry to get as close to F&L as you can!\n\n\n\n\n−+\n10:00"
-  },
-  {
-    "objectID": "slides/week-10.1.html#section",
-    "href": "slides/week-10.1.html#section",
-    "title": "Regression Tables",
-    "section": "",
-    "text": "This doesn’t look that great…\n\n\nShow the code\nmodelsummary(conflict_model, \n             stars = TRUE,  \n             gof_map = c(\"nobs\"),\n             coef_map = coef_map,\n             title = caption, \n             notes = reference)\n\n\n \n\n  \n    \n    \n    tinytable_1l64ay7j2cyqkal583ua\n    \n    \n    \n    \n  \n\n  \n    \n      \n        \n        Table 1: Predictors of Conflict Onset\n              \n                 \n                (1)\n              \n        \n        + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001\nSee appendix for data sources.\n        \n                \n                  Ethnic Frac   \n                  0.800*   \n                \n                \n                                \n                  (0.381)  \n                \n                \n                  Religions Frac\n                  -0.391   \n                \n                \n                                \n                  (0.417)  \n                \n                \n                  Polyarchy     \n                  -0.602   \n                \n                \n                                \n                  (0.509)  \n                \n                \n                  Terrain       \n                  0.064    \n                \n                \n                                \n                  (0.076)  \n                \n                \n                  Per capita GDP\n                  -0.372** \n                \n                \n                                \n                  (0.121)  \n                \n                \n                  Population    \n                  0.293*** \n                \n                \n                                \n                  (0.067)  \n                \n                \n                  Intercept     \n                  -5.693***\n                \n                \n                                \n                  (1.408)  \n                \n                \n                  Num.Obs.      \n                  6151"
-  },
-  {
-    "objectID": "slides/week-10.1.html#section-1",
-    "href": "slides/week-10.1.html#section-1",
-    "title": "Regression Tables",
-    "section": "",
-    "text": "So we can use ggplot to make a coefficient plot instead…\n\n\nShow the code\nlibrary(ggplot2)\n\nmodelplot(conflict_model, \n          coef_map = rev(coef_map), # rev() reverses list order\n          coef_omit = \"Intercept\", \n          color = \"blue\") + # use plus to add customizations like any ggplot object\n  geom_vline(xintercept = 0, color = \"red\", linetype = \"dashed\", linewidth = .75) + # red 0 line\n  labs(\n    title = \"Figure 1: Predictors of Conflict Onset\",\n    caption = \"See appendix for data sources.\"\n  )"
-  },
-  {
-    "objectID": "slides/week-10.1.html#your-turn-1",
-    "href": "slides/week-10.1.html#your-turn-1",
-    "title": "Regression Tables",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\nTake one of your models\nUse modelplot to create a coefficient plot of it\nCustomize the plot to your liking\nInterpret the results\nDiscuss advantages of coefficient plots with a neighbor\n\n\n\n\n−+\n10:00"
-  },
-  {
-    "objectID": "assignments/coding-assignment-4.html#submission",
-    "href": "assignments/coding-assignment-4.html#submission",
-    "title": "Assignment 4",
-    "section": "Submission",
-    "text": "Submission\nAfter rendering your document, export your project folder and submit it on Blackboard. You will find the link to the Coding Assignment one submission portal under the Assignments link. There is a screen capture video in the Discord server that will help you understand how to do this.",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 4"
-    ]
-  },
-  {
-    "objectID": "slides/week-9.1.html",
-    "href": "slides/week-9.1.html",
-    "title": "Making Tables",
-    "section": "",
-    "text": "Summary statistics\nPrecise values (for small number of cases)\nRegression tables"
-  },
-  {
-    "objectID": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
-    "href": "assignments/coding-assignment-4.html#bonus-section-use-confidence-intervals-instead-of-tables-2-pts",
-    "title": "Assignment 4",
-    "section": "Bonus section: Use confidence intervals instead of tables (2 pts)",
-    "text": "Bonus section: Use confidence intervals instead of tables (2 pts)\n1. Display median income with a plot of point estimates and confidence intervals for the counties in your selected state. What additional light does such a plot shed on your analysis of the income distrubtion in that state? (1 pt)\n2. Use modelplot to display the results of one of your regression models with point estimates and confidence intervals. What are some of the tradeoffs associated with displaying your results in this fashion as opposed to doing it in tabular form? (1 pt)",
-    "crumbs": [
-      "Coding Assignments",
-      "Coding Assignment 4"
     ]
   }
 ]

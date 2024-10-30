@@ -12,7 +12,7 @@ format:
     multiplex: true
     chalkboard: true
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: auto
@@ -58,6 +58,7 @@ execute:
 - Discuss with a neighbor
 
 ```{r}
+#| echo: false
 #| label: timer1
 
 library(countdown)
@@ -81,6 +82,7 @@ countdown(minutes = 5,
 
 ```{r}
 #| label: timer2
+#| echo: false
 
 countdown(minutes = 5, 
           id = "timer2", 
@@ -99,6 +101,7 @@ countdown(minutes = 5,
 
 ```{r}
 #| label: timer3
+#| echo: false
 
 countdown(minutes = 5, 
           id = "timer3", 
@@ -118,6 +121,7 @@ countdown(minutes = 5,
 
 ```{r}
 #| label: timer4
+#| echo: false
 
 countdown(minutes = 5, 
           id = "timer4", 
@@ -134,6 +138,7 @@ countdown(minutes = 5,
 
 ```{r}
 #| label: timer5
+#| echo: false
 
 countdown(minutes = 10, 
           id = "timer5", 

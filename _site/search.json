@@ -4655,14 +4655,14 @@
     "href": "slides/week-11.1.html#the-app.r-script",
     "title": "Shiny Apps",
     "section": "The app.R Script",
-    "text": "The app.R Script"
+    "text": "The app.R Script\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  \"Hello, Shiny!\"\n)\n\nserver &lt;- function(input, output, session) {\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-11.1.html#the-ui",
     "href": "slides/week-11.1.html#the-ui",
     "title": "Shiny Apps",
     "section": "The UI",
-    "text": "The UI\nfluidPage() creates a Bootstrap page"
+    "text": "The UI\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  \"Hello, Shiny!\"\n)\n\nserver &lt;- function(input, output, session) {\n}\n\nshinyApp(ui, server)\n\nfluidPage() creates a Bootstrap page"
   },
   {
     "objectID": "slides/week-11.1.html#the-ui-1",
@@ -4676,7 +4676,7 @@
     "href": "slides/week-11.1.html#the-ui-2",
     "title": "Shiny Apps",
     "section": "The UI",
-    "text": "The UI\nUnder the hood, every UI function is translated to HTML.\n\n\n[1] \"&lt;h2&gt;Hello, Shiny!&lt;/h2&gt;\"\n\n\n\nThis HTML can have styles attached to it, either by the style attribute, or by a CSS class.\n\n\n[1] \"&lt;div class=\\\"col-sm-4\\\"&gt;\\n  &lt;form class=\\\"well\\\" role=\\\"complementary\\\"&gt;&lt;/form&gt;\\n&lt;/div&gt;\""
+    "text": "The UI\nUnder the hood, every UI function is translated to HTML.\n\nas.character(titlePanel(\"Hello, Shiny!\"))\n\n[1] \"&lt;h2&gt;Hello, Shiny!&lt;/h2&gt;\"\n\n\n\nThis HTML can have styles attached to it, either by the style attribute, or by a CSS class.\n\nas.character(sidebarPanel())\n\n[1] \"&lt;div class=\\\"col-sm-4\\\"&gt;\\n  &lt;form class=\\\"well\\\" role=\\\"complementary\\\"&gt;&lt;/form&gt;\\n&lt;/div&gt;\""
   },
   {
     "objectID": "slides/week-11.1.html#the-ui-3",
@@ -4732,7 +4732,7 @@
     "href": "slides/week-11.1.html#the-server-2",
     "title": "Shiny Apps",
     "section": "The Server",
-    "text": "The Server"
+    "text": "The Server\n\nui &lt;- fluidPage(\n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n  })\n}"
   },
   {
     "objectID": "slides/week-11.1.html#using-inputs",
@@ -4746,7 +4746,7 @@
     "href": "slides/week-11.1.html#section",
     "title": "Shiny Apps",
     "section": "",
-    "text": "Combining the input and output objects, we get a simple app that displays the square of a number. 👏"
+    "text": "Combining the input and output objects, we get a simple app that displays the square of a number. 👏\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  })\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-11.1.html#eager-output",
@@ -4760,7 +4760,7 @@
     "href": "slides/week-11.1.html#adding-a-reactivity-modifier",
     "title": "Shiny Apps",
     "section": "Adding a Reactivity Modifier",
-    "text": "Adding a Reactivity Modifier\nYou could use an actionButton as an event:"
+    "text": "Adding a Reactivity Modifier\nYou could use an actionButton as an event:\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-11.1.html#try-it-yourself",

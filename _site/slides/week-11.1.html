@@ -559,6 +559,18 @@
 </div></aside></section>
 <section id="the-app.r-script" class="slide level2">
 <h2>The app.R Script</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|1|3-5|7-8|10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb1-4"><a></a>  <span class="st">"Hello, Shiny!"</span></span>
+<span id="cb1-5"><a></a>)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb1-8"><a></a>}</span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="the-user-interface-ui" class="title-slide slide level1 center">
@@ -567,6 +579,18 @@
 </section>
 <section id="the-ui" class="slide level2">
 <h2>The UI</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="3-5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-4"><a></a>  <span class="st">"Hello, Shiny!"</span></span>
+<span id="cb2-5"><a></a>)</span>
+<span id="cb2-6"><a></a></span>
+<span id="cb2-7"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb2-8"><a></a>}</span>
+<span id="cb2-9"><a></a></span>
+<span id="cb2-10"><a></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><code>fluidPage()</code> creates a Bootstrap page</p>
 </section>
 <section id="the-ui-1" class="slide level2">
@@ -585,6 +609,7 @@
 <h2>The UI</h2>
 <p>Under the hood, every UI function is translated to HTML.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">as.character</span>(<span class="fu">titlePanel</span>(<span class="st">"Hello, Shiny!"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "&lt;h2&gt;Hello, Shiny!&lt;/h2&gt;"</code></pre>
 </div>
@@ -592,6 +617,7 @@
 <p><br></p>
 <p>This HTML can have styles attached to it, either by the <code>style</code> attribute, or by a CSS class.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">as.character</span>(<span class="fu">sidebarPanel</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "&lt;div class=\"col-sm-4\"&gt;\n  &lt;form class=\"well\" role=\"complementary\"&gt;&lt;/form&gt;\n&lt;/div&gt;"</code></pre>
 </div>
@@ -609,12 +635,12 @@
 <section id="the-ui-4" class="slide level2">
 <h2>The UI</h2>
 <p>For example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">numericInput</span>(<span class="at">inputId =</span> <span class="st">"number"</span>, </span>
-<span id="cb3-2"><a></a>             <span class="at">label =</span> <span class="st">"Enter a number"</span>, </span>
-<span id="cb3-3"><a></a>             <span class="at">value =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">numericInput</span>(<span class="at">inputId =</span> <span class="st">"number"</span>, </span>
+<span id="cb7-2"><a></a>             <span class="at">label =</span> <span class="st">"Enter a number"</span>, </span>
+<span id="cb7-3"><a></a>             <span class="at">value =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"button"</span>, </span>
-<span id="cb4-2"><a></a>             <span class="at">label =</span> <span class="st">"Click me"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"button"</span>, </span>
+<span id="cb8-2"><a></a>             <span class="at">label =</span> <span class="st">"Click me"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="updating-the-ui" class="slide level2">
 <h2>Updating the UI</h2>
@@ -662,7 +688,7 @@
 <h2>Updating the UI</h2>
 <p>Every output element needs a single argument: <code>outputId</code>. This is a simple string that needs to be <strong>unique</strong>.</p>
 <p><br></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">textOutput</span>(<span class="at">outputId =</span> <span class="st">"text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">textOutput</span>(<span class="at">outputId =</span> <span class="st">"text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br></p>
 <p>This <code>textOutput</code> tells Shiny what to display. It’s a <strong>placeholder</strong> for what is goign to be produced by the server logic.</p>
 </section></section>
@@ -719,6 +745,16 @@
 </section>
 <section id="the-server-2" class="slide level2">
 <h2>The Server</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="2,6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb10-2"><a></a>  <span class="fu">textOutput</span>(<span class="at">outputId =</span> <span class="st">"text"</span>)</span>
+<span id="cb10-3"><a></a>)</span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb10-6"><a></a>  output<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb10-7"><a></a>  })</span>
+<span id="cb10-8"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="using-inputs" class="slide level2">
 <h2>Using Inputs</h2>
@@ -731,6 +767,25 @@
 <section id="section" class="slide level2">
 <h2></h2>
 <p>Combining the input and output objects, we get a simple app that displays the square of a number. 👏</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb11-4"><a></a>  <span class="fu">numericInput</span>(<span class="at">inputId =</span> <span class="st">"number"</span>, </span>
+<span id="cb11-5"><a></a>               <span class="at">label =</span> <span class="st">"Enter a number"</span>, </span>
+<span id="cb11-6"><a></a>               <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb11-7"><a></a>               </span>
+<span id="cb11-8"><a></a>  <span class="fu">textOutput</span>(<span class="at">outputId =</span> <span class="st">"text"</span>)</span>
+<span id="cb11-9"><a></a>)</span>
+<span id="cb11-10"><a></a></span>
+<span id="cb11-11"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb11-12"><a></a>  output<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb11-13"><a></a>    input<span class="sc">$</span>number<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-14"><a></a>  })</span>
+<span id="cb11-15"><a></a>}</span>
+<span id="cb11-16"><a></a></span>
+<span id="cb11-17"><a></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn!</h2>
@@ -761,7 +816,29 @@
 <section id="adding-a-reactivity-modifier" class="slide level2">
 <h2>Adding a Reactivity Modifier</h2>
 <p>You could use an <code>actionButton</code> as an <strong>event</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="8-9,15-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb12-4"><a></a>  <span class="fu">numericInput</span>(<span class="at">inputId =</span> <span class="st">"number"</span>, </span>
+<span id="cb12-5"><a></a>               <span class="at">label =</span> <span class="st">"Enter a number"</span>, </span>
+<span id="cb12-6"><a></a>               <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb12-7"><a></a>               </span>
+<span id="cb12-8"><a></a>  <span class="fu">actionButton</span>(<span class="at">inputId =</span> <span class="st">"button"</span>, </span>
+<span id="cb12-9"><a></a>               <span class="at">label =</span> <span class="st">"Click me"</span>),</span>
+<span id="cb12-10"><a></a>               </span>
+<span id="cb12-11"><a></a>  <span class="fu">textOutput</span>(<span class="at">outputId =</span> <span class="st">"text"</span>)</span>
+<span id="cb12-12"><a></a>)</span>
+<span id="cb12-13"><a></a></span>
+<span id="cb12-14"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb12-15"><a></a>  output<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb12-16"><a></a>    input<span class="sc">$</span>number<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb12-17"><a></a>  }) <span class="sc">|&gt;</span> <span class="fu">bindEvent</span>(input<span class="sc">$</span>button)</span>
+<span id="cb12-18"><a></a>}</span>
+<span id="cb12-19"><a></a></span>
+<span id="cb12-20"><a></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
+</div>
 <img data-src="week-11.1_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
 <section id="try-it-yourself" class="slide level2">
 <h2>Try It Yourself!</h2>

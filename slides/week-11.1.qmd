@@ -18,147 +18,52 @@ execute:
   freeze: auto
 ---
 
-## Shiny App
+# Exploring Shiny 
 
-<iframe src="https://emmanuelteitelbaum.shinyapps.io/vdem-scatter-plot/" width="780" height="500" data-external="1"></iframe>
+## What is Shiny?
 
-## Elements of a Shiny App
+::: {.incremental}
+- Shiny is an R package developed by [Posit](www.posit.co) that makes it easy to build interactive web apps straight from R
+- No HTML, CSS, or JavaScript required
+- Shiny apps can be hosted on the web or run locally
+- Makes it easy to explore your data and share your analysis
+:::
 
-<br>
+## What You Can Do with Shiny {.smaller}
 
-- User interface (UI)
-- Server object
-- Call to ShinyApp
+::: {.incremental}
+- **Data Exploration**: Utilize interactive widgets to filter and sort data dynamically
+- **Basic Visualizations**: Create real-time, interactive graphs and charts from datasets
+- **Advanced Analytics**: Integrate R's robust statistical and machine learning capabilities for in-depth analysis
+- **Interactive Reports**: Build dynamic reports that update based on user input or live data
+- **Production-Grade Dashboards**: Develop complex, multi-page dashboards with user authentication and data streaming
+:::
 
-## Reactivity
+## Flavors of Shiny {.smaller}
 
-<br>
+:::{.incremental}
+- [R Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html): The original framework, allowing R users to build interactive web applications directly within R
+- [Shiny for Python](https://shiny.posit.co/py/): Extends Shiny's capabilities to Python, enabling Python users to create Shiny applications using Python code
+- [Shiny Live](https://shiny.posit.co/py/docs/jupyter-widgets.html#shinylive): Enables you to run apps off the user's browser rather than having to deploy them to a server (only available in Python right now)
+- [Shiny Express](https://shiny.posit.co/blog/posts/shiny-express/): A simplified version of Shiny for Python aimed at rapid development and deployment of applications with less coding and configuration required
+- [Quarto Dashboards](https://quarto.org/docs/dashboards/): Not a Shiny app per se, but can connected to a Shiny server for increased interactivity
+:::
 
-The ability to change the user interface based on user-selected input values. 
+## User Demos
 
-<br>
-
-Reactivity works by having R functions that update different parts of the app when they get new values from the user.
-
-## Setup
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false
-
-# load packages
-library(shiny)
-library(readr)
-library(ggplot2)
-
-# load the data 
-dem_data <- read_csv("dem_data.csv")
-
-# create list of named values for the input selection
-vars <- c("Democracy" = "polyarchy",
-          "Clientelism" = "clientelism",
-          "Corruption" = "corruption",
-          "Women's Empowerment" = "womens_emp",
-          "Wealth" = "gdp_pc",
-          "Infant Mortality" = "inf_mort",
-          "Life Expectancy" = "life_exp", 
-          "Education" = "education")
-```
-
-## UI
-
-<br>
+- Have a look at the [Shiny gallery](https://shiny.posit.co/r/gallery/#user-showcase)
+- Pick an app that you like?
+- One thing you would like to learn from that app?
+- One thing that you would improve
+- Discuss with a neighbor
 
 ```{r}
-#| echo: true
-#| eval: false 
+#| label: timer1
 
-# Define UI for application that draws a scatter plot
-ui <- fluidPage(
-
-    # Application title
-    titlePanel("Democracy and Development"),
-
-    # Sidebar with a two dropdown menus
-    sidebarLayout(
-      sidebarPanel(
-        selectInput(input = 'xcol', label = 'X Variable', choices = vars),
-        selectInput(input = 'ycol', label = 'Y Variable', 
-                    choices = vars, selected = vars[[6]])
-      ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("scatterplot")
-        )
-    )
-)
-```
-
-## Server
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false 
-
-# Define server logic required to draw a scatter plot
-server <- function(input, output, session) {
-  
-  # Render the plot
-  output$scatterplot <- renderPlot({
-    
-    # ggplot call
-    ggplot(dem_data, aes(x = get(input$xcol), y = get(input$ycol))) +
-      geom_point(aes(color = region)) +
-      geom_smooth(method = "loess") +
-      scale_color_viridis_d(option = "plasma") +
-      theme_minimal() +
-      labs(
-        x =  names(vars[which(vars == input$xcol)]), # select names in vars that
-        y =  names(vars[which(vars == input$ycol)]), # match input selections
-        caption = "Source: V-Dem Institute",
-        color = "Region"
-      )
-  })
-}
-```
-
-## Shiny App Call
-
-<br>
-
-```{r}
-#| echo: true
-#| eval: false
-
-# See above for the definitions of ui and server
-ui <- ...
-
-server <- ...
-
-# Run the application 
-shinyApp(ui = ui, server = server)
-```
-
-## Your Turn!
-
-<br>
-
-- Do pre-work and wrangling from module 5.1
-- Create new Shiny App file
-- Copy UI, server and Shiny App call 
-- See if you can get the app to run locally
-
-```{r}
-#| label: setup_timer
 library(countdown)
-countdown(minutes = 10, 
-          id = "setup", 
-          bottom = "10%", 
+countdown(minutes = 5, 
+          id = "timer1", 
+          bottom = "10%",
           right = "10%",
           color_border = "#fff",
           color_text = "#fff",
@@ -168,38 +73,359 @@ countdown(minutes = 10,
           color_finished_text = "#00264A")
 ```
 
-## Try on shinyapps.io
+## Feature Demos
 
-<br>
-
-- Set up an account on [shinyapps.io](https://www.shinyapps.io/)
-- Publish app
+- Now let's look at [feature demos](https://shiny.posit.co/r/gallery/#feature-demos)
+- What widgets, layouts, or features are you interested in?
+- How would you use them in your own apps?
 
 ```{r}
 #| label: timer2
-countdown(minutes = 10, 
+
+countdown(minutes = 5, 
           id = "timer2", 
-          bottom = "10%", 
+          bottom = "10%",
           right = "10%")
 ```
 
-## Modify App
+## Professional Apps {.smaller}
 
-<br>
-
-- Try selecting different V-Dem variables
-- Or add some World Bank data
-- Make a new scatter plot or a different visualization
-- Make adjustments to menus 
-- Run and publish new app
+- Here is a selection of modern, professional Shiny Apps
+  - [PESKAS](https://timor.peskas.org/) fisheries monitoring in Timor-Leste
+  - [WaCSE](https://wsda.shinyapps.io/WaCSE/) for tracking reductions in GHG emissions as part of Washington State's [Sustainable Farms and Fields](https://www.scc.wa.gov/programs/sustainable-farms-fields) program
+  - [JHU Lyme Disease Tracker](https://www.hopkinslymetracker.org/)
+  - [movie-vue-r](https://friss.shinyapps.io/shiny-vue-r/#/) a Vue.js and Shiny app for exploring movie + COVID information
+- These are mainly for inspiration, but try to find the code on GitHub and see how much you can understand
 
 ```{r}
 #| label: timer3
-countdown(minutes = 15, 
+
+countdown(minutes = 5, 
           id = "timer3", 
-          bottom = "10%", 
+          bottom = "10%",
           right = "10%")
 ```
 
+## Getting Started with Shiny
 
+- Open RStudio
+- Start a folder for the workshop 
+- Install the `shiny` package (if not installed already)
+- Create a new Shiny app
+  - (File > New File > Shiny Web App)
+- Run the Geyser App
+- Try opening it in a browser
 
+```{r}
+#| label: timer4
+
+countdown(minutes = 5, 
+          id = "timer4", 
+          bottom = "10%",
+          right = "10%")
+```
+
+## Challenge
+
+- Look at the `faithful` dataset in R (hint: `?faithful`)
+- Create a Shiny app that displays a histogram of the `eruptions` column
+- Change the labels accordingly
+- What kind of distribution do you see?
+
+```{r}
+#| label: timer5
+
+countdown(minutes = 10, 
+          id = "timer5", 
+          bottom = "10%",
+          right = "10%")
+```
+
+# Elements of a Shiny App
+
+## Shiny App Basics
+
+Two parts of a Shiny app:
+
+- **UI**: User Interface
+- **Server**: Server logic
+
+They come together in a single script: `app.R`
+
+::: aside
+**Note:** You can compose your app with the ui and server in separate scripts, but we will stick to the single `app.R` script for now.
+:::
+
+## The app.R Script
+
+```{r} 
+#| label: app.r
+#| code-line-numbers: "|1|3-5|7-8|10"
+#| eval: false
+
+library(shiny)
+
+ui <- fluidPage(
+  "Hello, Shiny!"
+)
+
+server <- function(input, output, session) {
+}
+
+shinyApp(ui, server)
+```
+
+# The User Interface (`ui`)
+
+## The UI
+
+```{r} 
+#| label: ui
+#| code-line-numbers: "3-5"
+#| eval: false
+
+library(shiny)
+
+ui <- fluidPage(
+  "Hello, Shiny!"
+)
+
+server <- function(input, output, session) {
+}
+
+shinyApp(ui, server)
+```
+
+`fluidPage()` creates a Bootstrap page
+
+## The UI
+
+- [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) is a free front-end framework used in web development  
+- It is built on **HTML**, **CSS** and **JavaScript**
+- There are many version of Bootstrap, the latest being version 5, but R Shiny uses version 3 by default
+
+::: aside
+With the `bslib` package you can use Bootstrap 4 or 5 in your R Shiny apps.
+:::
+
+## The UI
+
+```{r}
+#| echo: false
+
+library(shiny)
+```
+
+Under the hood, every UI function is translated to HTML.
+
+```{r}
+as.character(titlePanel("Hello, Shiny!"))
+```
+
+<br>
+
+This HTML can have styles attached to it, either by the `style` attribute, or by a CSS class.
+
+```{r}
+as.character(sidebarPanel())
+```
+
+## The UI
+
+To let users interact with your app, you can add [input controls](https://shiny.posit.co/r/getstarted/shiny-basics/lesson3/). A basic input control has:
+
+- an `inputId`
+- a `label`
+- a `value`
+
+## The UI
+
+For example:
+
+```{.r}
+numericInput(inputId = "number", 
+             label = "Enter a number", 
+             value = 0)
+```
+<br>
+```{.r}
+actionButton(inputId = "button", 
+             label = "Click me")
+```
+
+## Updating the UI
+
+::: {.incremental}
+- When the app runs, every user gets served the same HTML from the UI
+- When the user interacts with the UI, we want that HTML to **react** and update based on user input
+- That is possible because these outputs are **reactive outputs**
+- The server logic (which we will discuss in detail soon) uses **reactive programming** that updates related inputs in the UI
+:::
+
+## Updating the UI
+
+Shiny has several functions that turn R objects into reactive outputs for your `ui`: the [Output](https://shiny.posit.co/r/getstarted/shiny-basics/lesson4/) family of functions.
+
+Each function creates a specific type of output, for example:
+
+| UI Function | Output type |
+|----------|-------------|
+| textOutput() | text |
+| tableOutput() | table |
+| plotOutput() | plot |
+| uiOutput() | raw HTML |
+: {.table .table-striped .table-hover}
+
+## Updating the UI
+
+Every output element needs a single argument: `outputId`. This is a simple string that needs to be **unique**.
+
+<br>
+
+```{.r}
+textOutput(outputId = "text")
+```
+
+<br>
+
+This `textOutput` tells Shiny what to display. It's a **placeholder** for what is goign to be produced by the server logic.
+
+# The Server Logic
+
+## The Server
+
+::: {.incremental}
+- The server function builds an object named **output** and this object will contain all the code needed to display the R objects in the UI
+- This output object is **list-like**
+- Each R object that you want to display has its own entry in this list
+- Therefore the name of every output in your UI needs to match a definition in the server, e.g. `output$text`
+:::
+
+## The Server
+
+Each entry in the output list should contain a **Render** function. You must use **Render** functions that match the **Output** functions:
+
+| UI Function | Output type | Render function |
+|----------|-------------|-----------------|
+| textOutput() | text | renderText() |
+| tableOutput() | table | renderTable() |
+| plotOutput() | plot | renderPlot() |
+| uiOutput() | raw HTML | renderUI() |
+: {.table .table-striped .table-hover}
+
+## The Server
+
+```{r} 
+#| code-line-numbers: "2,6"
+
+ui <- fluidPage(
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  output$text <- renderText({
+  })
+}
+```
+
+## Using Inputs
+
+- This works the same with inputs.
+- The server can access an object named `input` that will contain the value of all the input objects defined in the UI.
+- This object is **list-like**, just like the output object. Each input value has its own entry in this list, e.g. `input$number`.
+
+## 
+
+Combining the input and output objects, we get a simple app that displays the square of a number. 👏
+
+```{r}
+#| eval: false
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  output$text <- renderText({
+    input$number^2
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## Your Turn! 
+
+- Create a Shiny app that displays the square of a number
+- Try entering different numbers manually
+- Try using the up and down arrows
+- Adjust the server logic to display the cube of a number
+- Try other calculations
+
+```{r}
+#| echo: false
+
+countdown(minutes = 10, 
+          id = "timer1", 
+          bottom = "10%",
+          right = "10%")
+```
+
+## Eager Output
+
+An output is **eager**: it will update as soon as the input changes.
+
+<br>
+
+This **eagerness** is handy: you don't need to worry about updating the output when the input changes.
+
+<br>
+
+But what if you want to trigger the calculation only when you want?
+
+## Adding a Reactivity Modifier
+
+You could use an `actionButton` as an **event**:
+
+```{r} 
+#| code-line-numbers: "8-9,15-17"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  output$text <- renderText({
+    input$number^2
+  }) |> bindEvent(input$button)
+}
+
+shinyApp(ui, server)
+```
+
+## Try It Yourself! 
+
+- Add an `actionButton` to your app
+- Adjust the text on the button to read "Calculate"
+- Make sure it functions as intended
+- Go to the [getting started](https://shiny.posit.co/r/getstarted/shiny-basics/lesson3/) lesson on control widgets
+- See if you can control the calculation with a checkbox instead of a button
+- What is wrong with this approach?
+
+## Acknowledgements
+
+- Parts of this presentation were adapted from Veerle van Leemput's [Shiny 101: The Modular App Blueprint](https://github.com/hypebright/shinyconf2024-shiny101)

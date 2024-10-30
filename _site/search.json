@@ -1844,7 +1844,7 @@
     "href": "slides/week-11.1.html#your-turn",
     "title": "Shiny Apps",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nDo pre-work and wrangling from module 5.1\nCreate new Shiny App file\nCopy UI, server and Shiny App call\nSee if you can get the app to run locally\n\n\n\n\n−+\n10:00"
+    "text": "Your Turn!\n\nCreate a Shiny app that displays the square of a number\nTry entering different numbers manually\nTry using the up and down arrows\nAdjust the server logic to display the cube of a number\nTry other calculations\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-11.1.html#try-on-shinyapps.io",
@@ -4586,5 +4586,194 @@
       "Course Modules",
       "Module 5.1"
     ]
+  },
+  {
+    "objectID": "slides/week-11.1.html#what-is-shiny",
+    "href": "slides/week-11.1.html#what-is-shiny",
+    "title": "Shiny Apps",
+    "section": "What is Shiny?",
+    "text": "What is Shiny?\n\n\nShiny is an R package developed by Posit that makes it easy to build interactive web apps straight from R\nNo HTML, CSS, or JavaScript required\nShiny apps can be hosted on the web or run locally\nMakes it easy to explore your data and share your analysis"
+  },
+  {
+    "objectID": "slides/week-11.1.html#what-you-can-do-with-shiny",
+    "href": "slides/week-11.1.html#what-you-can-do-with-shiny",
+    "title": "Shiny Apps",
+    "section": "What You Can Do with Shiny",
+    "text": "What You Can Do with Shiny\n\n\nData Exploration: Utilize interactive widgets to filter and sort data dynamically\nBasic Visualizations: Create real-time, interactive graphs and charts from datasets\nAdvanced Analytics: Integrate R’s robust statistical and machine learning capabilities for in-depth analysis\nInteractive Reports: Build dynamic reports that update based on user input or live data\nProduction-Grade Dashboards: Develop complex, multi-page dashboards with user authentication and data streaming"
+  },
+  {
+    "objectID": "slides/week-11.1.html#flavors-of-shiny",
+    "href": "slides/week-11.1.html#flavors-of-shiny",
+    "title": "Shiny Apps",
+    "section": "Flavors of Shiny",
+    "text": "Flavors of Shiny\n\n\nR Shiny: The original framework, allowing R users to build interactive web applications directly within R\nShiny for Python: Extends Shiny’s capabilities to Python, enabling Python users to create Shiny applications using Python code\nShiny Live: Enables you to run apps off the user’s browser rather than having to deploy them to a server (only available in Python right now)\nShiny Express: A simplified version of Shiny for Python aimed at rapid development and deployment of applications with less coding and configuration required\nQuarto Dashboards: Not a Shiny app per se, but can connected to a Shiny server for increased interactivity"
+  },
+  {
+    "objectID": "slides/week-11.1.html#user-demos",
+    "href": "slides/week-11.1.html#user-demos",
+    "title": "Shiny Apps",
+    "section": "User Demos",
+    "text": "User Demos\n\nHave a look at the Shiny gallery\nPick an app that you like?\nOne thing you would like to learn from that app?\nOne thing that you would improve\nDiscuss with a neighbor\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-11.1.html#feature-demos",
+    "href": "slides/week-11.1.html#feature-demos",
+    "title": "Shiny Apps",
+    "section": "Feature Demos",
+    "text": "Feature Demos\n\nNow let’s look at feature demos\nWhat widgets, layouts, or features are you interested in?\nHow would you use them in your own apps?\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-11.1.html#professional-apps",
+    "href": "slides/week-11.1.html#professional-apps",
+    "title": "Shiny Apps",
+    "section": "Professional Apps",
+    "text": "Professional Apps\n\nHere is a selection of modern, professional Shiny Apps\n\nPESKAS fisheries monitoring in Timor-Leste\nWaCSE for tracking reductions in GHG emissions as part of Washington State’s Sustainable Farms and Fields program\nJHU Lyme Disease Tracker\nmovie-vue-r a Vue.js and Shiny app for exploring movie + COVID information\n\nThese are mainly for inspiration, but try to find the code on GitHub and see how much you can understand\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-11.1.html#getting-started-with-shiny",
+    "href": "slides/week-11.1.html#getting-started-with-shiny",
+    "title": "Shiny Apps",
+    "section": "Getting Started with Shiny",
+    "text": "Getting Started with Shiny\n\nOpen RStudio\nStart a folder for the workshop\nInstall the shiny package (if not installed already)\nCreate a new Shiny app\n\n(File &gt; New File &gt; Shiny Web App)\n\nRun the Geyser App\nTry opening it in a browser\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/week-11.1.html#challenge",
+    "href": "slides/week-11.1.html#challenge",
+    "title": "Shiny Apps",
+    "section": "Challenge",
+    "text": "Challenge\n\nLook at the faithful dataset in R (hint: ?faithful)\nCreate a Shiny app that displays a histogram of the eruptions column\nChange the labels accordingly\nWhat kind of distribution do you see?\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/week-11.1.html#shiny-app-basics",
+    "href": "slides/week-11.1.html#shiny-app-basics",
+    "title": "Shiny Apps",
+    "section": "Shiny App Basics",
+    "text": "Shiny App Basics\nTwo parts of a Shiny app:\n\nUI: User Interface\nServer: Server logic\n\nThey come together in a single script: app.R\n\n\nNote: You can compose your app with the ui and server in separate scripts, but we will stick to the single app.R script for now."
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-app.r-script",
+    "href": "slides/week-11.1.html#the-app.r-script",
+    "title": "Shiny Apps",
+    "section": "The app.R Script",
+    "text": "The app.R Script"
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-ui",
+    "href": "slides/week-11.1.html#the-ui",
+    "title": "Shiny Apps",
+    "section": "The UI",
+    "text": "The UI\nfluidPage() creates a Bootstrap page"
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-ui-1",
+    "href": "slides/week-11.1.html#the-ui-1",
+    "title": "Shiny Apps",
+    "section": "The UI",
+    "text": "The UI\n\nBootstrap is a free front-end framework used in web development\n\nIt is built on HTML, CSS and JavaScript\nThere are many version of Bootstrap, the latest being version 5, but R Shiny uses version 3 by default\n\n\n\nWith the bslib package you can use Bootstrap 4 or 5 in your R Shiny apps."
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-ui-2",
+    "href": "slides/week-11.1.html#the-ui-2",
+    "title": "Shiny Apps",
+    "section": "The UI",
+    "text": "The UI\nUnder the hood, every UI function is translated to HTML.\n\n\n[1] \"&lt;h2&gt;Hello, Shiny!&lt;/h2&gt;\"\n\n\n\nThis HTML can have styles attached to it, either by the style attribute, or by a CSS class.\n\n\n[1] \"&lt;div class=\\\"col-sm-4\\\"&gt;\\n  &lt;form class=\\\"well\\\" role=\\\"complementary\\\"&gt;&lt;/form&gt;\\n&lt;/div&gt;\""
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-ui-3",
+    "href": "slides/week-11.1.html#the-ui-3",
+    "title": "Shiny Apps",
+    "section": "The UI",
+    "text": "The UI\nTo let users interact with your app, you can add input controls. A basic input control has:\n\nan inputId\na label\na value"
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-ui-4",
+    "href": "slides/week-11.1.html#the-ui-4",
+    "title": "Shiny Apps",
+    "section": "The UI",
+    "text": "The UI\nFor example:\nnumericInput(inputId = \"number\", \n             label = \"Enter a number\", \n             value = 0)\n\nactionButton(inputId = \"button\", \n             label = \"Click me\")"
+  },
+  {
+    "objectID": "slides/week-11.1.html#updating-the-ui",
+    "href": "slides/week-11.1.html#updating-the-ui",
+    "title": "Shiny Apps",
+    "section": "Updating the UI",
+    "text": "Updating the UI\n\n\nWhen the app runs, every user gets served the same HTML from the UI\nWhen the user interacts with the UI, we want that HTML to react and update based on user input\nThat is possible because these outputs are reactive outputs\nThe server logic (which we will discuss in detail soon) uses reactive programming that updates related inputs in the UI"
+  },
+  {
+    "objectID": "slides/week-11.1.html#updating-the-ui-1",
+    "href": "slides/week-11.1.html#updating-the-ui-1",
+    "title": "Shiny Apps",
+    "section": "Updating the UI",
+    "text": "Updating the UI\nShiny has several functions that turn R objects into reactive outputs for your ui: the Output family of functions.\nEach function creates a specific type of output, for example:\n\n\n\nUI Function\nOutput type\n\n\n\n\ntextOutput()\ntext\n\n\ntableOutput()\ntable\n\n\nplotOutput()\nplot\n\n\nuiOutput()\nraw HTML"
+  },
+  {
+    "objectID": "slides/week-11.1.html#updating-the-ui-2",
+    "href": "slides/week-11.1.html#updating-the-ui-2",
+    "title": "Shiny Apps",
+    "section": "Updating the UI",
+    "text": "Updating the UI\nEvery output element needs a single argument: outputId. This is a simple string that needs to be unique.\n\ntextOutput(outputId = \"text\")\n\nThis textOutput tells Shiny what to display. It’s a placeholder for what is goign to be produced by the server logic."
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-server",
+    "href": "slides/week-11.1.html#the-server",
+    "title": "Shiny Apps",
+    "section": "The Server",
+    "text": "The Server\n\n\nThe server function builds an object named output and this object will contain all the code needed to display the R objects in the UI\nThis output object is list-like\nEach R object that you want to display has its own entry in this list\nTherefore the name of every output in your UI needs to match a definition in the server, e.g. output$text"
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-server-1",
+    "href": "slides/week-11.1.html#the-server-1",
+    "title": "Shiny Apps",
+    "section": "The Server",
+    "text": "The Server\nEach entry in the output list should contain a Render function. You must use Render functions that match the Output functions:\n\n\n\nUI Function\nOutput type\nRender function\n\n\n\n\ntextOutput()\ntext\nrenderText()\n\n\ntableOutput()\ntable\nrenderTable()\n\n\nplotOutput()\nplot\nrenderPlot()\n\n\nuiOutput()\nraw HTML\nrenderUI()"
+  },
+  {
+    "objectID": "slides/week-11.1.html#the-server-2",
+    "href": "slides/week-11.1.html#the-server-2",
+    "title": "Shiny Apps",
+    "section": "The Server",
+    "text": "The Server"
+  },
+  {
+    "objectID": "slides/week-11.1.html#using-inputs",
+    "href": "slides/week-11.1.html#using-inputs",
+    "title": "Shiny Apps",
+    "section": "Using Inputs",
+    "text": "Using Inputs\n\nThis works the same with inputs.\nThe server can access an object named input that will contain the value of all the input objects defined in the UI.\nThis object is list-like, just like the output object. Each input value has its own entry in this list, e.g. input$number."
+  },
+  {
+    "objectID": "slides/week-11.1.html#section",
+    "href": "slides/week-11.1.html#section",
+    "title": "Shiny Apps",
+    "section": "",
+    "text": "Combining the input and output objects, we get a simple app that displays the square of a number. 👏"
+  },
+  {
+    "objectID": "slides/week-11.1.html#eager-output",
+    "href": "slides/week-11.1.html#eager-output",
+    "title": "Shiny Apps",
+    "section": "Eager Output",
+    "text": "Eager Output\nAn output is eager: it will update as soon as the input changes.\n\nThis eagerness is handy: you don’t need to worry about updating the output when the input changes.\n\nBut what if you want to trigger the calculation only when you want?"
+  },
+  {
+    "objectID": "slides/week-11.1.html#adding-a-reactivity-modifier",
+    "href": "slides/week-11.1.html#adding-a-reactivity-modifier",
+    "title": "Shiny Apps",
+    "section": "Adding a Reactivity Modifier",
+    "text": "Adding a Reactivity Modifier\nYou could use an actionButton as an event:"
+  },
+  {
+    "objectID": "slides/week-11.1.html#try-it-yourself",
+    "href": "slides/week-11.1.html#try-it-yourself",
+    "title": "Shiny Apps",
+    "section": "Try It Yourself!",
+    "text": "Try It Yourself!\n\nAdd an actionButton to your app\nAdjust the text on the button to read “Calculate”\nMake sure it functions as intended\nGo to the getting started lesson on control widgets\nSee if you can control the calculation with a checkbox instead of a button\nWhat is wrong with this approach?"
+  },
+  {
+    "objectID": "slides/week-11.1.html#acknowledgements",
+    "href": "slides/week-11.1.html#acknowledgements",
+    "title": "Shiny Apps",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
   }
 ]

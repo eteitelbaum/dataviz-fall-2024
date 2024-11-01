@@ -22,4 +22,6 @@ For your final project in this course, you will be producing your very own Shiny
 
 *What would the user manipulate in your app? It could be a dropdown menu, a slider or some other control. See [here](https://shiny.posit.co/r/getstarted/shiny-basics/lesson3/) for a list of control widgets. When your user interacts with the control, what output will it produce, e.g. what will change when the user manipulates the widget? How would your chosen control widget enhance the user's experience and contribute to the overall purpose of the app?*
 
+## Submission
 
+*Please submit your unrendered QMD file to Blackboard.*

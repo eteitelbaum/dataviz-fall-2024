@@ -1,0 +1,405 @@
+---
+title: "Scatter Plot App"
+date: today
+date-format: long
+footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
+logo: images/dataviz-logo.png
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    transition: fade
+    slide-number: true
+    #multiplex: true
+    chalkboard: true
+execute:
+  echo: true
+  message: false
+  warning: false
+  eval: false
+  freeze: auto
+---
+
+# Overview
+
+## Idea for the App
+
+<iframe src="https://emmanuelteitelbaum.shinyapps.io/vdem-scatter-plot/" width="780" height="500" data-external="1"></iframe>
+
+## Plan
+
+- **Step 1:** Wrangle data
+- **Step 2:** Code up a scatter plot with two variables 
+- **Step 3:** Code UI with a title panel, sidebar with two dropdowns, and a main panel with the scatter plot output
+- **Step 4:** Code Server with reactive expressions to filter data and render the scatter plot
+- **Step 5:** Call the Shiny App (don't forget!)
+
+# App Setup
+
+## Preliminaries
+
+- Start a new Shiny Web App
+- Name the app something like `vdem-scatter-plot`
+- Start a new R script in the folder that was created
+  - Name the script something like `wrangle.R` 
+- Use this file for the code in the next slide
+
+## Save the Data
+
+```{r}
+#| label: setup
+
+library(dplyr)
+library(readr)
+library(vdemdata)
+
+dem_data <- vdem |>
+  filter(year == 2000) |>
+  select(
+    country = country_name, 
+    polyarchy = v2x_polyarchy,
+    clientelism = v2xnp_client,
+    corruption = v2xnp_regcorr,
+    womens_emp = v2x_gender,
+    gdp_pc = e_gdppc,
+    life_exp = e_pelifeex,
+    education = e_peaveduc,
+    region = e_regionpol_6C 
+  ) |>   mutate(
+    region = case_match(region, 
+                        1 ~ "Eastern Europe", 
+                        2 ~ "Latin America",  
+                        3 ~ "Middle East",   
+                        4 ~ "Africa", 
+                        5 ~ "The West", 
+                        6 ~ "Asia")
+  )
+
+# glimpse(dem_data)
+
+write_csv(dem_data, "dem_data.csv")
+```
+
+## Make the Setup Chunk {.smaller}
+
+In the app.R file, use this code for the global section of the app... 
+
+```{r}
+#| label: setup-chunk
+
+# load packages
+library(shiny)
+library(readr)
+library(ggplot2)
+
+# load the data 
+dem_data <- read_csv("dem_data.csv")
+
+# create list of named values for the input selection
+vars <- c("Democracy" = "polyarchy",
+          "Clientelism" = "clientelism",
+          "Corruption" = "corruption",
+          "Women's Empowerment" = "womens_emp",
+          "Wealth" = "gdp_pc",
+          "Life Expectancy" = "life_exp", 
+          "Education" = "education")
+```
+
+# The User Interface (`ui`)
+
+## The UI Code {.smaller}
+
+Copy and paste the UI code into the app.R file...
+
+```{r}
+#| label: ui1
+
+# Define UI for application that draws a scatter plot
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Democracy and Development"),
+
+    # Sidebar with a two dropdown menus
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(input = 'xcol', label = 'X Variable', choices = vars),
+        selectInput(input = 'ycol', label = 'Y Variable', 
+                    choices = vars, selected = vars[[6]])
+      ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("scatterplot")
+        )
+    )
+)
+```
+
+## The UI Code {.smaller}
+
+Adds the the title panel... 
+
+```{r}
+#| label: ui2
+#| code-line-numbers: "5"
+
+# Define UI for application that draws a scatter plot
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Democracy and Development"),
+
+    # Sidebar with a two dropdown menus
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(input = 'xcol', label = 'X Variable', choices = vars),
+        selectInput(input = 'ycol', label = 'Y Variable', 
+                    choices = vars, selected = vars[[6]])
+      ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("scatterplot")
+        )
+    )
+)
+```
+
+## The UI Code {.smaller}
+
+Defines the sidebar layout with the two dropdown panels... 
+
+```{r}
+#| label: ui3
+#| code-line-numbers: "8-13"
+
+# Define UI for application that draws a scatter plot
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Democracy and Development"),
+
+    # Sidebar with a two dropdown menus
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(input = 'xcol', label = 'X Variable', choices = vars),
+        selectInput(input = 'ycol', label = 'Y Variable', 
+                    choices = vars, selected = vars[[6]])
+      ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("scatterplot")
+        )
+    )
+)
+```
+
+## The UI Code {.smaller}
+
+Defines the main panel for the output. Note that we are calling `plotOutput()` and that we are calling the output "scatterplot" (the unique `outputID` for our plot)... 
+
+```{r}
+#| label: ui4
+#| code-line-numbers: "15-17"
+
+# Define UI for application that draws a scatter plot
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Democracy and Development"),
+
+    # Sidebar with a two dropdown menus
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(input = 'xcol', label = 'X Variable', choices = vars),
+        selectInput(input = 'ycol', label = 'Y Variable', 
+                    choices = vars, selected = vars[[6]])
+      ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("scatterplot")
+        )
+    )
+)
+```
+
+# The Server (`server`)
+
+## The Server Code {.smaller}
+
+Copy and paste the server code into the app.R file...
+
+```{r}
+#| label: server1
+
+# Define server logic required to draw a scatter plot
+server <- function(input, output, session) {
+  
+  # Render the plot
+  output$scatterplot <- renderPlot({
+    
+    # ggplot call
+    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +
+      geom_point(aes(color = region)) +
+      geom_smooth(method = "loess") +
+      scale_color_viridis_d(option = "plasma") +
+      theme_minimal() +
+      labs(
+        x =  names(vars[which(vars == input$xcol)]), # select names in vars that
+        y =  names(vars[which(vars == input$ycol)]), # match input selections
+        caption = "Source: V-Dem Institute",
+        color = "Region"
+      )
+  })
+}
+```
+
+## The Server Code {.smaller}
+
+Note that we are calling `renderPlot()`, which matches up with the `plotOutput()` in the UI. And we are referencing output as "scatterplot" (again, the unique `outputID` for our plot)... 
+
+```{r}
+#| label: server2
+#| code-line-numbers: "5"
+
+# Define server logic required to draw a scatter plot
+server <- function(input, output, session) {
+  
+  # Render the plot
+  output$scatterplot <- renderPlot({
+    
+    # ggplot call
+    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +
+      geom_point(aes(color = region)) +
+      geom_smooth(method = "loess") +
+      scale_color_viridis_d(option = "plasma") +
+      theme_minimal() +
+      labs(
+        x =  names(vars[which(vars == input$xcol)]), # select names in vars that
+        y =  names(vars[which(vars == input$ycol)]), # match input selections
+        caption = "Source: V-Dem Institute",
+        color = "Region"
+      )
+  })
+}
+```
+
+## The Server Code {.smaller}
+
+We dynamically reference the input values from the dropdown menus in the UI. We use `input$xcol` and `input$ycol` to reference the user-selected variables. As a result of [tidy evaluation](https://dplyr.tidyverse.org/articles/programming.html) in ggplot2, these inputs have to be referenced in .data[[]] in order to work....  
+
+```{r}
+#| label: server3
+#| code-line-numbers: "8"
+
+# Define server logic required to draw a scatter plot
+server <- function(input, output, session) {
+  
+  # Render the plot
+  output$scatterplot <- renderPlot({
+    
+    # ggplot call
+    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +
+      geom_point(aes(color = region)) +
+      geom_smooth(method = "loess") +
+      scale_color_viridis_d(option = "plasma") +
+      theme_minimal() +
+      labs(
+        x =  names(vars[which(vars == input$xcol)]), # select names in vars that
+        y =  names(vars[which(vars == input$ycol)]), # match input selections
+        caption = "Source: V-Dem Institute",
+        color = "Region"
+      )
+  })
+}
+```
+
+## The Server Code {.smaller}
+
+Here we need to select the variable from the vector `vars` that created with the list of variables. We use `which(vars == input$xcol)` to find the index of the selected variable in the vector `vars`. We then use `names()` to get the name of the variable at that index... 
+
+```{r}
+#| label: server4
+#| code-line-numbers: "14-15"
+
+# Define server logic required to draw a scatter plot
+server <- function(input, output, session) {
+  
+  # Render the plot
+  output$scatterplot <- renderPlot({
+    
+    # ggplot call
+    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +
+      geom_point(aes(color = region)) +
+      geom_smooth(method = "loess") +
+      scale_color_viridis_d(option = "plasma") +
+      theme_minimal() +
+      labs(
+        x =  names(vars[which(vars == input$xcol)]), # select names in vars that
+        y =  names(vars[which(vars == input$ycol)]), # match input selections
+        caption = "Source: V-Dem Institute",
+        color = "Region"
+      )
+  })
+}
+```
+
+# Call the App
+
+## Run the App
+
+To display the app, don't forget this final line of code... 
+
+<br>
+
+```{r}
+#| label: run-app
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+## Your Turn! 
+
+- Run the app and select different variables from the drop down menus.
+- What do you notice about the relationship between democracy and development?
+- How could you potentially improve the app?
+
+```{r}
+#| eval: true
+#| echo: false
+
+library(countdown)
+
+countdown(minutes = 10, 
+          bottom = "10%", 
+          right = "10%")
+```
+
+## Publish Your App
+
+- Install rsconnect:`install.packages("rsconnect")`
+- Create account and retrieve your API key
+- Configure RStudio:
+```{r}
+library(rsconnect)
+rsconnect::setAccountInfo(name='<account-name>', token='<account-token>', secret='<secret>')
+```
+- Click the "Publish" button in RStudio toolbar and follow prompts
+
+```{r}
+#| eval: true
+#| echo: false
+
+countdown(minutes = 10, 
+          id = "timer2", 
+          bottom = "5%", 
+          right = "10%")
+```
+
+
+
+
+

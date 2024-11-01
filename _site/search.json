@@ -2449,7 +2449,7 @@
     "href": "index.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
+    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n🖥️\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -4775,5 +4775,128 @@
     "title": "Shiny Apps",
     "section": "Acknowledgements",
     "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
+  },
+  {
+    "objectID": "project/project-assignment-1.html#submission",
+    "href": "project/project-assignment-1.html#submission",
+    "title": "Project Assignment 1",
+    "section": "Submission",
+    "text": "Submission\nPlease submit your unrendered QMD file to Blackboard.",
+    "crumbs": [
+      "Project",
+      "Project Assignment 1"
+    ]
+  },
+  {
+    "objectID": "slides/week-11.2.html#idea-for-the-app",
+    "href": "slides/week-11.2.html#idea-for-the-app",
+    "title": "Scatter Plot App",
+    "section": "Idea for the App",
+    "text": "Idea for the App"
+  },
+  {
+    "objectID": "slides/week-11.2.html#plan",
+    "href": "slides/week-11.2.html#plan",
+    "title": "Scatter Plot App",
+    "section": "Plan",
+    "text": "Plan\n\nStep 1: Wrangle data\nStep 2: Code up a scatter plot with two variables\nStep 3: Code UI with a title panel, sidebar with two dropdowns, and a main panel with the scatter plot output\nStep 4: Code Server with reactive expressions to filter data and render the scatter plot\nStep 5: Call the Shiny App (don’t forget!)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#preliminaries",
+    "href": "slides/week-11.2.html#preliminaries",
+    "title": "Scatter Plot App",
+    "section": "Preliminaries",
+    "text": "Preliminaries\n\nStart a new Shiny Web App\nName the app something like vdem-scatter-plot\nStart a new R script in the folder that was created\n\nName the script something like wrangle.R\n\nUse this file for the code in the next slide"
+  },
+  {
+    "objectID": "slides/week-11.2.html#save-the-data",
+    "href": "slides/week-11.2.html#save-the-data",
+    "title": "Scatter Plot App",
+    "section": "Save the Data",
+    "text": "Save the Data\n\nlibrary(dplyr)\nlibrary(readr)\nlibrary(vdemdata)\n\ndem_data &lt;- vdem |&gt;\n  filter(year == 2000) |&gt;\n  select(\n    country = country_name, \n    polyarchy = v2x_polyarchy,\n    clientelism = v2xnp_client,\n    corruption = v2xnp_regcorr,\n    womens_emp = v2x_gender,\n    gdp_pc = e_gdppc,\n    life_exp = e_pelifeex,\n    education = e_peaveduc,\n    region = e_regionpol_6C \n  ) |&gt;   mutate(\n    region = case_match(region, \n                        1 ~ \"Eastern Europe\", \n                        2 ~ \"Latin America\",  \n                        3 ~ \"Middle East\",   \n                        4 ~ \"Africa\", \n                        5 ~ \"The West\", \n                        6 ~ \"Asia\")\n  )\n\n# glimpse(dem_data)\n\nwrite_csv(dem_data, \"dem_data.csv\")"
+  },
+  {
+    "objectID": "slides/week-11.2.html#make-the-setup-chunk",
+    "href": "slides/week-11.2.html#make-the-setup-chunk",
+    "title": "Scatter Plot App",
+    "section": "Make the Setup Chunk",
+    "text": "Make the Setup Chunk\nIn the app.R file, use this code for the global section of the app…\n\n# load packages\nlibrary(shiny)\nlibrary(readr)\nlibrary(ggplot2)\n\n# load the data \ndem_data &lt;- read_csv(\"dem_data.csv\")\n\n# create list of named values for the input selection\nvars &lt;- c(\"Democracy\" = \"polyarchy\",\n          \"Clientelism\" = \"clientelism\",\n          \"Corruption\" = \"corruption\",\n          \"Women's Empowerment\" = \"womens_emp\",\n          \"Wealth\" = \"gdp_pc\",\n          \"Life Expectancy\" = \"life_exp\", \n          \"Education\" = \"education\")"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-ui-code",
+    "href": "slides/week-11.2.html#the-ui-code",
+    "title": "Scatter Plot App",
+    "section": "The UI Code",
+    "text": "The UI Code\nCopy and paste the UI code into the app.R file…\n\n# Define UI for application that draws a scatter plot\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"Democracy and Development\"),\n\n    # Sidebar with a two dropdown menus\n    sidebarLayout(\n      sidebarPanel(\n        selectInput(input = 'xcol', label = 'X Variable', choices = vars),\n        selectInput(input = 'ycol', label = 'Y Variable', \n                    choices = vars, selected = vars[[6]])\n      ),\n\n        # Show a plot of the generated distribution\n        mainPanel(\n           plotOutput(\"scatterplot\")\n        )\n    )\n)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-ui-code-1",
+    "href": "slides/week-11.2.html#the-ui-code-1",
+    "title": "Scatter Plot App",
+    "section": "The UI Code",
+    "text": "The UI Code\nAdds the the title panel…\n\n# Define UI for application that draws a scatter plot\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"Democracy and Development\"),\n\n    # Sidebar with a two dropdown menus\n    sidebarLayout(\n      sidebarPanel(\n        selectInput(input = 'xcol', label = 'X Variable', choices = vars),\n        selectInput(input = 'ycol', label = 'Y Variable', \n                    choices = vars, selected = vars[[6]])\n      ),\n\n        # Show a plot of the generated distribution\n        mainPanel(\n           plotOutput(\"scatterplot\")\n        )\n    )\n)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-ui-code-2",
+    "href": "slides/week-11.2.html#the-ui-code-2",
+    "title": "Scatter Plot App",
+    "section": "The UI Code",
+    "text": "The UI Code\nDefines the sidebar layout with the two dropdown panels…\n\n# Define UI for application that draws a scatter plot\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"Democracy and Development\"),\n\n    # Sidebar with a two dropdown menus\n    sidebarLayout(\n      sidebarPanel(\n        selectInput(input = 'xcol', label = 'X Variable', choices = vars),\n        selectInput(input = 'ycol', label = 'Y Variable', \n                    choices = vars, selected = vars[[6]])\n      ),\n\n        # Show a plot of the generated distribution\n        mainPanel(\n           plotOutput(\"scatterplot\")\n        )\n    )\n)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-ui-code-3",
+    "href": "slides/week-11.2.html#the-ui-code-3",
+    "title": "Scatter Plot App",
+    "section": "The UI Code",
+    "text": "The UI Code\nDefines the main panel for the output. Note that we are calling plotOutput() and that we are calling the output “scatterplot” (the unique outputID for our plot)…\n\n# Define UI for application that draws a scatter plot\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"Democracy and Development\"),\n\n    # Sidebar with a two dropdown menus\n    sidebarLayout(\n      sidebarPanel(\n        selectInput(input = 'xcol', label = 'X Variable', choices = vars),\n        selectInput(input = 'ycol', label = 'Y Variable', \n                    choices = vars, selected = vars[[6]])\n      ),\n\n        # Show a plot of the generated distribution\n        mainPanel(\n           plotOutput(\"scatterplot\")\n        )\n    )\n)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-server-code",
+    "href": "slides/week-11.2.html#the-server-code",
+    "title": "Scatter Plot App",
+    "section": "The Server Code",
+    "text": "The Server Code\nCopy and paste the server code into the app.R file…\n\n# Define server logic required to draw a scatter plot\nserver &lt;- function(input, output, session) {\n  \n  # Render the plot\n  output$scatterplot &lt;- renderPlot({\n    \n    # ggplot call\n    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +\n      geom_point(aes(color = region)) +\n      geom_smooth(method = \"loess\") +\n      scale_color_viridis_d(option = \"plasma\") +\n      theme_minimal() +\n      labs(\n        x =  names(vars[which(vars == input$xcol)]), # select names in vars that\n        y =  names(vars[which(vars == input$ycol)]), # match input selections\n        caption = \"Source: V-Dem Institute\",\n        color = \"Region\"\n      )\n  })\n}"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-server-code-1",
+    "href": "slides/week-11.2.html#the-server-code-1",
+    "title": "Scatter Plot App",
+    "section": "The Server Code",
+    "text": "The Server Code\nNote that we are calling renderPlot(), which matches up with the plotOutput() in the UI. And we are referencing output as “scatterplot” (again, the unique outputID for our plot)…\n\n# Define server logic required to draw a scatter plot\nserver &lt;- function(input, output, session) {\n  \n  # Render the plot\n  output$scatterplot &lt;- renderPlot({\n    \n    # ggplot call\n    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +\n      geom_point(aes(color = region)) +\n      geom_smooth(method = \"loess\") +\n      scale_color_viridis_d(option = \"plasma\") +\n      theme_minimal() +\n      labs(\n        x =  names(vars[which(vars == input$xcol)]), # select names in vars that\n        y =  names(vars[which(vars == input$ycol)]), # match input selections\n        caption = \"Source: V-Dem Institute\",\n        color = \"Region\"\n      )\n  })\n}"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-server-code-2",
+    "href": "slides/week-11.2.html#the-server-code-2",
+    "title": "Scatter Plot App",
+    "section": "The Server Code",
+    "text": "The Server Code\nWe dynamically reference the input values from the dropdown menus in the UI. We use input$xcol and input$ycol to reference the user-selected variables. As a result of tidy evaluation in ggplot2, these inputs have to be referenced in .data[[]] in order to work….\n\n# Define server logic required to draw a scatter plot\nserver &lt;- function(input, output, session) {\n  \n  # Render the plot\n  output$scatterplot &lt;- renderPlot({\n    \n    # ggplot call\n    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +\n      geom_point(aes(color = region)) +\n      geom_smooth(method = \"loess\") +\n      scale_color_viridis_d(option = \"plasma\") +\n      theme_minimal() +\n      labs(\n        x =  names(vars[which(vars == input$xcol)]), # select names in vars that\n        y =  names(vars[which(vars == input$ycol)]), # match input selections\n        caption = \"Source: V-Dem Institute\",\n        color = \"Region\"\n      )\n  })\n}"
+  },
+  {
+    "objectID": "slides/week-11.2.html#the-server-code-3",
+    "href": "slides/week-11.2.html#the-server-code-3",
+    "title": "Scatter Plot App",
+    "section": "The Server Code",
+    "text": "The Server Code\nHere we need to select the variable from the vector vars that created with the list of variables. We use which(vars == input$xcol) to find the index of the selected variable in the vector vars. We then use names() to get the name of the variable at that index…\n\n# Define server logic required to draw a scatter plot\nserver &lt;- function(input, output, session) {\n  \n  # Render the plot\n  output$scatterplot &lt;- renderPlot({\n    \n    # ggplot call\n    ggplot(dem_data, aes(x = .data[[input$xcol]], y = .data[[input$ycol]])) +\n      geom_point(aes(color = region)) +\n      geom_smooth(method = \"loess\") +\n      scale_color_viridis_d(option = \"plasma\") +\n      theme_minimal() +\n      labs(\n        x =  names(vars[which(vars == input$xcol)]), # select names in vars that\n        y =  names(vars[which(vars == input$ycol)]), # match input selections\n        caption = \"Source: V-Dem Institute\",\n        color = \"Region\"\n      )\n  })\n}"
+  },
+  {
+    "objectID": "slides/week-11.2.html#run-the-app",
+    "href": "slides/week-11.2.html#run-the-app",
+    "title": "Scatter Plot App",
+    "section": "Run the App",
+    "text": "Run the App\nTo display the app, don’t forget this final line of code…\n\n\n# Run the application \nshinyApp(ui = ui, server = server)"
+  },
+  {
+    "objectID": "slides/week-11.2.html#your-turn",
+    "href": "slides/week-11.2.html#your-turn",
+    "title": "Scatter Plot App",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nRun the app and select different variables from the drop down menus.\nWhat do you notice about the relationship between democracy and development?\nHow could you potentially improve the app?\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/week-11.2.html#publish-your-app",
+    "href": "slides/week-11.2.html#publish-your-app",
+    "title": "Scatter Plot App",
+    "section": "Publish Your App",
+    "text": "Publish Your App\n\nInstall rsconnect:install.packages(\"rsconnect\")\nCreate account and retrieve your API key\nConfigure RStudio:\n\n\nlibrary(rsconnect)\nrsconnect::setAccountInfo(name='&lt;account-name&gt;', token='&lt;account-token&gt;', secret='&lt;secret&gt;')\n\n\nClick the “Publish” button in RStudio toolbar and follow prompts\n\n\n\n\n−+\n10:00"
   }
 ]

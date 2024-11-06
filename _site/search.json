@@ -3249,7 +3249,7 @@
   {
     "objectID": "slides/week-12.1.html#example-from-this-week",
     "href": "slides/week-12.1.html#example-from-this-week",
-    "title": "Reactivity",
+    "title": "Observers and Reactives",
     "section": "Example from this Week",
     "text": "Example from this Week"
   },
@@ -3263,9 +3263,9 @@
   {
     "objectID": "slides/week-12.1.html#your-turn",
     "href": "slides/week-12.1.html#your-turn",
-    "title": "Reactivity",
+    "title": "Observers and Reactives",
     "section": "Your Turn!",
-    "text": "Your Turn!\n\n\nDo the prework, getting set up with fredr and other relevant packages\nCreate a NEW project folder\nSave your helper script in a subfolder\nStart on your app.R file\nFour parts:\n\nsetup\nUI\nServer\nCall to Shiny App\n\nExtend the app by incorporating new indicators"
+    "text": "Your Turn!\n\n\nDo the prework, getting set up with fredr and other relevant packages\nCreate a NEW project folder\nSave your helper script in a subfolder\nStart on your app.R file\nExtend the app by incorporating new indicators\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-6.2.html#column-chart-from-last-class",
@@ -4898,5 +4898,166 @@
     "title": "Scatter Plot App",
     "section": "Publish Your App",
     "text": "Publish Your App\n\nInstall rsconnect:install.packages(\"rsconnect\")\nCreate account and retrieve your API key\nConfigure RStudio:\n\n\nlibrary(rsconnect)\nrsconnect::setAccountInfo(name='&lt;account-name&gt;', token='&lt;account-token&gt;', secret='&lt;secret&gt;')\n\n\nClick the “Publish” button in RStudio toolbar and follow prompts\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/week-12.1.html#observers-1",
+    "href": "slides/week-12.1.html#observers-1",
+    "title": "Observers and Reactives",
+    "section": "Observers",
+    "text": "Observers\n\nSo far, we used render* functions to produce our output. All of the action with those functions happens inside of the app.\n\nBut sometimes, we want to reach outside the app: call an API, send data to a database, send debugging messages. We want to call a function for its “side-effects.”\n\nWe need observers for that!"
+  },
+  {
+    "objectID": "slides/week-12.1.html#observers-2",
+    "href": "slides/week-12.1.html#observers-2",
+    "title": "Observers and Reactives",
+    "section": "Observers",
+    "text": "Observers\n\nObservers are functions that run when their dependencies change, just like outputs.\n\nBut unlike output rendering functions that directly update the UI, observers handle tasks that can affect the application state or perform other “side effects.”"
+  },
+  {
+    "objectID": "slides/week-12.1.html#types-of-observers",
+    "href": "slides/week-12.1.html#types-of-observers",
+    "title": "Observers and Reactives",
+    "section": "Types of Observers",
+    "text": "Types of Observers\n\n\nobserve({}): Automatically re-executes when any of its reactive dependencies change.\nobserveEvent(event, { }): Executes in response to a specific event, offering more control over reactivity and allowing you to ignore changes in other inputs."
+  },
+  {
+    "objectID": "slides/week-12.1.html#what-are-side-effects",
+    "href": "slides/week-12.1.html#what-are-side-effects",
+    "title": "Observers and Reactives",
+    "section": "What Are Side Effects?",
+    "text": "What Are Side Effects?\n\nIn the context of Shiny, a side effect refers to any action performed by an observer that affects the state of the application or external systems but does not directly result in UI output. These include:\n\nModifying application state\nInteracting with databases\nSending data to external APIs\nWriting to or reading from files"
+  },
+  {
+    "objectID": "slides/week-12.1.html#example-printing-to-console",
+    "href": "slides/week-12.1.html#example-printing-to-console",
+    "title": "Observers and Reactives",
+    "section": "Example: Printing to Console",
+    "text": "Example: Printing to Console\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n  \n  observe({\n    print(input$number^2)\n  })\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#example-printing-to-console-1",
+    "href": "slides/week-12.1.html#example-printing-to-console-1",
+    "title": "Observers and Reactives",
+    "section": "Example: Printing to Console",
+    "text": "Example: Printing to Console\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n  \n  observe({\n    print(input$number^2)\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#example-resetting-values",
+    "href": "slides/week-12.1.html#example-resetting-values",
+    "title": "Observers and Reactives",
+    "section": "Example: Resetting Values",
+    "text": "Example: Resetting Values\n\nDemocracy Around the World! App.\n\n\n  # Observe changes to region selection\n  observeEvent(input$regions, {\n    if (input$regions == \"Global\") {\n      # Reset the selected country and display global trend when \"Global\" is chosen\n      selected_country(NULL)\n    } else {\n      # Reset the selected country when any specific region is chosen\n      selected_country(NULL)\n    }\n  })"
+  },
+  {
+    "objectID": "slides/week-12.1.html#what-reactives-do",
+    "href": "slides/week-12.1.html#what-reactives-do",
+    "title": "Observers and Reactives",
+    "section": "What Reactives Do",
+    "text": "What Reactives Do\n\nReactives are functions that return a value. You can assign them to an object and you can refer to reactives elsewhere in your app.\n\nYou can see them as backpacks 🎒 that carry values and expressions around that you can open whenever you want."
+  },
+  {
+    "objectID": "slides/week-12.1.html#types-of-reactive-functions",
+    "href": "slides/week-12.1.html#types-of-reactive-functions",
+    "title": "Observers and Reactives",
+    "section": "Types of Reactive Functions",
+    "text": "Types of Reactive Functions\n\nWhen you go hiking, you pick a backpack that fits your needs. There are different types of backpacks that are fit to carry different things.\n\nThat’s similar with a reactive. They carry different things:\n\nreactive(): takes an expression\nreactiveVal(): takes a single value\nreactiveValues(): takes a list of values"
+  },
+  {
+    "objectID": "slides/week-12.1.html#the-reactive-function-1",
+    "href": "slides/week-12.1.html#the-reactive-function-1",
+    "title": "Observers and Reactives",
+    "section": "The reactive() Function",
+    "text": "The reactive() Function\n\nYou can see reactive() as a very fancy full-size backpack 🎒🌟.\n\nIt can take multiple inputs, manipulate them and return something simple (a value) or complex (a plot, a table). It can even take other reactives (other backpacks) as input!"
+  },
+  {
+    "objectID": "slides/week-12.1.html#reactive-example",
+    "href": "slides/week-12.1.html#reactive-example",
+    "title": "Observers and Reactives",
+    "section": "reactive() Example",
+    "text": "reactive() Example\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  number_squared &lt;- reactive({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n  \n  output$text &lt;- renderText({\n    number_squared()\n  })\n  \n  observe({\n    print(number_squared())\n  })\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#laziness",
+    "href": "slides/week-12.1.html#laziness",
+    "title": "Observers and Reactives",
+    "section": "Laziness",
+    "text": "Laziness\n\nThis fancy backpack is only opened when you ask for it. It is therefore lazy.\n\nMore technical: when the dependencies of a reactive change, it doesn’t re-execute right away but rather waits until it gets called by something else."
+  },
+  {
+    "objectID": "slides/week-12.1.html#reactive-values",
+    "href": "slides/week-12.1.html#reactive-values",
+    "title": "Observers and Reactives",
+    "section": "Reactive Values",
+    "text": "Reactive Values\n\nIf reactive() is a fancy backpack, reactive values are simpler backpacks. They carry one or more value(s) that you can unpack, but also update.\n\nYou make a reactive single value with reactiveVal() and you can update it by calling it with a new value.\n\nYou can make and update multiple reactive values with reactiveValues()."
+  },
+  {
+    "objectID": "slides/week-12.1.html#reactiveval-example",
+    "href": "slides/week-12.1.html#reactiveval-example",
+    "title": "Observers and Reactives",
+    "section": "reactiveVal() Example",
+    "text": "reactiveVal() Example\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  number_squared &lt;- reactiveVal(0)\n  \n  observe({\n    number_squared(input$number^2)\n  }) |&gt; bindEvent(input$button)\n  \n  output$text &lt;- renderText({\n    number_squared()\n  })\n  \n  observe({\n    print(number_squared())\n  })\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#reactivevalues-example",
+    "href": "slides/week-12.1.html#reactivevalues-example",
+    "title": "Observers and Reactives",
+    "section": "reactiveValues() Example",
+    "text": "reactiveValues() Example\n\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = \"number\", \n               label = \"Enter a number\", \n               value = 0),\n               \n  actionButton(inputId = \"button\", \n               label = \"Click me\"),\n               \n  textOutput(outputId = \"text\")\n)\n\nserver &lt;- function(input, output, session) {\n  r &lt;- reactiveValues(number_squared = 0) \n  \n  observe({\n    r$number_squared &lt;- input$number^2\n  }) |&gt; bindEvent(input$button)\n  \n  output$text &lt;- renderText({\n    r$number_squared\n  })\n  \n  observe({\n    print(r$number_squared)\n  })\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#reactive-values-1",
+    "href": "slides/week-12.1.html#reactive-values-1",
+    "title": "Observers and Reactives",
+    "section": "Reactive Values",
+    "text": "Reactive Values\n\nYou can see reactiveValues() as some kind of reactive mini-database. You can use it to store multiple values, retrieve them in different places, and update them.\n\nAnd since it’s reactive, you can use it to trigger other parts of your app when one of its values changes."
+  },
+  {
+    "objectID": "slides/week-12.1.html#server-with-reactive-functions",
+    "href": "slides/week-12.1.html#server-with-reactive-functions",
+    "title": "Observers and Reactives",
+    "section": "Server with reactive() Functions",
+    "text": "Server with reactive() Functions\n\n\n    # Download data from FRED with reactive function. \n    # Only updates when user selects new indicator\n    fred_indicator &lt;- reactive({\n      fredr(series_id = input$indicator,\n        observation_start = start_date,\n        observation_end = end_date)\n    })\n  \n    # Filter data according to chosen years \n    # Only updates when user selects new data range\n    fred_data &lt;- reactive({\n      fred_indicator() |&gt;\n      filter(between(date, input$range[1],input$range[2])) \n   })"
+  },
+  {
+    "objectID": "slides/week-12.1.html#key-concepts",
+    "href": "slides/week-12.1.html#key-concepts",
+    "title": "Observers and Reactives",
+    "section": "Key Concepts",
+    "text": "Key Concepts\n\nFocused Reactivity:\n\nEach reactive() function isolates updates to specific user inputs.\nThis avoids redundant processing and enhances app performance.\n\nChained Dependencies:\n\nreactive() functions can depend on each other.\nChanges in one reactive output can trigger updates in another, maintaining efficient data flow.\n\nSelective Execution:\n\nReduces the computational workload by recalculating only necessary parts of the data pipeline.\nReactivity is triggered only in response to relevant user interactions."
+  },
+  {
+    "objectID": "slides/week-12.1.html#ui-code",
+    "href": "slides/week-12.1.html#ui-code",
+    "title": "Observers and Reactives",
+    "section": "UI Code",
+    "text": "UI Code\n\n\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"FRED Data App\"),\n    \n    fluidRow(\n      \n      # 12 columns on one row: this panel will take 1/3 of it\n      column(4, wellPanel(\n        selectInput(\"indicator\", \"Indicator:\", vars)\n        ),\n      helpText(\"Select an indicator, choose a date range and view the trend. \n               The grey bars represent economic recessions. \n               The data for this app comes from the St. Louis Fed's \n               FRED database. The consumer confidence, business confidence and \n               lead composite indicators are OECD data downloaded through FRED.\")\n      ), \n      \n      # Remaining 2/3 occupied by plot\n      column(8,\n        plotOutput(\"lineChart\"),     \n        sliderInput(\n          \"range\",\n          \"\",\n          min = start_date,\n          max = end_date, \n          value = c(start_date, end_date), \n          width = \"100%\"\n        )\n      )\n    )\n)"
+  },
+  {
+    "objectID": "slides/week-12.1.html#setup-global-code",
+    "href": "slides/week-12.1.html#setup-global-code",
+    "title": "Observers and Reactives",
+    "section": "Setup (Global) Code",
+    "text": "Setup (Global) Code\n\n\n# Load packages\nlibrary(shiny)\nlibrary(fredr)\nlibrary(dplyr)\nlibrary(ggplot2)\n\n# Set Fred API key \nfredr_set_key(\"YOUR FRED API KEY\") \n\n# Assign FRED series to objects\ncci &lt;- \"CSCICP03USM665S\" # consumer confidence\nbci &lt;- \"BSCICP03USM665S\" # business confidence\ncli &lt;- \"USALOLITONOSTSAM\" # composite lead indicator\nunemp_rate &lt;- \"UNRATE\" # unemployment rate\ngrowth &lt;- \"A191RL1Q225SBEA\" # growth rate\n\n# set start and end date\nstart_date &lt;- as.Date(\"1970-01-01\")\nend_date &lt;- as.Date(Sys.Date())\n\n# Create list of named values for the input selection\nvars &lt;- c(\"Consumer Confidence\" = cci, \n          \"Business Confidence\" = bci, \n          \"Composite Indicator\" = cli, \n          \"Unemployment Rate\" = unemp_rate,\n          \"Growth Rate\" = growth)\n\n# Load helper script\nsource(\"helper.R\") # scroll down, code pasted below"
+  },
+  {
+    "objectID": "slides/week-12.1.html#challenge-1observers",
+    "href": "slides/week-12.1.html#challenge-1observers",
+    "title": "Observers and Reactives",
+    "section": "Challenge 1–Observers",
+    "text": "Challenge 1–Observers\n\n\nNotification Management:\n\nImplement observeEvent() using showNotification() to show notifications when indicators are selected.\n\nAction Logging:\n\nLog changes to the indicator or date range to the R console with timestamps.\n\nDynamic UI Updates:\n\nUse observe() to adjust the UI elements dynamically based on the indicator selected."
+  },
+  {
+    "objectID": "slides/week-12.1.html#challenge-2reactives",
+    "href": "slides/week-12.1.html#challenge-2reactives",
+    "title": "Observers and Reactives",
+    "section": "Challenge 2–Reactives",
+    "text": "Challenge 2–Reactives\n\n\nImplement a counter using reactiveValues() that increments each time the indicator input changes.\n\nDisplay the counter value in the UI using textOutput().\nUse observeEvent() to increment the counter reactively.\n\nCreate UI controls for selecting plot line type and color.\n\nUse reactiveValues() to store the current plot style settings.\nUpdate the plot rendering logic to use these settings dynamically.\n\nUpdate our app to include vertical lines on the plot that show “black swan” events\n\nUse check boxes to allow users to select which events to display\nUse reactiveValues() to store the selected events, then plot"
+  },
+  {
+    "objectID": "slides/week-12.1.html#acknowledgements",
+    "href": "slides/week-12.1.html#acknowledgements",
+    "title": "Observers and Reactives",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
   }
 ]

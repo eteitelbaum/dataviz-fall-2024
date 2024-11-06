@@ -1,0 +1,535 @@
+---
+title: "Observers and Reactives"
+date: today
+date-format: long
+footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
+logo: images/dataviz-logo.png
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    transition: fade
+    slide-number: true
+    #multiplex: true
+    chalkboard: true
+execute:
+  echo: true
+  message: false
+  warning: false
+  eval: false
+  freeze: auto
+---
+
+# Observers
+
+## Observers
+
+<br>
+
+So far, we used `render*` functions to produce our output. All of the action with those functions happens inside of the app.
+
+<br>
+
+But sometimes, we want to reach **outside the app**: call an API, send data to a database, send debugging messages. We want to call a function for its "side-effects."
+
+<br>
+
+We need **observers** for that!
+
+## Observers
+
+<br>
+
+Observers are functions that run when their dependencies change, just like outputs.
+
+<br>
+
+But unlike output rendering functions that directly update the UI, observers handle tasks that can affect the application state or perform other "side effects."
+
+## Types of Observers
+
+<br>
+
+- **`observe({})`**: Automatically re-executes when any of its reactive dependencies change.
+- **`observeEvent(event, { })`**: Executes in response to a specific event, offering more control over reactivity and allowing you to ignore changes in other inputs.
+
+## What Are Side Effects?
+
+<br>
+
+In the context of Shiny, a side effect refers to any action performed by an observer that affects the state of the application or external systems but does not directly result in UI output. These include:
+
+- Modifying application state
+- Interacting with databases
+- Sending data to external APIs
+- Writing to or reading from files
+
+## Example: Printing to Console
+
+<br>
+
+```{r} 
+#| label: observers1
+#| code-line-numbers: "19-21"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  output$text <- renderText({
+    input$number^2
+  }) |> bindEvent(input$button)
+  
+  observe({
+    print(input$number^2)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## Example: Printing to Console
+
+<br>
+
+```{r} 
+#| label: observers2
+#| code-line-numbers: "21"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  output$text <- renderText({
+    input$number^2
+  }) |> bindEvent(input$button)
+  
+  observe({
+    print(input$number^2)
+  }) |> bindEvent(input$button)
+}
+
+shinyApp(ui, server)
+```
+
+## Example: Resetting Values
+
+<br>
+
+[Democracy Around the World!](https://emmanuelteitelbaum.shinyapps.io/vdem-dashboard) App.
+
+<br>
+
+```{r}
+#| label: observers3
+
+  # Observe changes to region selection
+  observeEvent(input$regions, {
+    if (input$regions == "Global") {
+      # Reset the selected country and display global trend when "Global" is chosen
+      selected_country(NULL)
+    } else {
+      # Reset the selected country when any specific region is chosen
+      selected_country(NULL)
+    }
+  })
+```
+
+# Reactives
+
+## What Reactives Do
+
+<br>
+
+**Reactives** are functions that **return a value**. You can assign them to an object and you can refer to reactives elsewhere in your app. 
+
+<br>
+
+You can see them as backpacks 🎒 that carry values and expressions around that you can open whenever you want.
+
+## Types of Reactive Functions
+
+<br>
+
+When you go hiking, you pick a backpack that fits your needs. There are **different types** of backpacks that are fit **to carry different things**.
+
+<br>
+
+That's similar with a reactive. They carry different things:
+
+- **reactive()**: takes an expression
+- **reactiveVal()**: takes a single value
+- **reactiveValues()**: takes a list of values
+
+# The `reactive()` Function
+
+## The `reactive()` Function
+
+<br>
+
+You can see `reactive()` as a very fancy full-size backpack 🎒🌟. 
+
+<br>
+
+It can take multiple inputs, manipulate them and return something simple (a value) or complex (a plot, a table). It can even take other reactives (other backpacks) as input!
+
+## `reactive()` Example
+
+<br>
+
+```{r} 
+#| label: reactives1
+#| code-line-numbers: "15-17,20,24"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  number_squared <- reactive({
+    input$number^2
+  }) |> bindEvent(input$button)
+  
+  output$text <- renderText({
+    number_squared()
+  })
+  
+  observe({
+    print(number_squared())
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## Laziness
+
+<br>
+
+This fancy backpack is only opened when you ask for it. It is therefore **lazy**.
+
+<br>
+
+More technical: when the dependencies of a reactive change, it doesn't re-execute right away but rather waits until it gets called by something else.
+
+
+## Reactive Values
+
+<br>
+
+ If `reactive()` is a fancy backpack, **reactive values** are simpler backpacks. They carry one or more value(s) that you can unpack, but also update.
+
+<br>
+
+You make a reactive single value with `reactiveVal()` and you can update it by calling it with a new value.
+
+<br>
+
+You can make and update multiple reactive values with `reactiveValues()`.
+
+## `reactiveVal()` Example
+
+<br>
+
+```{r}
+#| label: reactives2
+#| code-line-numbers: "15,17-19,22,26"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  number_squared <- reactiveVal(0)
+  
+  observe({
+    number_squared(input$number^2)
+  }) |> bindEvent(input$button)
+  
+  output$text <- renderText({
+    number_squared()
+  })
+  
+  observe({
+    print(number_squared())
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## `reactiveValues()` Example
+
+<br>
+
+```{r} 
+#| label: reactives3
+#| code-line-numbers: "15,17-19,22,26"
+
+library(shiny)
+
+ui <- fluidPage(
+  numericInput(inputId = "number", 
+               label = "Enter a number", 
+               value = 0),
+               
+  actionButton(inputId = "button", 
+               label = "Click me"),
+               
+  textOutput(outputId = "text")
+)
+
+server <- function(input, output, session) {
+  r <- reactiveValues(number_squared = 0) 
+  
+  observe({
+    r$number_squared <- input$number^2
+  }) |> bindEvent(input$button)
+  
+  output$text <- renderText({
+    r$number_squared
+  })
+  
+  observe({
+    print(r$number_squared)
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+## Reactive Values
+
+<br>
+
+You can see `reactiveValues()` as some kind of reactive mini-database. You can use it to store multiple values, retrieve them in different places, and update them. 
+
+<br>
+
+And since it's reactive, you can use it to **trigger other parts of your app** when one of its values changes.
+
+# Line Chart App
+
+## Example from this Week
+
+<iframe src="https://emmanuelteitelbaum.shinyapps.io/fred_app/" width="80%" height="80%" style="border: none;" data-external="1"></iframe>
+
+## Server with `reactive()` Functions
+
+<br>
+
+```{r}
+#| label: linechart1
+
+    # Download data from FRED with reactive function. 
+    # Only updates when user selects new indicator
+    fred_indicator <- reactive({
+      fredr(series_id = input$indicator,
+        observation_start = start_date,
+        observation_end = end_date)
+    })
+  
+    # Filter data according to chosen years 
+    # Only updates when user selects new data range
+    fred_data <- reactive({
+      fred_indicator() |>
+      filter(between(date, input$range[1],input$range[2])) 
+   })
+```
+
+## Key Concepts {.smaller}
+
+- **Focused Reactivity**: 
+  - Each `reactive()` function isolates updates to specific user inputs.
+  - This avoids redundant processing and enhances app performance.
+  
+- **Chained Dependencies**:
+  - `reactive()` functions can depend on each other.
+  - Changes in one reactive output can trigger updates in another, maintaining efficient data flow.
+
+- **Selective Execution**:
+  - Reduces the computational workload by recalculating only necessary parts of the data pipeline.
+  - Reactivity is triggered only in response to relevant user interactions.
+
+## UI Code
+
+<br>
+
+```{r}
+#| label: linechart2
+
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("FRED Data App"),
+    
+    fluidRow(
+      
+      # 12 columns on one row: this panel will take 1/3 of it
+      column(4, wellPanel(
+        selectInput("indicator", "Indicator:", vars)
+        ),
+      helpText("Select an indicator, choose a date range and view the trend. 
+               The grey bars represent economic recessions. 
+               The data for this app comes from the St. Louis Fed's 
+               FRED database. The consumer confidence, business confidence and 
+               lead composite indicators are OECD data downloaded through FRED.")
+      ), 
+      
+      # Remaining 2/3 occupied by plot
+      column(8,
+        plotOutput("lineChart"),     
+        sliderInput(
+          "range",
+          "",
+          min = start_date,
+          max = end_date, 
+          value = c(start_date, end_date), 
+          width = "100%"
+        )
+      )
+    )
+)
+```
+
+## Setup (Global) Code
+
+<br>
+
+```{r}
+#| label: linechart3
+
+# Load packages
+library(shiny)
+library(fredr)
+library(dplyr)
+library(ggplot2)
+
+# Set Fred API key 
+fredr_set_key("YOUR FRED API KEY") 
+
+# Assign FRED series to objects
+cci <- "CSCICP03USM665S" # consumer confidence
+bci <- "BSCICP03USM665S" # business confidence
+cli <- "USALOLITONOSTSAM" # composite lead indicator
+unemp_rate <- "UNRATE" # unemployment rate
+growth <- "A191RL1Q225SBEA" # growth rate
+
+# set start and end date
+start_date <- as.Date("1970-01-01")
+end_date <- as.Date(Sys.Date())
+
+# Create list of named values for the input selection
+vars <- c("Consumer Confidence" = cci, 
+          "Business Confidence" = bci, 
+          "Composite Indicator" = cli, 
+          "Unemployment Rate" = unemp_rate,
+          "Growth Rate" = growth)
+
+# Load helper script
+source("helper.R") # scroll down, code pasted below
+```
+
+## Your Turn! {.smaller}
+
+<br>
+
+- Do the prework, getting set up with `fredr` and other relevant packages
+- Create a NEW project folder
+- Save your helper script in a subfolder
+- Start on your app.R file
+- Extend the app by incorporating new indicators
+
+```{r}
+#| label: timer1
+#| eval: true
+#| echo: false
+
+library(countdown)
+countdown(minutes = 10, 
+          id = "timer1", 
+          bottom = "10%",
+          right = "10%",
+          color_border = "#fff",
+          color_text = "#fff",
+          color_running_background = "#42affa",
+          color_running_text = "black",
+          color_finished_background = "#E5D19D",
+          color_finished_text = "#00264A")
+```
+
+## Challenge 1--Observers {.smaller}
+
+<br>
+
+- **Notification Management**:
+  - Implement `observeEvent()` using `showNotification()` to show notifications when indicators are selected.
+- **Action Logging**:
+  - Log changes to the indicator or date range to the R console with timestamps.
+- **Dynamic UI Updates**:
+  - Use `observe()` to adjust the UI elements dynamically based on the indicator selected.
+
+## Challenge 2--Reactives {.smaller}
+
+<br>
+
+- Implement a counter using `reactiveValues()` that increments each time the indicator input changes.
+  - Display the counter value in the UI using `textOutput()`.
+  - Use `observeEvent()` to increment the counter reactively.
+- Create UI controls for selecting plot line type and color.
+  - Use `reactiveValues()` to store the current plot style settings.
+  - Update the plot rendering logic to use these settings dynamically.
+- Update our app to include vertical lines on the plot that show "black swan" events
+  - Use check boxes to allow users to select which events to display
+  - Use `reactiveValues()` to store the selected events, then plot
+  
+## Acknowledgements
+
+- Parts of this presentation were adapted from Veerle van Leemput's [Shiny 101: The Modular App Blueprint](https://github.com/hypebright/shinyconf2024-shiny101)
+
+
+
+
+
+
+
+
+

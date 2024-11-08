@@ -1,0 +1,257 @@
+---
+title: "Modules"
+date: today
+date-format: long
+footer: "[DataViz 2102 Website](https://dataviz-gwu.rocks)"
+logo: images/dataviz-logo.png
+format:
+  revealjs:
+    theme: [simple, custom.scss]
+    transition: fade
+    slide-number: true
+    #multiplex: true
+    chalkboard: true
+execute:
+  echo: true
+  eval: false
+  freeze: auto
+---
+
+# Shiny modules ⚙️
+
+## What are modules?
+
+You could call modules **special functions**.
+
+<br>
+
+Using functions in a Shiny app is common:
+
+- You use functions in your UI (e.g. `value_box()`)
+- You use functions in your server
+
+<br>
+
+That works well for code that is **completely on the ui or server side**.
+
+## What are modules?
+
+For code that spans both the ui and the server, you need a new technique: **modules**
+
+<br>
+
+A module consists of some **UI code** that works together with some **server code**
+
+<br>
+
+Modules are special because they create their own **namespace**: things like input and output ids are isolated from the rest of the app
+
+## Why use modules?
+
+There are two main reasons to work with modules:
+
+<br>
+
+1. Because a module creates its own **namespace**, you can write and run code in isolation. You don’t need to worry about what’s going on outside the module. And remember, ids needed to be unique!
+
+2. Because a module is basically a **function**, it comes with all the benefits that functions have.
+
+## What does a module look like?
+
+A module has two parts, and is basically a mini-app:
+
+<br>
+
+1. **The module UI**, which generates the HTML and runs code inside the `ui()` function
+
+2. **The module server**, which runs code inside the `server()` function
+
+## What does a module look like?
+
+```{.r code-line-numbers="3-13"}
+library(shiny)
+
+numberModUI <- function(id) {
+  ns <- NS(id)
+  tagList(
+    numericInput(inputId = ns("number"),
+                 label = "Enter a number",
+                 value = 0),
+    actionButton(inputId = ns("button"),
+                 label = "Click me"),
+    textOutput(outputId = ns("text"))
+  )
+}
+
+numberModServer <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    output$text <- renderText({
+      input$number^2
+    }) |> bindEvent(input$button)
+  })
+}
+
+ui <- fluidPage(
+  numberModUI("numbers")
+)
+
+server <- function(input, output, session) {
+  numberModServer("numbers")
+}
+
+shinyApp(ui, server)
+
+```
+
+## What does a module look like?
+
+```{.r code-line-numbers="3,4,6,9,11"}
+library(shiny)
+
+numberModUI <- function(id) {
+  ns <- NS(id)
+  tagList(
+    numericInput(inputId = ns("number"),
+                 label = "Enter a number",
+                 value = 0),
+    actionButton(inputId = ns("button"),
+                 label = "Click me"),
+    textOutput(outputId = ns("text"))
+  )
+}
+
+numberModServer <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    output$text <- renderText({
+      input$number^2
+    }) |> bindEvent(input$button)
+  })
+}
+
+ui <- fluidPage(
+  numberModUI("numbers")
+)
+
+server <- function(input, output, session) {
+  numberModServer("numbers")
+}
+
+shinyApp(ui, server)
+
+```
+
+## What does a module look like?
+
+```{.r code-line-numbers="15-21"}
+library(shiny)
+
+numberModUI <- function(id) {
+  ns <- NS(id)
+  tagList(
+    numericInput(inputId = ns("number"),
+                 label = "Enter a number",
+                 value = 0),
+    actionButton(inputId = ns("button"),
+                 label = "Click me"),
+    textOutput(outputId = ns("text"))
+  )
+}
+
+numberModServer <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    output$text <- renderText({
+      input$number^2
+    }) |> bindEvent(input$button)
+  })
+}
+
+ui <- fluidPage(
+  numberModUI("numbers")
+)
+
+server <- function(input, output, session) {
+  numberModServer("numbers")
+}
+
+shinyApp(ui, server)
+
+```
+
+## What does a module look like?
+
+```{.r code-line-numbers="23-29"}
+library(shiny)
+
+numberModUI <- function(id) {
+  ns <- NS(id)
+  tagList(
+    numericInput(inputId = ns("number"),
+                 label = "Enter a number",
+                 value = 0),
+    actionButton(inputId = ns("button"),
+                 label = "Click me"),
+    textOutput(outputId = ns("text"))
+  )
+}
+
+numberModServer <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    output$text <- renderText({
+      input$number^2
+    }) |> bindEvent(input$button)
+  })
+}
+
+ui <- fluidPage(
+  numberModUI("numbers")
+)
+
+server <- function(input, output, session) {
+  numberModServer("numbers")
+}
+
+shinyApp(ui, server)
+
+```
+
+## Where do you put modules?
+
+You can simply put the module functions in the `app.R` file (you call this **inline**).
+
+<br>
+
+Other options:
+
+ - Put the module in a separate R script in the /R folder. **Shiny will automatically source it**.
+
+- Put the module in a separate R script in any other folder, and source it using `source(“./my_modules/random.R”)`. 
+
+# Challenge
+
+## Module Use Cases
+
+- When do you think modules might be useful in a Shiny app?
+- What are some examples of modules you might create?
+- Hint: works well when you have to repeat the same thing multiple times, like with countries, regions, months or years.
+- [Here](https://emilyriederer.shinyapps.io/shiny-modules-demo/) is one simple example
+
+## Design an App with Modules
+
+- Design a simple Shiny app that uses a module.
+- What are the UI elements?
+- What are the server elements?
+- How could you use one or more modules to make the app easier to build and maintain?
+- Discuss a possible design with your group. 
+
+## Build the App
+
+- Build the app you designed.
+- Start with the modules.
+- Test it out.
+- Post it to shinyapps.io and share the link with the class.
+
+## Acknowledgements
+
+- Parts of this presentation were adapted from Veerle van Leemput's [Shiny 101: The Modular App Blueprint](https://github.com/hypebright/shinyconf2024-shiny101)
+
+

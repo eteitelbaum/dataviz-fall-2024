@@ -12,7 +12,7 @@ For this assignment, you are going to be reproducing a version of [this Shiny ap
 
 ## Step 1: Wrangle your data (20 pts)
 
-Load `vdemdata`, `dplyr` and `readr` into a separate R script or code chunk in a Quarto document. Select `country_name`, `year`, and three V-Dem democracy indicators: `v2x_polyarchy`, `v2x_libdem`, and `v2x_paritpdem`. Now go to the [V-Dem codebook](https://www.v-dem.net/documents/24/codebook_v13.pdf) and select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a `glimpse()` and the data to make sure everythign is there. Then store your data in an object called `vdem_trends` and then save it as a .csv file by the same name. 
+Load `vdemlite`, `dplyr` and `readr` into a separate R script or code chunk in a Quarto document. Select `country_name`, `year`, and three V-Dem democracy indicators: `v2x_polyarchy`, `v2x_libdem`, and `v2x_paritpdem`. Now use `searchdem()` to select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a `glimpse()` and the data to make sure everythign is there. Then store your data in an object called `vdem_trends` and then save it as a CSV file by the same name. 
 
 ## Step 2: Do the setup work (20 pts)
 
@@ -25,9 +25,9 @@ Now, in your `app.R` file, load your packages, load the data into an object call
 **Variable list**: Create a list of values using the combine function (`c()`) to be used in the "Indicator" dropdown menu. Some starter code is provided for you here:
 
 ```{r}
-vars <- c("Polyarchy" = "v2x_polyarchy"), # be sure to insert the variable names you have 
-          "Liberal Democracy" = ......   # in your wrangled data on the right hand side
-          )                              # of these equations 
+vars <- c("Polyarchy" = "v2x_polyarchy"), # be sure to insert the variable names 
+          "Liberal Democracy" = ......   # from your wrangled data on the right
+          )                              # side of these equations 
 ```
 
 **Country names list**: To get a list of country names, `filter()` `vdem_trends` for one year (tip: you can use `max(year)` for this), [pull()](https://dplyr.tidyverse.org/reference/pull.html) the country column and pipe that into `sort()` (with no arguments) so that the country names are arranged in alphabetical order. Store the list of country names in an object called `countries`. 
@@ -44,14 +44,14 @@ countries <- vdem_trends |>
 Define the UI using code similar to what we saw for the FRED line chart app in Module 5.2. You will want a quarter of the columns to be occupied by the `wellPanel()` with the "Indicator:" and "Country:" dropdown menus and some help text. The remaining 3/4 of the space is going to be occupied by your plot output. For the slider input, use this code: 
 
 ```{r}
-           sliderTextInput(
-             "range",
-             NULL,
-             grid = TRUE,
-             choices = 1789:2021,
-             selected = c(1789, 2021),
-             width = "100%"
-           )
+sliderTextInput(
+ "range",
+ NULL,
+ grid = TRUE,
+ choices = 1789:2021,
+ selected = c(1789, 2021),
+ width = "100%"
+)
 ```
 
 ## Step 4: Define the server logic (20 pts)
@@ -59,20 +59,20 @@ Define the UI using code similar to what we saw for the FRED line chart app in M
 Now the tricky part. This app is going to require two reactive functions. The first is going to be for the country and indicator dropdowns:
 
 ```{r}
-  ctry_indicator <- reactive({
-    vdem_trends |>
-    filter(country == INPUT) |> # replace INPUT with relevant input
-    select(year, INPUT)         # ditto
-    })
+ctry_indicator <- reactive({
+  vdem_trends |>
+  filter(country == INPUT) |> # replace INPUT with relevant input
+  select(year, INPUT)         # ditto
+  })
 ```
 
 The second is going to be for the year slider: 
 
 ```{r}
-  plot_df <- reactive({
-    ctry_indicator() |>
-    filter(year %in% (INPUT:INPUT)) # replace INPUT with relevant input
-   })
+plot_df <- reactive({
+  ctry_indicator() |>
+  filter(year %in% (INPUT:INPUT)) # replace INPUT with relevant input
+ })
 ```
 
 Now you need to render the plot. In the `ggplot()` call your data is going to be the saved in the second reactive function `plot_df()` (don't forget the parentheses!). In `aes()` `x` will simply be `year` but y is a little tricky. Here you need to call `get(input$indicator))` You might have guessed the `input$indicator` part, but to [non-standard evaluation](http://adv-r.had.co.nz/Computing-on-the-language.html) in `aes()`, you cannot pass your column into ggplot before you remove the parentheses. `get()` is one of [many ways](https://stackoverflow.com/questions/19826352/pass-character-strings-to-ggplot2-within-a-function) to do this.   

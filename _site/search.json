@@ -2053,7 +2053,7 @@
     "href": "assignments/coding-assignment-5.html#step-1-wrangle-your-data-20-pts",
     "title": "Assignment 5",
     "section": "Step 1: Wrangle your data (20 pts)",
-    "text": "Step 1: Wrangle your data (20 pts)\nLoad vdemdata, dplyr and readr into a separate R script or code chunk in a Quarto document. Select country_name, year, and three V-Dem democracy indicators: v2x_polyarchy, v2x_libdem, and v2x_paritpdem. Now go to the V-Dem codebook and select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a glimpse() and the data to make sure everythign is there. Then store your data in an object called vdem_trends and then save it as a .csv file by the same name.",
+    "text": "Step 1: Wrangle your data (20 pts)\nLoad vdemlite, dplyr and readr into a separate R script or code chunk in a Quarto document. Select country_name, year, and three V-Dem democracy indicators: v2x_polyarchy, v2x_libdem, and v2x_paritpdem. Now use searchdem() to select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a glimpse() and the data to make sure everythign is there. Then store your data in an object called vdem_trends and then save it as a CSV file by the same name.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 5"
@@ -2064,7 +2064,7 @@
     "href": "assignments/coding-assignment-5.html#step-2-do-the-setup-work-20-pts",
     "title": "Assignment 5",
     "section": "Step 2: Do the setup work (20 pts)",
-    "text": "Step 2: Do the setup work (20 pts)\nNow, in your app.R file, load your packages, load the data into an object called vdem_trends, and create lists of the variables and countries for the ui.\nPackages: You will need to load shiny, shinyWidgets, readr, dplyr, ggplot2 and lubridate.\nData: These will be loaded in from the .csv file you created in Step 1.\nVariable list: Create a list of values using the combine function (c()) to be used in the “Indicator” dropdown menu. Some starter code is provided for you here:\n\nvars &lt;- c(\"Polyarchy\" = \"v2x_polyarchy\"), # be sure to insert the variable names you have \n          \"Liberal Democracy\" = ......   # in your wrangled data on the right hand side\n          )                              # of these equations \n\nCountry names list: To get a list of country names, filter() vdem_trends for one year (tip: you can use max(year) for this), pull() the country column and pipe that into sort() (with no arguments) so that the country names are arranged in alphabetical order. Store the list of country names in an object called countries.\n\ncountries &lt;- vdem_trends |&gt;\n  filter(....) |&gt; # filter what?\n  pull(....) |&gt;   # pull what?\n  sort()          # no arguments for sort",
+    "text": "Step 2: Do the setup work (20 pts)\nNow, in your app.R file, load your packages, load the data into an object called vdem_trends, and create lists of the variables and countries for the ui.\nPackages: You will need to load shiny, shinyWidgets, readr, dplyr, ggplot2 and lubridate.\nData: These will be loaded in from the .csv file you created in Step 1.\nVariable list: Create a list of values using the combine function (c()) to be used in the “Indicator” dropdown menu. Some starter code is provided for you here:\n\nvars &lt;- c(\"Polyarchy\" = \"v2x_polyarchy\"), # be sure to insert the variable names \n          \"Liberal Democracy\" = ......   # from your wrangled data on the right\n          )                              # side of these equations \n\nCountry names list: To get a list of country names, filter() vdem_trends for one year (tip: you can use max(year) for this), pull() the country column and pipe that into sort() (with no arguments) so that the country names are arranged in alphabetical order. Store the list of country names in an object called countries.\n\ncountries &lt;- vdem_trends |&gt;\n  filter(....) |&gt; # filter what?\n  pull(....) |&gt;   # pull what?\n  sort()          # no arguments for sort",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 5"
@@ -2075,7 +2075,7 @@
     "href": "assignments/coding-assignment-5.html#step-3-define-the-ui-20-pts",
     "title": "Assignment 5",
     "section": "Step 3: Define the UI (20 pts)",
-    "text": "Step 3: Define the UI (20 pts)\nDefine the UI using code similar to what we saw for the FRED line chart app in Module 5.2. You will want a quarter of the columns to be occupied by the wellPanel() with the “Indicator:” and “Country:” dropdown menus and some help text. The remaining 3/4 of the space is going to be occupied by your plot output. For the slider input, use this code:\n\n           sliderTextInput(\n             \"range\",\n             NULL,\n             grid = TRUE,\n             choices = 1789:2021,\n             selected = c(1789, 2021),\n             width = \"100%\"\n           )",
+    "text": "Step 3: Define the UI (20 pts)\nDefine the UI using code similar to what we saw for the FRED line chart app in Module 5.2. You will want a quarter of the columns to be occupied by the wellPanel() with the “Indicator:” and “Country:” dropdown menus and some help text. The remaining 3/4 of the space is going to be occupied by your plot output. For the slider input, use this code:\n\nsliderTextInput(\n \"range\",\n NULL,\n grid = TRUE,\n choices = 1789:2021,\n selected = c(1789, 2021),\n width = \"100%\"\n)",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 5"
@@ -2086,7 +2086,7 @@
     "href": "assignments/coding-assignment-5.html#step-4-define-the-server-logic-20-pts",
     "title": "Assignment 5",
     "section": "Step 4: Define the server logic (20 pts)",
-    "text": "Step 4: Define the server logic (20 pts)\nNow the tricky part. This app is going to require two reactive functions. The first is going to be for the country and indicator dropdowns:\n\n  ctry_indicator &lt;- reactive({\n    vdem_trends |&gt;\n    filter(country == INPUT) |&gt; # replace INPUT with relevant input\n    select(year, INPUT)         # ditto\n    })\n\nThe second is going to be for the year slider:\n\n  plot_df &lt;- reactive({\n    ctry_indicator() |&gt;\n    filter(year %in% (INPUT:INPUT)) # replace INPUT with relevant input\n   })\n\nNow you need to render the plot. In the ggplot() call your data is going to be the saved in the second reactive function plot_df() (don’t forget the parentheses!). In aes() x will simply be year but y is a little tricky. Here you need to call get(input$indicator)) You might have guessed the input$indicator part, but to non-standard evaluation in aes(), you cannot pass your column into ggplot before you remove the parentheses. get() is one of many ways to do this.\nFor the y-labels, you can use names(vars[which(vars == input$indicator)])) to get the name of the selected indicator.",
+    "text": "Step 4: Define the server logic (20 pts)\nNow the tricky part. This app is going to require two reactive functions. The first is going to be for the country and indicator dropdowns:\n\nctry_indicator &lt;- reactive({\n  vdem_trends |&gt;\n  filter(country == INPUT) |&gt; # replace INPUT with relevant input\n  select(year, INPUT)         # ditto\n  })\n\nThe second is going to be for the year slider:\n\nplot_df &lt;- reactive({\n  ctry_indicator() |&gt;\n  filter(year %in% (INPUT:INPUT)) # replace INPUT with relevant input\n })\n\nNow you need to render the plot. In the ggplot() call your data is going to be the saved in the second reactive function plot_df() (don’t forget the parentheses!). In aes() x will simply be year but y is a little tricky. Here you need to call get(input$indicator)) You might have guessed the input$indicator part, but to non-standard evaluation in aes(), you cannot pass your column into ggplot before you remove the parentheses. get() is one of many ways to do this.\nFor the y-labels, you can use names(vars[which(vars == input$indicator)])) to get the name of the selected indicator.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 5"
@@ -2449,7 +2449,7 @@
     "href": "index.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n🖥️\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
+    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n🖥️\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n🖥️\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -5057,6 +5057,97 @@
     "objectID": "slides/week-12.1.html#acknowledgements",
     "href": "slides/week-12.1.html#acknowledgements",
     "title": "Observers and Reactives",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-are-modules",
+    "href": "slides/week-12.2.html#what-are-modules",
+    "title": "Modules",
+    "section": "What are modules?",
+    "text": "What are modules?\nYou could call modules special functions.\n\nUsing functions in a Shiny app is common:\n\nYou use functions in your UI (e.g. value_box())\nYou use functions in your server\n\n\nThat works well for code that is completely on the ui or server side."
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-are-modules-1",
+    "href": "slides/week-12.2.html#what-are-modules-1",
+    "title": "Modules",
+    "section": "What are modules?",
+    "text": "What are modules?\nFor code that spans both the ui and the server, you need a new technique: modules\n\nA module consists of some UI code that works together with some server code\n\nModules are special because they create their own namespace: things like input and output ids are isolated from the rest of the app"
+  },
+  {
+    "objectID": "slides/week-12.2.html#why-use-modules",
+    "href": "slides/week-12.2.html#why-use-modules",
+    "title": "Modules",
+    "section": "Why use modules?",
+    "text": "Why use modules?\nThere are two main reasons to work with modules:\n\n\nBecause a module creates its own namespace, you can write and run code in isolation. You don’t need to worry about what’s going on outside the module. And remember, ids needed to be unique!\nBecause a module is basically a function, it comes with all the benefits that functions have."
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-does-a-module-look-like",
+    "href": "slides/week-12.2.html#what-does-a-module-look-like",
+    "title": "Modules",
+    "section": "What does a module look like?",
+    "text": "What does a module look like?\nA module has two parts, and is basically a mini-app:\n\n\nThe module UI, which generates the HTML and runs code inside the ui() function\nThe module server, which runs code inside the server() function"
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-does-a-module-look-like-1",
+    "href": "slides/week-12.2.html#what-does-a-module-look-like-1",
+    "title": "Modules",
+    "section": "What does a module look like?",
+    "text": "What does a module look like?\nlibrary(shiny)\n\nnumberModUI &lt;- function(id) {\n  ns &lt;- NS(id)\n  tagList(\n    numericInput(inputId = ns(\"number\"),\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = ns(\"button\"),\n                 label = \"Click me\"),\n    textOutput(outputId = ns(\"text\"))\n  )\n}\n\nnumberModServer &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    output$text &lt;- renderText({\n      input$number^2\n    }) |&gt; bindEvent(input$button)\n  })\n}\n\nui &lt;- fluidPage(\n  numberModUI(\"numbers\")\n)\n\nserver &lt;- function(input, output, session) {\n  numberModServer(\"numbers\")\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-does-a-module-look-like-2",
+    "href": "slides/week-12.2.html#what-does-a-module-look-like-2",
+    "title": "Modules",
+    "section": "What does a module look like?",
+    "text": "What does a module look like?\nlibrary(shiny)\n\nnumberModUI &lt;- function(id) {\n  ns &lt;- NS(id)\n  tagList(\n    numericInput(inputId = ns(\"number\"),\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = ns(\"button\"),\n                 label = \"Click me\"),\n    textOutput(outputId = ns(\"text\"))\n  )\n}\n\nnumberModServer &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    output$text &lt;- renderText({\n      input$number^2\n    }) |&gt; bindEvent(input$button)\n  })\n}\n\nui &lt;- fluidPage(\n  numberModUI(\"numbers\")\n)\n\nserver &lt;- function(input, output, session) {\n  numberModServer(\"numbers\")\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-does-a-module-look-like-3",
+    "href": "slides/week-12.2.html#what-does-a-module-look-like-3",
+    "title": "Modules",
+    "section": "What does a module look like?",
+    "text": "What does a module look like?\nlibrary(shiny)\n\nnumberModUI &lt;- function(id) {\n  ns &lt;- NS(id)\n  tagList(\n    numericInput(inputId = ns(\"number\"),\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = ns(\"button\"),\n                 label = \"Click me\"),\n    textOutput(outputId = ns(\"text\"))\n  )\n}\n\nnumberModServer &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    output$text &lt;- renderText({\n      input$number^2\n    }) |&gt; bindEvent(input$button)\n  })\n}\n\nui &lt;- fluidPage(\n  numberModUI(\"numbers\")\n)\n\nserver &lt;- function(input, output, session) {\n  numberModServer(\"numbers\")\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.2.html#what-does-a-module-look-like-4",
+    "href": "slides/week-12.2.html#what-does-a-module-look-like-4",
+    "title": "Modules",
+    "section": "What does a module look like?",
+    "text": "What does a module look like?\nlibrary(shiny)\n\nnumberModUI &lt;- function(id) {\n  ns &lt;- NS(id)\n  tagList(\n    numericInput(inputId = ns(\"number\"),\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = ns(\"button\"),\n                 label = \"Click me\"),\n    textOutput(outputId = ns(\"text\"))\n  )\n}\n\nnumberModServer &lt;- function(id) {\n  moduleServer(id, function(input, output, session) {\n    output$text &lt;- renderText({\n      input$number^2\n    }) |&gt; bindEvent(input$button)\n  })\n}\n\nui &lt;- fluidPage(\n  numberModUI(\"numbers\")\n)\n\nserver &lt;- function(input, output, session) {\n  numberModServer(\"numbers\")\n}\n\nshinyApp(ui, server)"
+  },
+  {
+    "objectID": "slides/week-12.2.html#where-do-you-put-modules",
+    "href": "slides/week-12.2.html#where-do-you-put-modules",
+    "title": "Modules",
+    "section": "Where do you put modules?",
+    "text": "Where do you put modules?\nYou can simply put the module functions in the app.R file (you call this inline).\n\nOther options:\n\nPut the module in a separate R script in the /R folder. Shiny will automatically source it.\nPut the module in a separate R script in any other folder, and source it using source(“./my_modules/random.R”)."
+  },
+  {
+    "objectID": "slides/week-12.2.html#module-use-cases",
+    "href": "slides/week-12.2.html#module-use-cases",
+    "title": "Modules",
+    "section": "Module Use Cases",
+    "text": "Module Use Cases\n\nWhen do you think modules might be useful in a Shiny app?\nWhat are some examples of modules you might create?\nHint: works well when you have to repeat the same thing multiple times, like with countries, regions, months or years.\nHere is one simple example"
+  },
+  {
+    "objectID": "slides/week-12.2.html#design-an-app-with-modules",
+    "href": "slides/week-12.2.html#design-an-app-with-modules",
+    "title": "Modules",
+    "section": "Design an App with Modules",
+    "text": "Design an App with Modules\n\nDesign a simple Shiny app that uses a module.\nWhat are the UI elements?\nWhat are the server elements?\nHow could you use one or more modules to make the app easier to build and maintain?\nDiscuss a possible design with your group."
+  },
+  {
+    "objectID": "slides/week-12.2.html#build-the-app",
+    "href": "slides/week-12.2.html#build-the-app",
+    "title": "Modules",
+    "section": "Build the App",
+    "text": "Build the App\n\nBuild the app you designed.\nStart with the modules.\nTest it out.\nPost it to shinyapps.io and share the link with the class."
+  },
+  {
+    "objectID": "slides/week-12.2.html#acknowledgements",
+    "href": "slides/week-12.2.html#acknowledgements",
+    "title": "Modules",
     "section": "Acknowledgements",
     "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
   }

@@ -417,7 +417,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-1-wrangle-your-data-20-pts" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-wrangle-your-data-20-pts">Step 1: Wrangle your data (20 pts)</h2>
-<p>Load <code>vdemdata</code>, <code>dplyr</code> and <code>readr</code> into a separate R script or code chunk in a Quarto document. Select <code>country_name</code>, <code>year</code>, and three V-Dem democracy indicators: <code>v2x_polyarchy</code>, <code>v2x_libdem</code>, and <code>v2x_paritpdem</code>. Now go to the <a href="https://www.v-dem.net/documents/24/codebook_v13.pdf">V-Dem codebook</a> and select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a <code>glimpse()</code> and the data to make sure everythign is there. Then store your data in an object called <code>vdem_trends</code> and then save it as a .csv file by the same name.</p>
+<p>Load <code>vdemlite</code>, <code>dplyr</code> and <code>readr</code> into a separate R script or code chunk in a Quarto document. Select <code>country_name</code>, <code>year</code>, and three V-Dem democracy indicators: <code>v2x_polyarchy</code>, <code>v2x_libdem</code>, and <code>v2x_paritpdem</code>. Now use <code>searchdem()</code> to select four additional indicators related to democracy that you would like to explore. Make sure that your chosen indicators cover the same time period as those in the app (1789-2021). Have a <code>glimpse()</code> and the data to make sure everythign is there. Then store your data in an object called <code>vdem_trends</code> and then save it as a CSV file by the same name.</p>
 </section>
 <section id="step-2-do-the-setup-work-20-pts" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-do-the-setup-work-20-pts">Step 2: Do the setup work (20 pts)</h2>
@@ -426,9 +426,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Data</strong>: These will be loaded in from the .csv file you created in Step 1.</p>
 <p><strong>Variable list</strong>: Create a list of values using the combine function (<code>c()</code>) to be used in the “Indicator” dropdown menu. Some starter code is provided for you here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Polyarchy"</span> <span class="ot">=</span> <span class="st">"v2x_polyarchy"</span>), <span class="co"># be sure to insert the variable names you have </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Liberal Democracy"</span> <span class="ot">=</span> ......   <span class="co"># in your wrangled data on the right hand side</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>          <span class="er">)</span>                              <span class="co"># of these equations </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Polyarchy"</span> <span class="ot">=</span> <span class="st">"v2x_polyarchy"</span>), <span class="co"># be sure to insert the variable names </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Liberal Democracy"</span> <span class="ot">=</span> ......   <span class="co"># from your wrangled data on the right</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>          <span class="er">)</span>                              <span class="co"># side of these equations </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Country names list</strong>: To get a list of country names, <code>filter()</code> <code>vdem_trends</code> for one year (tip: you can use <code>max(year)</code> for this), <a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a> the country column and pipe that into <code>sort()</code> (with no arguments) so that the country names are arranged in alphabetical order. Store the list of country names in an object called <code>countries</code>.</p>
 <div class="cell">
@@ -442,32 +442,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="step-3-define-the-ui-20-pts">Step 3: Define the UI (20 pts)</h2>
 <p>Define the UI using code similar to what we saw for the FRED line chart app in Module 5.2. You will want a quarter of the columns to be occupied by the <code>wellPanel()</code> with the “Indicator:” and “Country:” dropdown menus and some help text. The remaining 3/4 of the space is going to be occupied by your plot output. For the slider input, use this code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>           <span class="fu">sliderTextInput</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">"range"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             <span class="cn">NULL</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">grid =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">choices =</span> <span class="dv">1789</span><span class="sc">:</span><span class="dv">2021</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">selected =</span> <span class="fu">c</span>(<span class="dv">1789</span>, <span class="dv">2021</span>),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">width =</span> <span class="st">"100%"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>           )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sliderTextInput</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="st">"range"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="cn">NULL</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="at">grid =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="at">choices =</span> <span class="dv">1789</span><span class="sc">:</span><span class="dv">2021</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="at">selected =</span> <span class="fu">c</span>(<span class="dv">1789</span>, <span class="dv">2021</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> <span class="at">width =</span> <span class="st">"100%"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-4-define-the-server-logic-20-pts" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-define-the-server-logic-20-pts">Step 4: Define the server logic (20 pts)</h2>
 <p>Now the tricky part. This app is going to require two reactive functions. The first is going to be for the country and indicator dropdowns:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  ctry_indicator <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    vdem_trends <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> INPUT) <span class="sc">|&gt;</span> <span class="co"># replace INPUT with relevant input</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year, INPUT)         <span class="co"># ditto</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ctry_indicator <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  vdem_trends <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> INPUT) <span class="sc">|&gt;</span> <span class="co"># replace INPUT with relevant input</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, INPUT)         <span class="co"># ditto</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The second is going to be for the year slider:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  plot_df <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ctry_indicator</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">%in%</span> (INPUT<span class="sc">:</span>INPUT)) <span class="co"># replace INPUT with relevant input</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>   })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ctry_indicator</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> (INPUT<span class="sc">:</span>INPUT)) <span class="co"># replace INPUT with relevant input</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now you need to render the plot. In the <code>ggplot()</code> call your data is going to be the saved in the second reactive function <code>plot_df()</code> (don’t forget the parentheses!). In <code>aes()</code> <code>x</code> will simply be <code>year</code> but y is a little tricky. Here you need to call <code>get(input$indicator))</code> You might have guessed the <code>input$indicator</code> part, but to <a href="http://adv-r.had.co.nz/Computing-on-the-language.html">non-standard evaluation</a> in <code>aes()</code>, you cannot pass your column into ggplot before you remove the parentheses. <code>get()</code> is one of <a href="https://stackoverflow.com/questions/19826352/pass-character-strings-to-ggplot2-within-a-function">many ways</a> to do this.</p>
 <p>For the y-labels, you can use <code>names(vars[which(vars == input$indicator)]))</code> to get the name of the selected indicator.</p>

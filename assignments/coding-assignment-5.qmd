@@ -8,7 +8,7 @@ execute:
 
 For this assignment, you are going to be reproducing a version of [this Shiny app](https://emmanuelteitelbaum.shinyapps.io/demwaves/) and using it to evaluate Samuel Huntington's classic book, *The Third Wave* which, according to Google, has been cited more than 19,700 times! For convenience, we will be looking a Journal of Democracy [article](https://muse-jhu-edu.proxygw.wrlc.org/article/225602) by Huntington that summarizes his main points from the book. You will be doing most of your coding in the separate `app.R` template provided for you. A big part of your grade for this assignment will be based on getting that file to produce your Shiny App. However, you can use this document as a worksheet to help generate the various elements of code for your App. 
 
-**Submission note**: For this assignment you should submit your working Shiny App code via GitHub. You can use this workbook to develop your code.
+**Submission note**: For this assignment you should submit your project folder to Blackboard as with previous assignments.
 
 ## Step 1: Wrangle your data (20 pts)
 

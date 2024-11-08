@@ -2053,7 +2053,7 @@
     "href": "assignments/coding-assignment-5.html#step-1-wrangle-your-data-20-pts",
     "title": "Assignment 5",
     "section": "Step 1: Wrangle your data (20 pts)",
-    "text": "Step 1: Wrangle your data (20 pts)\nLoad vdemlite, dplyr and readr into a separate R script or code chunk in a Quarto document. Select country_name, year, and three V-Dem democracy indicators: v2x_polyarchy, v2x_libdem, and v2x_paritpdem. Now use searchdem() to select four additional indicators related to democracy that you would like to explore. Next use fetchdem() to download the data. Have a glimpse() at the data to make sure everything is there. Then store your data in an object called vdem_trends and then save it as a CSV file by the same name.",
+    "text": "Step 1: Wrangle your data (20 pts)\nLoad vdemlite, dplyr and readr into a separate R script or code chunk in a Quarto document. Select country_name, year, and three V-Dem democracy indicators: v2x_polyarchy, v2x_libdem, and v2x_partipdem. Now use searchdem() to select four additional indicators related to democracy that you would like to explore. Next use fetchdem() to download the data. Have a glimpse() at the data to make sure everything is there. Then store your data in an object called vdem_trends and then save it as a CSV file by the same name.",
     "crumbs": [
       "Coding Assignments",
       "Coding Assignment 5"

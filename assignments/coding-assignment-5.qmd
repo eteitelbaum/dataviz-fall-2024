@@ -48,8 +48,8 @@ sliderTextInput(
  "range",
  NULL,
  grid = TRUE,
- choices = 1789:2021,
- selected = c(1789, 2021),
+ choices = 1970:2023,
+ selected = c(1970, 2023),
  width = "100%"
 )
 ```
@@ -75,7 +75,7 @@ plot_df <- reactive({
  })
 ```
 
-Now you need to render the plot. In the `ggplot()` call your data is going to be the saved in the second reactive function `plot_df()` (don't forget the parentheses!). In `aes()` `x` will simply be `year` but y is a little tricky. Here you need to call `get(input$indicator))` You might have guessed the `input$indicator` part, but to [non-standard evaluation](http://adv-r.had.co.nz/Computing-on-the-language.html) in `aes()`, you cannot pass your column into ggplot before you remove the parentheses. `get()` is one of [many ways](https://stackoverflow.com/questions/19826352/pass-character-strings-to-ggplot2-within-a-function) to do this.   
+Now you need to render the plot. In the `ggplot()` call your data is going to be the saved in the second reactive function `plot_df()` (don't forget the parentheses!). In `aes()` `x` will simply be `year` but y is a little tricky. Here you need to call `.data[[input$indicator]]` You might have guessed the `input$indicator` part, but to [non-standard evaluation](http://adv-r.had.co.nz/Computing-on-the-language.html) in `aes()`, you cannot pass your column into ggplot before you remove the parentheses. See [Lecture 7.2](https://dataviz-gwu.rocks/slides/week-7.2#/tidy-evaluation-2) for more on this.
 
 For the y-labels, you can use `names(vars[which(vars == input$indicator)]))` to get the name of the selected indicator. 
 

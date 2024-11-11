@@ -446,8 +446,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="st">"range"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="cn">NULL</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="at">grid =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="at">choices =</span> <span class="dv">1789</span><span class="sc">:</span><span class="dv">2021</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="at">selected =</span> <span class="fu">c</span>(<span class="dv">1789</span>, <span class="dv">2021</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="at">choices =</span> <span class="dv">1970</span><span class="sc">:</span><span class="dv">2023</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="at">selected =</span> <span class="fu">c</span>(<span class="dv">1970</span>, <span class="dv">2023</span>),</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> <span class="at">width =</span> <span class="st">"100%"</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -469,7 +469,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> (INPUT<span class="sc">:</span>INPUT)) <span class="co"># replace INPUT with relevant input</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now you need to render the plot. In the <code>ggplot()</code> call your data is going to be the saved in the second reactive function <code>plot_df()</code> (don’t forget the parentheses!). In <code>aes()</code> <code>x</code> will simply be <code>year</code> but y is a little tricky. Here you need to call <code>get(input$indicator))</code> You might have guessed the <code>input$indicator</code> part, but to <a href="http://adv-r.had.co.nz/Computing-on-the-language.html">non-standard evaluation</a> in <code>aes()</code>, you cannot pass your column into ggplot before you remove the parentheses. <code>get()</code> is one of <a href="https://stackoverflow.com/questions/19826352/pass-character-strings-to-ggplot2-within-a-function">many ways</a> to do this.</p>
+<p>Now you need to render the plot. In the <code>ggplot()</code> call your data is going to be the saved in the second reactive function <code>plot_df()</code> (don’t forget the parentheses!). In <code>aes()</code> <code>x</code> will simply be <code>year</code> but y is a little tricky. Here you need to call <code>.data[[input$indicator]]</code> You might have guessed the <code>input$indicator</code> part, but to <a href="http://adv-r.had.co.nz/Computing-on-the-language.html">non-standard evaluation</a> in <code>aes()</code>, you cannot pass your column into ggplot before you remove the parentheses. See <a href="https://dataviz-gwu.rocks/slides/week-7.2#/tidy-evaluation-2">Lecture 7.2</a> for more on this.</p>
 <p>For the y-labels, you can use <code>names(vars[which(vars == input$indicator)]))</code> to get the name of the selected indicator.</p>
 </section>
 <section id="step-5-run-the-app-and-interpret-the-results-20-pts" class="level2">

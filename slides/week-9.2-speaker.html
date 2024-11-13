@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.6.18">
 
   <meta name="dcterms.date" content="2024-11-11">
-  <title>PSC/DATS 2102--Fall Schedule – Scatter Plot App</title>
+  <title>PSC/DATS 2102--Fall Schedule – Advanced Table Skills</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,9 +389,9 @@
   </style>
   <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
   <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
-<meta property="og:title" content="Scatter Plot App – PSC/DATS 2102–Fall Schedule">
+<meta property="og:title" content="Advanced Table Skills – PSC/DATS 2102–Fall Schedule">
 <meta property="og:site_name" content="PSC/DATS 2102--Fall Schedule">
-<meta name="twitter:title" content="Scatter Plot App – PSC/DATS 2102–Fall Schedule">
+<meta name="twitter:title" content="Advanced Table Skills – PSC/DATS 2102–Fall Schedule">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-dark">
@@ -399,7 +399,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Scatter Plot App</h1>
+  <h1 class="title">Advanced Table Skills</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -407,368 +407,771 @@
   <p class="date">November 11, 2024</p>
 </section>
 <section>
-<section id="overview" class="title-slide slide level1 center">
-<h1>Overview</h1>
+<section id="gtextras" class="title-slide slide level1 center">
+<h1>gtExtras</h1>
 
 </section>
-<section id="idea-for-the-app" class="slide level2">
-<h2>Idea for the App</h2>
-<iframe src="https://emmanuelteitelbaum.shinyapps.io/vdem-scatter-plot/" width="780" height="500" data-external="1">
-</iframe>
-</section>
-<section id="plan" class="slide level2">
-<h2>Plan</h2>
+<section id="the-gtextras-package" class="slide level2">
+<h2>The <code>gtExtras</code> package</h2>
 <ul>
-<li><strong>Step 1:</strong> Wrangle data</li>
-<li><strong>Step 2:</strong> Code up a scatter plot with two variables</li>
-<li><strong>Step 3:</strong> Code UI with a title panel, sidebar with two dropdowns, and a main panel with the scatter plot output</li>
-<li><strong>Step 4:</strong> Code Server with reactive expressions to filter data and render the scatter plot</li>
-<li><strong>Step 5:</strong> Call the Shiny App (don’t forget!)</li>
-</ul>
-</section></section>
-<section>
-<section id="app-setup" class="title-slide slide level1 center">
-<h1>App Setup</h1>
-
-</section>
-<section id="preliminaries" class="slide level2">
-<h2>Preliminaries</h2>
+<li>By now we know the difference between a graph and a table
 <ul>
-<li>Start a new Shiny Web App</li>
-<li>Name the app something like <code>vdem-scatter-plot</code></li>
-<li>Start a new R script in the folder that was created
-<ul>
-<li>Name the script something like <code>wrangle.R</code></li>
+<li><strong>Tables</strong> are good for comparing individual values</li>
+<li><strong>Graphs</strong> are for visualizing a whole bunch of values</li>
 </ul></li>
-<li>Use this file for the code in the next slide</li>
+<li>Usually we keep our graphs and tables separate</li>
+<li>But are there times when we might want to combine them?</li>
+<li><code>gtExtras</code> lets us include sparklines, histograms, etc. in our tables</li>
 </ul>
 </section>
-<section id="save-the-data" class="slide level2">
-<h2>Save the Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-3"><a></a><span class="fu">library</span>(vdemdata)</span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a>dem_data <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a></a>  <span class="fu">select</span>(</span>
-<span id="cb1-8"><a></a>    <span class="at">country =</span> country_name, </span>
-<span id="cb1-9"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy,</span>
-<span id="cb1-10"><a></a>    <span class="at">clientelism =</span> v2xnp_client,</span>
-<span id="cb1-11"><a></a>    <span class="at">corruption =</span> v2xnp_regcorr,</span>
-<span id="cb1-12"><a></a>    <span class="at">womens_emp =</span> v2x_gender,</span>
-<span id="cb1-13"><a></a>    <span class="at">gdp_pc =</span> e_gdppc,</span>
-<span id="cb1-14"><a></a>    <span class="at">life_exp =</span> e_pelifeex,</span>
-<span id="cb1-15"><a></a>    <span class="at">education =</span> e_peaveduc,</span>
-<span id="cb1-16"><a></a>    <span class="at">region =</span> e_regionpol_6C </span>
-<span id="cb1-17"><a></a>  ) <span class="sc">|&gt;</span>   <span class="fu">mutate</span>(</span>
-<span id="cb1-18"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, </span>
-<span id="cb1-19"><a></a>                        <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
-<span id="cb1-20"><a></a>                        <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
-<span id="cb1-21"><a></a>                        <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
-<span id="cb1-22"><a></a>                        <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
-<span id="cb1-23"><a></a>                        <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
-<span id="cb1-24"><a></a>                        <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
-<span id="cb1-25"><a></a>  )</span>
-<span id="cb1-26"><a></a></span>
-<span id="cb1-27"><a></a><span class="co"># glimpse(dem_data)</span></span>
-<span id="cb1-28"><a></a></span>
-<span id="cb1-29"><a></a><span class="fu">write_csv</span>(dem_data, <span class="st">"dem_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="make-the-setup-chunk" class="slide level2 smaller">
-<h2>Make the Setup Chunk</h2>
-<p>In the app.R file, use this code for the global section of the app…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># load packages</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(shiny)</span>
-<span id="cb2-3"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-5"><a></a></span>
-<span id="cb2-6"><a></a><span class="co"># load the data </span></span>
-<span id="cb2-7"><a></a>dem_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dem_data.csv"</span>)</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a><span class="co"># create list of named values for the input selection</span></span>
-<span id="cb2-10"><a></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Democracy"</span> <span class="ot">=</span> <span class="st">"polyarchy"</span>,</span>
-<span id="cb2-11"><a></a>          <span class="st">"Clientelism"</span> <span class="ot">=</span> <span class="st">"clientelism"</span>,</span>
-<span id="cb2-12"><a></a>          <span class="st">"Corruption"</span> <span class="ot">=</span> <span class="st">"corruption"</span>,</span>
-<span id="cb2-13"><a></a>          <span class="st">"Women's Empowerment"</span> <span class="ot">=</span> <span class="st">"womens_emp"</span>,</span>
-<span id="cb2-14"><a></a>          <span class="st">"Wealth"</span> <span class="ot">=</span> <span class="st">"gdp_pc"</span>,</span>
-<span id="cb2-15"><a></a>          <span class="st">"Life Expectancy"</span> <span class="ot">=</span> <span class="st">"life_exp"</span>, </span>
-<span id="cb2-16"><a></a>          <span class="st">"Education"</span> <span class="ot">=</span> <span class="st">"education"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="the-user-interface-ui" class="title-slide slide level1 center">
-<h1>The User Interface (<code>ui</code>)</h1>
-
-</section>
-<section id="the-ui-code" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Copy and paste the UI code into the app.R file…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb3-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb3-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb3-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb3-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb3-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb3-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb3-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb3-13"><a></a>      ),</span>
-<span id="cb3-14"><a></a></span>
-<span id="cb3-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb3-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb3-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb3-18"><a></a>        )</span>
-<span id="cb3-19"><a></a>    )</span>
-<span id="cb3-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-ui-code-1" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Adds the the title panel…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb4-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb4-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb4-6"><a></a></span>
-<span id="cb4-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb4-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb4-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb4-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb4-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb4-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb4-13"><a></a>      ),</span>
-<span id="cb4-14"><a></a></span>
-<span id="cb4-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb4-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb4-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb4-18"><a></a>        )</span>
-<span id="cb4-19"><a></a>    )</span>
-<span id="cb4-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-ui-code-2" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Defines the sidebar layout with the two dropdown panels…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="8-13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb5-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb5-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb5-6"><a></a></span>
-<span id="cb5-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb5-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb5-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb5-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb5-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb5-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb5-13"><a></a>      ),</span>
-<span id="cb5-14"><a></a></span>
-<span id="cb5-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb5-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb5-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb5-18"><a></a>        )</span>
-<span id="cb5-19"><a></a>    )</span>
-<span id="cb5-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-ui-code-3" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Defines the main panel for the output. Note that we are calling <code>plotOutput()</code> and that we are calling the output “scatterplot” (the unique <code>outputID</code> for our plot)…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="15-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb6-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb6-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb6-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb6-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb6-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb6-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb6-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb6-13"><a></a>      ),</span>
-<span id="cb6-14"><a></a></span>
-<span id="cb6-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb6-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb6-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb6-18"><a></a>        )</span>
-<span id="cb6-19"><a></a>    )</span>
-<span id="cb6-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="the-server-server" class="title-slide slide level1 center">
-<h1>The Server (<code>server</code>)</h1>
-
-</section>
-<section id="the-server-code" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Copy and paste the server code into the app.R file…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb7-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb7-3"><a></a>  </span>
-<span id="cb7-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb7-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb7-6"><a></a>    </span>
-<span id="cb7-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb7-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb7-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb7-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb7-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb7-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb7-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb7-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb7-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb7-18"><a></a>      )</span>
-<span id="cb7-19"><a></a>  })</span>
-<span id="cb7-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-1" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Note that we are calling <code>renderPlot()</code>, which matches up with the <code>plotOutput()</code> in the UI. And we are referencing output as “scatterplot” (again, the unique <code>outputID</code> for our plot)…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb8-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb8-3"><a></a>  </span>
-<span id="cb8-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb8-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb8-6"><a></a>    </span>
-<span id="cb8-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb8-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb8-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb8-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb8-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb8-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb8-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb8-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb8-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb8-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb8-18"><a></a>      )</span>
-<span id="cb8-19"><a></a>  })</span>
-<span id="cb8-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-2" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>We dynamically reference the input values from the dropdown menus in the UI. We use <code>input$xcol</code> and <code>input$ycol</code> to reference the user-selected variables. As a result of <a href="https://dplyr.tidyverse.org/articles/programming.html">tidy evaluation</a> in ggplot2, these inputs have to be referenced in .data[[]] in order to work….</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb9-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb9-3"><a></a>  </span>
-<span id="cb9-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb9-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb9-6"><a></a>    </span>
-<span id="cb9-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb9-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb9-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb9-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb9-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb9-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb9-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb9-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb9-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb9-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb9-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb9-18"><a></a>      )</span>
-<span id="cb9-19"><a></a>  })</span>
-<span id="cb9-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-3" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Here we need to select the variable from the vector <code>vars</code> that created with the list of variables. We use <code>which(vars == input$xcol)</code> to find the index of the selected variable in the vector <code>vars</code>. We then use <code>names()</code> to get the name of the variable at that index…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="14-15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb10-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb10-3"><a></a>  </span>
-<span id="cb10-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb10-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb10-6"><a></a>    </span>
-<span id="cb10-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb10-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb10-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb10-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb10-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb10-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb10-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb10-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb10-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb10-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb10-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb10-18"><a></a>      )</span>
-<span id="cb10-19"><a></a>  })</span>
-<span id="cb10-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="call-the-app" class="title-slide slide level1 center">
-<h1>Call the App</h1>
-
-</section>
-<section id="run-the-app" class="slide level2">
-<h2>Run the App</h2>
-<p>To display the app, don’t forget this final line of code…</p>
+<section id="democracy-example" class="slide level2">
+<h2>Democracy Example</h2>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="co"># Run the application </span></span>
-<span id="cb11-2"><a></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(vdemlite)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="co"># Grab the polyarchy scores for the United States between 2000 and 2020</span></span>
+<span id="cb1-4"><a></a>brics_dem <span class="ot">&lt;-</span> <span class="fu">fetchdem</span>(<span class="at">indicators =</span> <span class="st">"v2x_polyarchy"</span>,</span>
+<span id="cb1-5"><a></a>                         <span class="at">start_year =</span> <span class="dv">2000</span>, <span class="at">end_year =</span> <span class="dv">2020</span>,</span>
+<span id="cb1-6"><a></a>                         <span class="at">countries =</span> <span class="fu">c</span>(<span class="st">"BRA"</span>, <span class="st">"RUS"</span>, <span class="st">"IND"</span>, <span class="st">"CHN"</span>, <span class="st">"ZAF"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="democracy-example-1" class="slide level2">
+<h2>Democracy Example</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a>dem_summary <span class="ot">&lt;-</span> brics_dem<span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a></a>  <span class="fu">group_by</span>(country_id) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb2-6"><a></a>    <span class="at">max =</span> <span class="fu">max</span>(v2x_polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-7"><a></a>    <span class="at">mean =</span> <span class="fu">mean</span>(v2x_polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-8"><a></a>    <span class="at">sd =</span> <span class="fu">sd</span>(v2x_polyarchy, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-9"><a></a>    <span class="at">dem_data =</span> <span class="fu">list</span>(v2x_polyarchy),</span>
+<span id="cb2-10"><a></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb2-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="democracy-example-2" class="slide level2">
+<h2>Democracy Example</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(gtExtras)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>dem_summary <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a></a>  <span class="fu">gt_plt_sparkline</span>(dem_data) <span class="co">#from gtExtras</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="datwtxgndu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#datwtxgndu table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#datwtxgndu thead, #datwtxgndu tbody, #datwtxgndu tfoot, #datwtxgndu tr, #datwtxgndu td, #datwtxgndu th {
+  border-style: none;
+}
+
+#datwtxgndu p {
+  margin: 0;
+  padding: 0;
+}
+
+#datwtxgndu .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#datwtxgndu .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#datwtxgndu .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#datwtxgndu .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#datwtxgndu .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#datwtxgndu .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#datwtxgndu .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#datwtxgndu .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#datwtxgndu .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#datwtxgndu .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#datwtxgndu .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#datwtxgndu .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#datwtxgndu .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#datwtxgndu .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#datwtxgndu .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#datwtxgndu .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#datwtxgndu .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#datwtxgndu .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#datwtxgndu .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#datwtxgndu .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#datwtxgndu .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#datwtxgndu .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#datwtxgndu .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#datwtxgndu .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#datwtxgndu .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#datwtxgndu .gt_left {
+  text-align: left;
+}
+
+#datwtxgndu .gt_center {
+  text-align: center;
+}
+
+#datwtxgndu .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#datwtxgndu .gt_font_normal {
+  font-weight: normal;
+}
+
+#datwtxgndu .gt_font_bold {
+  font-weight: bold;
+}
+
+#datwtxgndu .gt_font_italic {
+  font-style: italic;
+}
+
+#datwtxgndu .gt_super {
+  font-size: 65%;
+}
+
+#datwtxgndu .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#datwtxgndu .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#datwtxgndu .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#datwtxgndu .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#datwtxgndu .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#datwtxgndu .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#datwtxgndu .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#datwtxgndu .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#datwtxgndu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="gt_col_headings header">
+<th id="country_id" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">country_id</th>
+<th id="max" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">max</th>
+<th id="mean" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">mean</th>
+<th id="sd" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">sd</th>
+<th id="dem_data" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">dem_data</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="country_id">8</td>
+<td class="gt_row gt_right" headers="max">0.773</td>
+<td class="gt_row gt_right" headers="mean">0.75280952</td>
+<td class="gt_row gt_right" headers="sd">0.01862423</td>
+<td class="gt_row gt_center" headers="dem_data"><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="85.04pt" height="14.17pt" viewbox="0 0 85.04 14.17">
+<defs>
+<style type="text/css">    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {      fill: none;      stroke: #000000;      stroke-linecap: round;      stroke-linejoin: round;      stroke-miterlimit: 10.00;    }    .svglite text {      white-space: pre;    }  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs> <clippath id="cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3"> <rect x="0.00" y="0.00" width="85.04" height="14.17"></rect> </clippath></defs><g clip-path="url(#cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3)"><text x="68.69" y="5.60" style="font-size: 5.69px; font-family: &quot;Courier&quot;;" textlength="10.24px" lengthadjust="spacingAndGlyphs">0.7</text><polyline points="6.10,3.58 9.07,3.58 12.04,3.58 15.02,3.58 17.99,3.38 20.96,3.21 23.94,3.22 26.91,3.22 29.88,3.22 32.86,3.25 35.83,3.24 38.80,3.29 41.78,3.22 44.75,3.39 47.72,3.52 50.70,3.52 53.67,3.56 56.64,3.69 59.62,3.69 62.59,4.02 65.56,3.98 " style="stroke-width: 1.07; stroke-linecap: butt;"></polyline><circle cx="65.56" cy="3.98" r="0.89" style="stroke-width: 0.71; fill: #000000;"></circle><circle cx="62.59" cy="4.02" r="0.89" style="stroke-width: 0.71; stroke: #A020F0; fill: #A020F0;"></circle><circle cx="20.96" cy="3.21" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle></g>
+</svg></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="country_id">11</td>
+<td class="gt_row gt_right" headers="max">0.405</td>
+<td class="gt_row gt_right" headers="mean">0.30133333</td>
+<td class="gt_row gt_right" headers="sd">0.04091251</td>
+<td class="gt_row gt_center" headers="dem_data"><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="85.04pt" height="14.17pt" viewbox="0 0 85.04 14.17">
+<defs>
+<style type="text/css">    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {      fill: none;      stroke: #000000;      stroke-linecap: round;      stroke-linejoin: round;      stroke-miterlimit: 10.00;    }    .svglite text {      white-space: pre;    }  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs> <clippath id="cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3"> <rect x="0.00" y="0.00" width="85.04" height="14.17"></rect> </clippath></defs><g clip-path="url(#cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3)"><text x="68.69" y="11.57" style="font-size: 5.69px; font-family: &quot;Courier&quot;;" textlength="13.65px" lengthadjust="spacingAndGlyphs">0.26</text><polyline points="6.10,8.02 9.07,8.43 12.04,8.74 15.02,8.85 17.99,9.15 20.96,9.17 23.94,9.19 26.91,9.24 29.88,9.33 32.86,9.30 35.83,9.36 38.80,9.45 41.78,9.70 44.75,9.72 47.72,9.87 50.70,9.87 53.67,9.92 56.64,9.90 59.62,9.88 62.59,9.92 65.56,9.94 " style="stroke-width: 1.07; stroke-linecap: butt;"></polyline><circle cx="65.56" cy="9.94" r="0.89" style="stroke-width: 0.71; fill: #000000;"></circle><circle cx="65.56" cy="9.94" r="0.89" style="stroke-width: 0.71; stroke: #A020F0; fill: #A020F0;"></circle><circle cx="6.10" cy="8.02" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle></g>
+</svg></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="country_id">19</td>
+<td class="gt_row gt_right" headers="max">0.878</td>
+<td class="gt_row gt_right" headers="mean">0.83461905</td>
+<td class="gt_row gt_right" headers="sd">0.05923046</td>
+<td class="gt_row gt_center" headers="dem_data"><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="85.04pt" height="14.17pt" viewbox="0 0 85.04 14.17">
+<defs>
+<style type="text/css">    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {      fill: none;      stroke: #000000;      stroke-linecap: round;      stroke-linejoin: round;      stroke-miterlimit: 10.00;    }    .svglite text {      white-space: pre;    }  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs> <clippath id="cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3"> <rect x="0.00" y="0.00" width="85.04" height="14.17"></rect> </clippath></defs><g clip-path="url(#cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3)"><text x="68.69" y="5.84" style="font-size: 5.69px; font-family: &quot;Courier&quot;;" textlength="10.24px" lengthadjust="spacingAndGlyphs">0.7</text><polyline points="6.10,2.12 9.07,2.12 12.04,2.14 15.02,2.16 17.99,2.16 20.96,1.97 23.94,1.95 26.91,1.99 29.88,1.99 32.86,1.99 35.83,1.98 38.80,1.92 41.78,1.93 44.75,1.84 47.72,1.85 50.70,1.97 53.67,3.14 56.64,3.21 59.62,3.54 62.59,4.28 65.56,4.22 " style="stroke-width: 1.07; stroke-linecap: butt;"></polyline><circle cx="65.56" cy="4.22" r="0.89" style="stroke-width: 0.71; fill: #000000;"></circle><circle cx="62.59" cy="4.28" r="0.89" style="stroke-width: 0.71; stroke: #A020F0; fill: #A020F0;"></circle><circle cx="44.75" cy="1.84" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle></g>
+</svg></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="country_id">39</td>
+<td class="gt_row gt_right" headers="max">0.736</td>
+<td class="gt_row gt_right" headers="mean">0.63866667</td>
+<td class="gt_row gt_right" headers="sd">0.11018182</td>
+<td class="gt_row gt_center" headers="dem_data"><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="85.04pt" height="14.17pt" viewbox="0 0 85.04 14.17">
+<defs>
+<style type="text/css">    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {      fill: none;      stroke: #000000;      stroke-linecap: round;      stroke-linejoin: round;      stroke-miterlimit: 10.00;    }    .svglite text {      white-space: pre;    }  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs> <clippath id="cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3"> <rect x="0.00" y="0.00" width="85.04" height="14.17"></rect> </clippath></defs><g clip-path="url(#cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3)"><text x="68.69" y="9.79" style="font-size: 5.69px; font-family: &quot;Courier&quot;;" textlength="10.24px" lengthadjust="spacingAndGlyphs">0.4</text><polyline points="6.10,3.82 9.07,3.82 12.04,3.77 15.02,3.69 17.99,3.77 20.96,3.84 23.94,3.92 26.91,3.92 29.88,3.92 32.86,4.37 35.83,4.44 38.80,4.44 41.78,4.48 44.75,4.71 47.72,5.20 50.70,6.10 53.67,6.35 56.64,6.90 59.62,7.01 62.59,7.66 65.56,8.17 " style="stroke-width: 1.07; stroke-linecap: butt;"></polyline><circle cx="65.56" cy="8.17" r="0.89" style="stroke-width: 0.71; fill: #000000;"></circle><circle cx="65.56" cy="8.17" r="0.89" style="stroke-width: 0.71; stroke: #A020F0; fill: #A020F0;"></circle><circle cx="15.02" cy="3.69" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle></g>
+</svg></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="country_id">110</td>
+<td class="gt_row gt_right" headers="max">0.103</td>
+<td class="gt_row gt_right" headers="mean">0.09042857</td>
+<td class="gt_row gt_right" headers="sd">0.00944760</td>
+<td class="gt_row gt_center" headers="dem_data"><svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="85.04pt" height="14.17pt" viewbox="0 0 85.04 14.17">
+<defs>
+<style type="text/css">    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {      fill: none;      stroke: #000000;      stroke-linecap: round;      stroke-linejoin: round;      stroke-miterlimit: 10.00;    }    .svglite text {      white-space: pre;    }  </style>
+</defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs> <clippath id="cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3"> <rect x="0.00" y="0.00" width="85.04" height="14.17"></rect> </clippath></defs><g clip-path="url(#cpMC4wMHw4NS4wNHwwLjAwfDE0LjE3)"><text x="68.69" y="13.95" style="font-size: 5.69px; font-family: &quot;Courier&quot;;" textlength="13.65px" lengthadjust="spacingAndGlyphs">0.08</text><polyline points="6.10,12.00 9.07,12.00 12.04,12.00 15.02,11.97 17.99,11.97 20.96,12.09 23.94,12.09 26.91,12.09 29.88,12.09 32.86,12.09 35.83,12.09 38.80,12.09 41.78,12.09 44.75,12.18 47.72,12.22 50.70,12.26 53.67,12.27 56.64,12.30 59.62,12.31 62.59,12.34 65.56,12.32 " style="stroke-width: 1.07; stroke-linecap: butt;"></polyline><circle cx="65.56" cy="12.32" r="0.89" style="stroke-width: 0.71; fill: #000000;"></circle><circle cx="62.59" cy="12.34" r="0.89" style="stroke-width: 0.71; stroke: #A020F0; fill: #A020F0;"></circle><circle cx="15.02" cy="11.97" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle><circle cx="17.99" cy="11.97" r="0.89" style="stroke-width: 0.71; stroke: #00FF00; fill: #00FF00;"></circle></g>
+</svg></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
 </div>
 </section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn!</h2>
+<p><br></p>
 <ul>
-<li>Run the app and select different variables from the drop down menus.</li>
-<li>What do you notice about the relationship between democracy and development?</li>
-<li>How could you potentially improve the app?</li>
+<li>Download democracy data for one year</li>
+<li>Indicator is your choice</li>
+<li>Add region codes</li>
+<li>Group and summarize by region</li>
+<li>Add an appropriate inline plot to your table</li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_32aed169" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown" id="timer_a41a9cf7" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="when-not-to-use-a-table" class="title-slide slide level1 center">
+<h1>When Not to Use a Table</h1>
+
+</section>
+<section id="not-a-good-table" class="slide level2 scrollable">
+<h2>Not a Good Table</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">lower_90</th>
+<th style="text-align: right;">upper_90</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Barnstable</td>
+<td style="text-align: right;">40442</td>
+<td style="text-align: right;">39554</td>
+<td style="text-align: right;">41330</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Berkshire</td>
+<td style="text-align: right;">33040</td>
+<td style="text-align: right;">32074</td>
+<td style="text-align: right;">34006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bristol</td>
+<td style="text-align: right;">36910</td>
+<td style="text-align: right;">36347</td>
+<td style="text-align: right;">37473</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dukes</td>
+<td style="text-align: right;">40119</td>
+<td style="text-align: right;">34791</td>
+<td style="text-align: right;">45447</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Essex</td>
+<td style="text-align: right;">39756</td>
+<td style="text-align: right;">39174</td>
+<td style="text-align: right;">40338</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Franklin</td>
+<td style="text-align: right;">34775</td>
+<td style="text-align: right;">33712</td>
+<td style="text-align: right;">35838</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hampden</td>
+<td style="text-align: right;">32262</td>
+<td style="text-align: right;">31707</td>
+<td style="text-align: right;">32817</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hampshire</td>
+<td style="text-align: right;">30795</td>
+<td style="text-align: right;">29868</td>
+<td style="text-align: right;">31722</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Middlesex</td>
+<td style="text-align: right;">51808</td>
+<td style="text-align: right;">51337</td>
+<td style="text-align: right;">52279</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nantucket</td>
+<td style="text-align: right;">45717</td>
+<td style="text-align: right;">38260</td>
+<td style="text-align: right;">53174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Norfolk</td>
+<td style="text-align: right;">52591</td>
+<td style="text-align: right;">51991</td>
+<td style="text-align: right;">53191</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Plymouth</td>
+<td style="text-align: right;">43684</td>
+<td style="text-align: right;">43014</td>
+<td style="text-align: right;">44354</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Suffolk</td>
+<td style="text-align: right;">39200</td>
+<td style="text-align: right;">38624</td>
+<td style="text-align: right;">39776</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Worcester</td>
+<td style="text-align: right;">39009</td>
+<td style="text-align: right;">38454</td>
+<td style="text-align: right;">39564</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
-<section id="publish-your-app" class="slide level2">
-<h2>Publish Your App</h2>
-<ul>
-<li>Install rsconnect:<code>install.packages("rsconnect")</code></li>
-<li>Create account and retrieve your API key</li>
-<li>Configure RStudio:</li>
-</ul>
+<section id="use-confidence-intervals-instead" class="slide level2">
+<h2>Use Confidence Intervals Instead</h2>
+
+<img data-src="week-9.2_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="use-confidence-intervals-instead-1" class="slide level2">
+<h2>Use Confidence Intervals Instead</h2>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(rsconnect)</span>
-<span id="cb12-2"><a></a>rsconnect<span class="sc">::</span><span class="fu">setAccountInfo</span>(<span class="at">name=</span><span class="st">'&lt;account-name&gt;'</span>, <span class="at">token=</span><span class="st">'&lt;account-token&gt;'</span>, <span class="at">secret=</span><span class="st">'&lt;secret&gt;'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>mass_med_inc <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> <span class="fu">reorder</span>(name, estimate))) <span class="sc">+</span></span>
+<span id="cb4-5"><a></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> lower_90, <span class="at">xmax =</span> upper_90)) <span class="sc">+</span></span>
+<span id="cb4-6"><a></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Household income by county in Massachusetts"</span>,</span>
+<span id="cb4-8"><a></a>       <span class="at">subtitle =</span> <span class="st">"2017-2021 American Community Survey"</span>,</span>
+<span id="cb4-9"><a></a>       <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb4-10"><a></a>       <span class="at">x =</span> <span class="st">"Median Income"</span>, </span>
+<span id="cb4-11"><a></a>       <span class="at">caption =</span> <span class="st">"ACS estimate (bars represent 90% confidence intervals)"</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn!</h2>
+<p><br></p>
 <ul>
-<li>Click the “Publish” button in RStudio toolbar and follow prompts</li>
+<li>Download data on median income for another state</li>
+<li>Plot the income estimates for that state</li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer2" data-update-every="1" tabindex="0" style="right:10%;bottom:5%;">
+<div class="countdown" id="timer_dc9ad00a" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="time-permitting" class="title-slide slide level1 center">
+<h1>Time Permitting</h1>
+
+</section>
+<section id="reactable" class="slide level2">
+<h2><code>reactable</code></h2>
+<p><br></p>
+<ul>
+<li><code>reactable</code> is an <a href="https://glin.github.io/reactable/index.html">R package</a> that lets you create interactive tables</li>
+<li>You can sort, filter, and search the table</li>
+<li>Based on the <a href="https://github.com/tanstack/table/tree/v7?tab=readme-ov-file">React Table</a> library</li>
+<li>Let’s explore it together!</li>
+</ul>
 
 
 </section></section>
@@ -788,6 +1191,8 @@
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="../site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -810,6 +1215,7 @@
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
+'multiplex': {"secret":"17313643651935575536","id":"edde717117b26954","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

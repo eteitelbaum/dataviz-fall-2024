@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.6.18">
 
   <meta name="dcterms.date" content="2024-11-11">
-  <title>PSC/DATS 2102--Fall Schedule – Scatter Plot App</title>
+  <title>PSC/DATS 2102--Fall Schedule – Accessibility and Color Schemes</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,9 +389,9 @@
   </style>
   <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
   <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
-<meta property="og:title" content="Scatter Plot App – PSC/DATS 2102–Fall Schedule">
+<meta property="og:title" content="Accessibility and Color Schemes – PSC/DATS 2102–Fall Schedule">
 <meta property="og:site_name" content="PSC/DATS 2102--Fall Schedule">
-<meta name="twitter:title" content="Scatter Plot App – PSC/DATS 2102–Fall Schedule">
+<meta name="twitter:title" content="Accessibility and Color Schemes – PSC/DATS 2102–Fall Schedule">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-dark">
@@ -399,371 +399,324 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Scatter Plot App</h1>
+  <h1 class="title">Accessibility and Color Schemes</h1>
 
 <div class="quarto-title-authors">
 </div>
 
   <p class="date">November 11, 2024</p>
 </section>
-<section>
-<section id="overview" class="title-slide slide level1 center">
-<h1>Overview</h1>
-
-</section>
-<section id="idea-for-the-app" class="slide level2">
-<h2>Idea for the App</h2>
-<iframe src="https://emmanuelteitelbaum.shinyapps.io/vdem-scatter-plot/" width="780" height="500" data-external="1">
-</iframe>
-</section>
-<section id="plan" class="slide level2">
-<h2>Plan</h2>
+<section id="color-blindness" class="slide level2">
+<h2>Color Blindness</h2>
+<p><br></p>
 <ul>
-<li><strong>Step 1:</strong> Wrangle data</li>
-<li><strong>Step 2:</strong> Code up a scatter plot with two variables</li>
-<li><strong>Step 3:</strong> Code UI with a title panel, sidebar with two dropdowns, and a main panel with the scatter plot output</li>
-<li><strong>Step 4:</strong> Code Server with reactive expressions to filter data and render the scatter plot</li>
-<li><strong>Step 5:</strong> Call the Shiny App (don’t forget!)</li>
-</ul>
-</section></section>
-<section>
-<section id="app-setup" class="title-slide slide level1 center">
-<h1>App Setup</h1>
-
-</section>
-<section id="preliminaries" class="slide level2">
-<h2>Preliminaries</h2>
-<ul>
-<li>Start a new Shiny Web App</li>
-<li>Name the app something like <code>vdem-scatter-plot</code></li>
-<li>Start a new R script in the folder that was created
-<ul>
-<li>Name the script something like <code>wrangle.R</code></li>
-</ul></li>
-<li>Use this file for the code in the next slide</li>
+<li>Color Vision Deficiency (CVD) or color blindness affects 8 percent of men and 1 in 200 women</li>
+<li>There are different types of CVD but most common is red-green color blindness</li>
+<li>Therefore, don’t include red and green in the same chart!</li>
+<li>Look for color blind safe palettes</li>
 </ul>
 </section>
-<section id="save-the-data" class="slide level2">
-<h2>Save the Data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb1-3"><a></a><span class="fu">library</span>(vdemdata)</span>
-<span id="cb1-4"><a></a></span>
-<span id="cb1-5"><a></a>dem_data <span class="ot">&lt;-</span> vdem <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a></a>  <span class="fu">select</span>(</span>
-<span id="cb1-8"><a></a>    <span class="at">country =</span> country_name, </span>
-<span id="cb1-9"><a></a>    <span class="at">polyarchy =</span> v2x_polyarchy,</span>
-<span id="cb1-10"><a></a>    <span class="at">clientelism =</span> v2xnp_client,</span>
-<span id="cb1-11"><a></a>    <span class="at">corruption =</span> v2xnp_regcorr,</span>
-<span id="cb1-12"><a></a>    <span class="at">womens_emp =</span> v2x_gender,</span>
-<span id="cb1-13"><a></a>    <span class="at">gdp_pc =</span> e_gdppc,</span>
-<span id="cb1-14"><a></a>    <span class="at">life_exp =</span> e_pelifeex,</span>
-<span id="cb1-15"><a></a>    <span class="at">education =</span> e_peaveduc,</span>
-<span id="cb1-16"><a></a>    <span class="at">region =</span> e_regionpol_6C </span>
-<span id="cb1-17"><a></a>  ) <span class="sc">|&gt;</span>   <span class="fu">mutate</span>(</span>
-<span id="cb1-18"><a></a>    <span class="at">region =</span> <span class="fu">case_match</span>(region, </span>
-<span id="cb1-19"><a></a>                        <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Eastern Europe"</span>, </span>
-<span id="cb1-20"><a></a>                        <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Latin America"</span>,  </span>
-<span id="cb1-21"><a></a>                        <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Middle East"</span>,   </span>
-<span id="cb1-22"><a></a>                        <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Africa"</span>, </span>
-<span id="cb1-23"><a></a>                        <span class="dv">5</span> <span class="sc">~</span> <span class="st">"The West"</span>, </span>
-<span id="cb1-24"><a></a>                        <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Asia"</span>)</span>
-<span id="cb1-25"><a></a>  )</span>
-<span id="cb1-26"><a></a></span>
-<span id="cb1-27"><a></a><span class="co"># glimpse(dem_data)</span></span>
-<span id="cb1-28"><a></a></span>
-<span id="cb1-29"><a></a><span class="fu">write_csv</span>(dem_data, <span class="st">"dem_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="make-the-setup-chunk" class="slide level2 smaller">
-<h2>Make the Setup Chunk</h2>
-<p>In the app.R file, use this code for the global section of the app…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># load packages</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(shiny)</span>
-<span id="cb2-3"><a></a><span class="fu">library</span>(readr)</span>
-<span id="cb2-4"><a></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-5"><a></a></span>
-<span id="cb2-6"><a></a><span class="co"># load the data </span></span>
-<span id="cb2-7"><a></a>dem_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dem_data.csv"</span>)</span>
-<span id="cb2-8"><a></a></span>
-<span id="cb2-9"><a></a><span class="co"># create list of named values for the input selection</span></span>
-<span id="cb2-10"><a></a>vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Democracy"</span> <span class="ot">=</span> <span class="st">"polyarchy"</span>,</span>
-<span id="cb2-11"><a></a>          <span class="st">"Clientelism"</span> <span class="ot">=</span> <span class="st">"clientelism"</span>,</span>
-<span id="cb2-12"><a></a>          <span class="st">"Corruption"</span> <span class="ot">=</span> <span class="st">"corruption"</span>,</span>
-<span id="cb2-13"><a></a>          <span class="st">"Women's Empowerment"</span> <span class="ot">=</span> <span class="st">"womens_emp"</span>,</span>
-<span id="cb2-14"><a></a>          <span class="st">"Wealth"</span> <span class="ot">=</span> <span class="st">"gdp_pc"</span>,</span>
-<span id="cb2-15"><a></a>          <span class="st">"Life Expectancy"</span> <span class="ot">=</span> <span class="st">"life_exp"</span>, </span>
-<span id="cb2-16"><a></a>          <span class="st">"Education"</span> <span class="ot">=</span> <span class="st">"education"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="the-user-interface-ui" class="title-slide slide level1 center">
-<h1>The User Interface (<code>ui</code>)</h1>
+<section id="last-weeks-line-chart" class="slide level2">
+<h2>Last Week’s Line Chart</h2>
 
-</section>
-<section id="the-ui-code" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Copy and paste the UI code into the app.R file…</p>
+<img data-src="week-6.1_files/figure-revealjs/line_chart-1.png" width="960" class="r-stretch"></section>
+<section id="last-weeks-line-chart-1" class="slide level2">
+<h2>Last Week’s Line Chart</h2>
+<p><br></p>
+<p>Create last week’s line chart and save as an object…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb3-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb3-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb3-6"><a></a></span>
-<span id="cb3-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb3-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb3-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb3-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb3-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb3-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb3-13"><a></a>      ),</span>
-<span id="cb3-14"><a></a></span>
-<span id="cb3-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb3-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb3-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb3-18"><a></a>        )</span>
-<span id="cb3-19"><a></a>    )</span>
-<span id="cb3-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>dem_waves_ctrs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/eteitelbaum/dataviz-fall-2023/main/slides/data/dem_waves_ctrs.csv"</span>)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>dem_waves_chart <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dem_waves_ctrs, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> polyarchy, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb1-4"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># our geom is a line with a width of 1</span></span>
+<span id="cb1-5"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb1-6"><a></a>    <span class="at">x =</span> <span class="st">"Year"</span>, </span>
+<span id="cb1-7"><a></a>    <span class="at">y =</span> <span class="st">"Polyarchy Score"</span>, </span>
+<span id="cb1-8"><a></a>    <span class="at">title =</span> <span class="st">'Democracy in countries representing three different "waves"'</span>, </span>
+<span id="cb1-9"><a></a>    <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>, </span>
+<span id="cb1-10"><a></a>    <span class="at">color =</span> <span class="st">"Country"</span> <span class="co"># make title of legend to upper case</span></span>
+<span id="cb1-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="the-ui-code-1" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Adds the the title panel…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb4-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb4-3"><a></a></span>
-<span id="cb4-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb4-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb4-6"><a></a></span>
-<span id="cb4-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb4-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb4-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb4-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb4-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb4-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb4-13"><a></a>      ),</span>
-<span id="cb4-14"><a></a></span>
-<span id="cb4-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb4-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb4-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb4-18"><a></a>        )</span>
-<span id="cb4-19"><a></a>    )</span>
-<span id="cb4-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-ui-code-2" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Defines the sidebar layout with the two dropdown panels…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5" data-code-line-numbers="8-13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb5-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb5-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb5-6"><a></a></span>
-<span id="cb5-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb5-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb5-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb5-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb5-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb5-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb5-13"><a></a>      ),</span>
-<span id="cb5-14"><a></a></span>
-<span id="cb5-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb5-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb5-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb5-18"><a></a>        )</span>
-<span id="cb5-19"><a></a>    )</span>
-<span id="cb5-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-ui-code-3" class="slide level2 smaller">
-<h2>The UI Code</h2>
-<p>Defines the main panel for the output. Note that we are calling <code>plotOutput()</code> and that we are calling the output “scatterplot” (the unique <code>outputID</code> for our plot)…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="15-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Define UI for application that draws a scatter plot</span></span>
-<span id="cb6-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a>    <span class="co"># Application title</span></span>
-<span id="cb6-5"><a></a>    <span class="fu">titlePanel</span>(<span class="st">"Democracy and Development"</span>),</span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a>    <span class="co"># Sidebar with a two dropdown menus</span></span>
-<span id="cb6-8"><a></a>    <span class="fu">sidebarLayout</span>(</span>
-<span id="cb6-9"><a></a>      <span class="fu">sidebarPanel</span>(</span>
-<span id="cb6-10"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'xcol'</span>, <span class="at">label =</span> <span class="st">'X Variable'</span>, <span class="at">choices =</span> vars),</span>
-<span id="cb6-11"><a></a>        <span class="fu">selectInput</span>(<span class="at">input =</span> <span class="st">'ycol'</span>, <span class="at">label =</span> <span class="st">'Y Variable'</span>, </span>
-<span id="cb6-12"><a></a>                    <span class="at">choices =</span> vars, <span class="at">selected =</span> vars[[<span class="dv">6</span>]])</span>
-<span id="cb6-13"><a></a>      ),</span>
-<span id="cb6-14"><a></a></span>
-<span id="cb6-15"><a></a>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span id="cb6-16"><a></a>        <span class="fu">mainPanel</span>(</span>
-<span id="cb6-17"><a></a>           <span class="fu">plotOutput</span>(<span class="st">"scatterplot"</span>)</span>
-<span id="cb6-18"><a></a>        )</span>
-<span id="cb6-19"><a></a>    )</span>
-<span id="cb6-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="the-server-server" class="title-slide slide level1 center">
-<h1>The Server (<code>server</code>)</h1>
+<section id="cvd-plot" class="slide level2">
+<h2>CVD Plot</h2>
 
-</section>
-<section id="the-server-code" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Copy and paste the server code into the app.R file…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb7-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb7-3"><a></a>  </span>
-<span id="cb7-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb7-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb7-6"><a></a>    </span>
-<span id="cb7-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb7-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb7-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb7-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb7-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb7-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb7-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb7-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb7-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb7-18"><a></a>      )</span>
-<span id="cb7-19"><a></a>  })</span>
-<span id="cb7-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-1" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Note that we are calling <code>renderPlot()</code>, which matches up with the <code>plotOutput()</code> in the UI. And we are referencing output as “scatterplot” (again, the unique <code>outputID</code> for our plot)…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb8-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb8-3"><a></a>  </span>
-<span id="cb8-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb8-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb8-6"><a></a>    </span>
-<span id="cb8-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb8-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb8-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb8-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb8-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb8-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb8-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb8-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb8-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb8-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb8-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb8-18"><a></a>      )</span>
-<span id="cb8-19"><a></a>  })</span>
-<span id="cb8-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-2" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>We dynamically reference the input values from the dropdown menus in the UI. We use <code>input$xcol</code> and <code>input$ycol</code> to reference the user-selected variables. As a result of <a href="https://dplyr.tidyverse.org/articles/programming.html">tidy evaluation</a> in ggplot2, these inputs have to be referenced in .data[[]] in order to work….</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb9-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb9-3"><a></a>  </span>
-<span id="cb9-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb9-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb9-6"><a></a>    </span>
-<span id="cb9-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb9-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb9-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb9-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb9-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb9-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb9-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb9-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb9-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb9-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb9-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb9-18"><a></a>      )</span>
-<span id="cb9-19"><a></a>  })</span>
-<span id="cb9-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-server-code-3" class="slide level2 smaller">
-<h2>The Server Code</h2>
-<p>Here we need to select the variable from the vector <code>vars</code> that created with the list of variables. We use <code>which(vars == input$xcol)</code> to find the index of the selected variable in the vector <code>vars</code>. We then use <code>names()</code> to get the name of the variable at that index…</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="14-15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Define server logic required to draw a scatter plot</span></span>
-<span id="cb10-2"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb10-3"><a></a>  </span>
-<span id="cb10-4"><a></a>  <span class="co"># Render the plot</span></span>
-<span id="cb10-5"><a></a>  output<span class="sc">$</span>scatterplot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb10-6"><a></a>    </span>
-<span id="cb10-7"><a></a>    <span class="co"># ggplot call</span></span>
-<span id="cb10-8"><a></a>    <span class="fu">ggplot</span>(dem_data, <span class="fu">aes</span>(<span class="at">x =</span> .data[[input<span class="sc">$</span>xcol]], <span class="at">y =</span> .data[[input<span class="sc">$</span>ycol]])) <span class="sc">+</span></span>
-<span id="cb10-9"><a></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb10-10"><a></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>) <span class="sc">+</span></span>
-<span id="cb10-11"><a></a>      <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>) <span class="sc">+</span></span>
-<span id="cb10-12"><a></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb10-13"><a></a>      <span class="fu">labs</span>(</span>
-<span id="cb10-14"><a></a>        <span class="at">x =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>xcol)]), <span class="co"># select names in vars that</span></span>
-<span id="cb10-15"><a></a>        <span class="at">y =</span>  <span class="fu">names</span>(vars[<span class="fu">which</span>(vars <span class="sc">==</span> input<span class="sc">$</span>ycol)]), <span class="co"># match input selections</span></span>
-<span id="cb10-16"><a></a>        <span class="at">caption =</span> <span class="st">"Source: V-Dem Institute"</span>,</span>
-<span id="cb10-17"><a></a>        <span class="at">color =</span> <span class="st">"Region"</span></span>
-<span id="cb10-18"><a></a>      )</span>
-<span id="cb10-19"><a></a>  })</span>
-<span id="cb10-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></section>
-<section>
-<section id="call-the-app" class="title-slide slide level1 center">
-<h1>Call the App</h1>
-
-</section>
-<section id="run-the-app" class="slide level2">
-<h2>Run the App</h2>
-<p>To display the app, don’t forget this final line of code…</p>
+<img data-src="week-6.1_files/figure-revealjs/cvdPlot_output-1.png" width="960" class="r-stretch"></section>
+<section id="cvd-plot-1" class="slide level2">
+<h2>CVD Plot</h2>
+<p><br></p>
+<p>Call CVD plot from the <code>colorBlindness</code> package. CVD stands for “color vision deficiency.”</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="co"># Run the application </span></span>
-<span id="cb11-2"><a></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(colorBlindness)</span>
+<span id="cb2-2"><a></a></span>
+<span id="cb2-3"><a></a><span class="fu">cvdPlot</span>(dem_waves_chart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="cvd-plot-2" class="slide level2">
+<h2>CVD Plot</h2>
+
+<img data-src="images/expand_view.png" class="r-stretch quarto-figure-center"><p class="caption">Click on little image to expand view…</p></section>
 <section id="your-turn" class="slide level2">
 <h2>Your Turn!</h2>
+<p><br></p>
 <ul>
-<li>Run the app and select different variables from the drop down menus.</li>
-<li>What do you notice about the relationship between democracy and development?</li>
-<li>How could you potentially improve the app?</li>
+<li>Take your <code>dem_waves_chart</code> object and run <code>cvdPlot()</code> on it</li>
+<li>Expand the window and have a good look</li>
+<li>Which group would have the toughest time reading this graph?</li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_32aed169" data-update-every="1" tabindex="0" style="right:10%;bottom:10%;">
+<div class="countdown" id="timer1" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="create-your-own-color-scheme" class="slide level2">
+<h2>Create Your Own Color Scheme</h2>
+<p><br></p>
+
+<img data-src="week-6.1_files/figure-revealjs/your_own_palette1-1.png" width="960" class="r-stretch"></section>
+<section id="create-your-own-color-scheme-1" class="slide level2">
+<h2>Create Your Own Color Scheme</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>cb_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a>flfp_region <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(flfp_gdp_regions, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(iso3c, <span class="sc">-</span>flfp), <span class="at">y =</span> flfp, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb3-4"><a></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb3-5"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-6"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-7"><a></a>    <span class="at">x =</span> <span class="st">"Region"</span>, </span>
+<span id="cb3-8"><a></a>    <span class="at">y =</span> <span class="st">"Avg. Female Labor Force Participation"</span>, </span>
+<span id="cb3-9"><a></a>    <span class="at">title =</span> <span class="st">"Levels of female labor force participation by region"</span>, </span>
+<span id="cb3-10"><a></a>    <span class="at">fill =</span> <span class="st">"Region"</span>,</span>
+<span id="cb3-11"><a></a>    <span class="at">caption =</span> <span class="st">"Source: World Bank"</span></span>
+<span id="cb3-12"><a></a>    ) </span>
+<span id="cb3-13"><a></a></span>
+<span id="cb3-14"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cb_palette)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-your-own-color-scheme-2" class="slide level2">
+<h2>Create Your Own Color Scheme</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" data-code-line-numbers="1,14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>cb_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, <span class="st">"#F0E442"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#CC79A7"</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>flfp_region <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(flfp_gdp_regions, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(iso3c, <span class="sc">-</span>flfp), <span class="at">y =</span> flfp, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb4-4"><a></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb4-5"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-7"><a></a>    <span class="at">x =</span> <span class="st">"Region"</span>, </span>
+<span id="cb4-8"><a></a>    <span class="at">y =</span> <span class="st">"Avg. Female Labor Force Participation"</span>, </span>
+<span id="cb4-9"><a></a>    <span class="at">title =</span> <span class="st">"Levels of female labor force participation by region"</span>, </span>
+<span id="cb4-10"><a></a>    <span class="at">fill =</span> <span class="st">"Region"</span>,</span>
+<span id="cb4-11"><a></a>    <span class="at">caption =</span> <span class="st">"Source: World Bank"</span></span>
+<span id="cb4-12"><a></a>    ) </span>
+<span id="cb4-13"><a></a></span>
+<span id="cb4-14"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> cb_palette)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="your-turn-1" class="slide level2">
+<h2>Your Turn!</h2>
+<ul>
+<li>Go to <a href="https://dataviz-gwu.rocks/modules/module-2.2">Module 2.2</a> on the course website</li>
+<li>Do the setup steps</li>
+<li>Reproduce the column chart of FLFP with the custom color scheme</li>
+<li>Try changing one of the <a href="https://htmlcolorcodes.com/">hex codes</a></li>
+<li>Now run <code>cvdPlot()</code> on the plot object to make sure it is color-blind friendly</li>
+<li>Now try a <a href="https://coolors.co/">coolors palette</a> or <a href="https://communications.gwu.edu/visual-identity/color-palette">GW colors</a></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="dem_waves" data-update-every="1" tabindex="0" style="right:5%;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
 </section>
-<section id="publish-your-app" class="slide level2">
-<h2>Publish Your App</h2>
+<section id="using-a-color-palette" class="slide level2">
+<h2>Using a Color Palette</h2>
+<p><br></p>
 <ul>
-<li>Install rsconnect:<code>install.packages("rsconnect")</code></li>
-<li>Create account and retrieve your API key</li>
-<li>Configure RStudio:</li>
+<li>There are many color palettes</li>
+<li>Viridis scales look cool and are accessible</li>
+<li>ColorBrewer has many scales some of which are color-blind safe</li>
+<li>The <a href="https://emilhvitfeldt.github.io/paletteer/">paletteer</a> package aims to be a comprehensive collection of color palettes</li>
 </ul>
+</section>
+<section id="viridis" class="slide level2">
+<h2>Viridis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(rsconnect)</span>
-<span id="cb12-2"><a></a>rsconnect<span class="sc">::</span><span class="fu">setAccountInfo</span>(<span class="at">name=</span><span class="st">'&lt;account-name&gt;'</span>, <span class="at">token=</span><span class="st">'&lt;account-token&gt;'</span>, <span class="at">secret=</span><span class="st">'&lt;secret&gt;'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
+<img data-src="week-6.1_files/figure-revealjs/viridis1-1.png" width="960" class="r-stretch"></section>
+<section id="viridis-1" class="slide level2">
+<h2>Viridis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>flfp_region <span class="ot">&lt;-</span>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_viridis_d</span>()</span>
+<span id="cb6-2"><a></a><span class="fu">cvdPlot</span>(flfp_region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/viridis2-1.png" width="960" class="r-stretch"></section>
+<section id="colorbrewer" class="slide level2">
+<h2>ColorBrewer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlGn"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/color_brewer1-1.png" width="960" class="r-stretch"></section>
+<section id="colorbrewer-1" class="slide level2">
+<h2>ColorBrewer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>flfp_region <span class="ot">&lt;-</span> flfp_region <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"YlGn"</span>)</span>
+<span id="cb8-2"><a></a><span class="fu">cvdPlot</span>(flfp_region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/color_brewer2-1.png" width="960" class="r-stretch"></section>
+<section id="paletteer" class="slide level2">
+<h2>Paletteer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(paletteer)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_paletteer_d</span>(<span class="st">"rcartocolor::Temps"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/paletteer1-1.png" width="960" class="r-stretch"></section>
+<section id="paletteer-1" class="slide level2">
+<h2>Paletteer</h2>
+<p>Not all palettes are color-blind safe…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>flfp_region <span class="ot">&lt;-</span> flfp_region <span class="sc">+</span> <span class="fu">scale_fill_paletteer_d</span>(<span class="st">"rcartocolor::Temps"</span>)</span>
+<span id="cb10-2"><a></a><span class="fu">cvdPlot</span>(flfp_region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/paletteer2-1.png" width="960" class="r-stretch"></section>
+<section id="paletteer-2" class="slide level2">
+<h2>Paletteer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">library</span>(paletteer)</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a>flfp_region <span class="sc">+</span> <span class="fu">scale_fill_paletteer_d</span>(<span class="st">"beyonce::X1"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="week-6.1_files/figure-revealjs/Paletteer3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And some many not have enough colors for your chart…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>flfp_region <span class="sc">+</span>  <span class="fu">scale_fill_paletteer_d</span>(<span class="st">"beyonce::X1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="week-6.1_files/figure-revealjs/paletteer4-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn-2" class="slide level2">
+<h2>Your Turn</h2>
+<p><br></p>
 <ul>
-<li>Click the “Publish” button in RStudio toolbar and follow prompts</li>
+<li>Try one of the color palettes packages we just discussed</li>
+<li>A full list of viridis schemes is <a href="https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html">here</a></li>
+<li>For ColorBrewer, check out this <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">selector tool</a></li>
+<li>For paletteer, check out this <a href="https://pmassicotte.github.io/paletteer_gallery/">paletteer gallery</a></li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer2" data-update-every="1" tabindex="0" style="right:10%;bottom:5%;">
+<div class="countdown" id="palette_package" data-update-every="1" tabindex="0" style="right:5%;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="scaling-for-scatter-plots" class="slide level2">
+<h2>Scaling for Scatter Plots</h2>
+
+<img data-src="week-6.1_files/figure-revealjs/scatterplot1-1.png" width="960" class="r-stretch"></section>
+<section id="fill-vs.-color" class="slide level2">
+<h2>Fill vs.&nbsp;Color</h2>
+<p><br></p>
+<ul>
+<li>Use <strong>fill</strong> (e.g.&nbsp;<code>fill =</code> or <code>scale_fill_*</code>) to modify the fill color of shapes like bars, boxes, or polygons.</li>
+<li>Commonly applied to:
+<ul>
+<li>Bar charts</li>
+<li>Box plots</li>
+<li>Histograms</li>
+</ul></li>
+</ul>
+</section>
+<section id="fill-vs.-color-1" class="slide level2">
+<h2>Fill vs.&nbsp;Color</h2>
+<p><br></p>
+<ul>
+<li>Use <strong>color</strong> (e.g.&nbsp;<code>color =</code> or <code>scale_color_*</code>) to modify the color of points, lines, or text.</li>
+<li>Commonly applied to:
+<ul>
+<li>Scatter plots</li>
+<li>Line charts</li>
+<li>Text elements</li>
+</ul></li>
+</ul>
+</section>
+<section id="scaling-for-scatter-plots-1" class="slide level2">
+<h2>Scaling for Scatter Plots</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>wealth_flfp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(flfp_gdp, <span class="fu">aes</span>(<span class="at">x =</span> gdp_pc, <span class="at">y =</span> flfp)) <span class="sc">+</span> </span>
+<span id="cb13-2"><a></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span> <span class="co"># color points by region</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># make the line a loess curve</span></span>
+<span id="cb13-4"><a></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span> <span class="co"># stretch axis, add '$' format</span></span>
+<span id="cb13-5"><a></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># add % label</span></span>
+<span id="cb13-6"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-7"><a></a>    <span class="at">x=</span> <span class="st">"GDP per Capita"</span>, <span class="co"># x-axis title</span></span>
+<span id="cb13-8"><a></a>    <span class="at">y =</span> <span class="st">"Female Labor Force Participation"</span>, <span class="co"># y-axis title</span></span>
+<span id="cb13-9"><a></a>    <span class="at">title =</span> <span class="st">"Wealth and female labor force participation"</span>, <span class="co"># plot title</span></span>
+<span id="cb13-10"><a></a>    <span class="at">caption =</span> <span class="st">"Source: World Bank Development Indicators"</span>, <span class="co"># caption</span></span>
+<span id="cb13-11"><a></a>    <span class="at">color =</span> <span class="st">"Region"</span> <span class="co"># legend title</span></span>
+<span id="cb13-12"><a></a>    )</span>
+<span id="cb13-13"><a></a></span>
+<span id="cb13-14"><a></a>wealth_flfp <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="scaling-for-scatter-plots-2" class="slide level2">
+<h2>Scaling for Scatter Plots</h2>
+<p>Use the <code>end</code> argument to darken the colors</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>wealth_flfp <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">end =</span> .<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
+<section id="scaling-for-scatter-plots-3" class="slide level2">
+<h2>Scaling for Scatter Plots</h2>
+<p>Use the <code>direction</code> argument to flip the color scale…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>wealth_flfp <span class="sc">+</span> <span class="fu">scale_color_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="week-6.1_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
+<section id="your-turn-3" class="slide level2">
+<h2>Your Turn!</h2>
+<p><br></p>
+<ul>
+<li>Try using one of the color schemes on a scatter plot</li>
+<li>Use <code>scale_color_</code> instead of <code>scale_fill_</code></li>
+<li>Play around with <code>end</code> and <code>direction</code> arguments in <code>viridis</code></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="countdown" id="scatter_plot" data-update-every="1" tabindex="0" style="right:5%;bottom:10%;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
@@ -771,7 +724,7 @@
 </div>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/dataviz-logo.png" class="slide-logo"></p>
@@ -788,6 +741,8 @@
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="../site_libs/revealjs/plugin/multiplex/multiplex.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -810,6 +765,7 @@
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
+'multiplex': {"secret":"17313643626837639670","id":"0cb188965b9110b1","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

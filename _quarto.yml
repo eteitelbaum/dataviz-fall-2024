@@ -3,7 +3,7 @@ project:
 
 website:
   page-navigation: true
-  title: "PSC/DATS 2102--Summer Schedule"
+  title: "PSC/DATS 2102--Fall Schedule"
   description: "Homepage for PSC/DATS 2102, George Washington University."
   
   site-url: "https://dataviz-gwu.rocks"

@@ -5015,36 +5015,36 @@
     "objectID": "slides/week-13.1.html#quickly-leveling-up-your-ui",
     "href": "slides/week-13.1.html#quickly-leveling-up-your-ui",
     "title": "Styling Your App",
-    "section": "",
-    "text": "There are many ways to make your app look instantly better\nOne of them is using bslib which is a package that provides a modern UI toolkit for Shiny and R Markdown based on Bootstrap\nThe cool thing: you can get around Shiny’s default usage of Bootstrap version 3!"
+    "section": "Quickly Leveling Up Your UI",
+    "text": "Quickly Leveling Up Your UI\n\nThere are many ways to make your app look instantly better\nOne of them is using bslib which is a package that provides a modern UI toolkit for Shiny and R Markdown based on Bootstrap\nThe cool thing: you can get around Shiny’s default usage of Bootstrap version 3!"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib",
     "href": "slides/week-13.1.html#working-with-bslib",
     "title": "Styling Your App",
-    "section": "",
-    "text": "library(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "section": "Working with {bslib}",
+    "text": "Working with {bslib}\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib-1",
     "href": "slides/week-13.1.html#working-with-bslib-1",
     "title": "Styling Your App",
-    "section": "",
-    "text": "Use the bootswatch argument to change the theme (other bootswatch themes:\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "section": "Working with {bslib}",
+    "text": "Working with {bslib}\nUse the bootswatch argument to change the theme (other bootswatch themes:\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib-2",
     "href": "slides/week-13.1.html#working-with-bslib-2",
     "title": "Styling Your App",
-    "section": "",
-    "text": "You can also customize the theme:\nlibrary(shiny)\nlibrary(bslib)\n\ncustom_theme &lt;- bs_theme(\n  version = 5,\n  bg = \"#F9F9F9\",\n  fg = \"#003f5c\",\n  primary = \"#bc5090\",\n  secondary = \"#58508d\",\n  warning = \"#ffa600\",\n  danger = \"#ff6361\",\n  info = \"#0091d5\",\n  base_font = font_google(\"PT Sans\")\n)\n\nui &lt;- page_navbar(\n  theme = custom_theme,\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\",\n                 width = \"100px\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "section": "Working with {bslib}",
+    "text": "Working with {bslib}\nYou can also customize the theme:\nlibrary(shiny)\nlibrary(bslib)\n\ncustom_theme &lt;- bs_theme(\n  version = 5,\n  bg = \"#F9F9F9\",\n  fg = \"#003f5c\",\n  primary = \"#bc5090\",\n  secondary = \"#58508d\",\n  warning = \"#ffa600\",\n  danger = \"#ff6361\",\n  info = \"#0091d5\",\n  base_font = font_google(\"PT Sans\")\n)\n\nui &lt;- page_navbar(\n  theme = custom_theme,\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\",\n                 width = \"100px\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#your-turn",
     "href": "slides/week-13.1.html#your-turn",
     "title": "Styling Your App",
-    "section": "",
-    "text": "Take the toy app from this section or another one you have made\nAdd some styling to it using bslib\n\n\n\n\n−+\n10:00"
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nTake the toy app from this section or another one you have made\nAdd some styling to it using bslib\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-13.1.html#what-is-a-dashboard",

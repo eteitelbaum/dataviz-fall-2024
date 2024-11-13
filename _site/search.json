@@ -2582,7 +2582,7 @@
     "href": "index.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n🖥️\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n🖥️\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
+    "text": "This page displays an outline of the topics, content, and assignments for the term. Each module starts on a Wednesday. Note that all of your coding and project assignments are due on the Monday after they are assigned at 11:59 p.m.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nModule\nDate\nSkills\nPackages\nFunctions\nReadings\nReference\nSlides\nVideos\nAssignments\n\n\n\n\n\nAug 23\nCourse Intro\n\n\n\n\n\n\n\n\n\nGS\nAug 28\nRStudio and Quarto\n\n\n\n📖\n🖥️\n🖥️\n\n\n\n\nAug 30\nMore with Quarto\n\n\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n1.1\nSep 4\nRead data into R\nreadr, dplyr\nread_csv(), glimpse()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 6\nReshape, clean data\ntidyr, dplyr\npivot_longer(), mutate(), mutate_at(), substring()\n\n📖\n🖥️\n🖥️🖥️🖥️\n\n\n\n1.2\nSep 11\nDownload data\nwbstats, vdemdata, dplyr, janitor\nwb_data(), vdem, select_(), filter(), case_match(), round_to_fraction()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nSep 13\nMerge data frames, group, summarize and arrange\ncountrycode, dplyr , readr\ncountrycode(), left_join(), write_csv(), group_by(), summarize(), arrange()\n\n📖 📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n2.1\nSep 18\nBar charts & histograms\nggplot2\nggplot(), geom_col(), geom_histogram(), aes(), labs()\n\n📖📖\n🖥️\n🖥️🖥️\n\n\n\n\nSep 27\nLine charts & scatter plots\nggplot2, scales\ngeom_line() , geom_point(), geom_smooth(), scale_x_log10(), label_number(), geom_text()\n\n📖\n🖥️\n🖥️🖥️\n\n\n\n2.2\nSep 25\nColor schemes\ntidyr, colorBlindess, dplyr, viridis, RColorBrewer\ndrop_na(), cvdPlot(), scale_fill_manual(), scale_fill_viridis_d(), scale_fill_brewer(), scale_color_manual(), scale_color_viridis_d(), scale_color_brewer\n📖\n📖\n🖥️\n🖥️\n\n\n\n\nSep 27\nThemes, annotations & interactivity\nggplot2 , plotly\ntheme_dark(), theme_minimal(), annotate(), geom_hline(), geom_vline(),``ggplotly(), layout()\n\n📖\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n3.1\nOct 2\nMap data with choropleth maps\nrnaturalearth, ggplot2, ggthemes , virids\nne_countries(), geom_sf(), theme_map() , theme() , scale_fill_viridis_c()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 4\nTurn your map into a function\n\nsouce(), function()\n📖\n📖\n🖥️\n🖥️\n\n\n\n3.2\nOct 9\nMake a leaflet map\nstates, sf , leaflet, htmltools\nleaflet(), st_as_sf() , addTiles(), addMarkers(),addProviderTiles()\n\n\n🖥️\n🖥️🖥️🖥️\n🧮\n\n\n\nOct 11\nNo class, fall break\n\n🍁🍂🎃\n\n\n\n\n\n\n\n4.1\nOct 16\nExploring tabular data\ntidycensus, dplyr, stringr, kableExtra\ncensus_api_key(), load_variables(), get_acs(), rename(), rename_with, str_remove(), kable(), slice_max(), slice_min(), slice_sample(), bind_rows()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nOct 18\nMake a gt table, make confidence intervals with ggplot2\ngt , ggplot2\ngt(), tab_header(), cols_label(), fmt_currency(), tab_source_note(), cols_width(), opt_table_font(), cols_align(), tab_options(), gtsave() , geom_errorbar()\n\n\n🖥️\n🖥️🖥️\n\n\n\n4.2\nOct 23\nDisplay regression tables\npeacesciencer, broom, dplyr\ncreate_stateyears(), add_ucdp_acd(), add_democracy(), add_creg_fractionalization(), add_sdp_gdp(), add_rugged_terrain(), tidy(), mutate_if(), glm(), binomial()\n📖\n\n🖥️\n🖥️\n\n\n\n\nOct 25\nMake regression tables and coefficient plots\nmodelsummary\nlist(), modelsummary(), modelplot(), rev()\n\n\n\n🖥️🖥️\n🧮\n\n\n5.1\nOct 30\nScatter plot app setup, building the UI\ndplyr , shiny\nsummarize_all(), fluidPage(), titlePanel(), sidebarLayout(), sidebarPanel(), selectInput(), mainPanel(), plotOutput()\n\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 1\nBuilding the server\nshiny\nrenderPlot(), shinyApp()\n\n\n🖥️\n🖥️\n✍️\n\n\n5.2\nNov 6\nLine chart app setup, building the UI\nfredr , shiny\nfredr_set_key() , as.Date() , Sys.Date() , column(), wellPanel(), helpText(), sliderInput()\n📖\n\n🖥️\n🖥️🖥️\n\n\n\n\nNov 8\nBuilding the server\nfredr , shiny\nreactive(), fredr(), fred_indicator()\n\n\n🖥️\n🖥️\n🧮\n\n\n6.1\nNov 13\nBuilding your app\n\n\n\n\n🖥️\n🖥️\n\n\n\n\nNov 15\nTroubleshooting your app\n\n\n\n\n🖥️\n\n✍️\n\n\n6.2\nNov 20\nSharing your app\n\n\n\n\n\n🖥️\n\n\n\n\nNov 22\nShinylive\n\n\n\n\n\n\n\n\n\n\nNov 27\nNo class, Thanksgiving break\n\n🦃🥧🍂\n\n\n\n\n\n\n\n\nNov 29\nNo class, Thanksgiving break\n\n\n\n\n\n\n\n\n\n\nDec 4\nLightning talks\n\n\n\n\n\n\n\n\n\n\nDec 6\nLightning talks\n\n\n\n\n\n\n✍️",
     "crumbs": [
       "Course information",
       "Schedule"
@@ -5014,42 +5014,42 @@
   {
     "objectID": "slides/week-13.1.html#quickly-leveling-up-your-ui",
     "href": "slides/week-13.1.html#quickly-leveling-up-your-ui",
-    "title": "Building Your App",
-    "section": "Quickly Leveling Up Your UI",
-    "text": "Quickly Leveling Up Your UI\n\nThere are many ways to make your app look instantly better\nOne of them is using bslib which is a package that provides a modern UI toolkit for Shiny and R Markdown based on Bootstrap\nThe cool thing: you can get around Shiny’s default usage of Bootstrap version 3!"
+    "title": "Styling Your App",
+    "section": "",
+    "text": "There are many ways to make your app look instantly better\nOne of them is using bslib which is a package that provides a modern UI toolkit for Shiny and R Markdown based on Bootstrap\nThe cool thing: you can get around Shiny’s default usage of Bootstrap version 3!"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib",
     "href": "slides/week-13.1.html#working-with-bslib",
-    "title": "Building Your App",
-    "section": "Working with {bslib}",
-    "text": "Working with {bslib}\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "title": "Styling Your App",
+    "section": "",
+    "text": "library(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib-1",
     "href": "slides/week-13.1.html#working-with-bslib-1",
-    "title": "Building Your App",
-    "section": "Working with {bslib}",
-    "text": "Working with {bslib}\nUse the bootswatch argument to change the theme (other bootswatch themes:\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "title": "Styling Your App",
+    "section": "",
+    "text": "Use the bootswatch argument to change the theme (other bootswatch themes:\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#working-with-bslib-2",
     "href": "slides/week-13.1.html#working-with-bslib-2",
-    "title": "Building Your App",
-    "section": "Working with {bslib}",
-    "text": "Working with {bslib}\nYou can also customize the theme:\nlibrary(shiny)\nlibrary(bslib)\n\ncustom_theme &lt;- bs_theme(\n  version = 5,\n  bg = \"#F9F9F9\",\n  fg = \"#003f5c\",\n  primary = \"#bc5090\",\n  secondary = \"#58508d\",\n  warning = \"#ffa600\",\n  danger = \"#ff6361\",\n  info = \"#0091d5\",\n  base_font = font_google(\"PT Sans\")\n)\n\nui &lt;- page_navbar(\n  theme = custom_theme,\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\",\n                 width = \"100px\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
+    "title": "Styling Your App",
+    "section": "",
+    "text": "You can also customize the theme:\nlibrary(shiny)\nlibrary(bslib)\n\ncustom_theme &lt;- bs_theme(\n  version = 5,\n  bg = \"#F9F9F9\",\n  fg = \"#003f5c\",\n  primary = \"#bc5090\",\n  secondary = \"#58508d\",\n  warning = \"#ffa600\",\n  danger = \"#ff6361\",\n  info = \"#0091d5\",\n  base_font = font_google(\"PT Sans\")\n)\n\nui &lt;- page_navbar(\n  theme = custom_theme,\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\",\n                 width = \"100px\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)"
   },
   {
     "objectID": "slides/week-13.1.html#your-turn",
     "href": "slides/week-13.1.html#your-turn",
-    "title": "Building Your App",
-    "section": "Your Turn!",
-    "text": "Your Turn!\n\nTake the toy app from this section or another one you have made\nAdd some styling to it using bslib\n\n\n\n\n−+\n10:00"
+    "title": "Styling Your App",
+    "section": "",
+    "text": "Take the toy app from this section or another one you have made\nAdd some styling to it using bslib\n\n\n\n\n−+\n10:00"
   },
   {
     "objectID": "slides/week-13.1.html#what-is-a-dashboard",
     "href": "slides/week-13.1.html#what-is-a-dashboard",
-    "title": "Building Your App",
+    "title": "Styling Your App",
     "section": "What is a Dashboard?",
     "text": "What is a Dashboard?\n\nA dashboard combines multiple visualizations into a single page\nIt provides a high-level overview of the data\nHere is an example of a dashboard I made using the shinydashboard package"
   },
@@ -5154,8 +5154,120 @@
   {
     "objectID": "slides/week-13.1.html#acknowledgements",
     "href": "slides/week-13.1.html#acknowledgements",
-    "title": "Building Your App",
+    "title": "Styling Your App",
     "section": "Acknowledgements",
     "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
+  },
+  {
+    "objectID": "slides/week-13.2.html#the-hard-part-about-shiny",
+    "href": "slides/week-13.2.html#the-hard-part-about-shiny",
+    "title": "Troubleshooting Your App",
+    "section": "The hard part about Shiny",
+    "text": "The hard part about Shiny\nNote that the server part doesn’t run line-by-line. It’s a reactive environment that will run the code when input changes.\n\nCode only reacts when it needs to, which is why it’s called reactive programming.\n\nThis makes it hard to test your code. And it’s hard to understand what’s going on when you’re new to Shiny!"
+  },
+  {
+    "objectID": "slides/week-13.2.html#the-hard-part-about-shiny-1",
+    "href": "slides/week-13.2.html#the-hard-part-about-shiny-1",
+    "title": "Troubleshooting Your App",
+    "section": "The hard part about Shiny",
+    "text": "The hard part about Shiny\nMy personal top ways ways to get more insight into what’s going on:\n\nUse print() statements to see when something is happening\nUse browser() to stop the code and inspect the environment (just as you can do within functions, because that is literally what server is!)"
+  },
+  {
+    "objectID": "slides/week-13.2.html#print-example",
+    "href": "slides/week-13.2.html#print-example",
+    "title": "Troubleshooting Your App",
+    "section": "print() example",
+    "text": "print() example\n\nserver &lt;- function(input, output) {\n  \n    # Reactive function to fetch data\n    fred_indicator &lt;- reactive({\n      data &lt;- fredr(series_id = input$indicator,\n                    observation_start = start_date,\n                    observation_end = end_date)\n      print(paste(\"Data fetched for indicator:\", input$indicator))  # Debug statement\n      print(head(data))  # Print first few rows of the fetched data\n      data\n    })\n  \n    # Reactive function to filter data\n    fred_data &lt;- reactive({\n      data &lt;- fred_indicator() |&gt; \n              filter(between(date, input$range[1], input$range[2]))\n      print(paste(\"Data filtered for range:\", input$range[1], \"to\", input$range[2]))  # Debug statement\n      data\n    })\n\n    # Plotting function\n    output$lineChart &lt;- renderPlot({\n      data &lt;- fred_data()\n      print(\"Plotting data\")  # Debug statement before plotting\n      ggplot(data, aes(x = date, y = value)) + \n        geom_line(color = \"navyblue\") +\n        labs(x = \"\", y = names(vars[which(vars == input$indicator)])) +\n        theme_minimal()\n    })\n}"
+  },
+  {
+    "objectID": "slides/week-13.2.html#print-example-1",
+    "href": "slides/week-13.2.html#print-example-1",
+    "title": "Troubleshooting Your App",
+    "section": "print() example",
+    "text": "print() example\n\nserver &lt;- function(input, output) {\n  \n    # Reactive function to fetch data\n    fred_indicator &lt;- reactive({\n      data &lt;- fredr(series_id = input$indicator,\n                    observation_start = start_date,\n                    observation_end = end_date)\n      print(paste(\"Data fetched for indicator:\", input$indicator))  # Debug statement\n      print(head(data))  # Print first few rows of the fetched data\n    })\n  \n    # Reactive function to filter data\n    fred_data &lt;- reactive({\n      data &lt;- fred_indicator() |&gt; \n              filter(between(date, input$range[1], input$range[2]))\n      print(paste(\"Data filtered for range:\", input$range[1], \"to\", input$range[2]))  # Debug statement\n      data\n    })\n\n    # Plotting function\n    output$lineChart &lt;- renderPlot({\n      data &lt;- fred_data()\n      print(\"Plotting data\")  # Debug statement before plotting\n      ggplot(data, aes(x = date, y = value)) + \n        geom_line(color = \"navyblue\") +\n        labs(x = \"\", y = names(vars[which(vars == input$indicator)])) +\n        theme_minimal()\n    })\n}"
+  },
+  {
+    "objectID": "slides/week-13.2.html#browser-example",
+    "href": "slides/week-13.2.html#browser-example",
+    "title": "Troubleshooting Your App",
+    "section": "browser() example",
+    "text": "browser() example\n\nserver &lt;- function(input, output) {\n  \n    # Reactive function to fetch data\n    fred_indicator &lt;- reactive({\n      browser()  # Initiate debugging here\n      fredr(series_id = input$indicator,\n            observation_start = start_date,\n            observation_end = end_date)\n    })\n  \n    # Reactive function to filter data\n    fred_data &lt;- reactive({\n      browser()  # Debugging point to inspect filtered data\n      fred_indicator() |&gt; \n        filter(between(date, input$range[1], input$range[2]))\n    })\n\n    # Plotting function\n    output$lineChart &lt;- renderPlot({\n      browser()  # Inspect before plotting\n      ggplot(fred_data(), aes(x = date, y = value)) + \n        geom_line(color = \"navyblue\") +\n        labs(x = \"\", y = names(vars[which(vars == input$indicator)])) +\n        theme_minimal()\n    })\n}"
+  },
+  {
+    "objectID": "slides/week-13.2.html#your-turn",
+    "href": "slides/week-13.2.html#your-turn",
+    "title": "Troubleshooting Your App",
+    "section": "Your Turn!",
+    "text": "Your Turn!\n\nTake the toy app from this section or another one you have made\nTry adding print() or browser() statements to see when things are happening\n\n\n\n\n−+\n10:00"
+  },
+  {
+    "objectID": "slides/week-13.2.html#wrangle-some-working-data",
+    "href": "slides/week-13.2.html#wrangle-some-working-data",
+    "title": "Troubleshooting Your App",
+    "section": "Wrangle some “working data”",
+    "text": "Wrangle some “working data”\n\nStart by selecting a manageable subset of data.\nFocus on a few indicators for initial testing.\nExpand data scope after validating app functionality."
+  },
+  {
+    "objectID": "slides/week-13.2.html#use-separate-files",
+    "href": "slides/week-13.2.html#use-separate-files",
+    "title": "Troubleshooting Your App",
+    "section": "Use separate files",
+    "text": "Use separate files\n\nSeparate data wrangling and visualization into different R scripts or Quarto documents.\nEmploy glimpse() and View() to verify data structures.\nHelps isolate and troubleshoot errors effectively."
+  },
+  {
+    "objectID": "slides/week-13.2.html#start-building-with-comments-and-function-calls",
+    "href": "slides/week-13.2.html#start-building-with-comments-and-function-calls",
+    "title": "Troubleshooting Your App",
+    "section": "Start building with comments and function calls",
+    "text": "Start building with comments and function calls\n\nUse comments to outline what each code section should do.\nIntroduce function calls without arguments to build the structure.\nThis method helps in maintaining clarity and debugging."
+  },
+  {
+    "objectID": "slides/week-13.2.html#test-your-ui-code-separately-from-your-server-code",
+    "href": "slides/week-13.2.html#test-your-ui-code-separately-from-your-server-code",
+    "title": "Troubleshooting Your App",
+    "section": "Test your UI code separately from your server code",
+    "text": "Test your UI code separately from your server code\n\nTest UI components like drop-downs and sliders without server-side logic.\nHelps ensure that the UI layout functions as intended.\nUse dummy server functions to isolate UI issues."
+  },
+  {
+    "objectID": "slides/week-13.2.html#ensure-reactive-data-frames-are-called-correctly",
+    "href": "slides/week-13.2.html#ensure-reactive-data-frames-are-called-correctly",
+    "title": "Troubleshooting Your App",
+    "section": "Ensure reactive data frames are called correctly",
+    "text": "Ensure reactive data frames are called correctly\n\nUse parentheses to call reactive data frames within server functions.\nEssential for maintaining reactivity and accurate data handling.\nAvoids common bugs related to reactive contexts."
+  },
+  {
+    "objectID": "slides/week-13.2.html#properly-call-input-in-server-functions",
+    "href": "slides/week-13.2.html#properly-call-input-in-server-functions",
+    "title": "Troubleshooting Your App",
+    "section": "Properly call input in server functions",
+    "text": "Properly call input in server functions\n\nCheck that input variables are used correctly in server functions.\nAccurate naming ensures the server reacts properly to UI changes.\nCritical for dynamic app behavior and user interactions."
+  },
+  {
+    "objectID": "slides/week-13.2.html#consider-nonstandard-evaluation-in-ggplot",
+    "href": "slides/week-13.2.html#consider-nonstandard-evaluation-in-ggplot",
+    "title": "Troubleshooting Your App",
+    "section": "Consider nonstandard evaluation in ggplot",
+    "text": "Consider nonstandard evaluation in ggplot\n\nUse .data[[]] to handle user inputs within ggplot2 aesthetics.\nEnsures dynamic plotting based on user-selected data.\nNonstandard evaluation simplifies coding but requires careful handling."
+  },
+  {
+    "objectID": "slides/week-13.2.html#understand-what-your-code-is-doing",
+    "href": "slides/week-13.2.html#understand-what-your-code-is-doing",
+    "title": "Troubleshooting Your App",
+    "section": "Understand what your code is doing",
+    "text": "Understand what your code is doing\n\nMaintain a clear concept of each part’s function within your code.\nRegularly test and refine to ensure it meets your objectives.\nTheoretical understanding aids in effective troubleshooting and innovation."
+  },
+  {
+    "objectID": "slides/week-13.2.html#acknowledgements",
+    "href": "slides/week-13.2.html#acknowledgements",
+    "title": "Troubleshooting Your App",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\n\nParts of this presentation were adapted from Veerle van Leemput’s Shiny 101: The Modular App Blueprint"
+  },
+  {
+    "objectID": "slides/week-13.1.html",
+    "href": "slides/week-13.1.html",
+    "title": "Styling Your App",
+    "section": "",
+    "text": "There are many ways to make your app look instantly better\nOne of them is using bslib which is a package that provides a modern UI toolkit for Shiny and R Markdown based on Bootstrap\nThe cool thing: you can get around Shiny’s default usage of Bootstrap version 3!\n\n\n\n\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)\n\n\n\nUse the bootswatch argument to change the theme (other bootswatch themes:\nlibrary(shiny)\nlibrary(bslib)\n\nui &lt;- page_navbar(\n  theme = bs_theme(version = 5, bootswatch = \"minty\"),\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)\n\n\n\nYou can also customize the theme:\nlibrary(shiny)\nlibrary(bslib)\n\ncustom_theme &lt;- bs_theme(\n  version = 5,\n  bg = \"#F9F9F9\",\n  fg = \"#003f5c\",\n  primary = \"#bc5090\",\n  secondary = \"#58508d\",\n  warning = \"#ffa600\",\n  danger = \"#ff6361\",\n  info = \"#0091d5\",\n  base_font = font_google(\"PT Sans\")\n)\n\nui &lt;- page_navbar(\n  theme = custom_theme,\n  title = \"Modular App Blueprint\",\n  nav_panel(\n    title = \"Numbers\",\n    numericInput(inputId = \"number\",\n                 label = \"Enter a number\",\n                 value = 0),\n    actionButton(inputId = \"button\",\n                 label = \"Click me\",\n                 width = \"100px\"),\n    textOutput(outputId = \"text\")\n  )\n)\n\nserver &lt;- function(input, output, session) {\n  output$text &lt;- renderText({\n    input$number^2\n  }) |&gt; bindEvent(input$button)\n}\n\nshinyApp(ui, server)\n\n\n\n\nTake the toy app from this section or another one you have made\nAdd some styling to it using bslib\n\n\n\n\n−+\n10:00"
   }
 ]
